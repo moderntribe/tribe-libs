@@ -1,0 +1,18 @@
+{
+  "name": "moderntribe/tribe-libs",
+  "type": "library",
+  "description": "A library for use on Modern Tribe service projects.",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Libs\\": "src/"
+    }
+  }
+}
