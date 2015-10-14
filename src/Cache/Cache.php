@@ -67,8 +67,16 @@ class Cache {
 		if ( empty( $key ) ) return false;
 		$key = ( is_array( $key ) ) ? md5( serialize( $key ) ) : $key;
 
-		$key .= get_version();
+		$key .= $this->version();
 		return $key;
+	}
+
+	private function version() {
+		if ( function_exists( 'tribe_get_version' ) ) {
+			return tribe_get_version();
+		} else {
+			return '';
+		}
 	}
 
 	/**
