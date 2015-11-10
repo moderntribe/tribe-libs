@@ -33,6 +33,7 @@ class Post_Type_Registration {
 			register_extended_post_type( $config->post_type(), $config->get_args(), $config->get_labels() );
 			add_filter( 'cmb2_meta_boxes', function( $meta_boxes ) use ( $config ) {
 				$post_type_meta_boxes = $config->get_meta_boxes();
+				$post_type_meta_boxes = apply_filters( "tribe_{$config->post_type()}_meta_boxes", $post_type_meta_boxes );
 				$meta_boxes = array_merge( $meta_boxes, $post_type_meta_boxes );
 				return $meta_boxes;
 			});
