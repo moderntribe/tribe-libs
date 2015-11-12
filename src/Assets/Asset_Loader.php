@@ -48,4 +48,8 @@ class Asset_Loader {
 	public function get_path( $relative_path ) {
 		return $this->base_dir . $relative_path;
 	}
+
+	public function localize_script( $handle, $localization_object_name, $localization_data ) {
+		return wp_localize_script( $handle, $localization_object_name, $localization_data );
+	}
 }
