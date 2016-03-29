@@ -37,6 +37,13 @@ class Post_Type_Registration {
 				$meta_boxes = array_merge( $meta_boxes, $post_type_meta_boxes );
 				return $meta_boxes;
 			});
+			// acf fires `acf/include_fields` too early to use a callback here, at init:5
+			if ( function_exists( 'acf_add_local_field_group' ) ) {
+				$meta_boxes = $config->get_acf_fields();
+				foreach ( $meta_boxes as $box ) {
+					acf_add_local_field_group( $box );
+				}
+			}
 		};
 	}
 

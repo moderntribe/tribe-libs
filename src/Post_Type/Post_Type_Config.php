@@ -58,4 +58,13 @@ abstract class Post_Type_Config {
 	public function get_meta_boxes() {
 		return [];
 	}
+
+	/**
+	 * Get the ACF metabox configuration for the post type
+	 * @return array
+	 * @see acf_add_local_field_group()
+	 */
+	public function get_acf_fields() {
+		return [];
+	}
 }
