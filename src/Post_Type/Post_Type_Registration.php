@@ -39,9 +39,11 @@ class Post_Type_Registration {
 			
 			register_extended_post_type( $config->post_type(), $config->get_args(), $config->get_labels() );
 
+			 // The meta box handler is supposed to handle any hooking, meta box and field registration...
 			if ( $meta_box_handler !== null ) {
 				$meta_box_handler->register_meta_boxes( $config );
 			} else {
+				// ...otherwise we'll cover the bases with CMB2 and ACF
 				add_filter( 'cmb2_meta_boxes', function ( $meta_boxes ) use ( $config ) {
 					$post_type_meta_boxes = $config->get_meta_boxes();
 					$post_type_meta_boxes = apply_filters( "tribe_{$config->post_type()}_meta_boxes", $post_type_meta_boxes );
