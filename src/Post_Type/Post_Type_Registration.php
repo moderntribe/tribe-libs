@@ -38,8 +38,24 @@ class Post_Type_Registration {
 			if ( empty( $config->post_type() ) ) {
 				throw new \RuntimeException( 'Invalid configuration. Specify a post type.' );
 			}
+			
 			register_extended_post_type( $config->post_type(), $config->get_args(), $config->get_labels() );
-
+			
+			add_filter( 'cmb2_meta_boxes', function( $meta_boxes ) use ( $config ) {
+				$post_type_meta_boxes = $config->get_meta_boxes();
+				$post_type_meta_boxes = apply_filters( "tribe_{$config->post_type()}_meta_boxes", $post_type_meta_boxes );
+				$meta_boxes = array_merge( $meta_boxes, $post_type_meta_boxes );
+				return $meta_boxes;
+			});
+			
+			// acf fires `acf/include_fields` too early to use a callback here, at init:5
+			if ( function_exists( 'acf_add_local_field_group' ) ) {
+				$meta_boxes = $config->get_acf_fields();
+				foreach ( $meta_boxes as $box ) {
+					acf_add_local_field_group( $box );
+				}
+			}
+			
 			$meta_box_handler->register_meta_boxes( $config );
 		};
 	}
