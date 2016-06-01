@@ -3,8 +3,6 @@
 
 namespace Tribe\Libs\Post_Type;
 
-use Tribe\Libs\Post_Type\Meta_Box_Handlers\ACF;
-
 abstract class Post_Type_Config {
 	/** @var string */
 	protected $post_type = '';
@@ -22,7 +20,7 @@ abstract class Post_Type_Config {
 	 * Hook into WordPress to register the post type
 	 */
 	public function register() {
-		Post_Type_Registration::register( $this );
+		Post_Type_Registration::register( $this, apply_filters( 'tribe_libs_meta_box_handler', null ) );
 	}
 
 	/**
