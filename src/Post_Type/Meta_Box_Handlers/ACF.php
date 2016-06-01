@@ -13,7 +13,7 @@ class ACF implements Meta_Box_Handler_Interface {
 	 * @param Post_Type_Config $config
 	 */
 	public function register_meta_boxes( Post_Type_Config $config ) {
-		if ( ! function_exists( 'register_field_group' ) ) {
+		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
 			return;
 		}
 
