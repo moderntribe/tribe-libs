@@ -19,4 +19,15 @@ class ACF implements Meta_Box_Handler_Interface {
 
 		acf_add_local_field_group( $config->get_meta_boxes() );
 	}
+
+	/**
+	 * Hooks the meta box handler class to the required filters/actions if needed.
+	 *
+	 * @return void
+	 */
+	public function hook() {
+		add_filter( Meta_Box_Handler_Interface::INSTANCE_FILTER, function () {
+			return $this;
+		} );
+	}
 }
