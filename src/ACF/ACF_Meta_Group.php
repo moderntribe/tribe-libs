@@ -3,14 +3,9 @@
 
 namespace Tribe\Libs\ACF;
 
+use Tribe\Libs\Post_Meta\Meta_Group;
 
-abstract class ACF_Meta_Group {
-
-	protected $post_types = [ ];
-
-	public function __construct( array $post_types ) {
-		$this->post_types = $post_types;
-	}
+abstract class ACF_Meta_Group extends Meta_Group {
 
 	public function hook() {
 		add_action( 'acf/init', [ $this, 'register_group' ], 10, 0 );
