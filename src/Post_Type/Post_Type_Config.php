@@ -22,7 +22,7 @@ abstract class Post_Type_Config {
 	 * Hook into WordPress to register the post type
 	 */
 	public function register() {
-		Post_Type_Registration::register( $this, new ACF() );
+		Post_Type_Registration::register( $this );
 	}
 
 	/**
