@@ -1,0 +1,29 @@
+<?php
+namespace Tribe\Project\Post_Types\Config;
+
+use Tribe\Libs\Post_Type\Post_Type_Config;
+use Tribe\Project\Post_Types\$CLASS_NAME$ as $CLASS_NAME$_Object;
+
+class $CLASS_NAME$ extends Post_Type_Config {
+
+	public function get_args() {
+		return [
+			'hierarchical'     => false,
+			'enter_title_here' => __( '$SINGULAR_NAME$ title', 'tribe' ),
+			'map_meta_cap'     => true,
+			'supports'         => [ 'title', 'editor', 'thumbnail' ],
+			'capability_type'  => 'post',
+			'menu_icon'        => '$DASHICON$',
+			'has_archive'      => sanitize_title( '$PLURAL_NAME$' ),
+			'rewrite'          => [ 'slug' => $CLASS_NAME$_Object::NAME ],
+		];
+	}
+
+	public function get_labels() {
+		return [
+			'singular' => __( '$SINGULAR_NAME$', 'tribe' ),
+			'plural'   => __( '$PLURAL_NAME$', 'tribe' ),
+			'slug'     => __( $CLASS_NAME$_Object::NAME, 'tribe' ),
+		];
+	}
+}

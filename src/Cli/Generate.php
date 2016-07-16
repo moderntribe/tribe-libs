@@ -3,6 +3,8 @@
 
 namespace Tribe\Libs\Cli;
 
+use Tribe\Project\Core;
+
 class Generate extends \WP_CLI_Command {
 
 	/**
@@ -45,21 +47,21 @@ class Generate extends \WP_CLI_Command {
 				'value'    => $singular,
 			],
 			'PLURAL_NAME'    => [
-				'question' => 'Singular name',
+				'question' => 'Plural name',
 				'value'    => $singular . 's',
+			],
+			'DASHICON'       => [
+				'question' => 'Dashicon',
+				'value'    => 'dashicons-no',
 			],
 		];
 
 		if ( empty( $assoc_args['defaults'] ) ) {
 			$values = $this->ask_questions( $values );
 		}
-		
-		
-		echo "<pre>";
-		print_r($values);
-		echo "</pre>";
-		
-		
+
+		$this->build( $values['CLASS_NAME'], 'Post_Type', $values );
+		$this->build( $values['CLASS_NAME'], 'Post_Type_Configuration', $values );
 
 
 	}
@@ -67,7 +69,7 @@ class Generate extends \WP_CLI_Command {
 	// ToDo: move to own class
 	protected function ask_questions( $values ) {
 		foreach ( $values as $key => $data ) {
-			$question = sprintf( '%s [%s]', $data['question'], $data['value'] );
+			$question                = sprintf( '%s [%s]', $data['question'], $data['value'] );
 			$values[ $key ]['value'] = \cli\prompt( $question, $data['value'] );
 		}
 
@@ -75,23 +77,37 @@ class Generate extends \WP_CLI_Command {
 	}
 
 	// ToDo: move to own class
-	public function compile( $template_file, $values ) {
+	public function build( $name, $object_type, $values ) {
+		$settings = $this->settings();
+		$template = $this->compile( $object_type, $values );
+		$this->save( $values['CLASS_NAME']['value'], $settings[ $object_type ], $template );
 	}
 
-	// ToDo: move to 'compile' class
-	public function compile_text( $template, $data ) {
-		foreach ( $data as $key => $value ) {
-			$template = preg_replace( "/\\$$key\\$/i", $value, $template );
+	// ToDo: move to own class
+	public function compile( $template_file, $values ) {
+		$template = file_get_contents( trailingslashit( __DIR__ ) . 'Templates/' . $template_file . '.s1t' );
+
+		foreach ( $values as $key => $data ) {
+			$template = preg_replace( "/\\$$key\\$/i", $data['value'], $template );
 		}
 
 		return $template;
 	}
 
+	// ToDo: move to own class
+	public function save( $file, $path, $code ) {
+		file_put_contents( $path . $file . '.php', $code );
+	}
+
 	// ToDo: Move to own class and get them from a config file
 	private function settings() {
+		$core      = Core::instance();
+		$container = $core->container();
+		$core_path = plugin_dir_path( $container['plugin_file'] );
+
 		return [
-			'post_type_path'               => '',
-			'post_type_configuration_path' => '',
+			'Post_Type'               => $core_path . 'src/Post_Types/',
+			'Post_Type_Configuration' => $core_path . 'src/Post_Types/Config/',
 		];
 	}
 

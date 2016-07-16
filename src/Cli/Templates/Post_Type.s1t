@@ -1,0 +1,6 @@
+<?php
+namespace Tribe\Project\Post_Types;
+
+class $CLASS_NAME$ {
+	const NAME = '$POST_TYPE_NAME$';
+}
