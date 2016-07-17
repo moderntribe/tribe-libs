@@ -63,8 +63,7 @@ class Generate extends \WP_CLI_Command {
 		$this->build( $values['CLASS_NAME']['value'], 'Post_Type', $values );
 		$this->build( $values['CLASS_NAME']['value'], 'Post_Type_Configuration', $values );
 
-		$content = $values['CLASS_NAME']['value'] . ',\n/*DONTREMOVE*/';
-		$this->update( 'Global_Service_Provider', '/*DONTREMOVE*/', $content );
+		$this->update_array( 'Global_Service_Provider', '/*DONTREMOVE*/', $values['CLASS_NAME']['value'] );
 
 
 		\WP_CLI::success( "Post Type '{$values['CLASS_NAME']['value']}' generated." );
@@ -87,13 +86,19 @@ class Generate extends \WP_CLI_Command {
 		$this->save( $name, $settings[ $object_type ], $template );
 	}
 
-	public function update( $file, $token, $content ) {
+	public function update_array( $file, $token, $content ) {
 		$settings     = $this->settings();
-		$path         = $settings[$file];
+		$path         = $settings[ $file ];
 		$file_content = file_get_contents( $path );
+		$content      = sprintf( "'%s',\n\t\t%s", $content, $token );
+		$file_content = str_replace( $token, $content, $file_content );
 
-		$file_content = preg_replace( "/\\$$token\\$/i", $content, $file_content );
-		file_put_contents( $path, $file_content );
+		//file_put_contents( $path, $file_content );
+		echo "<pre>";
+		print_r( $file_content );
+		echo "</pre>";
+
+
 	}
 
 	// ToDo: move to own class
