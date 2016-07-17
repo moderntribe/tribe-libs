@@ -60,10 +60,14 @@ class Generate extends \WP_CLI_Command {
 			$values = $this->ask_questions( $values );
 		}
 
-		$this->build( $values['CLASS_NAME'], 'Post_Type', $values );
-		$this->build( $values['CLASS_NAME'], 'Post_Type_Configuration', $values );
+		$this->build( $values['CLASS_NAME']['value'], 'Post_Type', $values );
+		$this->build( $values['CLASS_NAME']['value'], 'Post_Type_Configuration', $values );
+
+		$content = $values['CLASS_NAME']['value'] . ',\n/*DONTREMOVE*/';
+		$this->update( 'Global_Service_Provider', '/*DONTREMOVE*/', $content );
 
 
+		\WP_CLI::success( "Post Type '{$values['CLASS_NAME']['value']}' generated." );
 	}
 
 	// ToDo: move to own class
@@ -80,7 +84,16 @@ class Generate extends \WP_CLI_Command {
 	public function build( $name, $object_type, $values ) {
 		$settings = $this->settings();
 		$template = $this->compile( $object_type, $values );
-		$this->save( $values['CLASS_NAME']['value'], $settings[ $object_type ], $template );
+		$this->save( $name, $settings[ $object_type ], $template );
+	}
+
+	public function update( $file, $token, $content ) {
+		$settings     = $this->settings();
+		$path         = $settings[$file];
+		$file_content = file_get_contents( $path );
+
+		$file_content = preg_replace( "/\\$$token\\$/i", $content, $file_content );
+		file_put_contents( $path, $file_content );
 	}
 
 	// ToDo: move to own class
@@ -108,6 +121,7 @@ class Generate extends \WP_CLI_Command {
 		return [
 			'Post_Type'               => $core_path . 'src/Post_Types/',
 			'Post_Type_Configuration' => $core_path . 'src/Post_Types/Config/',
+			'Global_Service_Provider' => $core_path . 'src/Service_Providers/Global_Service_Provider.php',
 		];
 	}
 
