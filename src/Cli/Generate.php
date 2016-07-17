@@ -93,12 +93,7 @@ class Generate extends \WP_CLI_Command {
 		$content      = sprintf( "'%s',\n\t\t%s", $content, $token );
 		$file_content = str_replace( $token, $content, $file_content );
 
-		//file_put_contents( $path, $file_content );
-		echo "<pre>";
-		print_r( $file_content );
-		echo "</pre>";
-
-
+		file_put_contents( $path, $file_content );
 	}
 
 	// ToDo: move to own class
