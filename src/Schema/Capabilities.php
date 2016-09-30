@@ -68,7 +68,7 @@ class Capabilities {
 		$pto = get_post_type_object( $post_type );
 		if ( ! $pto ) {
 			_deprecated_argument( __FUNCTION__, '2016-09-02', 'First argument should be a registered post type, rather than the plural capability prefix.' );
-			return $this->register_post_type_caps_with_prefix( $post_type, $role_id, $level );
+			return $this->register_post_type_caps_with_prefix( $post_type, $role, $level );
 		}
 
 		foreach ( $this->caps[ $level ] as $cap ) {
@@ -85,15 +85,14 @@ class Capabilities {
 	 * Not recommended, because it does not take into account custom capabilities
 	 * set for the post type when it is registered.
 	 *
-	 * @param string $post_type_suffix The plural form of the post type's capability_type
-	 * @param string $role_id          The name of a registered role
-	 * @param string $level            The access level the user should have. One of 'subscriber', 'contributor',
-	 *                                 'author', or 'editor'
+	 * @param string   $post_type_suffix The plural form of the post type's capability_type
+	 * @param \WP_Role $role             The role object
+	 * @param string   $level            The access level the user should have. One of 'subscriber', 'contributor',
+	 *                                   'author', or 'editor'
 	 * @return bool
 	 */
-	private function register_post_type_caps_with_prefix( $post_type_suffix, $role_id, $level = 'editor' ) {
+	private function register_post_type_caps_with_prefix( $post_type_suffix, $role, $level = 'editor' ) {
 		// argument validation handled above in self::register_post_type_caps()
-		$role = get_role( $role_id );
 		foreach ( $this->caps[ $level ] as $cap ) {
 			$prefix = str_replace( '_posts', '', $cap );
 			$role->add_cap( $prefix . '_' . $post_type_suffix );
