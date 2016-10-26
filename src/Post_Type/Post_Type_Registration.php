@@ -36,10 +36,13 @@ class Post_Type_Registration {
 			if ( empty( $config->post_type() ) ) {
 				throw new \RuntimeException( 'Invalid configuration. Specify a post type.' );
 			}
-			
-			register_extended_post_type( $config->post_type(), $config->get_args(), $config->get_labels() );
 
-			 // The meta box handler is supposed to handle any hooking, meta box and field registration...
+			$args = $config->get_args();
+			$args[ 'labels' ] = wp_parse_args( empty( $args[ 'labels' ] ) ? [] : $args[ 'labels' ], $config->get_labels() );
+			register_extended_post_type( $config->post_type(), $args, $config->get_labels() );
+
+
+			// The meta box handler is supposed to handle any hooking, meta box and field registration...
 			if ( $meta_box_handler !== null ) {
 				$meta_box_handler->register_meta_boxes( $config );
 			} else {
