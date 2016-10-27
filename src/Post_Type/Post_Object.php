@@ -92,11 +92,11 @@ abstract class Post_Object {
 			$meta_repo = new Meta_Repository();
 		}
 		if( is_a( $post, 'WP_Post' ) ){
-			$post = new static( $post->ID, $meta_repo->get( static::NAME ) );
-			$post->post = $post;
+			$_post = new static( $post->ID, $meta_repo->get( static::NAME ) );
+			$_post->post = $post;
 		} else {
-			$post = new static( $post, $meta_repo->get( static::NAME ) );
+			$_post = new static( $post, $meta_repo->get( static::NAME ) );
 		}
-		return $post;
+		return $_post;
 	}
 }
