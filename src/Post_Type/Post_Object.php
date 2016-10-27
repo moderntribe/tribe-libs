@@ -54,8 +54,14 @@ abstract class Post_Object {
 		}
 	}
 
-	public function __get( $key ) {
-		return $this->get_meta( $key );
+
+	public function __get( $key ){
+		$post = $this->get_post();
+		if( isset( $post->{$key} ) ){
+			return $this->{$key} = $post->{$key};
+		}
+
+		return $this->{$key} = $this->get_meta( $key );
 	}
 
 
