@@ -28,7 +28,7 @@ abstract class Post_Object {
 	/** @var Meta_Map */
 	protected $meta;
 
-	protected $post_id = 0;
+	public $post_id = 0;
 
 	/**
 	 * post
