@@ -28,7 +28,7 @@ abstract class Post_Object {
 	/** @var Meta_Map */
 	protected $meta;
 
-	public $post_id = 0;
+	protected $post_id = 0;
 
 	/**
 	 * post
@@ -54,6 +54,10 @@ abstract class Post_Object {
 		}
 	}
 
+	public function get_post_id(){
+		return $this->post_id;
+	}
+
 
 	public function __get( $key ){
 		$post = $this->get_post();
@@ -61,7 +65,7 @@ abstract class Post_Object {
 			return $this->{$key} = $post->{$key};
 		}
 
-		return $this->{$key} = $this->get_meta( $key );
+		return $this->get_meta( $key );
 	}
 
 
