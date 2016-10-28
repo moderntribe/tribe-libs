@@ -38,8 +38,7 @@ class Post_Type_Registration {
 			}
 
 			$args = $config->get_args();
-			$labels = empty( $args[ 'labels' ] ) ? [] : $args[ 'labels' ];
-			$args[ 'labels' ] = wp_parse_args( $labels, $config->get_labels() );
+			$args[ 'labels' ] = wp_parse_args( empty( $args[ 'labels' ] ) ? [] : $args[ 'labels' ], $config->get_labels() );
 			register_extended_post_type( $config->post_type(), $args, $config->get_labels() );
 
 

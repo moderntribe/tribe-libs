@@ -31,13 +31,6 @@ abstract class Post_Object {
 	protected $post_id = 0;
 
 	/**
-	 * post
-	 *
-	 * @var \WP_Post
-	 */
-	protected $post;
-
-	/**
 	 * Post_Object constructor.
 	 *
 	 * @param int           $post_id        The ID of a WP post
@@ -58,15 +51,6 @@ abstract class Post_Object {
 		return $this->get_meta( $key );
 	}
 
-
-	public function get_post(){
-		if( empty( $this->post ) ){
-			$this->post = get_post( $this->post_id );
-		}
-		return $this->post;
-	}
-
-
 	/**
 	 * Get the value for the given meta key corresponding
 	 * to this post.
@@ -82,21 +66,16 @@ abstract class Post_Object {
 	 * Get an instance of the Post_Object corresponding
 	 * to the \WP_Post with the given $post_id
 	 *
-	 * @param int|\WP_Post $post
+	 * @param int $post_id The ID of an existing post
 	 * @return static
 	 */
-	public static function factory( $post ) {
+	public static function factory( $post_id ) {
 		/** @var Meta_Repository $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		if( is_a( $post, 'WP_Post' ) ){
-			$post = new static( $post->ID, $meta_repo->get( static::NAME ) );
-			$post->post = $post;
-		} else {
-			$post = new static( $post, $meta_repo->get( static::NAME ) );
-		}
+		$post = new static( $post_id, $meta_repo->get( static::NAME ) );
 		return $post;
 	}
 }
