@@ -22,7 +22,7 @@ use Tribe\Libs\Post_Meta\Meta_Repository;
  * an appropriate Meta_Group, via the `get_meta()` method
  * called with a registered key.
  */
-abstract class Post_Object {
+class Post_Object {
 	const NAME = '';
 
 	/** @var Meta_Map */
@@ -75,7 +75,11 @@ abstract class Post_Object {
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		$post = new static( $post_id, $meta_repo->get( static::NAME ) );
+		$post_type = static::NAME;
+		if ( empty( $post_type ) ) {
+			$post_type = get_post_type( $post_id );
+		}
+		$post = new static( $post_id, $meta_repo->get( $post_type ) );
 		return $post;
 	}
 }
