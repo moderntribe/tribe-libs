@@ -1,9 +1,8 @@
 <?php
 
 
-namespace Tribe\Libs\Post_Meta;
+namespace Tribe\Libs\Object_Meta;
 
-use Tribe\Libs\Object_Meta\Meta_Group;
 
 /**
  * Class Meta_Repository
@@ -59,8 +58,19 @@ class Meta_Repository {
 	 */
 	public function add_group( Meta_Group $group ) {
 		$this->groups[ $group::NAME ] = $group;
-		foreach ( $group->get_post_types() as $post_type ) {
+
+		$types = $group->get_object_types();
+
+		foreach ( $types['post_types'] as $post_type ) {
 			$this->get( $post_type )->add( $group );
+		}
+
+		foreach ( $types['taxonomies'] as $taxonomy ) {
+			$this->get( $taxonomy )->add( $group );
+		}
+
+		if ( $types['users'] ) {
+			$this->get( 'users' )->add( $group );
 		}
 	}
 
@@ -68,21 +78,21 @@ class Meta_Repository {
 	 * Set/override the Meta_Map for the given post type
 	 *
 	 * @param Meta_Map $collection
-	 * @param string   $post_type
+	 * @param string   $object_type
 	 * @return void
 	 */
-	public function set( Meta_Map $collection, $post_type ) {
-		$this->collections[ $post_type ] = $collection;
+	public function set( Meta_Map $collection, $object_type ) {
+		$this->collections[ $object_type ] = $collection;
 	}
 
 	/**
-	 * @param string $post_type
+	 * @param string $object_type
 	 * @return Meta_Map The meta collection relevant to the given post type
 	 */
-	public function get( $post_type ) {
-		if ( !isset( $this->collections[ $post_type ] ) ) {
-			$this->set( new Meta_Map( $post_type ), $post_type );
+	public function get( $object_type ) {
+		if ( !isset( $this->collections[ $object_type ] ) ) {
+			$this->set( new Meta_Map( $object_type ), $object_type );
 		}
-		return $this->collections[ $post_type ];
+		return $this->collections[ $object_type ];
 	}
 }

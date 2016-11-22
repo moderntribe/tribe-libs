@@ -7,8 +7,33 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 	/** @var Field[] */
 	protected $fields = [ ];
-
 	protected $post_types = [ ];
+	protected $taxonomies = [ ];
+	protected $users = false;
+
+	/**
+	 * Group constructor.
+	 *
+	 * @param string     $key
+	 * @param array|bool $object_types
+	 */
+	public function __construct( $key, $object_types = false ) {
+		parent::__construct( $key );
+
+		if ( $object_types ) {
+
+			if ( ! array_key_exists( 'post_types', $object_types ) ) {
+				$this->set_post_types( $object_types );
+				return;
+			}
+
+			$this->set_post_types( $object_types['post_types'] );
+			$this->set_taxonomies( $object_types['taxonomies'] );
+			if ( $object_types['users'] ) {
+				$this->enable_users();
+			}
+		}
+	}
 
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
@@ -30,7 +55,36 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				],
 			];
 		}
+
+		foreach ( $this->taxonomies as $taxonomy ) {
+			$attributes[ 'location' ][] = [
+				[
+					'param'    => 'taxonomy',
+					'operator' => '==',
+					'value'    => $taxonomy,
+				],
+			];
+		}
+
+		if ( $this->users ) {
+			$attributes[ 'location' ][] = [
+				[
+					'param'    => 'user_form',
+					'operator' => '==',
+					'value'    => 'edit',
+				],
+			];
+		}
+
 		return $attributes;
+	}
+
+	public function enable_users() {
+		$this->users = true;
+	}
+
+	public function set_taxonomies( array $taxonomies ) {
+		$this->taxonomies = $taxonomies;
 	}
 
 	/**

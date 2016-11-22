@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tribe\Libs\Post_Type;
+namespace Tribe\Libs\Taxonomy;
 
 
 use Tribe\Libs\Object_Meta\Meta_Map;
@@ -22,24 +22,24 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * an appropriate Meta_Group, via the `get_meta()` method
  * called with a registered key.
  */
-abstract class Post_Object {
+abstract class Taxonomy_Object {
 	const NAME = '';
 
 	/** @var Meta_Map */
 	protected $meta;
 
-	protected $post_id = 0;
+	protected $taxonomy_id = 0;
 
 	/**
 	 * Post_Object constructor.
 	 *
-	 * @param int           $post_id        The ID of a WP post
+	 * @param int           $taxonomy_id    The ID of a taxonomy
 	 * @param Meta_Map|null $meta           Meta fields appropriate to this post type.
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $post_id = 0, Meta_Map $meta = NULL ) {
-		$this->post_id = $post_id;
+	public function __construct( $taxonomy_id = 0, Meta_Map $meta = NULL ) {
+		$this->taxonomy_id = $taxonomy_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
 		} else {
@@ -54,7 +54,7 @@ abstract class Post_Object {
 	/**
 	 * Get the value for the given meta key corresponding
 	 * to this post.
-	 * 
+	 *
 	 * @param string $key
 	 * @return mixed
 	 */
@@ -64,18 +64,18 @@ abstract class Post_Object {
 
 	/**
 	 * Get an instance of the Post_Object corresponding
-	 * to the \WP_Post with the given $post_id
+	 * to the taxonomy with the given $taxonomy_id
 	 *
-	 * @param int $post_id The ID of an existing post
+	 * @param int $taxonomy_id The ID of an existing post
 	 * @return static
 	 */
-	public static function factory( $post_id ) {
+	public static function factory( $taxonomy_id ) {
 		/** @var Meta_Repository $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		$post = new static( $post_id, $meta_repo->get( static::NAME ) );
+		$post = new static( $taxonomy_id, $meta_repo->get( static::NAME ) );
 		return $post;
 	}
 }
