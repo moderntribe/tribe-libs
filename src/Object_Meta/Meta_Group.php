@@ -5,7 +5,7 @@ namespace Tribe\Libs\Object_Meta;
 /**
  * Class Meta_Group
  *
- * A container for one or more post meta fields.
+ * A container for one or more object meta fields.
  *
  * It is the responsibility of instances of this class to
  *  - register meta boxes/fields with WP (probably via a lib like ACF or CMB2)
@@ -21,9 +21,10 @@ abstract class Meta_Group {
 	/**
 	 * Meta_Group constructor.
 	 *
-	 * @param array $object_types The post types the meta group applies to
+	 * @param array $object_types The object types the meta group applies to
 	 */
 	public function __construct( array $object_types ) {
+		// Allow backwards compatibility with the former method of assigning post types to meta groups.
 		if ( ! array_key_exists( 'post_types', $object_types ) ) {
 			$this->post_types = $object_types;
 			$object_types = [ 'post_types' => $object_types, 'taxonomies' => [], 'users' => false ];
@@ -32,6 +33,10 @@ abstract class Meta_Group {
 		$this->object_types = $object_types;
 	}
 
+	/**
+	 * @return array Return the post types for this meta group. This method exists purely to allow backwards compatibility with
+	 *               older versions of the Post_Meta class.
+	 */
 	public function get_post_types() {
 		return $this->object_types['post_types'];
 	}
@@ -55,6 +60,7 @@ abstract class Meta_Group {
 	/**
 	 * @param int    $object_id
 	 * @param string $key
+	 *
 	 * @return mixed The value for the given key
 	 */
 	abstract public function get_value( $object_id, $key );

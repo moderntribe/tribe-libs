@@ -8,9 +8,9 @@ use Tribe\Libs\Object_Meta\Meta_Map;
 use Tribe\Libs\Object_Meta\Meta_Repository;
 
 /**
- * Class Post_Object
+ * Class Taxonomy_Object
  *
- * Extend this class for each registered post type.
+ * Extend this class for each registered taxonomy.
  * Be sure to set a value for the NAME constant in
  * each subclass.
  *
@@ -28,18 +28,19 @@ abstract class Taxonomy_Object {
 	/** @var Meta_Map */
 	protected $meta;
 
-	protected $taxonomy_id = 0;
+	/** @var integer */
+	protected $term_id = 0;
 
 	/**
 	 * Post_Object constructor.
 	 *
-	 * @param int           $taxonomy_id    The ID of a taxonomy
-	 * @param Meta_Map|null $meta           Meta fields appropriate to this post type.
+	 * @param int           $term_id        The ID of a taxonomy term.
+	 * @param Meta_Map|null $meta           Meta fields appropriate to this taxonomy term..
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $taxonomy_id = 0, Meta_Map $meta = NULL ) {
-		$this->taxonomy_id = $taxonomy_id;
+	public function __construct( $term_id = 0, Meta_Map $meta = NULL ) {
+		$this->term_id = $term_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
 		} else {
@@ -53,30 +54,30 @@ abstract class Taxonomy_Object {
 
 	/**
 	 * Get the value for the given meta key corresponding
-	 * to this post.
+	 * to this taxonomy term.
 	 *
 	 * @param string $key
 	 * @return mixed
 	 */
 	public function get_meta( $key ) {
-		$term = sprintf( '%s_%s', static::NAME, $this->taxonomy_id );
+		$term = sprintf( '%s_%s', static::NAME, $this->term_id );
 		return $this->meta->get_value( $term, $key );
 	}
 
 	/**
 	 * Get an instance of the Post_Object corresponding
-	 * to the taxonomy with the given $taxonomy_id
+	 * to the term with the given $term_id
 	 *
-	 * @param int $taxonomy_id The ID of an existing post
+	 * @param int $term_id The ID of an existing taxonomy term.
 	 * @return static
 	 */
-	public static function factory( $taxonomy_id ) {
+	public static function factory( $term_id ) {
 		/** @var Meta_Repository $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		$post = new static( $taxonomy_id, $meta_repo->get( static::NAME ) );
+		$post = new static( $term_id, $meta_repo->get( static::NAME ) );
 		return $post;
 	}
 }
