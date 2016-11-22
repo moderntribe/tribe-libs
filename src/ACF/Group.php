@@ -22,6 +22,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 		if ( $object_types ) {
 
+			// Provides backwards compatibility for older method of registering post types for a group.
 			if ( ! array_key_exists( 'post_types', $object_types ) ) {
 				$this->set_post_types( $object_types );
 				return;
@@ -35,6 +36,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 	}
 
+	/**
+	 * Add a field to the group.
+	 *
+	 * @param Field $field
+	 */
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
 	}
