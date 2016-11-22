@@ -6,10 +6,10 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected $key_prefix = 'group';
 
 	/** @var Field[] */
-	protected $fields = [ ];
-	protected $post_types = [ ];
-	protected $taxonomies = [ ];
-	protected $users = false;
+	protected $fields     = [];
+	protected $post_types = [];
+	protected $taxonomies = [];
+	protected $users      = false;
 
 	/**
 	 * Group constructor.
@@ -45,10 +45,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 * @return array
 	 */
 	public function get_attributes() {
-		$attributes = parent::get_attributes();
-		$attributes[ 'fields' ] = [ ];
+		$attributes           = parent::get_attributes();
+		$attributes['fields'] = [];
+
 		foreach ( $this->fields as $f ) {
-			$attributes[ 'fields' ][] = $f->get_attributes();
+			$attributes['fields'][] = $f->get_attributes();
 		}
 
 		$this->set_location_restrictions( $attributes );
