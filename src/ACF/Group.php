@@ -39,6 +39,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		$this->fields[] = $field;
 	}
 
+	/**
+	 * Get the attributes for this group.
+	 *
+	 * @return array
+	 */
 	public function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes[ 'fields' ] = [ ];
@@ -46,8 +51,22 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			$attributes[ 'fields' ][] = $f->get_attributes();
 		}
 
+		$this->set_location_restrictions( $attributes );
+
+		return $attributes;
+	}
+
+	/**
+	 * Assign the location restrictions for this group.
+	 *
+	 * @param $attributes
+	 *
+	 * @return mixed
+	 */
+	protected function set_location_restrictions( &$attributes ) {
+
 		foreach ( $this->post_types as $post_type ) {
-			$attributes[ 'location' ][] = [
+			$attributes['location'][] = [
 				[
 					'param'    => 'post_type',
 					'operator' => '==',
@@ -57,7 +76,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->taxonomies as $taxonomy ) {
-			$attributes[ 'location' ][] = [
+			$attributes['location'][] = [
 				[
 					'param'    => 'taxonomy',
 					'operator' => '==',
@@ -67,7 +86,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		if ( $this->users ) {
-			$attributes[ 'location' ][] = [
+			$attributes['location'][] = [
 				[
 					'param'    => 'user_form',
 					'operator' => '==',
@@ -75,14 +94,20 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				],
 			];
 		}
-
-		return $attributes;
 	}
 
+	/**
+	 * Enable this group to show on the user Add/Edit forms.
+	 */
 	public function enable_users() {
 		$this->users = true;
 	}
 
+	/**
+	 * Set the taxonomies for this group.
+	 *
+	 * @param array $taxonomies
+	 */
 	public function set_taxonomies( array $taxonomies ) {
 		$this->taxonomies = $taxonomies;
 	}
