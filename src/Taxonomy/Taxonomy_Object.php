@@ -59,7 +59,8 @@ abstract class Taxonomy_Object {
 	 * @return mixed
 	 */
 	public function get_meta( $key ) {
-		return $this->meta->get_value( $this->post_id, $key );
+		$term = sprintf( '%s_%s', static::NAME, $this->taxonomy_id );
+		return $this->meta->get_value( $term, $key );
 	}
 
 	/**
