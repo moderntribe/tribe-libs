@@ -4,6 +4,7 @@
 namespace Tribe\Libs\Post_Meta;
 
 use Tribe\Libs\Object_Meta\Meta_Group;
+use Tribe\Libs\Object_Meta\Meta_Map;
 
 /**
  * Class Meta_Repository
