@@ -10,6 +10,8 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 	protected $post_types = [ ];
 
+	protected $taxonomies = [ ];
+
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
 	}
@@ -40,6 +42,17 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				];
 			}
 		}
+
+		foreach ( $this->taxonomies as $taxonomy ) {
+			$attributes['location'][] = [
+				[
+					'param'    => 'taxonomy',
+					'operator' => '==',
+					'value'    => $taxonomy,
+				],
+			];
+		}
+
 		return $attributes;
 	}
 
@@ -51,5 +64,16 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 */
 	public function set_post_types( array $post_types ) {
 		$this->post_types = $post_types;
+	}
+
+	/**
+	 * Set the taxonomy types in which this group will be available
+	 *
+	 * @param array $taxonomies
+	 *
+	 * @return void
+	 */
+	public function set_taxonomies( array $taxonomies ) {
+		$this->taxonomies = $taxonomies;
 	}
 }

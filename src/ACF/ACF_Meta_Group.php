@@ -7,6 +7,13 @@ use Tribe\Libs\Post_Meta\Meta_Group;
 
 abstract class ACF_Meta_Group extends Meta_Group {
 
+	protected $taxonomies;
+
+	public function __construct( $post_types, $taxonomies = [] ) {
+		parent::__construct( $post_types );
+		$this->taxonomies = $taxonomies;
+	}
+
 	public function hook() {
 		add_action( 'acf/init', [ $this, 'register_group' ], 10, 0 );
 	}
