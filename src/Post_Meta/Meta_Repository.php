@@ -38,9 +38,6 @@ class Meta_Repository {
 	 * Hook this repository and its meta groups into WP
 	 */
 	public function hook() {
-		foreach ( $this->groups as $group ) {
-			$group->hook();
-		}
 		add_filter( self::GET_REPO_FILTER, [ $this, 'filter_global_instance' ], 10, 1 );
 	}
 

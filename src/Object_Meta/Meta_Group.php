@@ -64,11 +64,4 @@ abstract class Meta_Group {
 	 * @return mixed The value for the given key
 	 */
 	abstract public function get_value( $object_id, $key );
-
-	/**
-	 * Set up hooks with WordPress to register meta boxes and fields
-	 *
-	 * @return void
-	 */
-	abstract public function hook();
 }
