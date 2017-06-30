@@ -6,10 +6,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected $key_prefix = 'group';
 
 	/** @var Field[] */
-	protected $fields     = [];
-	protected $post_types = [];
-	protected $taxonomies = [];
-	protected $users      = false;
+	protected $fields         = [];
+	protected $post_types     = [];
+	protected $taxonomies     = [];
+	protected $settings_pages = [];
+	protected $users          = false;
 
 	/**
 	 * Group constructor.
@@ -30,6 +31,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 			$this->set_post_types( $object_types['post_types'] );
 			$this->set_taxonomies( $object_types['taxonomies'] );
+			$this->set_settings_pages( $object_types['settings_pages'] );
 			if ( $object_types['users'] ) {
 				$this->enable_users();
 			}
@@ -92,6 +94,16 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			];
 		}
 
+		foreach ( $this->settings_pages as $page ) {
+			$attributes['location'][] = [
+				[
+					'param'    => 'options_page',
+					'operator' => '==',
+					'value'    => $page,
+				],
+			];
+		}
+
 		if ( $this->users ) {
 			$attributes['location'][] = [
 				[
@@ -115,7 +127,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 *
 	 * @param array $taxonomies
 	 */
-	public function set_taxonomies( array $taxonomies ) {
+	public function set_taxonomies( $taxonomies ) {
 		$this->taxonomies = $taxonomies;
 	}
 
@@ -125,7 +137,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 * @param array $post_types
 	 * @return void
 	 */
-	public function set_post_types( array $post_types ) {
+	public function set_post_types( $post_types ) {
 		$this->post_types = $post_types;
+	}
+
+	public function set_settings_pages( $pages ) {
+		$this->settings_pages = $pages;
 	}
 }
