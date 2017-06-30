@@ -116,9 +116,9 @@ abstract class Object_Nav_Walker extends Walker  {
 		remove_filter( 'the_title', 'wptexturize' );
 		$output['label'] = apply_filters( 'the_title', $item->title, $item->ID );
 		if( !empty( $args->numeric_ids ) ){
-			$output['id'] = apply_filters( 'nav_menu_item_id', $item->ID, $item, $args );
+			$output['id'] = apply_filters( 'nav_menu_item_id', $item->ID, $item, $args, $depth );
 		} else {
-			$output['id'] = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+			$output['id'] = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args, $depth );
 		}
 		$output['excerpt'] = $item->description;
 		$output['summary_link_label'] = apply_filters( 'summary_link_label', $item->summary_link_label, $item->ID );
@@ -159,7 +159,7 @@ abstract class Object_Nav_Walker extends Walker  {
 		 * @param object $item The current menu item.
 		 * @param array  $args An array of wp_nav_menu() arguments.
 		 */
-		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
+		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
 		foreach ( $atts as $key => $value ) {
 			$output[$key] = $value;
 		}

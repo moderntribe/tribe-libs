@@ -75,13 +75,23 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected function set_location_restrictions( &$attributes ) {
 
 		foreach ( $this->post_types as $post_type ) {
-			$attributes['location'][] = [
-				[
-					'param'    => 'post_type',
-					'operator' => '==',
-					'value'    => $post_type,
-				],
-			];
+			if ( $post_type === 'attachment' ) {
+				$attributes['location'][] = [
+					[
+						'param'    => 'attachment',
+						'operator' => '==',
+						'value'    => 'all',
+					],
+				];
+			} else {
+				$attributes['location'][] = [
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => $post_type,
+					],
+				];
+			}
 		}
 
 		foreach ( $this->taxonomies as $taxonomy ) {
