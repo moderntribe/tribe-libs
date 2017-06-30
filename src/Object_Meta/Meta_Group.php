@@ -36,6 +36,8 @@ abstract class Meta_Group {
 	/**
 	 * @return array Return the post types for this meta group. This method exists purely to allow backwards compatibility with
 	 *               older versions of the Post_Meta class.
+	 *
+	 * @deprecated Object meta should be registered using an array of key=>value pairs for object types. E.g. [ 'post_types' => [ 'page' ], 'taxonomies' => ['category'] ]
 	 */
 	public function get_post_types() {
 		return $this->object_types['post_types'];
