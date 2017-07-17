@@ -5,7 +5,7 @@ namespace Tribe\Libs\ACF;
 use Tribe\Libs\Settings\Base_Settings;
 
 /**
- * Class Abstract_Settings
+ * Class ACF_Settings
  *
  * @package Tribe\Libs\ACF
  */

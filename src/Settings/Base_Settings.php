@@ -3,9 +3,7 @@
 namespace Tribe\Libs\Settings;
 
 /**
- * Class Abstract_Settings
- *
- * @ToDo: Candidate for tribe-libs
+ * Class Base_Settings
  *
  * @package Tribe\Lib\Settings
  */
