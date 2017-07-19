@@ -3,6 +3,7 @@
 namespace Tribe\Libs\ACF;
 
 class Group extends ACF_Configuration implements ACF_Aggregate {
+
 	protected $key_prefix = 'group';
 
 	/** @var Field[] */
@@ -23,18 +24,22 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 		if ( $object_types ) {
 
-			// Provides backwards compatibility for older method of registering post types for a group.
-			if ( ! array_key_exists( 'post_types', $object_types ) ) {
-				$this->set_post_types( $object_types );
-				return;
+			if ( isset( $object_types['post_types'] ) ) {
+				$this->set_post_types( $object_types['post_types'] );
 			}
 
-			$this->set_post_types( $object_types['post_types'] );
-			$this->set_taxonomies( $object_types['taxonomies'] );
-			$this->set_settings_pages( $object_types['settings_pages'] );
-			if ( $object_types['users'] ) {
-				$this->enable_users();
+			if ( isset( $object_types['taxonomies'] ) ) {
+				$this->set_taxonomies( $object_types['taxonomies'] );
 			}
+
+			if ( isset( $object_types['settings_pages'] ) ) {
+				$this->set_settings_pages( $object_types['settings_pages'] );
+			}
+
+			if ( isset( $object_types['users'] ) ) {
+				$this->toggle_users( $object_types['users'] );
+			}
+
 		}
 	}
 
@@ -60,7 +65,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			$attributes['fields'][] = $f->get_attributes();
 		}
 
-		$this->set_location_restrictions( $attributes );
+		$attributes = $this->set_location_restrictions( $attributes );
 
 		return $attributes;
 	}
@@ -70,9 +75,9 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 *
 	 * @param $attributes
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	protected function set_location_restrictions( &$attributes ) {
+	protected function set_location_restrictions( $attributes ) {
 
 		foreach ( $this->post_types as $post_type ) {
 			if ( $post_type === 'attachment' ) {
@@ -123,13 +128,17 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				],
 			];
 		}
+
+		return $attributes;
 	}
 
 	/**
-	 * Enable this group to show on the user Add/Edit forms.
+	 * Toggle whether to show on the user Add/Edit forms.
+	 *
+	 * @param bool $enable
 	 */
-	public function enable_users() {
-		$this->users = true;
+	public function toggle_users( bool $enable ) {
+		$this->users = $enable;
 	}
 
 	/**
@@ -137,7 +146,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 *
 	 * @param array $taxonomies
 	 */
-	public function set_taxonomies( $taxonomies ) {
+	public function set_taxonomies( array $taxonomies ) {
 		$this->taxonomies = $taxonomies;
 	}
 
@@ -145,9 +154,10 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 * Set the post types in which this group will be available
 	 *
 	 * @param array $post_types
+	 *
 	 * @return void
 	 */
-	public function set_post_types( $post_types ) {
+	public function set_post_types( array $post_types ) {
 		$this->post_types = $post_types;
 	}
 

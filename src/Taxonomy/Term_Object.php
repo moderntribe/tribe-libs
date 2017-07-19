@@ -22,7 +22,7 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * an appropriate Meta_Group, via the `get_meta()` method
  * called with a registered key.
  */
-abstract class Taxonomy_Object {
+abstract class Term_Object {
 	const NAME = '';
 
 	/** @var Meta_Map */
@@ -60,7 +60,7 @@ abstract class Taxonomy_Object {
 	 * @return mixed
 	 */
 	public function get_meta( $key ) {
-		$term = sprintf( '%s_%s', static::NAME, $this->term_id );
+		$term = sprintf( 'term_%s', $this->term_id );
 		return $this->meta->get_value( $term, $key );
 	}
 
@@ -77,7 +77,13 @@ abstract class Taxonomy_Object {
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		$post = new static( $term_id, $meta_repo->get( static::NAME ) );
-		return $post;
+		$taxonomy = static::NAME;
+		if ( empty( $taxonomy ) ) {
+			$term     = get_term( $term_id );
+			$taxonomy = $term->taxonomy;
+		}
+		$term = new static( $term_id, $meta_repo->get( $taxonomy ) );
+
+		return $term;
 	}
 }

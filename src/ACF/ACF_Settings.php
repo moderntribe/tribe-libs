@@ -67,30 +67,7 @@ abstract class ACF_Settings extends Base_Settings {
 	}
 
 	/**
-	 * Adds the settings group
+	 * Adds the settings groups
 	 */
-	public function register_fields() {
-		acf_add_local_field_group( apply_filters( 'core_settings_acf_field_group', [
-			'key'                   => 'group_' . md5( $this->slug ),
-			'title'                 => $this->get_title(),
-			'fields'                => $this->get_fields(),
-			'location'              => [
-				[
-					[
-						'param'    => 'options_page',
-						'operator' => '==',
-						'value'    => $this->slug,
-					],
-				],
-			],
-			'menu_order'            => 0,
-			'position'              => 'normal',
-			'style'                 => 'default',
-			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
-			'hide_on_screen'        => '',
-			'active'                => 1,
-			'description'           => '',
-		] ) );
-	}
+	abstract public function register_fields() {}
 }

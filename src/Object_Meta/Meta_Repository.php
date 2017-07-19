@@ -36,9 +36,6 @@ class Meta_Repository {
 	 * Hook this repository and its meta groups into WP
 	 */
 	public function hook() {
-		foreach ( $this->groups as $group ) {
-			$group->hook();
-		}
 		add_filter( self::GET_REPO_FILTER, [ $this, 'filter_global_instance' ], 10, 1 );
 	}
 
@@ -54,6 +51,7 @@ class Meta_Repository {
 
 	/**
 	 * @param Meta_Group $group
+	 *
 	 * @return void
 	 */
 	public function add_group( Meta_Group $group ) {
@@ -61,16 +59,15 @@ class Meta_Repository {
 
 		$types = $group->get_object_types();
 
-		foreach ( $types['post_types'] as $post_type ) {
-			$this->get( $post_type )->add( $group );
-		}
+		foreach ( $types as $type => $values ) {
+			if ( is_bool( $values ) ) {
+				$this->get( $type )->add( $group );
+				continue;
+			}
 
-		foreach ( $types['taxonomies'] as $taxonomy ) {
-			$this->get( $taxonomy )->add( $group );
-		}
-
-		if ( $types['users'] ) {
-			$this->get( 'users' )->add( $group );
+			foreach ( $values as $item ) {
+				$this->get( $item )->add( $group );
+			}
 		}
 	}
 
