@@ -65,7 +65,7 @@ abstract class Term_Object {
 	}
 
 	/**
-	 * Get an instance of the Post_Object corresponding
+	 * Get an instance of the Term_Object corresponding
 	 * to the term with the given $term_id
 	 *
 	 * @param int $term_id The ID of an existing taxonomy term.
