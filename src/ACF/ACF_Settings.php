@@ -12,13 +12,6 @@ use Tribe\Libs\Settings\Base_Settings;
 abstract class ACF_Settings extends Base_Settings {
 
 	/**
-	 * Return array of ACF fields
-	 *
-	 * @return array
-	 */
-	abstract public function get_fields();
-
-	/**
 	 * @param int $priority
 	 */
 	public function hook( $priority = 10 ) {
@@ -69,5 +62,5 @@ abstract class ACF_Settings extends Base_Settings {
 	/**
 	 * Adds the settings groups
 	 */
-	abstract public function register_fields() {}
+	abstract public function register_fields();
 }
