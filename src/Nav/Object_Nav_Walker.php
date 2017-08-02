@@ -65,7 +65,7 @@ abstract class Object_Nav_Walker extends Walker  {
 
 		$classes = empty( $element->classes ) ? array() : (array) $element->classes;
 		$classes[] = 'menu-item-' . $element->ID;
-		$classes = apply_filters( 'nav_menu_css_class', array_filter( $classes ), $element, $args, $depth );
+		$classes = apply_filters( 'nav_menu_css_class', array_filter( $classes ), $element, $args[0], $depth );
 		$output['menu_id'] = $id;
 		if ( !isset( $element->post_type ) || $element->post_type !== 'nav_menu_item' ) {
 			if ( $element->type === 'post_type' ) {
