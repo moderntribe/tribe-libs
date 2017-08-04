@@ -35,11 +35,6 @@ interface Settings_Builder {
 	public function register_settings();
 
 	/**
-	 * Register the fields for the settings page
-	 */
-	public function register_fields();
-
-	/**
 	 * Return the setting value for a given Key.
 	 * Return $default if the value is empty.
 	 *

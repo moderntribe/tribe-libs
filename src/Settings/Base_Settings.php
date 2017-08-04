@@ -27,7 +27,6 @@ abstract class Base_Settings implements Settings_Builder {
 	 */
 	public function hook( $priority = 10 ) {
 		add_action( 'init', [ $this, 'register_settings' ], $priority, 0 );
-		add_action( 'init', [ $this, 'register_fields' ], $priority + 1, 0 );
 	}
 
 }

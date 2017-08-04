@@ -58,9 +58,4 @@ abstract class ACF_Settings extends Base_Settings {
 			'parent_slug' => $this->get_parent_slug(),
 		] ) );
 	}
-
-	/**
-	 * Adds the settings groups
-	 */
-	abstract public function register_fields();
 }
