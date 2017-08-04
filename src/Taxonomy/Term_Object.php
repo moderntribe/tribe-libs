@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Tribe\Libs\Post_Type;
+namespace Tribe\Libs\Taxonomy;
 
 
 use Tribe\Libs\Object_Meta\Meta_Map;
 use Tribe\Libs\Object_Meta\Meta_Repository;
 
 /**
- * Class Post_Object
+ * Class Taxonomy_Object
  *
- * Extend this class for each registered post type.
+ * Extend this class for each registered taxonomy.
  * Be sure to set a value for the NAME constant in
  * each subclass.
  *
@@ -22,24 +22,25 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * an appropriate Meta_Group, via the `get_meta()` method
  * called with a registered key.
  */
-class Post_Object {
+abstract class Term_Object {
 	const NAME = '';
 
 	/** @var Meta_Map */
 	protected $meta;
 
-	protected $post_id = 0;
+	/** @var integer */
+	protected $term_id = 0;
 
 	/**
 	 * Post_Object constructor.
 	 *
-	 * @param int           $post_id        The ID of a WP post
-	 * @param Meta_Map|null $meta           Meta fields appropriate to this post type.
+	 * @param int           $term_id        The ID of a taxonomy term.
+	 * @param Meta_Map|null $meta           Meta fields appropriate to this taxonomy term..
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $post_id = 0, Meta_Map $meta = NULL ) {
-		$this->post_id = $post_id;
+	public function __construct( $term_id = 0, Meta_Map $meta = NULL ) {
+		$this->term_id = $term_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
 		} else {
@@ -53,33 +54,36 @@ class Post_Object {
 
 	/**
 	 * Get the value for the given meta key corresponding
-	 * to this post.
-	 * 
+	 * to this taxonomy term.
+	 *
 	 * @param string $key
 	 * @return mixed
 	 */
 	public function get_meta( $key ) {
-		return $this->meta->get_value( $this->post_id, $key );
+		$term = sprintf( 'term_%s', $this->term_id );
+		return $this->meta->get_value( $term, $key );
 	}
 
 	/**
-	 * Get an instance of the Post_Object corresponding
-	 * to the \WP_Post with the given $post_id
+	 * Get an instance of the Term_Object corresponding
+	 * to the term with the given $term_id
 	 *
-	 * @param int $post_id The ID of an existing post
+	 * @param int $term_id The ID of an existing taxonomy term.
 	 * @return static
 	 */
-	public static function factory( $post_id ) {
+	public static function factory( $term_id ) {
 		/** @var Meta_Repository $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
 		if ( !$meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}
-		$post_type = static::NAME;
-		if ( empty( $post_type ) ) {
-			$post_type = get_post_type( $post_id );
+		$taxonomy = static::NAME;
+		if ( empty( $taxonomy ) ) {
+			$term     = get_term( $term_id );
+			$taxonomy = $term->taxonomy;
 		}
-		$post = new static( $post_id, $meta_repo->get( $post_type ) );
-		return $post;
+		$term = new static( $term_id, $meta_repo->get( $taxonomy ) );
+
+		return $term;
 	}
 }

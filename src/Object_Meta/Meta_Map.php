@@ -1,9 +1,8 @@
 <?php
 
 
-namespace Tribe\Libs\Post_Meta;
+namespace Tribe\Libs\Object_Meta;
 
-use Tribe\Libs\Object_Meta\Meta_Group;
 
 /**
  * Class Meta_Map
@@ -11,13 +10,13 @@ use Tribe\Libs\Object_Meta\Meta_Group;
  * Maps requests for meta keys to the Meta_Group responsible for handling it
  */
 class Meta_Map {
-	private $post_type = '';
+	private $object_type = '';
 
 	/** @var Meta_Group[] */
 	private $keys = [];
 
-	public function __construct( $post_type ) {
-		$this->post_type = $post_type;
+	public function __construct( $object_type ) {
+		$this->object_type = $object_type;
 	}
 
 	/**
@@ -42,13 +41,13 @@ class Meta_Map {
 	}
 
 	/**
-	 * @param int $post_id
+	 * @param int $object_id
 	 * @param string $key
 	 * @return mixed The value for the given key
 	 */
-	public function get_value( $post_id, $key ) {
+	public function get_value( $object_id, $key ) {
 		if ( isset( $this->keys[ $key ] ) ) {
-			return $this->keys[ $key ]->get_value( $post_id, $key );
+			return $this->keys[ $key ]->get_value( $object_id, $key );
 		}
 		return null;
 	}
