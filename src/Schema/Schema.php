@@ -39,7 +39,7 @@ abstract class Schema {
 	public function do_updates() {
 		$this->clear_option_caches();
 		$updates = $this->get_updates();
-		asort($updates);
+		ksort($updates);
 		try {
 			foreach ( $updates as $version => $callback ) {
 				if ( $this->is_version_in_db_less_than($version) ) {
