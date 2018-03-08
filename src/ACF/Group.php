@@ -11,6 +11,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected $post_types     = [];
 	protected $taxonomies     = [];
 	protected $settings_pages = [];
+	protected $nav_menus      = [];
 	protected $users          = false;
 
 	/**
@@ -40,6 +41,9 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				$this->toggle_users( $object_types['users'] );
 			}
 
+			if ( isset( $object_types[ 'nav_menus' ] ) ) {
+				$this->set_nav_menus( $object_types[ 'nav_menus' ] );
+			}
 		}
 	}
 
@@ -129,6 +133,16 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			];
 		}
 
+		foreach ( $this->nav_menus as $nav_menu ) {
+			$attributes['location'][] = [
+				[
+					'param'    => 'nav_menu',
+					'operator' => '==',
+					'value'    => $nav_menu,
+				],
+			];
+		}
+
 		return $attributes;
 	}
 
@@ -163,5 +177,9 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 	public function set_settings_pages( $pages ) {
 		$this->settings_pages = $pages;
+	}
+
+	public function set_nav_menus(array $nav_menus) {
+		$this->nav_menus = $nav_menus;
 	}
 }
