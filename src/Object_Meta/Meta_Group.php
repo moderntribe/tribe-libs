@@ -11,6 +11,27 @@ namespace Tribe\Libs\Object_Meta;
  *  - register meta boxes/fields with WP (probably via a lib like ACF or CMB2)
  *  - return a list of keys for which this group is willing to handle finding a value
  *  - return the appropriate value when one of said keys is requested
+ *
+ * Examples:
+ *  new Instance_Class([
+ *  	'post_types' => ['post', 'page'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'taxonomies' => ['post_tag', 'category'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'settings_pages' => ['options-general-php-general-settings'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'users' => true,
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'nav_menu' => ['location/menu_location_slug'],
+ *  ]);
  */
 abstract class Meta_Group {
 	const NAME = '';
