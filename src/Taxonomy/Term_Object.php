@@ -22,7 +22,7 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * an appropriate Meta_Group, via the `get_meta()` method
  * called with a registered key.
  */
-abstract class Term_Object {
+class Term_Object {
 	const NAME = '';
 
 	/** @var Meta_Map */
