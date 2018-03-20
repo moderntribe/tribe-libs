@@ -11,6 +11,27 @@ namespace Tribe\Libs\Object_Meta;
  *  - register meta boxes/fields with WP (probably via a lib like ACF or CMB2)
  *  - return a list of keys for which this group is willing to handle finding a value
  *  - return the appropriate value when one of said keys is requested
+ *
+ * Examples:
+ *  new Instance_Class([
+ *  	'post_types' => ['post', 'page'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'taxonomies' => ['post_tag', 'category'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'settings_pages' => ['options-general-php-general-settings'],
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'users' => true,
+ *  ]);
+ *
+ *  new Instance_Class([
+ * 		'nav_menu' => ['location/menu_location_slug'],
+ *  ]);
  */
 abstract class Meta_Group {
 	const NAME = '';
@@ -25,7 +46,7 @@ abstract class Meta_Group {
 	 */
 	public function __construct( array $object_types ) {
 		// Allow backwards compatibility with the former method of assigning post types to meta groups.
-		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users' ];
+		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus' ];
 		if ( empty( array_intersect( $types, array_keys( $object_types ) ) ) ) {
 			$this->post_types = $object_types;
 			$object_types     = [ 'post_types' => $object_types ];
