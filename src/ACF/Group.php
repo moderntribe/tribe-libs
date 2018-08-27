@@ -42,8 +42,8 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				$this->toggle_users( $object_types['users'] );
 			}
 
-			if ( isset( $object_types[ 'nav_menus' ] ) ) {
-				$this->set_nav_menus( $object_types[ 'nav_menus' ] );
+			if ( isset( $object_types['nav_menus'] ) ) {
+				$this->set_nav_menus( $object_types['nav_menus'] );
 			}
 
 			if ( isset( $object_types['nav_menu_items'] ) ) {
