@@ -30,7 +30,17 @@ namespace Tribe\Libs\Object_Meta;
  *  ]);
  *
  *  new Instance_Class([
- * 		'nav_menu' => ['location/menu_location_slug'],
+ * 		'nav_menus' => ['location/menu_location_slug'],
+ *  ]);
+ *
+ *  // include a menu location
+ *  new Instance_Class([
+ * 		'nav_menu_items' => ['location/menu_location_slug'],
+ *  ]);
+ *
+ *  // include a specific menu based on term_id (e.g. menu_id)
+ *  new Instance_Class([
+ * 		'nav_menu_items' => [ 4 ],
  *  ]);
  */
 abstract class Meta_Group {
