@@ -12,6 +12,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected $taxonomies     = [];
 	protected $settings_pages = [];
 	protected $nav_menus      = [];
+	protected $nav_menu_items = [];
 	protected $users          = false;
 
 	/**
@@ -41,8 +42,12 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 				$this->toggle_users( $object_types['users'] );
 			}
 
-			if ( isset( $object_types[ 'nav_menus' ] ) ) {
-				$this->set_nav_menus( $object_types[ 'nav_menus' ] );
+			if ( isset( $object_types['nav_menus'] ) ) {
+				$this->set_nav_menus( $object_types['nav_menus'] );
+			}
+
+			if ( isset( $object_types['nav_menu_items'] ) ) {
+				$this->set_nav_menu_items( $object_types['nav_menu_items'] );
 			}
 		}
 	}
@@ -143,6 +148,16 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			];
 		}
 
+		foreach ( $this->nav_menu_items as $nav_menu_item ) {
+			$attributes['location'][] = [
+				[
+					'param'    => 'nav_menu_item',
+					'operator' => '==',
+					'value'    => $nav_menu_item,
+				],
+			];
+		}
+
 		return $attributes;
 	}
 
@@ -179,7 +194,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		$this->settings_pages = $pages;
 	}
 
-	public function set_nav_menus(array $nav_menus) {
+	public function set_nav_menus( array $nav_menus ) {
 		$this->nav_menus = $nav_menus;
+	}
+
+	public function set_nav_menu_items( array $nav_menu_items ) {
+		$this->nav_menu_items = $nav_menu_items;
 	}
 }

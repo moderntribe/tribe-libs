@@ -30,7 +30,17 @@ namespace Tribe\Libs\Object_Meta;
  *  ]);
  *
  *  new Instance_Class([
- * 		'nav_menu' => ['location/menu_location_slug'],
+ * 		'nav_menus' => ['location/menu_location_slug'],
+ *  ]);
+ *
+ *  // include a menu location
+ *  new Instance_Class([
+ * 		'nav_menu_items' => ['location/menu_location_slug'],
+ *  ]);
+ *
+ *  // include a specific menu based on term_id (e.g. menu_id)
+ *  new Instance_Class([
+ * 		'nav_menu_items' => [ 4 ],
  *  ]);
  */
 abstract class Meta_Group {
@@ -46,7 +56,7 @@ abstract class Meta_Group {
 	 */
 	public function __construct( array $object_types ) {
 		// Allow backwards compatibility with the former method of assigning post types to meta groups.
-		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus' ];
+		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus', 'nav_menu_items' ];
 		if ( empty( array_intersect( $types, array_keys( $object_types ) ) ) ) {
 			$this->post_types = $object_types;
 			$object_types     = [ 'post_types' => $object_types ];
