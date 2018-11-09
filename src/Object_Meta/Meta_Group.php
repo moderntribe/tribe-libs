@@ -56,7 +56,7 @@ abstract class Meta_Group {
 	 */
 	public function __construct( array $object_types ) {
 		// Allow backwards compatibility with the former method of assigning post types to meta groups.
-		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus', 'nav_menu_items' ];
+		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus', 'nav_menu_items', 'widget' ];
 		if ( empty( array_intersect( $types, array_keys( $object_types ) ) ) ) {
 			$this->post_types = $object_types;
 			$object_types     = [ 'post_types' => $object_types ];
