@@ -13,6 +13,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	protected $settings_pages = [];
 	protected $nav_menus      = [];
 	protected $nav_menu_items = [];
+	protected $widget         = [];
 	protected $users          = false;
 
 	/**
@@ -48,6 +49,10 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 			if ( isset( $object_types['nav_menu_items'] ) ) {
 				$this->set_nav_menu_items( $object_types['nav_menu_items'] );
+			}
+
+			if ( isset( $object_types['widget'] ) ) {
+				$this->set_widget( $object_types['widget'] );
 			}
 		}
 	}
@@ -158,6 +163,16 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 			];
 		}
 
+		foreach ( $this->widget as $widget ) {
+			$attributes['location'][] = [
+				[
+					'param'    => 'widget',
+					'operator' => '==',
+					'value'    => $widget,
+				],
+			];
+		}
+
 		return $attributes;
 	}
 
@@ -200,5 +215,9 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 	public function set_nav_menu_items( array $nav_menu_items ) {
 		$this->nav_menu_items = $nav_menu_items;
+	}
+
+	public function set_widget( array $widget ) {
+		$this->widget = $widget;
 	}
 }
