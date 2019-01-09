@@ -49,6 +49,9 @@ class Purger {
 			\WpeCommon::clear_maxcdn_cache();
 			\WpeCommon::purge_varnish_cache();
 		} else {
+			if ( function_exists( 'pantheon_clear_edge_all' ) ) {
+				pantheon_clear_edge_all();
+			}
 			wp_cache_flush();
 			if ( function_exists( 'opcache_reset' ) ) {
 				opcache_reset();
