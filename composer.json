@@ -29,6 +29,7 @@
     "moderntribe/square1-oembed": "self.version",
     "moderntribe/square1-p2p": "self.version",
     "moderntribe/square1-post-type": "self.version",
-    "moderntribe/square1-schema": "self.version"
+    "moderntribe/square1-schema": "self.version",
+    "moderntribe/square1-settings": "self.version"
   }
 }
