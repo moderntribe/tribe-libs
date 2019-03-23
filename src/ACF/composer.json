@@ -1,18 +1,19 @@
 {
-  "name": "moderntribe/square1-object-meta",
+  "name": "moderntribe/square1-acf",
   "type": "library",
-  "description": "Provides object meta wrappers for square one",
+  "description": "Provides ACF object meta wrappers for square one",
   "license": "Private",
   "config": {
     "vendor-dir": "vendor",
     "preferred-install": "dist"
   },
   "require": {
-    "php": "^7.0"
+    "php": "^7.0",
+    "square1-object-meta": "2.0.*"
   },
   "autoload": {
     "psr-4": {
-      "Tribe\\Libs\\Object_Meta\\": ""
+      "Tribe\\Libs\\ACF\\": ""
     }
   },
   "extra": {

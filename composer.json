@@ -8,11 +8,20 @@
     "preferred-install": "dist"
   },
   "require": {
-    "php": ">=5.5.0"
+    "php": "^7.0"
   },
   "autoload": {
     "psr-4": {
       "Tribe\\Libs\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  },
+  "replace": {
+    "moderntribe/square1-acf": "self.version",
+    "moderntribe/square1-object-meta": "self.version"
   }
 }
