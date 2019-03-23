@@ -1,7 +1,7 @@
 <?php
 
 namespace Tribe\Libs\Taxonomy;
-use Tribe\Libs\Walker\Walker_Category_Radio_List;
+use Tribe\Libs\Taxonomy\Walker\Walker_Category_Radio_List;
 
 /**
  * Class Tribe\Libs\Taxonomy\Single_Select_Taxonomy_Meta_Box

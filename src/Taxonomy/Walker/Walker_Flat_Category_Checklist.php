@@ -1,6 +1,6 @@
 <?php
 
-namespace Tribe\Libs\Walker;
+namespace Tribe\Libs\Taxonomy\Walker;
 
 use Walker_Category_Checklist;
 

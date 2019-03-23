@@ -2,7 +2,7 @@
 
 namespace Tribe\Libs\Taxonomy;
 
-use Tribe\Libs\Walker\Walker_Flat_Category_Checklist;
+use Tribe\Libs\Taxonomy\Walker\Walker_Flat_Category_Checklist;
 
 /**
  * Class Tribe_Multi_Select_Taxonomy_Meta_Box
