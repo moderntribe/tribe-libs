@@ -1,0 +1,23 @@
+{
+  "name": "moderntribe/square1-cache",
+  "type": "library",
+  "description": "Object cache wrapper for square one",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "require": {
+    "php": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Libs\\Cache\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  }
+}
