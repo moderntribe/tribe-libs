@@ -13,7 +13,10 @@
   "autoload": {
     "psr-4": {
       "Tribe\\Libs\\Assets\\": ""
-    }
+    },
+    "files": [
+      "version.php"
+    ]
   },
   "extra": {
     "branch-alias": {

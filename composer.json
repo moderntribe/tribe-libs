@@ -15,6 +15,7 @@
       "Tribe\\Libs\\": "src/"
     },
     "files": [
+      "src/Assets/version.php",
       "src/Cache/functions.php"
     ]
   },
