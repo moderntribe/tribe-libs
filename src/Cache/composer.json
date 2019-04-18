@@ -13,7 +13,10 @@
   "autoload": {
     "psr-4": {
       "Tribe\\Libs\\Cache\\": ""
-    }
+    },
+    "files": [
+      "functions.php"
+    ]
   },
   "extra": {
     "branch-alias": {
