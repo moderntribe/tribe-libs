@@ -28,6 +28,7 @@
     "moderntribe/square1-acf": "self.version",
     "moderntribe/square1-assets": "self.version",
     "moderntribe/square1-cache": "self.version",
+    "moderntribe/square1-container": "self.version",
     "moderntribe/square1-nav": "self.version",
     "moderntribe/square1-object-meta": "self.version",
     "moderntribe/square1-oembed": "self.version",

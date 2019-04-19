@@ -1,0 +1,26 @@
+{
+  "name": "moderntribe/square1-container",
+  "type": "library",
+  "description": "A dependency injection container wrapper for square one",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.0",
+    "pimple/pimple": "~3.0@dev",
+    "jbzoo/pimpledumper": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Libs\\Container\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  }
+}
