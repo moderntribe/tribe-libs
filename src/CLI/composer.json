@@ -1,0 +1,25 @@
+{
+  "name": "moderntribe/square1-cli",
+  "type": "library",
+  "description": "A framework for registering wp-cli commands in square one",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.0",
+    "pimple/pimple": "~3.0@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Libs\\Container\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  }
+}
