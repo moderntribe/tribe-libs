@@ -27,6 +27,7 @@
   "replace": {
     "moderntribe/square1-acf": "self.version",
     "moderntribe/square1-assets": "self.version",
+    "moderntribe/square1-blog-copier": "self.version",
     "moderntribe/square1-cache": "self.version",
     "moderntribe/square1-cli": "self.version",
     "moderntribe/square1-container": "self.version",

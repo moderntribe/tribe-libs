@@ -1,0 +1,27 @@
+{
+  "name": "moderntribe/square1-blog-copier",
+  "type": "library",
+  "description": "Blog copier for square one",
+  "license": "Private",
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "moderntribe/square1-container": "2.0.*",
+    "moderntribe/square1-queues": "2.0.*",
+    "php": "^7.0",
+    "pimple/pimple": "~3.0@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Libs\\Blog_Copier\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-dev"
+    }
+  }
+}
