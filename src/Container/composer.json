@@ -10,7 +10,7 @@
   "minimum-stability": "dev",
   "require": {
     "jbzoo/pimpledumper": "^1.2",
-    "moderntribe/square1-cli": "2.0.*f",
+    "moderntribe/square1-cli": "2.0.*",
     "php": "^7.0",
     "pimple/pimple": "~3.0@dev"
   },
