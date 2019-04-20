@@ -19,6 +19,11 @@
       "src/Cache/functions.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tribe\\Libs\\": "tests/integration/Tribe/Libs"
+    }
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "2.0-dev"
@@ -42,5 +47,8 @@
     "moderntribe/square1-taxonomy": "self.version",
     "moderntribe/square1-user": "self.version",
     "moderntribe/square1-utils": "self.version"
+  },
+  "require-dev": {
+    "lucatume/wp-browser": "^2.2"
   }
 }
