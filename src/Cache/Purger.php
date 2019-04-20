@@ -13,6 +13,15 @@ class Purger {
 	private $nonce_action = 'clear-cache';
 
 	/**
+	 * @var string The capability required to purge the cache
+	 */
+	private $cap;
+
+	public function __construct( $cap = 'manage_options' ) {
+		$this->cap = $cap;
+	}
+
+	/**
 	 * Hook into WordPress to register the button and its handler
 	 * @return void
 	 */
@@ -27,10 +36,14 @@ class Purger {
 	 * Handle requests to clear the cache
 	 *
 	 * @return void
+	 * @action init 9
 	 */
 	public function maybe_purge_cache() {
 		if ( empty( $_REQUEST[ $this->query_arg ] ) || empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], $this->nonce_action ) ) {
 			return; // nothing to do here
+		}
+		if ( ! current_user_can( $this->cap ) ) {
+			return; // user shouldn't be here
 		}
 		$this->do_purge_cache();
 		wp_redirect( esc_url_raw( remove_query_arg( array( $this->query_arg, '_wpnonce' ) ) ) );
@@ -63,8 +76,12 @@ class Purger {
 
 	/**
 	 * @param \WP_Admin_Bar $admin_bar
+	 * @action admin_bar_menu 100
 	 */
 	public function add_admin_bar_button( $admin_bar ) {
+		if ( ! current_user_can( $this->cap ) ) {
+			return; // user doesn't have access to purge, so no button
+		}
 		$admin_bar->add_menu( array(
 			'parent' => '',
 			'id'     => 'clear-cache',

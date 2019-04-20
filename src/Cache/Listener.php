@@ -5,19 +5,12 @@ namespace Tribe\Libs\Cache;
 /**
  * Tracks WP events and expires select caches as necessary
  */
-abstract class Listener {
+class Listener {
 	/** @var Cache */
-	protected $cache = null;
+	protected $cache;
 
-	public function __construct() {
-		$this->cache = new Cache();
+	public function __construct( Cache $cache = null ) {
+		$this->cache = $cache ?: new Cache();
 	}
-
-	/**
-	 * Register each hook that should lead to something expiring
-	 *
-	 * @return void
-	 */
-	abstract public function hook();
 }
 
