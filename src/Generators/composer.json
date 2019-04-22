@@ -1,24 +1,22 @@
 {
-  "name": "moderntribe/square1-cache",
+  "name": "moderntribe/square1-generators",
   "type": "library",
-  "description": "Object cache wrapper for square one",
+  "description": "Code generators for Square One",
   "license": "Private",
   "config": {
     "vendor-dir": "vendor",
     "preferred-install": "dist"
   },
   "require": {
+    "moderntribe/square1-cli": "2.0.*",
     "moderntribe/square1-container": "2.0.*",
     "php": "^7.0",
     "pimple/pimple": "~3.0@dev"
   },
   "autoload": {
     "psr-4": {
-      "Tribe\\Libs\\Cache\\": ""
-    },
-    "files": [
-      "functions.php"
-    ]
+      "Tribe\\Libs\\Generators\\": ""
+    }
   },
   "extra": {
     "branch-alias": {
