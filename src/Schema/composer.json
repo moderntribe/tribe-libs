@@ -1,23 +1,23 @@
 {
-  "name": "moderntribe/square1-schema",
-  "type": "library",
-  "description": "Schema utilities for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Schema\\": ""
+    "name": "moderntribe/square1-schema",
+    "type": "library",
+    "description": "Schema utilities for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Schema\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

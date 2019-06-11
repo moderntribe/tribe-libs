@@ -1,23 +1,23 @@
 {
-  "name": "moderntribe/square1-object-meta",
-  "type": "library",
-  "description": "Provides object meta wrappers for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Object_Meta\\": ""
+    "name": "moderntribe/square1-object-meta",
+    "type": "library",
+    "description": "Provides object meta wrappers for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Object_Meta\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

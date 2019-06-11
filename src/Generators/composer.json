@@ -1,26 +1,26 @@
 {
-  "name": "moderntribe/square1-generators",
-  "type": "library",
-  "description": "Code generators for Square One",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "moderntribe/square1-cli": "2.0.*",
-    "moderntribe/square1-container": "2.0.*",
-    "php": "^7.0",
-    "pimple/pimple": "~3.0@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Generators\\": ""
+    "name": "moderntribe/square1-generators",
+    "type": "library",
+    "description": "Code generators for Square One",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "moderntribe/square1-cli": "2.0.*",
+        "moderntribe/square1-container": "2.0.*",
+        "php": "^7.0",
+        "pimple/pimple": "~3.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Generators\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

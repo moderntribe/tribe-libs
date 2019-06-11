@@ -1,0 +1,21 @@
+{
+  "src/ACF": "square1-acf",
+  "src/Assets": "square1-assets",
+  "src/Blog_Copier": "square1-blog-copier",
+  "src/Cache": "square1-cache",
+  "src/CLI": "square1-cli",
+  "src/Container": "square1-container",
+  "src/Generators": "square1-generators",
+  "src/Nav": "square1-nav",
+  "src/Object_Meta": "square1-object-meta",
+  "src/Oembed": "square1-oembed",
+  "src/P2P": "square1-p2p",
+  "src/Post_Meta": "square1-post-meta",
+  "src/Post_Type": "square1-post-type",
+  "src/Queues": "square1-queues",
+  "src/Schema": "square1-schema",
+  "src/Settings": "square1-settings",
+  "src/Taxonomy": "square1-taxonomy",
+  "src/User": "square1-user",
+  "src/Utils": "square1-utils"
+}

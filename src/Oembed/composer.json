@@ -1,24 +1,24 @@
 {
-  "name": "moderntribe/square1-oembed",
-  "type": "library",
-  "description": "Oembed utilities for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0",
-    "square1-cache": "2.0.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Oembed\\": ""
+    "name": "moderntribe/square1-oembed",
+    "type": "library",
+    "description": "Oembed utilities for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0",
+        "square1-cache": "2.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Oembed\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

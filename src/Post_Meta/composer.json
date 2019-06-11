@@ -1,25 +1,25 @@
 {
-  "name": "moderntribe/square1-post-meta",
-  "type": "library",
-  "description": "Post meta wrappers for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0",
-    "square1-object-meta": "2.0.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Post_Meta\\": ""
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  },
-  "abandoned": "moderntribe/square1-object-meta"
+    "name": "moderntribe/square1-post-meta",
+    "type": "library",
+    "description": "Post meta wrappers for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0",
+        "square1-object-meta": "2.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Post_Meta\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    },
+    "abandoned": "moderntribe/square1-object-meta"
 }

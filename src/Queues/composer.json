@@ -1,27 +1,27 @@
 {
-  "name": "moderntribe/square1-queues",
-  "type": "library",
-  "description": "A queues provider for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "minimum-stability": "dev",
-  "require": {
-    "moderntribe/square1-cli": "2.0.*",
-    "moderntribe/square1-container": "2.0.*",
-    "php": "^7.0",
-    "pimple/pimple": "~3.0@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Queues\\": ""
+    "name": "moderntribe/square1-queues",
+    "type": "library",
+    "description": "A queues provider for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "moderntribe/square1-cli": "2.0.*",
+        "moderntribe/square1-container": "2.0.*",
+        "php": "^7.0",
+        "pimple/pimple": "~3.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Queues\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

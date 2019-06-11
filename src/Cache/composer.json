@@ -1,28 +1,28 @@
 {
-  "name": "moderntribe/square1-cache",
-  "type": "library",
-  "description": "Object cache wrapper for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "moderntribe/square1-container": "2.0.*",
-    "php": "^7.0",
-    "pimple/pimple": "~3.0@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Cache\\": ""
+    "name": "moderntribe/square1-cache",
+    "type": "library",
+    "description": "Object cache wrapper for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
     },
-    "files": [
-      "functions.php"
-    ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
+    "require": {
+        "moderntribe/square1-container": "2.0.*",
+        "php": "^7.0",
+        "pimple/pimple": "~3.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Cache\\": ""
+        },
+        "files": [
+            "functions.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  }
 }

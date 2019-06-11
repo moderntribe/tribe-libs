@@ -1,23 +1,23 @@
 {
-  "name": "moderntribe/square1-settings",
-  "type": "library",
-  "description": "Settings page utilities for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Settings\\": ""
+    "name": "moderntribe/square1-settings",
+    "type": "library",
+    "description": "Settings page utilities for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Settings\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  }
 }

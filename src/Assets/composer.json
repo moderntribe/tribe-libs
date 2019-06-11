@@ -1,26 +1,26 @@
 {
-  "name": "moderntribe/square1-assets",
-  "type": "library",
-  "description": "Asset loading for square one",
-  "license": "Private",
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  },
-  "require": {
-    "php": "^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Tribe\\Libs\\Assets\\": ""
+    "name": "moderntribe/square1-assets",
+    "type": "library",
+    "description": "Asset loading for square one",
+    "license": "Private",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
     },
-    "files": [
-      "version.php"
-    ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Assets\\": ""
+        },
+        "files": [
+            "version.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
-  }
 }
