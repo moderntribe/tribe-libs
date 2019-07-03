@@ -37,6 +37,6 @@ class Send_NotificationsTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertEqualSets( [ 'alpha@example.com', 'beta@example.com' ], array_column( $sent->to, 0 ) );
 		$this->assertEquals( 'Blog Copy Complete', $sent->subject );
-		$this->assertContains( $config->get_title(), $sent->body );
+		$this->assertStringContainsString( $config->get_title(), $sent->body );
 	}
 }
