@@ -1,6 +1,6 @@
 <?php
 
-namespace Tribe\Libs\Queues\Backends;
+namespace Tribe\Libs\Queues_Mysql\Backends;
 
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Message;

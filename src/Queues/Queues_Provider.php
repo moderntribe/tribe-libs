@@ -5,18 +5,16 @@ namespace Tribe\Libs\Queues;
 
 use Pimple\Container;
 use Tribe\Libs\Container\Service_Provider;
-use Tribe\Libs\Queues\Backends\MySQL;
+use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Backends\WP_Cache;
 use Tribe\Libs\Queues\CLI\Add_Tasks;
 use Tribe\Libs\Queues\CLI\Cleanup;
 use Tribe\Libs\Queues\CLI\List_Queues;
-use Tribe\Libs\Queues\CLI\MySQL_Table;
 use Tribe\Libs\Queues\CLI\Process;
 
 class Queues_Provider extends Service_Provider {
 
 	const WP_CACHE         = 'queues.backend.wp_cache';
-	const MYSQL            = 'queues.backend.mysql';
 	const DEFAULT_QUEUE    = 'queues.DefaultQueue';
 	const COLLECTION       = 'queues.collection';
 	const CRON             = 'queues.cron';
@@ -42,29 +40,12 @@ class Queues_Provider extends Service_Provider {
 	 */
 	protected function backends( Container $container ) {
 		$this->cache_backend( $container );
-		$this->mysql_backend( $container );
 	}
 
 	protected function cache_backend( Container $container ) {
 		$container[ self::WP_CACHE ] = function () {
 			return new WP_Cache();
 		};
-	}
-
-	protected function mysql_backend( Container $container ) {
-		$container[ self::MYSQL ] = function () {
-			return new MySQL();
-		};
-
-		add_action( 'tribe/project/queues/mysql/init_table', function () use ( $container ) {
-			$container[ self::MYSQL ]->initialize_table();
-		}, 10, 0 );
-
-		add_action( 'admin_init', function () {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				do_action( 'tribe/project/queues/mysql/init_table' );
-			}
-		}, 0, 0 );
 	}
 
 	/**
@@ -75,7 +56,13 @@ class Queues_Provider extends Service_Provider {
 	 */
 	protected function queues( Container $container ) {
 		$container[ self::DEFAULT_QUEUE ] = function ( $container ) {
-			$backend = $container[ self::MYSQL ];
+			/**
+			 * Filter the backend supplied to the default queue.
+			 */
+			$backend = apply_filters( 'tribe/libs/queues/backend/default', $container[ self::WP_CACHE ] );
+			if ( empty( $backend ) || ! $backend instanceof Backend ) {
+				throw new \RuntimeException( 'Invalid backend provided for default queue' );
+			}
 
 			return new DefaultQueue( $backend );
 		};
@@ -91,10 +78,6 @@ class Queues_Provider extends Service_Provider {
 	protected function cli( Container $container ) {
 		$container[ self::QUEUES_LIST ] = function ( $container ) {
 			return new List_Queues( $container[ self::COLLECTION ] );
-		};
-
-		$container[ self::QUEUES_ADD_TABLE ] = function ( $container ) {
-			return new MySQL_Table( $container[ self::MYSQL ] );
 		};
 
 		$container[ self::QUEUES_CLEANUP ] = function ( $container ) {
@@ -115,7 +98,6 @@ class Queues_Provider extends Service_Provider {
 			}
 
 			$container[ self::QUEUES_LIST ]->register();
-			$container[ self::QUEUES_ADD_TABLE ]->register();
 			$container[ self::QUEUES_CLEANUP ]->register();
 			$container[ self::QUEUES_PROCESS ]->register();
 			$container[ self::QUEUES_ADD_TASK ]->register();

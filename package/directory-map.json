@@ -13,6 +13,7 @@
   "src/Post_Meta": "square1-post-meta",
   "src/Post_Type": "square1-post-type",
   "src/Queues": "square1-queues",
+  "src/Queues_Mysql": "square1-queues-mysql",
   "src/Schema": "square1-schema",
   "src/Settings": "square1-settings",
   "src/Taxonomy": "square1-taxonomy",

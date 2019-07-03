@@ -1,9 +1,9 @@
 <?php
 
-namespace Tribe\Libs\Queues\CLI;
+namespace Tribe\Libs\Queues_Mysql\CLI;
 
 use Tribe\Libs\CLI\Command;
-use Tribe\Libs\Queues\Backends\MySQL;
+use Tribe\Libs\Queues_Mysql\Backends\MySQL;
 
 class MySQL_Table extends Command {
 
@@ -30,7 +30,7 @@ class MySQL_Table extends Command {
 	}
 
 	public function run_command( $args, $assoc_args ) {
-		if ( 'Tribe\Libs\Queues\Backends\MySQL' !== get_class( $this->backend ) ) {
+		if ( 'Tribe\Libs\Queues_Mysql\Backends\MySQL' !== get_class( $this->backend ) ) {
 			\WP_CLI::error( __( 'You cannot add a table a non-MySQL backend' ) );
 		}
 
