@@ -15,8 +15,8 @@ if ( empty( $tag ) ) {
 	exit( 1 );
 }
 
-$remote        = 'jbrinley'; // 'origin';
-$repo_owner    = 'jbrinley'; // 'moderntribe';
+$remote        = 'origin';
+$repo_owner    = 'moderntribe';
 $upstream_repo = sprintf( 'git@github.com:%s/%s.git', $repo_owner, 'tribe-libs' );
 $branches      = [ 'feature/monorepo' ]; // [ 'master' ];
 
