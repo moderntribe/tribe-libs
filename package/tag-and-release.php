@@ -10,11 +10,6 @@ if ( empty( $_SERVER['argv'][1] ) ) {
 
 $tag = sanitize_version( $_SERVER['argv'][1] );
 
-if ( empty( $tag ) ) {
-	echo( "Invalid tag given. Use format 'X.Y.Z'." );
-	exit( 1 );
-}
-
 $remote        = 'origin';
 $repo_owner    = 'moderntribe';
 $upstream_repo = sprintf( 'git@github.com:%s/%s.git', $repo_owner, 'tribe-libs' );
@@ -26,7 +21,7 @@ if ( $exit ) {
 	exit( $exit );
 }
 
-if ( ! tag_exists( $tag, $remote ) ) {
+if ( $tag && ! tag_exists( $tag, $remote ) ) {
 	create_tag( $tag, $remote );
 }
 
