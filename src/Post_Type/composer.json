@@ -2,7 +2,7 @@
     "name": "moderntribe/square1-post-type",
     "type": "library",
     "description": "Post type utilities for square one",
-    "license": "Private",
+    "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"

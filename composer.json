@@ -2,7 +2,7 @@
     "name": "moderntribe/tribe-libs",
     "type": "library",
     "description": "A library for use on Modern Tribe service projects.",
-    "license": "Private",
+    "license": "GPL-2.0-only",
     "require": {
         "jbzoo/pimpledumper": "^1.2",
         "php": "^7.0",

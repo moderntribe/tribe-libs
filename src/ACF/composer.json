@@ -2,7 +2,7 @@
     "name": "moderntribe/square1-acf",
     "type": "library",
     "description": "Provides ACF object meta wrappers for square one",
-    "license": "Private",
+    "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"

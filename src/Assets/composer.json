@@ -2,7 +2,7 @@
     "name": "moderntribe/square1-assets",
     "type": "library",
     "description": "Asset loading for square one",
-    "license": "Private",
+    "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"

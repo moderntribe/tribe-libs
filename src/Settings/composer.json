@@ -2,7 +2,7 @@
     "name": "moderntribe/square1-settings",
     "type": "library",
     "description": "Settings page utilities for square one",
-    "license": "Private",
+    "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"
