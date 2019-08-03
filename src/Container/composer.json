@@ -10,7 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "jbzoo/pimpledumper": "^1.2",
-        "moderntribe/square1-cli": "^2.0",
+        "moderntribe/square1-cli": "dev-feature/monorepo",
         "php": "^7.0",
         "pimple/pimple": "~3.0@dev"
     },
@@ -21,7 +21,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-feature/monorepo": "2.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }

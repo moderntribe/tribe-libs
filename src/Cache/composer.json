@@ -8,7 +8,7 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-container": "^2.0",
+        "moderntribe/square1-container": "dev-feature/monorepo",
         "php": "^7.0",
         "pimple/pimple": "~3.0@dev"
     },
@@ -22,7 +22,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-feature/monorepo": "2.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
