@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Tribe\\Libs\\Container\\": ""
+            "Tribe\\Libs\\CLI\\": ""
         }
     },
     "extra": {
