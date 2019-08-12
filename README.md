@@ -54,3 +54,17 @@ with tagging a new version.
 ```
 vendor/bin/monorepo-builder release 2.0.0
 ```
+
+### Adding Packages
+
+1. Create a new directory for the package in `src`. Create your code
+   there, include an independent `composer.json` for the package, and
+   commit it to tribe-libs.
+2. Create an empty public GitHub repository for the package. Follow the
+   naming convention `moderntribe/square1-*`.
+3. Add the directory and repo to the `directories_to_repositories` map
+   in `monorepo-builder.yml`.
+4. After the code has merged to `master`, run the aforementioned release
+   script. This is an appropriate opportunity to bump the minor version number.
+5. Register the package on [Packagist](https://packagist.org/packages/submit).  
+   
