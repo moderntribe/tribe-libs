@@ -22,6 +22,28 @@ class Generator_Provider extends Service_Provider {
 		$this->cli( $container );
 		$this->setting( $container );
 		$this->meta( $container );
+		$this->init( $container );
+	}
+
+	protected function init( Container $container ) {
+		add_action( 'init', function () use ( $container ) {
+			if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
+				return;
+			}
+			foreach ( $this->commands_to_register() as $key ) {
+				$container[ $key ]->register();
+			}
+		}, 0, 0 );
+	}
+
+	protected function commands_to_register() {
+		return [
+			self::CPT,
+			self::TAX,
+			self::CLI,
+			self::SETTING,
+			self::META,
+		];
 	}
 
 	protected function file_system( Container $container ) {
