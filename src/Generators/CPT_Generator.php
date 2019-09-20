@@ -94,7 +94,7 @@ class CPT_Generator extends Generator_Command {
 	}
 
 	private function new_service_provider_file() {
-		$new_service_provider         = trailingslashit( dirname( __DIR__, 1 ) ) . 'Service_Providers/Post_Types/' . $this->ucwords( $this->slug ) . '_Service_Provider.php';
+		$new_service_provider         = trailingslashit( $this->src_path ) . 'Service_Providers/Post_Types/' . $this->ucwords( $this->slug ) . '_Service_Provider.php';
 		$this->service_provider_class = $this->ucwords( $this->slug );
 		$this->file_system->write_file( $new_service_provider, $this->get_service_provider_contents() );
 	}
@@ -102,7 +102,7 @@ class CPT_Generator extends Generator_Command {
 	private function update_core() {
 		$core_file = $this->src_path . 'Core.php';
 
-		$new_service_provider_registration   = "\t\t" . '$this->container->register( new ' . $this->class_name . '_Service_Provider() );' . PHP_EOL;
+		$new_service_provider_registration   = "\t\t" . sprintf( '$this->providers[\'post_type.%s\'] = new %s_Service_Provider();', $this->slug, $this->class_name ) . "\n";
 		$below_service_provider_registration = 'private function load_post_type_providers() {';
 
 		$below_use = 'use Tribe\Project\Service_Providers\Post_Types\Post_Service_Provider';
