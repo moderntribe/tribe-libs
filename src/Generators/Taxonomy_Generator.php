@@ -128,7 +128,7 @@ class Taxonomy_Generator extends Generator_Command {
 	private function update_core() {
 		$core_file = $this->src_path . 'Core.php';
 
-		$new_service_provider_registration   = "\t\t" . '$this->container->register( new ' . $this->class_name . '_Service_Provider() );' . PHP_EOL;
+		$new_service_provider_registration   = "\t\t" . sprintf( '$this->providers[\'taxonomy.%s\'] = new %s_Service_Provider();', $this->slug, $this->class_name ) . "\n";
 		$below_service_provider_registration = 'private function load_taxonomy_providers() {';
 
 		$below_use = 'use Tribe\Project\Service_Providers\Taxonomies\Category_Service_Provider';
