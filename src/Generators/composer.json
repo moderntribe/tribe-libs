@@ -8,8 +8,8 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-cli": "dev-feature/monorepo",
-        "moderntribe/square1-container": "dev-feature/monorepo",
+        "moderntribe/square1-cli": "^2.0",
+        "moderntribe/square1-container": "^2.0",
         "php": "^7.0",
         "pimple/pimple": "~3.0@dev"
     },
