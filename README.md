@@ -46,6 +46,19 @@ Push the latest tag and the `master` branch to all the package repositories.
 vendor/bin/monorepo-builder split
 ```
 
+#### Pushing other branches
+
+On _very_ rare occasions, you may need to push a different branch to the package repositories.
+Think very hard about whether this is necessary (it's probably not). In the unlikely event that
+it _is_ necessary, the `monorepo-builder` library doesn't have any flags we can pass to make it
+possible. But we can hack it a bit to accomplish our goals.
+
+1. Find `\Symplify\MonorepoBuilder\Split\Process\ProcessFactory::createSubsplit()` in the vendor directory
+2. Change `'--branch=master'`, replacing "master" with your branch name.
+3. Comment out the following line that sets the tag.
+4. Run the `split` command to push your branch to all the package repositories.
+5. Restore `ProcessFactory` to its pristine state.
+
 ### Releasing a new version
 
 All of the above commands are wrapped up into a `release` command to help
