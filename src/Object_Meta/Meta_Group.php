@@ -42,6 +42,11 @@ namespace Tribe\Libs\Object_Meta;
  *  new Instance_Class([
  * 		'nav_menu_items' => [ 4 ],
  *  ]);
+ *
+ * // include an ACF block
+ * new Instance_Class([
+ *     'block' => [ 'block-name' ],
+ * ]);
  */
 abstract class Meta_Group {
 	const NAME = '';
@@ -56,7 +61,7 @@ abstract class Meta_Group {
 	 */
 	public function __construct( array $object_types ) {
 		// Allow backwards compatibility with the former method of assigning post types to meta groups.
-		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus', 'nav_menu_items', 'widget' ];
+		$types = [ 'post_types', 'taxonomies', 'settings_pages', 'users', 'nav_menus', 'nav_menu_items', 'widget', 'block' ];
 		if ( empty( array_intersect( $types, array_keys( $object_types ) ) ) ) {
 			$this->post_types = $object_types;
 			$object_types     = [ 'post_types' => $object_types ];
