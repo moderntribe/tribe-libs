@@ -7,9 +7,7 @@ use Tribe\Libs\Container\Service_Provider;
 use Tribe\Libs\Roles\Role\Administrator;
 use Tribe\Libs\Roles\Role\Author;
 use Tribe\Libs\Roles\Role\Editor;
-use Tribe\Libs\Roles\Role\Role;
 use Tribe\Libs\Roles\Role\Subscriber;
-use WP_User;
 
 class Roles_Provider extends Service_Provider {
 	const ROLES = 'users.roles';
@@ -49,30 +47,13 @@ class Roles_Provider extends Service_Provider {
 	}
 
 	private function redirect_after_login( Container $container ) {
+		$container[ Login_Redirector::class ] = function () use ( $container ) {
+			return new Login_Redirector( $container[ self::ROLES ] );
+		};
+
 		add_filter( 'login_redirect', function ( $redirect_to, $requested_redirect_to, $user ) use ( $container ) {
-			// Early bail: no user available
-			if ( ! $user instanceof WP_User ) {
-				return $requested_redirect_to;
-			}
-
-			// Try to find a matching Role for this user
-			/** @var Role $role */
-			foreach ( $container[ self::ROLES ] as $role ) {
-				// Early bail: user does have this role
-				if ( ! $user->has_cap( $role->get_slug() ) ) {
-					return $requested_redirect_to;
-				}
-
-				// Early bail: role does not overrides login redirection
-				if ( empty( $role->url_to_redirect_after_login() ) ) {
-					return $requested_redirect_to;
-				} else {
-					return $role->url_to_redirect_after_login();
-				}
-			}
-
-			// Couldn't find any override. Let's just return the default behavior
-			return $requested_redirect_to;
+			return $container[ Login_Redirector::class ]->redirect_after_login( $redirect_to, $requested_redirect_to,
+				$user );
 		}, 10, 3 );
 	}
 
@@ -80,6 +61,7 @@ class Roles_Provider extends Service_Provider {
 		$container[ Dashboard_Restictor::class ] = function () {
 			return new Dashboard_Restictor;
 		};
+
 		add_action( 'admin_init', function () use ( $container ) {
 			$container[ Dashboard_Restictor::class ]->check_user();
 		}, 0, 0 );
