@@ -6,7 +6,11 @@ use Tribe\Libs\Schema\Schema;
 use Tribe\Libs\Roles\Role\Role;
 
 class Roles_Schema extends Schema {
+	/**
+	 * @var int $schema_version Bump this whenever you make changes to Roles
+	 */
 	protected $schema_version = 1;
+
 	private $roles = [];
 
 	public function __construct( array $roles ) {
