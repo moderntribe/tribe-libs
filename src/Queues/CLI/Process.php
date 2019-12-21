@@ -63,6 +63,8 @@ class Process extends Command {
 
 		$endtime = time() + $this->timelimit;
 
+		\WP_CLI::log( sprintf( 'Processing queue %s. This will run for %d seconds. Run with --debug to see additional details.', $queue_name, $this->timelimit ) );
+
 		// Run forever.
 		while ( $this->timelimit === 0 || time() < $endtime ) {
 
@@ -86,6 +88,7 @@ class Process extends Command {
 			if ( ! class_exists( $task_class ) ) {
 				\WP_CLI::debug( sprintf( 'Class %s does not exist.', $task_class ) );
 				$queue->nack( $job->get_job_id() );
+
 				return;
 			}
 
