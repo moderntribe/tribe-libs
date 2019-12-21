@@ -63,7 +63,13 @@ class Process extends Command {
 
 		$endtime = time() + $this->timelimit;
 
-		\WP_CLI::log( sprintf( 'Processing queue %s. This will run for %d seconds. Run with --debug to see additional details.', $queue_name, $this->timelimit ) );
+		if ( intval( $this->timelimit ) === 0 ) {
+			$time_message = 'This will run indefinitely or until memory is exhausted';
+		} else {
+			$time_message = sprintf( 'This will run for %d seconds', $this->timelimit );
+		}
+
+		\WP_CLI::log( sprintf( 'Processing queue: %s. %s. Run with --debug to see additional details.', $queue_name, $time_message ) );
 
 		// Run forever.
 		while ( $this->timelimit === 0 || time() < $endtime ) {
