@@ -1,0 +1,23 @@
+{
+    "name": "moderntribe/square1-cron",
+    "type": "library",
+    "description": "Abstract cron jobs and schedules for square one",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Cron\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1-dev"
+        }
+    }
+}
