@@ -32,13 +32,13 @@ namespace Tribe\Project\Cron;
 
 class My_Cron extends Abstract_Cron {
 
-	/**
-	 * Executes when the cron job runs
-	 *
-	 * @param  array  $args
-	 *
-	 * @return mixed
-	 */    
+    /**
+     * Executes when the cron job runs
+     *
+     * @param  array  $args
+     *
+     * @return mixed
+     */    
     public function run( array $args = [] ) {
         update_option( 'my_cron_option', 'ran', false );
     }
