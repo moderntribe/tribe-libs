@@ -11,6 +11,8 @@ This package provides some abstract classes to be used to create both custom sch
 
 namespace Tribe\Project\Cron;
 
+use Tribe\Libs\Cron\Abstract_Schedule;
+
 class Thirty_Minutes extends Abstract_Schedule {
 
     /** @var string array friendly key name **/
@@ -30,15 +32,17 @@ class Thirty_Minutes extends Abstract_Schedule {
 
 namespace Tribe\Project\Cron;
 
+use Tribe\Libs\Cron\Abstract_Cron;
+
 class My_Cron extends Abstract_Cron {
 
     /**
-     * Executes when the cron job runs
-     *
-     * @param  array  $args
-     *
-     * @return mixed
-     */    
+    * Executes when the cron job runs
+    *
+    * @param  array  $args
+    *
+    * @return mixed
+    */    
     public function run( array $args = [] ) {
         update_option( 'my_cron_option', 'ran', false );
     }
@@ -61,7 +65,7 @@ use Tribe\Project\Container\Service_Provider;
 use Tribe\Project\Cron\Thirty_Minutes;
 use Tribe\Project\Cron\Schedule_Collection;
 use Tribe\Project\Cron\My_Cron;
-use Tribe\Project\Cron\Abstract_Cron;
+use Tribe\Libs\Cron\Abstract_Cron;
 
 class Cron_Provider extends Service_Provider {   
 
