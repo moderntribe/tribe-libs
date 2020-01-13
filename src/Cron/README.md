@@ -128,25 +128,25 @@ use Tribe\Project\Cron\Abstract_Cron;
 
 class Cron_Schema extends Schema {
 
-	protected $schema_version = 1;
+protected $schema_version = 1;
 
-	public function get_updates() {
-		return [
-			1 => [ $this, 'enable_cron_jobs' ]
-		];
-	}
-
-	/**
-	 * Enable Cron Jobs
-	 */
-	public function enable_cron_jobs() {
-		$container = tribe_project()->container();
-
-		/** @var Abstract_Cron $cron */
+    public function get_updates() {
+        return [
+            1 => [ $this, 'enable_cron_jobs' ]
+        ];
+    }
+    
+    /**
+    * Enable Cron Jobs
+    */
+    public function enable_cron_jobs() {
+        $container = tribe_project()->container();
+        
+        /** @var Abstract_Cron $cron */
         foreach( $container[ 'cron.cron_collection' ] as $cron ) {
             $cron->enable();        
         }
-	}
+    }
 }
 ```
 
