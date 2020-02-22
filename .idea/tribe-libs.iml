@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/Queues_Mysql" isTestSource="false" packagePrefix="Tribe\Libs\Queues_Mysql\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Post_Type" isTestSource="false" packagePrefix="Tribe\Libs\Post_Type\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Schema" isTestSource="false" packagePrefix="Tribe\Libs\Schema\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/integration/Tribe/Libs" isTestSource="true" packagePrefix="Tribe\Libs\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Taxonomy" isTestSource="false" packagePrefix="Tribe\Libs\Taxonomy\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Cache" isTestSource="false" packagePrefix="Tribe\Libs\Cache\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/CLI" isTestSource="false" packagePrefix="Tribe\Libs\CLI\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Nav" isTestSource="false" packagePrefix="Tribe\Libs\Nav\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Post_Meta" isTestSource="false" packagePrefix="Tribe\Libs\Post_Meta\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Settings" isTestSource="false" packagePrefix="Tribe\Libs\Settings\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/ACF" isTestSource="false" packagePrefix="Tribe\Libs\ACF\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Blog_Copier" isTestSource="false" packagePrefix="Tribe\Libs\Blog_Copier\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/User" isTestSource="false" packagePrefix="Tribe\Libs\User\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Utils" isTestSource="false" packagePrefix="Tribe\Libs\Utils\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Assets" isTestSource="false" packagePrefix="Tribe\Libs\Assets\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Container" isTestSource="false" packagePrefix="Tribe\Libs\Container\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/P2P" isTestSource="false" packagePrefix="Tribe\Libs\P2P\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Generators" isTestSource="false" packagePrefix="Tribe\Libs\Generators\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Object_Meta" isTestSource="false" packagePrefix="Tribe\Libs\Object_Meta\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Queues" isTestSource="false" packagePrefix="Tribe\Libs\Queues\" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Oembed" isTestSource="false" packagePrefix="Tribe\Libs\Oembed\" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/antecedent/patchwork" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bacon/bacon-string-utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/codeception" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/phpunit-wrapper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/stub" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cweagans/composer-patches" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dg/mysql-dump" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/facebook/webdriver" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gettext/gettext" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gettext/languages" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gumlet/php-image-resize" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hautelook/phpass" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/consistency" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/console" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/event" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/exception" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/file" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/protocol" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/stream" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/hoa/ustring" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/support" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jbzoo/pimpledumper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/justinrainbow/json-schema" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lucatume/wp-browser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mck89/peast" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mikemclin/laravel-wp-password" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mustache/mustache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nb/oxymel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-token-stream" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pimple/pimple" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/rmccue/requests" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/resource-operations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/type" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/seld/jsonlint" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/seld/phar-utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/browser-kit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/config" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dependency-injection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/error-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/filesystem" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php72" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symplify/monorepo-builder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symplify/package-builder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/cache-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/checksum-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/config-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/core-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/cron-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/db-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/embed-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/entity-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/eval-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/export-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/extension-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/i18n-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/import-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/language-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/maintenance-mode-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/media-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/mustangostang-spyc" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/package-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/php-cli-tools" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/rewrite-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/role-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/scaffold-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/search-replace-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/server-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/shell-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/super-admin-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/widget-command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/wp-cli" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/wp-cli-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/wp-cli/wp-config-transformer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/xamin/handlebars.php" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
