@@ -26,7 +26,7 @@ class Purger {
 	 * @return void
 	 */
 	public function hook() {
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( $this->cap ) ) {
 			add_action( 'init', array( $this, 'maybe_purge_cache' ), 9, 0 );
 			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_button' ), 100, 1 );
 		}
