@@ -25,10 +25,22 @@ class Blog_Copier_Provider extends Service_Provider {
 	const FILE_COPY_STRATEGY = 'blog_copier.file_copy_strategy';
 
 	public function register( Container $container ) {
+		$this->register_cpt();
 		$this->admin( $container );
 		$this->tasks( $container );
 		$this->manager( $container );
 		$this->file_copy( $container );
+	}
+
+	/**
+	 * Registers a private CPT to store blog data
+	 */
+	protected function register_cpt() {
+		add_action( 'init', function () {
+			register_post_type( Copy_Manager::POST_TYPE, [
+				'public' => false,
+			] );
+		} );
 	}
 
 	/**
