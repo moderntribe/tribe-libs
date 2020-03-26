@@ -118,7 +118,7 @@ class Taxonomy_Generator extends Generator_Command {
 	private function update_core() {
 		$core_file = $this->src_path . 'Core.php';
 
-		$new_subscriber_registration   = "\t\t\t" . sprintf( 'Taxonomies\%s\Subscriber::class,', $this->class_name ) . "\n";
+		$new_subscriber_registration   = "\t\t" . sprintf( 'Taxonomies\%s\Subscriber::class,', $this->class_name ) . "\n";
 		$below_line = '// our taxonomies';
 
 		$this->file_system->insert_into_existing_file( $core_file, $new_subscriber_registration, $below_line );
