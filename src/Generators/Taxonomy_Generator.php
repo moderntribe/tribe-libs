@@ -43,13 +43,6 @@ class Taxonomy_Generator extends Generator_Command {
 				'optional'    => true,
 				'description' => __( 'Plural taxonomy.', 'tribe' ),
 			],
-			[
-				'type'        => 'flag',
-				'name'        => 'config',
-				'optional'    => true,
-				'description' => __( 'Whether or not to create a config file by default. Defaults to true, pass --no-config if you don\'t need one.', 'tribe' ),
-				'default'     => true,
-			],
 		];
 	}
 
@@ -62,8 +55,8 @@ class Taxonomy_Generator extends Generator_Command {
 		// Write file(s).
 		$this->create_taxonomy_class();
 
-		// Write Service Provider.
-		$this->create_service_provider();
+		// Write subscriber.
+		$this->create_subscriber();
 
 		// Update Core.
 		$this->update_core();
@@ -84,7 +77,6 @@ class Taxonomy_Generator extends Generator_Command {
 		$defaults = [
 			'single' => $this->ucwords( $this->slug ),
 			'plural' => $this->ucwords( $this->slug ) . 's',
-			'config' => true,
 		];
 
 		$assoc_args['post-types'] = $this->get_post_types( $assoc_args );
@@ -115,27 +107,21 @@ class Taxonomy_Generator extends Generator_Command {
 
 	private function create_taxonomy_class() {
 		$this->new_taxonomy_class_file();
-		if ( $this->assoc_args['config'] ) {
-			$this->new_taxonomy_config_file();
-		}
+		$this->new_taxonomy_config_file();
 	}
 
-	private function create_service_provider() {
-		$service_provider_file = $this->src_path . 'Service_Providers/Taxonomies/' . $this->ucwords( $this->slug ) . '_Service_Provider.php';
-		$this->file_system->write_file( $service_provider_file, $this->get_service_provider_contents() );
+	private function create_subscriber() {
+		$service_provider_file = $this->src_path . 'Taxonomies/' . $this->ucwords( $this->slug ) . '/Subscriber.php';
+		$this->file_system->write_file( $service_provider_file, $this->get_subscriber_contents() );
 	}
 
 	private function update_core() {
 		$core_file = $this->src_path . 'Core.php';
 
-		$new_service_provider_registration   = "\t\t" . sprintf( '$this->providers[\'taxonomy.%s\'] = new %s_Service_Provider();', $this->slug, $this->class_name ) . "\n";
-		$below_service_provider_registration = 'private function load_taxonomy_providers() {';
+		$new_subscriber_registration   = "\t\t\t" . sprintf( 'Taxonomies\%s\Subscriber::class,', $this->class_name ) . "\n";
+		$below_service_provider_registration = '// our taxonomies';
 
-		$below_use = 'use Tribe\Project\Service_Providers\Taxonomies\Category_Service_Provider';
-		$use       = 'use Tribe\Project\Service_Providers\Taxonomies\\' . $this->class_name . '_Service_Provider;' . PHP_EOL;
-
-		$this->file_system->insert_into_existing_file( $core_file, $new_service_provider_registration, $below_service_provider_registration );
-		$this->file_system->insert_into_existing_file( $core_file, $use, $below_use );
+		$this->file_system->insert_into_existing_file( $core_file, $new_subscriber_registration, $below_service_provider_registration );
 	}
 
 	private function new_taxonomy_class_file() {
@@ -154,7 +140,6 @@ class Taxonomy_Generator extends Generator_Command {
 
 		return sprintf(
 			$taxonomy_file,
-			$this->namespace,
 			$this->class_name,
 			$this->slug
 		);
@@ -166,23 +151,20 @@ class Taxonomy_Generator extends Generator_Command {
 
 		return sprintf(
 			$config_file,
-			$this->namespace,
+			$this->class_name,
 			$this->assoc_args['single'],
 			$this->assoc_args['plural'],
-			$this->slug
+			$this->slug,
+			$this->format_post_types()
 		);
 	}
 
-	private function get_service_provider_contents() {
-		$post_types = $this->format_post_types();
-
-		$service_provider = $this->file_system->get_file( $this->templates_path . 'taxonomies/service_provider.php' );
+	private function get_subscriber_contents() {
+		$service_provider = $this->file_system->get_file( $this->templates_path . 'taxonomies/subscriber.php' );
 
 		return sprintf(
 			$service_provider,
-			$this->namespace,
-			$this->class_name,
-			$post_types
+			$this->class_name
 		);
 	}
 
@@ -191,11 +173,11 @@ class Taxonomy_Generator extends Generator_Command {
 			return '';
 		}
 
-		$post_types = 'protected $post_types = [ ';
+		$post_types = '';
+
 		foreach ( $this->assoc_args['post-types'] as $post_type ) {
-			$post_types .= '\'' . $post_type . '\', ';
+			$post_types .= "'$post_type',";
 		}
-		$post_types .= '];' . PHP_EOL;
 
 		return $post_types;
 	}
