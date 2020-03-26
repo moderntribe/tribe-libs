@@ -34,11 +34,13 @@ class Settings_Generator extends Generator_Command {
 
 		$this->create_settings_file();
 
-		$this->update_service_provider();
+		$this->update_subscriber();
+
+		\WP_CLI::success( 'Way to go! ' . \WP_CLI::colorize( "%W{$this->slug}%n" ) . ' settings page has been created' );
 	}
 
 	private function create_settings_file() {
-		$new_settings = $this->src_path . 'Settings/' . $this->ucwords( $this->slug ) . '.php';
+		$new_settings = $this->src_path . 'Settings/' . $this->class_name . '.php';
 		$this->file_system->write_file( $new_settings, $this->get_settings_file_contents() );
 	}
 
@@ -48,21 +50,16 @@ class Settings_Generator extends Generator_Command {
 		return sprintf(
 			$settings_file,
 			$this->class_name,
-			str_replace( '_', ' ', $this->class_name ),
-			$this->slug
+			str_replace( '_', ' ', $this->class_name )
 		);
 	}
 
-	protected function update_service_provider() {
-		$service_provider = $this->src_path . 'Service_Providers/Settings_Provider.php';
+	protected function update_subscriber() {
+		$service_provider = $this->src_path . 'Settings/Settings_Subscriber.php';
 
-		// Add class to pimple container.
-		$container_partial_file = $this->file_system->get_file( $this->templates_path . 'settings/container_partial.php' );
-		$container_partial = sprintf( $container_partial_file, $this->slug, $this->class_name );
-		$this->file_system->insert_into_existing_file( $service_provider, $container_partial, '}, 0, 0 );' );
-
-		$method = "\t\t\$this->{$this->slug}( \$container );" . PHP_EOL;
-		$this->file_system->insert_into_existing_file( $service_provider, $method, 'public function register(' );
+		$method = "\t\t\t\$container->get( {$this->class_name}::class )->hook();" . PHP_EOL;
+		// insert after the first settings page we find hooking into WP
+		$this->file_system->insert_into_existing_file( $service_provider, $method, '->hook()' );
 	}
 
 }
