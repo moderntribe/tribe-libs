@@ -9,10 +9,9 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "jbzoo/pimpledumper": "^1.2",
         "moderntribe/square1-cli": "^2.2",
         "php": "^7.0",
-        "pimple/pimple": "~3.0@dev"
+        "php-di/php-di": "^6.0"
     },
     "autoload": {
         "psr-4": {
