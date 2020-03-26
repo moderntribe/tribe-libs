@@ -4,13 +4,11 @@
     "description": "A library for use on Modern Tribe service projects.",
     "license": "GPL-2.0-only",
     "require": {
-        "jbzoo/pimpledumper": "^1.2",
         "php": "^7.0",
-        "pimple/pimple": "~3.0@dev"
+        "php-di/php-di": "^6.0"
     },
     "require-dev": {
-        "lucatume/wp-browser": "^2.2",
-        "symplify/monorepo-builder": "^6.0"
+        "symplify/monorepo-builder": "^7.2"
     },
     "autoload": {
         "files": [
@@ -73,7 +71,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.2-dev"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
