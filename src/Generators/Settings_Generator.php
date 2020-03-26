@@ -55,11 +55,11 @@ class Settings_Generator extends Generator_Command {
 	}
 
 	protected function update_subscriber() {
-		$service_provider = $this->src_path . 'Settings/Settings_Subscriber.php';
+		$subscriber = $this->src_path . 'Settings/Settings_Subscriber.php';
 
 		$method = "\t\t\t\$container->get( {$this->class_name}::class )->hook();" . PHP_EOL;
 		// insert after the first settings page we find hooking into WP
-		$this->file_system->insert_into_existing_file( $service_provider, $method, '->hook()' );
+		$this->file_system->insert_into_existing_file( $subscriber, $method, '->hook()' );
 	}
 
 }
