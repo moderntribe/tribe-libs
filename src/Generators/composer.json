@@ -8,8 +8,8 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-cli": "^2.1.2",
-        "moderntribe/square1-container": "^2.1.2",
+        "moderntribe/square1-cli": "^2.2",
+        "moderntribe/square1-container": "^2.2",
         "php": "^7.0",
         "pimple/pimple": "~3.0@dev"
     },
