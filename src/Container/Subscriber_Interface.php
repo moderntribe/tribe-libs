@@ -7,11 +7,9 @@ use Psr\Container\ContainerInterface;
 
 interface Subscriber_Interface {
 	/**
-	 * Register action/filter listeners too hook into WordPress
-	 *
-	 * @param ContainerInterface $container The project's global DI container
+	 * Register action/filter listeners to hook into WordPress
 	 *
 	 * @return void
 	 */
-	public function register( ContainerInterface $container ): void;
+	public function register(): void;
 }
