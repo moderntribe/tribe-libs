@@ -68,11 +68,6 @@ jobs:
           coverage: none
           tools: codeception, composer
 
-      - name: Add GitHub oAuth
-        env:
-          TOKEN: ${{ secrets.GH_TOKEN }}
-        run: composer config --global github-oauth.github.com $TOKEN
-
       - name: Download WordPress
         run: |
           wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
