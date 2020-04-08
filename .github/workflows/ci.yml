@@ -75,7 +75,7 @@ jobs:
 
       - name: Download WordPress
         run: |
-          wget "https://wordpress.org/wordpress-${{ wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
+          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
 
