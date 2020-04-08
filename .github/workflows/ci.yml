@@ -29,6 +29,7 @@ jobs:
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
       TABLE_PREFIX: "tribe_"
+      TEST_CONFIG_FILE: "wp-config-environment.php"
 
     services:
 
