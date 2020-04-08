@@ -9,9 +9,18 @@ use Tribe\Libs\Container\Subscriber_Interface;
 
 class Blog_Copier_Subscriber implements Subscriber_Interface {
 	public function register( ContainerInterface $container ): void {
+		$this->post_type( $container );
 		$this->admin( $container );
 		$this->manager( $container );
 		$this->file_copy( $container );
+	}
+
+	protected function post_type( ContainerInterface $container ): void {
+		add_action( 'init', function () {
+			register_post_type( Copy_Manager::POST_TYPE, [
+				'public' => false,
+			] );
+		} );
 	}
 
 	/**
