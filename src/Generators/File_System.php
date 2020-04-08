@@ -31,13 +31,15 @@ class File_System {
 		if ( ! $handle = fopen( $file, 'r+' ) ) {
 			\WP_CLI::error( 'Sorry.. ' . $file . ' could not be opened.' );
 		}
+		$inserted = false;
 
 		$contents = '';
 		while ( ! feof( $handle ) ) {
 			$line     = fgets( $handle );
 			$contents .= $line;
-			if ( strpos( $line, $below_line ) !== false ) {
+			if ( ! $inserted && strpos( $line, $below_line ) !== false ) {
 				$contents .= $new_line;
+				$inserted = true;
 			}
 		}
 

@@ -15,8 +15,7 @@ parameters:
       psr-4:
         'Tribe\Libs\': 'tests/integration/Tribe/Libs'
     require-dev:
-      lucatume/wp-browser: '^2.2'
-      symplify/monorepo-builder: '^6.0'
+      symplify/monorepo-builder: '^7.2'
 
   # for "split" command
   directories_to_repositories:
