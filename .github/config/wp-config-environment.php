@@ -63,37 +63,12 @@ $config_defaults = [
 	// Paths
 	'ABSPATH'                        => tribe_getenv( 'ABSPATH', __DIR__ . '/wordpress/' ),
 
-	// Multisite
-	'WP_ALLOW_MULTISITE'             => tribe_getenv( 'WP_ALLOW_MULTISITE', false ),
-	'MULTISITE'                      => tribe_getenv( 'WP_MULTISITE', false ),
-	'SUBDOMAIN_INSTALL'              => tribe_getenv( 'SUBDOMAIN_INSTALL', false ),
-	'DOMAIN_CURRENT_SITE'            => tribe_getenv( 'DOMAIN_CURRENT_SITE', '%%PRIMARY_DOMAIN%%' ),
-	'PATH_CURRENT_SITE'              => tribe_getenv( 'PATH_CURRENT_SITE', '/' ),
-	'SITE_ID_CURRENT_SITE'           => tribe_getenv( 'SITE_ID_CURRENT_SITE', 1 ),
-	'BLOG_ID_CURRENT_SITE'           => tribe_getenv( 'BLOG_ID_CURRENT_SITE', 1 ),
-
 	// DB settings
 	'DB_CHARSET'                     => 'utf8',
 	'DB_COLLATE'                     => '',
 
 	// Language
 	'WPLANG'                         => tribe_getenv( 'WPLANG', '' ),
-
-	// Security Hashes (grab from: https://api.wordpress.org/secret-key/1.1/salt)
-	'AUTH_KEY'                       => '%%AUTH_KEY%%',
-	'SECURE_AUTH_KEY'                => '%%SECURE_AUTH_KEY%%',
-	'LOGGED_IN_KEY'                  => '%%LOGGED_IN_KEY%%',
-	'NONCE_KEY'                      => '%%NONCE_KEY%%',
-	'AUTH_SALT'                      => '%%AUTH_SALT%%',
-	'SECURE_AUTH_SALT'               => '%%SECURE_AUTH_SALT%%',
-	'LOGGED_IN_SALT'                 => '%%LOGGED_IN_SALT%%',
-	'NONCE_SALT'                     => '%%NONCE_SALT%%',
-
-	// Security Directives
-	'DISALLOW_FILE_EDIT'             => true,
-	'DISALLOW_FILE_MODS'             => true,
-	'FORCE_SSL_LOGIN'                => tribe_getenv( 'FORCE_SSL_LOGIN', false ),
-	'FORCE_SSL_ADMIN'                => tribe_getenv( 'FORCE_SSL_ADMIN', false ),
 
 	// Performance
 	'WP_CACHE'                       => tribe_getenv( 'WP_CACHE', false ),
