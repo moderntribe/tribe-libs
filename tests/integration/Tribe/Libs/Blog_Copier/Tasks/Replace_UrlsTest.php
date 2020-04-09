@@ -64,12 +64,21 @@ class Replace_UrlsTest extends \Codeception\TestCase\WPTestCase {
 		$src_panel[ 'panels' ][ 0 ][ 'data' ][ 'description' ]  = sprintf( $src_panel[ 'panels' ][ 0 ][ 'data' ][ 'description' ], $src_image_url );
 		$src_panel[ 'panels' ][ 0 ][ 'data' ][ 'cta' ][ 'url' ] = home_url();
 
+		// kses will corrupt the json data
+		if ( $kses_filter_priority = has_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' ) ) {
+			remove_filter('content_filtered_save_pre', 'wp_filter_post_kses', $kses_filter_priority );
+		}
+
 		$content_post_id = $this->factory()->post->create( [
 			'post_type'             => 'post',
 			'post_status'           => 'publish',
 			'post_content'          => sprintf( $post_content_template, $src_image_url ),
 			'post_content_filtered' => wp_slash( \json_encode( $src_panel ) ),
 		] );
+
+		if ( $kses_filter_priority !== false ) {
+			remove_filter('content_filtered_save_pre', 'wp_filter_post_kses', $kses_filter_priority );
+		}
 
 		restore_current_blog();
 
