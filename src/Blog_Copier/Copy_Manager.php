@@ -108,4 +108,10 @@ class Copy_Manager {
 			\WP_CLI::debug( sprintf( 'Error message: %s.', $error->get_error_message() ) );
 		}
 	}
+
+	public static function register_post_type(): void {
+		register_post_type( self::POST_TYPE, [
+			'public' => false,
+		] );
+	}
 }

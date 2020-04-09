@@ -8,7 +8,8 @@
         "php-di/php-di": "^6.0"
     },
     "require-dev": {
-        "symplify/monorepo-builder": "^7.2"
+        "symplify/monorepo-builder": "^6.0 || ^7.0",
+        "lucatume/wp-browser": "^2.3.4"
     },
     "autoload": {
         "files": [

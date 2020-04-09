@@ -17,3 +17,5 @@ pimple.json
 
 /vendor
 composer.lock
+/wordpress
+/wp-config-environment.php
