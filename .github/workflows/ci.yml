@@ -89,7 +89,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
 
       - name: Install composer dependencies
