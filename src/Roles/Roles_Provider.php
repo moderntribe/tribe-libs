@@ -64,6 +64,6 @@ class Roles_Provider extends Service_Provider {
 
 		add_action( 'admin_init', function () use ( $container ) {
 			$container[ Dashboard_Restictor::class ]->check_user();
-		}, 0, 0 );
+		}, 1, 0 );
 	}
 }
