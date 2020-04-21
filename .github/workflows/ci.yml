@@ -10,8 +10,8 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.2', '7.3' ]
-        wordpress-version: [ '5.4', '5.3.2', '5.2.5' ]
+        php-versions: [ '7.3' ]
+        wordpress-version: [ 'latest' ]
 
     env:
       cache_version: 0 # increment to flush all caches
@@ -94,6 +94,9 @@ jobs:
 
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
 
       - name: Run integration tests
         run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration
