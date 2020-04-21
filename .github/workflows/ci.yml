@@ -10,8 +10,9 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.2', '7.3', '7.4' ]
-        wordpress-version: [ '5.4', '5.3.2', '5.2.5' ]
+        php-versions: [ '7.3', '7.4' ]
+        wordpress-version: [ 'latest', '5.3.2' ]
+      fail-fast: false
 
     env:
       cache_version: 0 # increment to flush all caches
@@ -89,7 +90,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
 
       - name: Install composer dependencies
