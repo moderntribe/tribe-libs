@@ -5,7 +5,8 @@
     "license": "GPL-2.0-only",
     "require": {
         "php": "^7.0",
-        "php-di/php-di": "^6.0"
+        "php-di/php-di": "^6.0",
+        "filp/whoops": "^2.2@dev"
     },
     "require-dev": {
         "symplify/monorepo-builder": "^6.0 || ^7.0",
