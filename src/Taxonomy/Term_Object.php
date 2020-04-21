@@ -23,7 +23,7 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * called with a registered key.
  */
 class Term_Object {
-	const NAME = '';
+	public const NAME = '';
 
 	/** @var Meta_Map */
 	protected $meta;
