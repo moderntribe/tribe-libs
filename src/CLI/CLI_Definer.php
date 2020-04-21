@@ -7,7 +7,7 @@ use DI;
 use Tribe\Libs\Container\Definer_Interface;
 
 class CLI_Definer implements Definer_Interface {
-	public const COMMANDS = 'cli.commands';
+	public const COMMANDS = 'libs.cli.commands';
 
 	public function define(): array {
 		return [

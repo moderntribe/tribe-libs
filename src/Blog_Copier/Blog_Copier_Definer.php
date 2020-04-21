@@ -19,7 +19,7 @@ use Tribe\Libs\Container\Definer_Interface;
 use Tribe\Libs\Queues\Contracts\Queue;
 
 class Blog_Copier_Definer implements Definer_Interface {
-	public const TASK_CHAIN = 'blog_copier.task_chain';
+	public const TASK_CHAIN = 'libs.blog_copier.task_chain';
 
 	public function define(): array {
 		return [
