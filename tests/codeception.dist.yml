@@ -42,8 +42,15 @@ modules:
       configFile: "%TEST_CONFIG_FILE%"
       multisite: false
       theme: core
+      plugins:
+        - posts-to-posts/posts-to-posts.php
+      activatePlugins:
+        - posts-to-posts/posts-to-posts.php
       bootstrapActions:
         - [\Tribe\Libs\Blog_Copier\Copy_Manager, register_post_type]
+        - [P2P_Storage, install]
+        - [P2P_Storage, init]
+
 
 env:
   singlesite:

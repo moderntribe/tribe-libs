@@ -70,11 +70,14 @@ jobs:
           coverage: none
           tools: codeception, composer
 
-      - name: Download WordPress
+      - name: Download WordPress and plugins
         run: |
           wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
+          wget "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip" -O ./wordpress/wp-content/plugins/posts-to-posts.zip
+          unzip ./wordpress/wp-content/plugins/posts-to-posts.zip -d ./wordpress/wp-content/plugins
+          rm ./wordpress/wp-content/plugins/posts-to-posts.zip
 
       - name: Create config files
         run: |
