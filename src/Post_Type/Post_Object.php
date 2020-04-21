@@ -23,7 +23,7 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * called with a registered key.
  */
 class Post_Object {
-	const NAME = '';
+	public const NAME = '';
 
 	/** @var Meta_Map */
 	protected $meta;
@@ -54,7 +54,7 @@ class Post_Object {
 	/**
 	 * Get the value for the given meta key corresponding
 	 * to this post.
-	 * 
+	 *
 	 * @param string $key
 	 * @return mixed
 	 */
