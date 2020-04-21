@@ -34,6 +34,7 @@
             "Tribe\\Libs\\Post_Type\\": "src/Post_Type/",
             "Tribe\\Libs\\Queues\\": "src/Queues/",
             "Tribe\\Libs\\Queues_Mysql\\": "src/Queues_Mysql/",
+            "Tribe\\Libs\\Request\\": "src/Request/",
             "Tribe\\Libs\\Required_Page\\": "src/Required_Page/",
             "Tribe\\Libs\\Schema\\": "src/Schema/",
             "Tribe\\Libs\\Settings\\": "src/Settings/",

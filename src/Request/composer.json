@@ -1,0 +1,24 @@
+{
+    "name": "moderntribe/square1-request",
+    "type": "library",
+    "description": "A utility for forcing content pages to exist in square one",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Request\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2-dev"
+        }
+    }
+}
