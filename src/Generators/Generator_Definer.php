@@ -9,7 +9,7 @@ use Tribe\Libs\CLI\CLI_Definer;
 use Tribe\Libs\Container\Definer_Interface;
 
 class Generator_Definer implements Definer_Interface {
-	public const PATH = 'generator.path';
+	public const PATH = 'libs.generator.path';
 
 	public function define(): array {
 		return [

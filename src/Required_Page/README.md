@@ -53,3 +53,9 @@ class Content_Definer implements Definer_Interface {
 	}
 }
 ```
+
+The page will now be automatically created. The ID of the page can be found with:
+
+```php
+get_field( Contact_Page::NAME, 'option' );
+```
