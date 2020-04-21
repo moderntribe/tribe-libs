@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.2', '7.3', '7.4' ]
+        php-versions: [ '7.2', '7.3' ]
         wordpress-version: [ '5.4', '5.3.2', '5.2.5' ]
 
     env:
