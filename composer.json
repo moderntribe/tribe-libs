@@ -6,7 +6,8 @@
     "require": {
         "php": "^7.0",
         "php-di/php-di": "^6.0",
-        "filp/whoops": "^2.2@dev"
+        "filp/whoops": "^2.2@dev",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "symplify/monorepo-builder": "^6.0 || ^7.0",

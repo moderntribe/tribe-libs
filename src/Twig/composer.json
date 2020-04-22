@@ -9,11 +9,12 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "twig/twig": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Tribe\\Libs\\Request\\": ""
+            "Tribe\\Libs\\Twig\\": ""
         }
     },
     "extra": {
