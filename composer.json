@@ -39,6 +39,7 @@
             "Tribe\\Libs\\Schema\\": "src/Schema/",
             "Tribe\\Libs\\Settings\\": "src/Settings/",
             "Tribe\\Libs\\Taxonomy\\": "src/Taxonomy/",
+            "Tribe\\Libs\\Twig\\": "src/Twig/",
             "Tribe\\Libs\\User\\": "src/User/",
             "Tribe\\Libs\\Utils\\": "src/Utils/"
         }
@@ -64,10 +65,12 @@
         "moderntribe/square1-post-type": "self.version",
         "moderntribe/square1-queues": "self.version",
         "moderntribe/square1-queues-mysql": "self.version",
+        "moderntribe/square1-request": "self.version",
         "moderntribe/square1-required-page": "self.version",
         "moderntribe/square1-schema": "self.version",
         "moderntribe/square1-settings": "self.version",
         "moderntribe/square1-taxonomy": "self.version",
+        "moderntribe/square1-twig": "self.version",
         "moderntribe/square1-user": "self.version",
         "moderntribe/square1-utils": "self.version"
     },
