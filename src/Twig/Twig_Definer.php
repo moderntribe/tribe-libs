@@ -26,7 +26,7 @@ class Twig_Definer implements Definer_Interface {
 			self::OPTIONS => static function ( ContainerInterface $container ) {
 				return apply_filters( 'tribe/libs/twig/options', [
 					'debug'       => WP_DEBUG,
-					'cache'       => $container->get( Twig_Cache::class ),
+					'cache'       => defined( 'TWIG_CACHE' ) && TWIG_CACHE === false ? false : $container->get( Twig_Cache::class ),
 					'autoescape'  => false,
 					'auto_reload' => true,
 				] );
