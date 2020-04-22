@@ -12,7 +12,7 @@ class Twig_Cache extends FilesystemCache {
 		parent::__construct( $path, $options );
 	}
 
-	public function generateKey( $name, $className ) {
+	public function generateKey(string $name, string $className): string {
 		$hash = hash( 'sha256', $className );
 
 		return $this->path . $hash[0] . $hash[1] . '/' . $hash . '.html';
