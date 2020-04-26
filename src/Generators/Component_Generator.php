@@ -147,7 +147,7 @@ class Component_Generator extends Generator_Command {
 			return sprintf( "public const %s = '%s';", $prop['const'], $prop['name'] );
 		}, $properties ) );
 		$property_declarations = implode( "\n\t\t", array_map( function ( $prop ) {
-			return sprintf( "self::%s => [\n\t\t\tself::DEFAULT => '',\n\t\t]", $prop['const'] );
+			return sprintf( "self::%s => [\n\t\t\tself::DEFAULT => '',\n\t\t],", $prop['const'] );
 		}, $properties ) );
 
 		$context_file     = $this->component_directory( $path, $name ) . $classname . '.php';
@@ -178,7 +178,7 @@ class Component_Generator extends Generator_Command {
 		$context_alias = $classname . '_Context';
 
 		$property_defaults = implode( "\n\t\t\t", array_map( function ( $prop ) use ( $context_alias ) {
-			return sprintf( "%s::%s => ''", $context_alias, $prop['const'] );
+			return sprintf( "%s::%s => '',", $context_alias, $prop['const'] );
 		}, $properties ) );
 
 		$controller_file     = $this->controller_directory( $path, $name ) . $classname . '.php';
