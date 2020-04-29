@@ -149,7 +149,9 @@ class Component_Generator extends Generator_Command {
 	}
 
 	private function make_template( $name, $path, $properties, $dry_run ): void {
-		$template_file = $this->component_directory( $path, $name ) . $name . '.twig';
+		$directory = $this->component_directory( $path, $name );
+		$this->file_system->create_directory( $directory );
+		$template_file = $directory . $name . '.twig';
 		$props         = implode( "\n\t", array_map( static function ( $prop ) {
 			return sprintf( '{{ %s }}', $prop['name'] );
 		}, $properties ) );
@@ -170,6 +172,8 @@ class Component_Generator extends Generator_Command {
 	}
 
 	private function make_context( $name, $path, $properties, $dry_run ): void {
+		$directory = $this->component_directory( $path, $name );
+		$this->file_system->create_directory( $directory );
 		$classname = $this->class_name( $name );
 		$namespace = 'Tribe\Project\Templates\Components';
 		foreach ( $path as $path_part ) {
@@ -186,7 +190,7 @@ class Component_Generator extends Generator_Command {
 			return sprintf( "self::%s => [\n\t\t\tself::DEFAULT => '',\n\t\t],", $prop['const'] );
 		}, $properties ) );
 
-		$context_file     = $this->component_directory( $path, $name ) . $classname . '.php';
+		$context_file     = $directory . $classname . '.php';
 		$context_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/component/context.php' ),
 			$name,
@@ -222,7 +226,9 @@ class Component_Generator extends Generator_Command {
 			return sprintf( "%s::%s => '',", $context_alias, $prop['const'] );
 		}, $properties ) );
 
-		$controller_file     = $this->controller_directory( $path, $name ) . $classname . '.php';
+		$directory = $this->controller_directory( $path, $name );
+		$this->file_system->create_directory( $directory );
+		$controller_file     = $directory . $classname . '.php';
 		$controller_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/component/controller.php' ),
 			$classname,
@@ -242,8 +248,11 @@ class Component_Generator extends Generator_Command {
 	}
 
 	private function make_css( $name, $path, $dry_run ): void {
-		$index_file  = $this->component_directory( $path, $name ) . 'index.pcss';
-		$source_file = $this->component_directory( $path, $name ) . 'css/' . $name . '.pcss';
+		$directory = $this->component_directory( $path, $name );
+		$this->file_system->create_directory( $directory );
+		$this->file_system->create_directory( $directory . 'css/' );
+		$index_file  = $directory . 'index.pcss';
+		$source_file = $directory . 'css/' . $name . '.pcss';
 		$human_name  = $this->human_name( $name );
 
 		$index_contents  = sprintf(
@@ -269,8 +278,11 @@ class Component_Generator extends Generator_Command {
 	}
 
 	private function make_js( $name, $path, $dry_run ): void {
-		$index_file  = $this->component_directory( $path, $name ) . 'index.js';
-		$source_file = $this->component_directory( $path, $name ) . 'js/' . $name . '.js';
+		$directory = $this->component_directory( $path, $name );
+		$this->file_system->create_directory( $directory );
+		$this->file_system->create_directory( $directory . 'js/' );
+		$index_file  = $directory . 'index.js';
+		$source_file = $directory . 'js/' . $name . '.js';
 		$human_name  = $this->human_name( $name );
 
 		$index_contents  = sprintf(
