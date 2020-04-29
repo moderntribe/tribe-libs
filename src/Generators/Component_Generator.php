@@ -54,6 +54,27 @@ class Component_Generator extends Generator_Command {
 				'default'     => false,
 			],
 			[
+				'type'        => 'flag',
+				'name'        => 'css',
+				'optional'    => true,
+				'description' => __( 'Whether to generate a placeholder css file', 'tribe' ),
+				'default'     => false,
+			],
+			[
+				'type'        => 'flag',
+				'name'        => 'js',
+				'optional'    => true,
+				'description' => __( 'Whether to generate a placeholder js file', 'tribe' ),
+				'default'     => false,
+			],
+			[
+				'type'        => 'flag',
+				'name'        => 'dry-run',
+				'optional'    => true,
+				'description' => __( 'During a dry-run, no files will be written', 'tribe' ),
+				'default'     => false,
+			],
+			[
 				'type'        => 'assoc',
 				'name'        => 'properties',
 				'optional'    => true,
@@ -71,6 +92,9 @@ class Component_Generator extends Generator_Command {
 		$make_template   = get_flag_value( $assoc_args, 'template', true );
 		$make_context    = get_flag_value( $assoc_args, 'context', true );
 		$make_controller = get_flag_value( $assoc_args, 'controller', false );
+		$make_css        = get_flag_value( $assoc_args, 'css', false );
+		$make_js         = get_flag_value( $assoc_args, 'js', false );
+		$dry_run         = get_flag_value( $assoc_args, 'dry-run', false );
 
 		$properties = array_filter( array_map( [
 			$this,
@@ -78,15 +102,23 @@ class Component_Generator extends Generator_Command {
 		], explode( ',', $assoc_args['properties'] ?? '' ) ) );
 
 		if ( $make_template ) {
-			$this->make_template( $name, $path, $properties );
+			$this->make_template( $name, $path, $properties, $dry_run );
 		}
 
 		if ( $make_context ) {
-			$this->make_context( $name, $path, $properties );
+			$this->make_context( $name, $path, $properties, $dry_run );
 		}
 
 		if ( $make_controller ) {
-			$this->make_controller( $name, $path, $properties );
+			$this->make_controller( $name, $path, $properties, $dry_run );
+		}
+
+		if ( $make_css ) {
+			$this->make_css( $name, $path, $dry_run );
+		}
+
+		if ( $make_js ) {
+			$this->make_js( $name, $path, $dry_run );
 		}
 
 		\WP_CLI::success( 'Way to go! ' . \WP_CLI::colorize( "%W{$name}%n" ) . ' component has been created' );
@@ -94,7 +126,7 @@ class Component_Generator extends Generator_Command {
 
 	private function prepare_property( string $name ): array {
 		$name = sanitize_title( trim( $name ) );
-		if ( $name === 'classes' || $name === 'attrs' ) {
+		if ( $name === 'classes' || $name === 'attrs' || empty( $name ) ) {
 			return [];
 		}
 		$name  = str_replace( '-', '_', $name );
@@ -116,7 +148,7 @@ class Component_Generator extends Generator_Command {
 		return trailingslashit( $this->src_path . 'Templates/Controllers/' . implode( '/', $path ) );
 	}
 
-	private function make_template( $name, $path, $properties ): void {
+	private function make_template( $name, $path, $properties, $dry_run ): void {
 		$template_file = $this->component_directory( $path, $name ) . $name . '.twig';
 		$props         = implode( "\n\t", array_map( static function ( $prop ) {
 			return sprintf( '{{ %s }}', $prop['name'] );
@@ -127,13 +159,17 @@ class Component_Generator extends Generator_Command {
 			$props
 		);
 
-		\WP_CLI::log( 'Writing template file to ' . $template_file );
-		\WP_CLI::debug( 'Template contents: ' . "\n" . $template_contents );
 
-		$this->file_system->write_file( $template_file, $template_contents );
+		if ( $dry_run ) {
+			\WP_CLI::log( '[Dry Run] Template file: ' . $template_file );
+			\WP_CLI::log( 'Template contents: ' . "\n" . $template_contents );
+		} else {
+			\WP_CLI::log( 'Writing template file to ' . $template_file );
+			$this->file_system->write_file( $template_file, $template_contents );
+		}
 	}
 
-	private function make_context( $name, $path, $properties ): void {
+	private function make_context( $name, $path, $properties, $dry_run ): void {
 		$classname = $this->class_name( $name );
 		$namespace = 'Tribe\Project\Templates\Components';
 		foreach ( $path as $path_part ) {
@@ -161,13 +197,18 @@ class Component_Generator extends Generator_Command {
 			$property_declarations
 		);
 
-		\WP_CLI::log( 'Writing context file to ' . $context_file );
 		\WP_CLI::debug( 'Context contents: ' . "\n" . $context_contents );
 
-		$this->file_system->write_file( $context_file, $context_contents );
+		if ( $dry_run ) {
+			\WP_CLI::log( '[Dry Run] Context file: ' . $context_file );
+			\WP_CLI::log( 'Context contents: ' . "\n" . $context_contents );
+		} else {
+			\WP_CLI::log( 'Writing context file to ' . $context_file );
+			$this->file_system->write_file( $context_file, $context_contents );
+		}
 	}
 
-	private function make_controller( $name, $path, $properties ): void {
+	private function make_controller( $name, $path, $properties, $dry_run ): void {
 		$classname            = $this->class_name( $name );
 		$controller_namespace = 'Tribe\Project\Templates\Controllers';
 		$context_namespace    = 'Tribe\Project\Templates\Components';
@@ -191,15 +232,79 @@ class Component_Generator extends Generator_Command {
 			$property_defaults
 		);
 
-		\WP_CLI::log( 'Writing controller file to ' . $controller_file );
-		\WP_CLI::debug( 'Controller contents: ' . "\n" . $controller_contents );
+		if ( $dry_run ) {
+			\WP_CLI::log( '[Dry Run] Controller file: ' . $controller_file );
+			\WP_CLI::log( 'Controller contents: ' . "\n" . $controller_contents );
+		} else {
+			\WP_CLI::log( 'Writing controller file to ' . $controller_file );
+			$this->file_system->write_file( $controller_file, $controller_contents );
+		}
+	}
 
-		$this->file_system->write_file( $controller_file, $controller_contents );
+	private function make_css( $name, $path, $dry_run ): void {
+		$index_file  = $this->component_directory( $path, $name ) . 'index.pcss';
+		$source_file = $this->component_directory( $path, $name ) . 'css/' . $name . '.pcss';
+		$human_name  = $this->human_name( $name );
+
+		$index_contents  = sprintf(
+			file_get_contents( __DIR__ . '/templates/component/index.pcss' ),
+			$human_name,
+			$name
+		);
+		$source_contents = sprintf(
+			file_get_contents( __DIR__ . '/templates/component/source.pcss' ),
+			$human_name
+		);
+		if ( $dry_run ) {
+			\WP_CLI::log( '[Dry Run] CSS index file: ' . $index_file );
+			\WP_CLI::log( 'CSS index contents: ' . "\n" . $index_contents );
+			\WP_CLI::log( '[Dry Run] CSS source file: ' . $source_file );
+			\WP_CLI::log( 'CSS source contents: ' . "\n" . $source_contents );
+		} else {
+			\WP_CLI::log( 'Writing CSS index file to ' . $index_file );
+			$this->file_system->write_file( $index_file, $index_contents );
+			\WP_CLI::log( 'Writing CSS source file to ' . $source_file );
+			$this->file_system->write_file( $source_file, $source_contents );
+		}
+	}
+
+	private function make_js( $name, $path, $dry_run ): void {
+		$index_file  = $this->component_directory( $path, $name ) . 'index.js';
+		$source_file = $this->component_directory( $path, $name ) . 'js/' . $name . '.js';
+		$human_name  = $this->human_name( $name );
+
+		$index_contents  = sprintf(
+			file_get_contents( __DIR__ . '/templates/component/index.js' ),
+			$human_name,
+			$name
+		);
+		$source_contents = sprintf(
+			file_get_contents( __DIR__ . '/templates/component/source.js' ),
+			$human_name
+		);
+
+		if ( $dry_run ) {
+			\WP_CLI::log( '[Dry Run] JS index file: ' . $index_file );
+			\WP_CLI::log( 'JS index contents: ' . "\n" . $index_contents );
+			\WP_CLI::log( '[Dry Run] JS source file: ' . $source_file );
+			\WP_CLI::log( 'JS source contents: ' . "\n" . $source_contents );
+		} else {
+			\WP_CLI::log( 'Writing JS index file to ' . $index_file );
+			$this->file_system->write_file( $index_file, $index_contents );
+			\WP_CLI::log( 'Writing JS source file to ' . $source_file );
+			$this->file_system->write_file( $source_file, $source_contents );
+		}
 	}
 
 	protected function class_name( string $component_name ): string {
 		$parts = array_map( 'ucwords', explode( '-', $component_name ) );
 
 		return implode( '_', $parts );
+	}
+
+	protected function human_name( string $component_name ): string {
+		$parts = array_map( 'ucwords', explode( '-', $component_name ) );
+
+		return implode( ' ', $parts );
 	}
 }
