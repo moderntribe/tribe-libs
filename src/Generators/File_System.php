@@ -6,10 +6,10 @@ class File_System {
 
 	public function create_directory( $directory ) {
 		clearstatcache();
-		if ( file_exists( $directory ) ) {
-			\WP_CLI::error( 'Sorry... ' . $directory . ' directory already exists' );
+		if ( is_dir( $directory ) ) {
+			return;
 		}
-		if ( ! mkdir( $directory ) && ! is_dir( $directory ) ) {
+		if ( ! wp_mkdir_p( $directory ) && ! is_dir( $directory ) ) {
 			\WP_CLI::error( 'Sorry...something went wrong when we tried to create ' . $directory );
 		}
 	}
