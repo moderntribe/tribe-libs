@@ -27,6 +27,7 @@ parameters:
     src/CLI: "git@github.com:moderntribe/square1-cli.git"
     src/Container: "git@github.com:moderntribe/square1-container.git"
     src/Generators: "git@github.com:moderntribe/square1-generators.git"
+    src/Media: "git@github.com:moderntribe/square1-media.git"
     src/Nav: "git@github.com:moderntribe/square1-nav.git"
     src/Object_Meta: "git@github.com:moderntribe/square1-object-meta.git"
     src/Oembed: "git@github.com:moderntribe/square1-oembed.git"
