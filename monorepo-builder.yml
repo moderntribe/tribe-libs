@@ -1,4 +1,6 @@
 parameters:
+  enable_default_release_workers: true
+
   package_directories:
     - 'src'
 
@@ -13,9 +15,10 @@ parameters:
   data_to_append:
     autoload-dev:
       psr-4:
+        'Tribe\Libs\Dev\Monorepo\': 'dev/monorepo/src'
         'Tribe\Libs\': 'tests/integration/Tribe/Libs'
     require-dev:
-      symplify/monorepo-builder: '^6.0 || ^7.0'
+      symplify/monorepo-builder: '^6.0'
       lucatume/wp-browser: "^2.3.4"
 
   # for "split" command
@@ -42,3 +45,10 @@ parameters:
     src/Taxonomy: "git@github.com:moderntribe/square1-taxonomy.git"
     src/User: "git@github.com:moderntribe/square1-user.git"
     src/Utils: "git@github.com:moderntribe/square1-utils.git"
+
+services:
+  _defaults:
+    autowire: true
+
+  Tribe\Libs\Dev\Monorepo\:
+    resource: "./dev/monorepo/src/"

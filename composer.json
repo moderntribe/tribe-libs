@@ -10,7 +10,7 @@
         "twig/twig": "^3.0"
     },
     "require-dev": {
-        "symplify/monorepo-builder": "^6.0 || ^7.0",
+        "symplify/monorepo-builder": "^6.0",
         "lucatume/wp-browser": "^2.3.4",
         "phpunit/phpunit": "^8.0"
     },
@@ -48,6 +48,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src",
             "Tribe\\Libs\\": "tests/integration/Tribe/Libs"
         }
     },
