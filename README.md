@@ -47,7 +47,6 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    commit it to tribe-libs.
 1. Create an empty public GitHub repository for the package. Follow the
    naming convention `moderntribe/square1-*`.
-1. Register the package on [Packagist](https://packagist.org/packages/submit).
 1. Add the directory and repo to the `directories_to_repositories` map
    in `monorepo-builder.yml`.
 1. Run the script to merge the package `composer.json` files to the root
@@ -55,6 +54,7 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    ```
    ./monorepo.sh merge
    ```
+1. After the next release, Register the package on [Packagist](https://packagist.org/packages/submit).
 
 ### Adding Composer Dependencies
 
