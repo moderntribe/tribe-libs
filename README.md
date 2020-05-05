@@ -43,11 +43,11 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Adding Packages
 
-1. Create a new directory for the package in `src`. Create your code
-   there, include an independent `composer.json` for the package, and
-   commit it to tribe-libs.
-1. Create an empty public GitHub repository for the package. Follow the
-   naming convention `moderntribe/square1-*`. Ensure that the user `tr1b0t`
+1. Create a new directory for the package in `src`. Create your code there, include an independent
+   `composer.json` for the package (you can [copy the sample](dev/monorepo/samples/composer.json)),
+   and commit it to tribe-libs.
+1. Create an empty public GitHub repository for the package (you probably need to be an org admin to
+   complete this step). Follow the naming convention `moderntribe/square1-*`. Ensure that the user `tr1b0t`
    has write access to the repo. Use the script `dev/monorepo/scripts/create-package-repo.sh`
    to create the repo and add the `tr1b0t` user automatically.
    ```
