@@ -18,3 +18,4 @@ pimple.json
 /vendor
 /wordpress
 /wp-config-environment.php
+/.env
