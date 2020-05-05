@@ -38,7 +38,8 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    1. Create the git tag and push it to GitHub
    1. Bump the `master` branch version to the next minor version number
 1. When the tag is pushed to GitHub, an Action there will automatically split the monorepo and deploy the tag
-   to all of the package repos.
+   to all of the package repos. (Note: The GH Action will run as a bot user with appropriate permissions
+   to write to all of the package repositories. Those repositories are read-only for normal usage.)
 
 ### Adding Packages
 
@@ -90,3 +91,6 @@ is pushed to GitHub. That is really just running this command (but with appropri
 ```
 ./monorepo.sh split --tag="v3.0.0"
 ```
+
+Your GitHub user must have write access to all of the `square1-*` repositories to complete this successfully (this is
+why we have the GitHub Action).
