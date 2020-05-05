@@ -47,7 +47,11 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    commit it to tribe-libs.
 1. Create an empty public GitHub repository for the package. Follow the
    naming convention `moderntribe/square1-*`. Ensure that the user `tr1b0t`
-   has write access to the rpo.
+   has write access to the repo. Use the script `dev/monorepo/scripts/create-package-repo.sh`
+   to create the repo and add the `tr1b0t` user automatically.
+   ```
+   ./dev/monorepo/scripts/create-package-repo.sh square1-my-new-repo
+   ```
 1. Add the directory and repo to the `directories_to_repositories` map
    in `monorepo-builder.yml`.
 1. Run the script to merge the package `composer.json` files to the root
