@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
  *
  * Log something with WordPress actions
  *
- * do_action( Logger_Actions::WARNING, 'Something is wrong!', [ 'data' = $data ] );
+ * do_action( Log_Actions::WARNING, 'Something is wrong!', [ 'additional data' ] );
  *
  * @package Tribe\Libs\Log
  */
