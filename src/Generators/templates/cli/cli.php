@@ -2,7 +2,7 @@
 
 namespace Tribe\Project\CLI;
 
-class %1$s extends Command {
+class %1$s extends \Tribe\Libs\CLI\Command {
 
 	public function description() {
 		return __( '%2$s', 'tribe' );
@@ -24,8 +24,7 @@ class %1$s extends Command {
 	}
 
 	public function run_command( $args, $assoc_args ) {
-		$this->slug       = $this->sanitize_slug( $args );
-		$this->class_name = $this->ucwords( $this->slug );
+		\WP_CLI::success( __CLASS__ );
 	}
 
 }

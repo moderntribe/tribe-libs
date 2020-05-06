@@ -19,7 +19,7 @@ abstract class Generator_Command extends \Tribe\Libs\CLI\Command {
 	public function __construct( File_System $file_system, $src_path ) {
 		$this->file_system    = $file_system;
 		$this->templates_path = trailingslashit( __DIR__ ) . 'templates/';
-		$this->src_path       = $src_path;
+		$this->src_path       = trailingslashit( $src_path );
 		parent::__construct();
 	}
 
