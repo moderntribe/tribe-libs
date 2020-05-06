@@ -4,9 +4,12 @@
     "description": "A library for use on Modern Tribe service projects.",
     "license": "GPL-2.0-only",
     "require": {
-        "php": "^7.0",
-        "php-di/php-di": "^6.0",
         "filp/whoops": "^2.2@dev",
+        "mhcg/monolog-wp-cli": "^1.0",
+        "monolog/monolog": "^2.0",
+        "php": "^7.2",
+        "php-di/php-di": "^6.0",
+        "psr/log": "^1.1",
         "twig/twig": "^3.0"
     },
     "require-dev": {
@@ -27,9 +30,9 @@
             "Tribe\\Libs\\Cache\\": "src/Cache/",
             "Tribe\\Libs\\Container\\": "src/Container/",
             "Tribe\\Libs\\Generators\\": "src/Generators/",
+            "Tribe\\Libs\\Log\\": "src/Log/",
             "Tribe\\Libs\\Media\\": "src/Media/",
             "Tribe\\Libs\\Nav\\": "src/Nav/",
-            "Tribe\\Libs\\Log\\": "src/Log/",
             "Tribe\\Libs\\Object_Meta\\": "src/Object_Meta/",
             "Tribe\\Libs\\Oembed\\": "src/Oembed/",
             "Tribe\\Libs\\P2P\\": "src/P2P/",
@@ -44,13 +47,17 @@
             "Tribe\\Libs\\Taxonomy\\": "src/Taxonomy/",
             "Tribe\\Libs\\Twig\\": "src/Twig/",
             "Tribe\\Libs\\User\\": "src/User/",
-            "Tribe\\Libs\\Utils\\": "src/Utils/"
+            "Tribe\\Libs\\Utils\\": "src/Utils/",
+            "Tribe\\Libs\\Whoops\\": [
+                "src/Media/",
+                "src/Whoops/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src",
-            "Tribe\\Libs\\": "tests/integration/Tribe/Libs"
+            "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
+            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src"
         }
     },
     "replace": {
@@ -78,17 +85,18 @@
         "moderntribe/square1-taxonomy": "self.version",
         "moderntribe/square1-twig": "self.version",
         "moderntribe/square1-user": "self.version",
-        "moderntribe/square1-utils": "self.version"
+        "moderntribe/square1-utils": "self.version",
+        "moderntribe/square1-whoops": "self.version"
     },
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.2-dev"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
