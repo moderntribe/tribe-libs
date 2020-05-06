@@ -32,6 +32,7 @@ parameters:
     src/Generators: "git@github.com:moderntribe/square1-generators.git"
     src/Media: "git@github.com:moderntribe/square1-media.git"
     src/Nav: "git@github.com:moderntribe/square1-nav.git"
+    src/Log: "git@github.com:moderntribe/square1-log.git"
     src/Object_Meta: "git@github.com:moderntribe/square1-object-meta.git"
     src/Oembed: "git@github.com:moderntribe/square1-oembed.git"
     src/P2P: "git@github.com:moderntribe/square1-p2p.git"
