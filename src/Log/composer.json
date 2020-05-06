@@ -1,0 +1,28 @@
+{
+    "name": "moderntribe/square1-log",
+    "type": "library",
+    "description": "Provides a hook based PSR logger for square one",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.2",
+        "psr/log": "^1.1",
+        "moderntribe/square1-container": "^2.2",
+        "monolog/monolog": "^2.0",
+        "mhcg/monolog-wp-cli": "^1.0",
+        "pimple/pimple": "~3.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Log\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2-dev"
+        }
+    }
+}
