@@ -26,7 +26,7 @@ class MySQL implements Backend {
 		 *
 		 * @param string $table_name Table name with $wpdb->prefix added
 		 */
-		$table_name = apply_filters( 'core_queues_backend_mysql_table_name', $table_name );
+		$table_name = apply_filters( 'tribe/queues/mysql/table_name', $table_name );
 
 		$this->table_name = $table_name;
 	}
@@ -75,7 +75,7 @@ class MySQL implements Backend {
 			$wpdb->prepare(
 				"SELECT * FROM $this->table_name
 				WHERE queue = %s
-				AND taken = 0 
+				AND taken = 0
 				AND done = 0
 				AND run_after <= CURRENT_TIME()
 				ORDER BY priority ASC

@@ -45,11 +45,46 @@ All PHP classes will have their namespaces adjusted to reflect their position in
 
 # Post Type Generator
 
-TODO: write documentation for the post type generator
+```
+wp s1 generate cpt <cpt> [--single=<single>] [--plural=<plural>]
+```
+
+Generates the files required for a custom post type.
+
+Example usage:
+
+```
+wp s1 generate cpt document --single="Document" --plural="Documents"
+```
+
+This will create three files for you in the core plugin:
+
+* `src/Post_Types/Document/Document.php`
+* `src/Post_Types/Document/Config.php`
+* `src/Post_Types/Document/Subscriber.php`
+
+And it will add a reference to the subscriber in `Tribe\Project\Core`.
 
 # Taxonomy Generator
 
-TODO: write documentation for the taxonomy generator
+```
+wp s1 generate tax <taxonomy> [--post-types=<post-types>] [--single=<single>] [--plural=<plural>]
+```
+
+Generates the files required for a custom taxonomy.
+
+Example usage:
+
+wp s1 generate tax classification --post-types="page,post" --single="Classification" --plural="Classifications"
+
+
+This will create three files for you in the core plugin:
+
+* `src/Taxonomies/Classification/Classification.php`
+* `src/Taxonomies/Classification/Config.php`
+* `src/Taxonomies/Classification/Subscriber.php`
+
+And it will add a reference to the subscriber in `Tribe\Project\Core`.
 
 # Settings Page Generator
 
