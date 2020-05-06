@@ -12,8 +12,7 @@
         "psr/log": "^1.1",
         "moderntribe/square1-container": "^2.2",
         "monolog/monolog": "^2.0",
-        "mhcg/monolog-wp-cli": "^1.0",
-        "pimple/pimple": "~3.0@dev"
+        "mhcg/monolog-wp-cli": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +23,7 @@
         "branch-alias": {
             "dev-master": "2.2-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
