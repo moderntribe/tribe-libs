@@ -13,7 +13,7 @@ class Log_Subscriber extends Abstract_Subscriber {
 
 	protected function log(): void {
 		// Set logger action hooks
-		add_action( 'init', static function () {
+		add_action( 'init', function () {
 			$this->container->get( Log_Actions::class )->init();
 		}, 0, 0 );
 	}
