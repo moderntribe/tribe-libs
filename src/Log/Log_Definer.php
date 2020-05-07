@@ -13,13 +13,17 @@ class Log_Definer implements Definer_Interface {
 	public function define(): array {
 		return [
 			Psr\Log\LoggerInterface::class => DI\factory( function () {
-				$path        = WP_CONTENT_DIR . '/square-one-' . date( 'Y-m-d' ) . '.log';
-				$path        = apply_filters( 'tribe/log/path', $path );
-				$handler     = new StreamHandler( $path, MonoLogger::DEBUG );
-				$cli_handler = new WPCLIHandler( MonoLogger::DEBUG );
+				$path    = WP_CONTENT_DIR . '/square-one-' . date( 'Y-m-d' ) . '.log';
+				$path    = apply_filters( 'tribe/log/path', $path );
+				$level   = defined( 'LOG_LEVEL' ) ? LOG_LEVEL : MonoLogger::DEBUG;
+				$handler = new StreamHandler( $path, $level );
 
 				$logger = new Logger( $handler );
-				$logger->add_push_handler( $cli_handler );
+
+				if ( ( defined( 'WP_CLI' ) && WP_CLI ) && ( defined( 'TRIBE_LOG_CLI' ) && TRIBE_LOG_CLI ) ) {
+					$cli_handler = new WPCLIHandler( $level );
+					$logger->add_push_handler( $cli_handler );
+				}
 
 				return $logger;
 			} ),
