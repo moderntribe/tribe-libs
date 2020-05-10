@@ -45,6 +45,7 @@ parameters:
     src/Taxonomy: "git@github.com:moderntribe/square1-taxonomy.git"
     src/User: "git@github.com:moderntribe/square1-user.git"
     src/Utils: "git@github.com:moderntribe/square1-utils.git"
+    src/Whoops: "git@github.com:moderntribe/square1-whoops.git"
 
 services:
   _defaults:
