@@ -93,3 +93,29 @@ TODO: write documentation for the settings page generator
 # CLI Command Generator
 
 TODO: write documentation for the CLI command generator
+
+# Image Size Generator
+
+```
+wp s1 generate image-size <name> [--width=<width>] [--height=<height>] [--ratio=<ratio>] [--crop=<crop>]
+```
+
+Adds an image size to the core plugin's `Image_Sizes` class.
+
+Example usage:
+
+```
+wp s1 generate image-size test-size --width=1000 --ratio=0.75 --crop=left,top
+```
+
+This will add the constant `TEST_SIZE` to the `Image_Sizes` class and add this definition to the
+`$sizes` array:
+
+```
+self::TEST_SIZE => [
+	'width'  => 1000,
+	'height' => 750,
+	'crop'   => [ 'left', 'top' ],
+]
+```
+
