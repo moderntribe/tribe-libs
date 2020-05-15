@@ -25,7 +25,7 @@ class Full_Size_Gif {
 	}
 
 	/**
-	 * @param $src
+	 * @param string $src
 	 *
 	 * @return bool
 	 */

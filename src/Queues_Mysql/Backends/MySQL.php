@@ -66,7 +66,7 @@ class MySQL implements Backend {
 	 *
 	 * @return Message
 	 *
-	 * @throws /RuntimeException
+	 * @throws \RuntimeException
 	 */
 	public function dequeue( string $queue_name ): Message {
 		global $wpdb;
@@ -90,7 +90,7 @@ class MySQL implements Backend {
 			throw new \RuntimeException( 'No messages available to reserve.' );
 		}
 
-		$queue['args'] = json_decode( $queue['args'], 1 );
+		$queue['args'] = json_decode( $queue['args'], true );
 
 		if ( ! is_array( $queue[ 'args' ] ) ) {
 			// No args, or error decoding args, leaving us

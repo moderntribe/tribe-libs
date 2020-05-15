@@ -19,7 +19,7 @@ class Twig_Definer implements Definer_Interface {
 		return [
 			Twig_Cache::class => DI\create()
 				->constructor(
-					defined( 'TWIG_CACHE_DIR' ) && TWIG_CACHE_DIR ? TWIG_CACHE_DIR : WP_CONTENT_DIR . '/cache/twig/',
+					$this->twig_cache_dir(),
 					FilesystemCache::FORCE_BYTECODE_INVALIDATION
 				),
 
@@ -55,6 +55,16 @@ class Twig_Definer implements Definer_Interface {
 				return $environment;
 			},
 		];
+	}
+
+	private function twig_cache_dir(  ): string {
+		if ( defined( 'TWIG_CACHE_DIR' ) && TWIG_CACHE_DIR ) {
+			return TWIG_CACHE_DIR;
+		}
+		if ( defined( 'WP_CONTENT_DIR' ) && WP_CONTENT_DIR ) {
+			return WP_CONTENT_DIR . '/cache/twig/';
+		}
+		return sys_get_temp_dir() . '/cache/twig/';
 	}
 
 }

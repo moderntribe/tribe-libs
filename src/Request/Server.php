@@ -70,8 +70,11 @@ class Server {
 	public function get_method() {
 		$method = $_SERVER['REQUEST_METHOD'];
 
-		if ( 'POST' === $method && $method = $this->get_header( 'X-HTTP-METHOD-OVERRIDE' ) ) {
-			$method = strtoupper( $method );
+		if ( 'POST' === $method ) {
+			$override = $this->get_header( 'X-HTTP-METHOD-OVERRIDE' );
+			if ( $override ) {
+				$method = strtoupper( $override );
+			}
 		}
 
 		return $method;
@@ -143,9 +146,9 @@ class Server {
 	/**
 	 * Get the header value by the specified key.
 	 *
-	 * @param $key
+	 * @param string $key
 	 *
-	 * @return null
+	 * @return string|null
 	 */
 	public function get_header( $key ) {
 		return $this->headers[ $key ] ?? null;
