@@ -36,7 +36,7 @@ class Taxonomy_Registration {
 		if ( !$version ) {
 			return false;
 		}
-		if ( isset( $version_history[ $taxonomy ] ) && version_compare( $version, $version_history[ $taxonomy ], '<=' ) ) {
+		if ( isset( $version_history[ $taxonomy ] ) && version_compare( (string) $version, $version_history[ $taxonomy ], '<=' ) ) {
 			return false;
 		}
 		return true;
@@ -91,7 +91,7 @@ class Taxonomy_Registration {
 	/**
 	 * TODO: Move this to a taxonomy repository class
 	 *
-	 * @param int[] $term_ids
+	 * @param int[]|string $term_ids
 	 * @return int[]
 	 */
 	public static function get_term_taxonomy_ids_from_term_ids( $term_ids ) {
@@ -109,7 +109,7 @@ class Taxonomy_Registration {
 	/**
 	 * TODO: move this to a taxonomy repository class
 	 *
-	 * @param            $taxonomy
+	 * @param string     $taxonomy
 	 * @param string     $key_property
 	 * @param string     $value_property
 	 * @param array|null $args

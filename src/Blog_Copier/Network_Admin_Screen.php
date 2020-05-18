@@ -117,7 +117,7 @@ class Network_Admin_Screen {
 		global $wpdb;
 
 		$query = "SELECT b.blog_id, CONCAT(b.domain, b.path) as domain_path
-              FROM {$wpdb->blogs} b 
+              FROM {$wpdb->blogs} b
               WHERE b.site_id = %d
                 AND b.blog_id > 1
                 AND b.deleted = 0
@@ -210,7 +210,7 @@ class Network_Admin_Screen {
 	}
 
 	/**
-	 * @param $submission
+	 * @param array $submission
 	 *
 	 * @return \WP_Error
 	 */

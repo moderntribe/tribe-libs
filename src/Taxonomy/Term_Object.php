@@ -73,8 +73,8 @@ class Term_Object {
 	 */
 	public static function factory( $term_id ) {
 		/** @var Meta_Repository $meta_repo */
-		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
-		if ( !$meta_repo ) {
+		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
+		if ( empty( $meta_repo ) ) {
 			$meta_repo = new Meta_Repository();
 		}
 		$taxonomy = static::NAME;

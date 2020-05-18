@@ -11,7 +11,7 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * What the class handles.
 	 *
 	 * @see Walker::$tree_type
-	 * @var string
+	 * @var string[]
 	 */
 	public $tree_type = array( 'post_type', 'taxonomy', 'custom' );
 
@@ -41,7 +41,7 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * @param int    $depth             Depth of current element.
 	 * @param array  $args              An array of arguments.
 	 * @param string $output            Passed by reference. Used to append additional content.
-	 * @return null Null on failure with no changes to parameters.
+	 * @return void Null on failure with no changes to parameters.
 	 */
 	function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
@@ -78,7 +78,7 @@ abstract class Object_Nav_Walker extends Walker  {
 		}
 		$output['classes'] = isset( $output['classes'] ) ? $output['classes'] : array();
 		$output['classes'] = implode( ' ', array_merge( $output['classes'], $classes ) );
-		
+
 		// descend only when the depth is right and there are children for this element
 		if ( ($max_depth == 0 || $max_depth > $depth+1 ) && isset( $children_elements[$id]) ) {
 			$output['has_children'] = true;
@@ -181,11 +181,10 @@ abstract class Object_Nav_Walker extends Walker  {
 	 *
 	 * @param array $elements  An array of elements.
 	 * @param int   $max_depth The maximum hierarchical depth.
+	 * @param mixed ...$args   Optional additional arguments.
 	 * @return string The hierarchical item output.
 	 */
-	function walk( $elements, $max_depth) {
-
-		$args = array_slice(func_get_args(), 2);
+	function walk( $elements, $max_depth, ...$args) {
 		$menu_items = array();
 
 		if ($max_depth < -1) { //invalid parameter
