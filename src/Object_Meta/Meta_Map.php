@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tribe\Libs\Object_Meta;
-
 
 /**
  * Class Meta_Map
@@ -23,7 +21,7 @@ class Meta_Map {
 	 * Add the Meta_Group as the handler for its declared keys.
 	 * Any keys that are already handled will be taken over by
 	 * this group.
-	 * 
+	 *
 	 * @param Meta_Group $group
 	 * @return void
 	 */

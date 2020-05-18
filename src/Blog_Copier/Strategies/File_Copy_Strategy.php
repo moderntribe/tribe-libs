@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier\Strategies;
 
-
 abstract class File_Copy_Strategy {
 	public function handle_copy( $src_blog_id, $dest_blog_id ) {
 		@ini_set( 'memory_limit', '2048M' );

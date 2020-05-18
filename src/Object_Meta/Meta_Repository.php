@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tribe\Libs\Object_Meta;
-
 
 /**
  * Class Meta_Repository
@@ -41,7 +39,7 @@ class Meta_Repository {
 
 	/**
 	 * Assuming this is hooked in, declares itself as the global Meta_Repository
-	 * 
+	 *
 	 * @param mixed $repo
 	 * @return $this
 	 */

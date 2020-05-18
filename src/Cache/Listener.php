@@ -13,4 +13,3 @@ class Listener {
 		$this->cache = $cache ?: new Cache();
 	}
 }
-

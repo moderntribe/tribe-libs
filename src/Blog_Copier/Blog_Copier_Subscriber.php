@@ -27,7 +27,6 @@ class Blog_Copier_Subscriber extends Abstract_Subscriber {
 		add_action( 'network_admin_edit_' . Network_Admin_Screen::NAME, function () {
 			$this->container->get( Network_Admin_Screen::class )->handle_submission();
 		}, 10, 0 );
-
 	}
 
 	protected function manager() {

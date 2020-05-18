@@ -75,7 +75,6 @@ class Meta_Importer extends Generator_Command {
 
 		// Success!
 		\WP_CLI::line( __( 'We did it!', 'tribe' ) );
-
 	}
 
 	protected function get_dynamic_field_groups() {
@@ -115,7 +114,6 @@ class Meta_Importer extends Generator_Command {
 		$container_partial_file = file_get_contents( $this->templates_path . 'object_meta/container_partial.php' );
 		$container_partial      = sprintf( $container_partial_file, $this->class_name, $this->file_system->format_array_for_file( $this->build_object_array(), 16 ), $this->const_name );
 		$this->file_system->insert_into_existing_file( $definer, $container_partial, '->constructor( DI\get( self::GROUPS ) )' );
-
 	}
 
 	protected function build_object_array() {
@@ -225,7 +223,7 @@ class Meta_Importer extends Generator_Command {
 	}
 
 	private function prepare_field( $field ) {
-		unset ( $field['key'], $field['wrapper'], $field['prepend'], $field['append'] );
+		unset( $field['key'], $field['wrapper'], $field['prepend'], $field['append'] );
 
 		$field = array_filter( $field, function ( $element ) {
 			return '' !== $element;
@@ -258,7 +256,7 @@ class Meta_Importer extends Generator_Command {
 
 	private function get_repeater( $field ) {
 		$write_field = $field;
-		unset ( $write_field['sub_fields'] );
+		unset( $write_field['sub_fields'] );
 
 		$group_partial = file_get_contents( $this->templates_path . 'object_meta/repeater_function_partial.php' );
 		$group         = sprintf(

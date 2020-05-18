@@ -2,6 +2,7 @@
 
 
 namespace Tribe\Libs\Taxonomy\Walker;
+
 use Walker_Category_Checklist;
 
 class Walker_Category_Radio_List extends Walker_Category_Checklist {

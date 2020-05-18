@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Media;
 
-
 class WP_Responsive_Image_Disabler {
 
 	/**

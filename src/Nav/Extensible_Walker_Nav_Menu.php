@@ -22,7 +22,7 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   An array of wp_nav_menu() arguments.
 	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {
+	public function start_lvl( &$output, $depth = 0, $args = [] ) {
 
 		$indent = str_repeat( "\t", $depth );
 		$tag = apply_filters( 'nav_menu_start_level_tag', 'ul', $depth, $args );
@@ -42,7 +42,7 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   An array of wp_nav_menu() arguments.
 	 */
-	public function end_lvl( &$output, $depth = 0, $args = array() ) {
+	public function end_lvl( &$output, $depth = 0, $args = [] ) {
 		$tag = apply_filters( 'nav_menu_end_level_tag', 'ul', $depth, $args );
 		$indent = str_repeat( "\t", $depth );
 		$output .= "$indent</$tag>\n";
@@ -62,11 +62,11 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 	 * @param array  $args   An array of wp_nav_menu() arguments.
 	 * @param int    $id     Current item ID.
 	 */
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
 
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
-		$classes   = empty( $item->classes ) ? array() : (array)$item->classes;
+		$classes   = empty( $item->classes ) ? [] : (array)$item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
 
 		/**
@@ -91,8 +91,10 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 		 * @param array  $args    An array of wp_nav_menu() arguments.
 		 * @param int    $depth   Depth of menu item. Used for padding.
 		 */
-		$class_names = implode( ' ',
-			apply_filters( 'nav_menu_css_class', array_filter( array_map( 'sanitize_html_class', $classes ) ), $item, $args, $depth ) );
+		$class_names = implode(
+			' ',
+			apply_filters( 'nav_menu_css_class', array_filter( array_map( 'sanitize_html_class', $classes ) ), $item, $args, $depth ) 
+		);
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
 		$item_tag = apply_filters( 'nav_menu_item_tag', 'li', $item, $args, $depth );
@@ -113,7 +115,7 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 
 		$output .= $indent . '<' . $item_tag . $id . $class_names . '>';
 
-		$atts           = array();
+		$atts           = [];
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
 		$atts['target'] = ! empty( $item->target ) ? $item->target : '';
 		$atts['rel']    = ! empty( $item->xfn ) ? $item->xfn : '';
@@ -200,7 +202,7 @@ class Extensible_Walker_Nav_Menu extends \Walker_Nav_Menu {
 	 * @param int    $depth  Depth of page. Not Used.
 	 * @param array  $args   An array of wp_nav_menu() arguments.
 	 */
-	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
+	public function end_el( &$output, $item, $depth = 0, $args = [] ) {
 		$item_tag = apply_filters( 'nav_menu_item_tag', 'li', $item, $args, $depth );
 		$output .= "</$item_tag\n";
 	}

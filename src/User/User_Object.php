@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\User;
 
-
 use Tribe\Libs\Object_Meta\Meta_Map;
 use Tribe\Libs\Object_Meta\Meta_Repository;
 
@@ -34,7 +33,7 @@ class User_Object {
 	 * @param int           $user_id        The ID of a User.
 	 * @param Meta_Map|null $meta           Meta fields appropriate to a user.
 	 */
-	public function __construct( $user_id = 0, Meta_Map $meta = NULL ) {
+	public function __construct( $user_id = 0, Meta_Map $meta = null ) {
 		$this->user_id = $user_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
@@ -68,7 +67,7 @@ class User_Object {
 	 */
 	public static function factory( $user_id ) {
 		/** @var Meta_Repository $meta_repo */
-		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
+		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
 		if ( ! $meta_repo ) {
 			$meta_repo = new Meta_Repository();
 		}

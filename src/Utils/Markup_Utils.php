@@ -2,7 +2,6 @@
 
 namespace Tribe\Libs\Utils;
 
-
 class Markup_Utils {
 
 	public static function concat_attrs( array $attrs = null, $prefix = '' ) {

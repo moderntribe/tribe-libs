@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier\Strategies;
 
-
 class Shell_File_Copy extends File_Copy_Strategy {
 
 	protected function copy_files( $source, $destination ) {

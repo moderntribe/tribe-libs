@@ -124,7 +124,6 @@ class MySQL implements Backend {
 		}
 
 		return new Message( $queue['task_handler'], $queue['args'], $queue['priority'], $queue['id'] );
-
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
@@ -182,7 +181,6 @@ class MySQL implements Backend {
 			"SELECT COUNT(*) FROM $this->table_name WHERE queue = %s AND done = 0",
 			$queue_name
 		) );
-
 	}
 
 	public function table_exists() {

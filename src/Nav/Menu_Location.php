@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Nav;
 
-
 class Menu_Location {
 	private $location = '';
 	private $description = '';

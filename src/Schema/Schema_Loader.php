@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Schema;
 
-
 class Schema_Loader {
 	private $schema_classes;
 
