@@ -6,7 +6,7 @@ on:
       - 'src/**.php'
 
 jobs:
-  sniff:
+  analyze:
 
     runs-on: ${{ matrix.operating-system }}
 
