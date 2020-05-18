@@ -57,7 +57,7 @@ class Twig_Definer implements Definer_Interface {
 		];
 	}
 
-	private function twig_cache_dir(  ): string {
+	private function twig_cache_dir(): string {
 		if ( defined( 'TWIG_CACHE_DIR' ) && TWIG_CACHE_DIR ) {
 			return TWIG_CACHE_DIR;
 		}

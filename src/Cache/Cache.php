@@ -64,7 +64,9 @@ class Cache {
 	 * @return string
 	 */
 	private function filter_key( $key ) {
-		if ( empty( $key ) ) return '';
+		if ( empty( $key ) ) {
+			return '';
+		}
 		$key = ( is_array( $key ) ) ? md5( serialize( $key ) ) : $key;
 
 		$key .= $this->version();

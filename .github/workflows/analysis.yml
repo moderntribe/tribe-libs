@@ -1,4 +1,4 @@
-name: PHP Codesniffer
+name: PHP Code Sniffer and Static Analysis
 
 on:
   pull_request:
@@ -63,5 +63,8 @@ jobs:
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
-      - name: PHPCS
+      - name: Run PHPCS code sniffer
         run: ./vendor/bin/phpcs --standard=tests/phpcs.xml $( git diff-tree --no-commit-id --name-only -r ${GITHUB_SHA} | tr '\n' ' ' )
+
+      - name: Run PHPStan static analysis
+        run: vendor/bin/phpstan analyse -c tests/phpstan.neon
