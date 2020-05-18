@@ -39,7 +39,7 @@ class Meta_Map {
 	}
 
 	/**
-	 * @param int $object_id
+	 * @param int|string $object_id
 	 * @param string $key
 	 * @return mixed The value for the given key
 	 */

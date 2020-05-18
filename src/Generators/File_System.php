@@ -58,8 +58,8 @@ class File_System {
 	 * Thanks stackoverflow.
 	 * gist: https://gist.github.com/stemar/bb7c5cd2614b21b624bf57608f995ac0
 	 *
-	 * @param     $array
-	 * @param int $internal_indent
+	 * @param array $array
+	 * @param int   $internal_indent
 	 *
 	 * @return mixed
 	 */

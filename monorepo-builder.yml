@@ -18,7 +18,7 @@ parameters:
         'Tribe\Libs\Dev\Monorepo\': 'dev/monorepo/src'
         'Tribe\Libs\': 'tests/integration/Tribe/Libs'
     require-dev:
-      symplify/monorepo-builder: '^6.0'
+      symplify/monorepo-builder: "^6.0"
       lucatume/wp-browser: "^2.3.4"
       phpunit/phpunit: "^8.0"
       automattic/phpcs-neutron-standard: "^1.5"
@@ -28,6 +28,9 @@ parameters:
       phpcompatibility/phpcompatibility-wp: "^2.0"
       sirbrillig/phpcs-variable-analysis: "^2.0.1"
       squizlabs/php_codesniffer: "^3.4.2"
+      phpstan/phpstan: "^0.12.25"
+      szepeviktor/phpstan-wordpress: "^0.6.0"
+      wp-cli/wp-cli: "^2.4"
 
   # for "split" command
   directories_to_repositories:

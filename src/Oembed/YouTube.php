@@ -46,6 +46,8 @@ class YouTube implements \JsonSerializable {
 
 	private $url;
 
+	private $object;
+
 	/**
 	 * cache
 	 *
@@ -81,7 +83,7 @@ class YouTube implements \JsonSerializable {
 	 *
 	 * So $video->thumbnail_url becomes $this->get_thumbnail_url()
 	 *
-	 * @param $field
+	 * @param string $field
 	 *
 	 * @return bool
 	 */
@@ -139,8 +141,8 @@ class YouTube implements \JsonSerializable {
 		$object = $this->get_object();
 		$frame  = "";
 		if ( !empty( $object->id ) ) {
-			$frame = '<iframe 
-						width="' . $this->width . '" 
+			$frame = '<iframe
+						width="' . $this->width . '"
 						height="' . $this->height . '"
 						src="https://www.youtube.com/embed/' . $object->id . '">
 				</iframe>';

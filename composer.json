@@ -19,7 +19,10 @@
         "phpcompatibility/php-compatibility": "*",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
         "sirbrillig/phpcs-variable-analysis": "^2.0.1",
-        "squizlabs/php_codesniffer": "^3.4.2"
+        "squizlabs/php_codesniffer": "^3.4.2",
+        "phpstan/phpstan": "^0.12.25",
+        "szepeviktor/phpstan-wordpress": "^0.6.0",
+        "wp-cli/wp-cli": "^2.4"
     },
     "autoload": {
         "files": [

@@ -56,7 +56,7 @@ class Task_Chain {
 	}
 
 	/**
-	 * @param $prev
+	 * @param string $prev
 	 *
 	 * @return string
 	 */

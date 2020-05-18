@@ -30,7 +30,7 @@ abstract class Required_Page {
 	 * @return string The post type of the post that will be created
 	 */
 	protected function get_post_type() {
-		return Page::NAME;
+		return 'page';
 	}
 
 	/**
@@ -96,7 +96,7 @@ abstract class Required_Page {
 	}
 
 	/**
-	 * @param $post_id
+	 * @param int $post_id
 	 *
 	 * @return void
 	 * @action trashed_post

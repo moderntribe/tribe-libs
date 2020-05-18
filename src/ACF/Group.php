@@ -92,7 +92,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	/**
 	 * Assign the location restrictions for this group.
 	 *
-	 * @param $attributes
+	 * @param array $attributes
 	 *
 	 * @return array
 	 */

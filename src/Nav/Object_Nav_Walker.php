@@ -11,7 +11,7 @@ abstract class Object_Nav_Walker extends Walker {
 	 * What the class handles.
 	 *
 	 * @see Walker::$tree_type
-	 * @var string
+	 * @var string[]
 	 */
 	public $tree_type = [ 'post_type', 'taxonomy', 'custom' ];
 
@@ -41,7 +41,7 @@ abstract class Object_Nav_Walker extends Walker {
 	 * @param int    $depth             Depth of current element.
 	 * @param array  $args              An array of arguments.
 	 * @param string $output            Passed by reference. Used to append additional content.
-	 * @return null Null on failure with no changes to parameters.
+	 * @return void Null on failure with no changes to parameters.
 	 */
 	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
