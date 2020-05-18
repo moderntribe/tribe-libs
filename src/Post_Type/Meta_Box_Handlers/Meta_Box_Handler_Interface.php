@@ -2,7 +2,6 @@
 
 namespace Tribe\Libs\Post_Type\Meta_Box_Handlers;
 
-
 use Tribe\Libs\Post_Type\Post_Type_Config;
 
 interface Meta_Box_Handler_Interface {
@@ -14,7 +13,7 @@ interface Meta_Box_Handler_Interface {
 	 * 
 	 * @return void
 	 */
-	public function hook(  );
+	public function hook();
 	
 	/**
 	 * Registers the meta boxes for a post type.

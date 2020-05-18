@@ -54,7 +54,7 @@ class Titles_Filter {
 	 * @return string
 	 * @filter p2p_candidate_title
 	 */
-	public function filter_candidate_name( $title,  $object ) {
+	public function filter_candidate_name( $title, $object ) {
 		if ( empty( $this->connection_types ) ) {
 			return $title;
 		}

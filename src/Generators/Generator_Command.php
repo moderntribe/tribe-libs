@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Generators;
 
-
 abstract class Generator_Command extends \Tribe\Libs\CLI\Command {
 
 	protected $file_system    = null;

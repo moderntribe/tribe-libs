@@ -14,6 +14,5 @@ class Noop implements Task {
 
 		\WP_CLI::line( 'Noop task failed, releasing ack' );
 		return false;
-
 	}
 }

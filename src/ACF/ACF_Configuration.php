@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\ACF;
 
-
 abstract class ACF_Configuration {
 	protected $key        = '';
 	protected $attributes = [ ];

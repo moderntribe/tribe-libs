@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Required_Page;
 
-
 use Tribe\Libs\ACF;
 use Tribe\Project\Post_Types\Page\Page;
 

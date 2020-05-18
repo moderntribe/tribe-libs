@@ -69,7 +69,6 @@ class WP_Cache implements Backend {
 		$this->save_queue( $queue_name, $queue );
 
 		return new Message( $queue[ $job_id ]['task_handler'], $queue[ $job_id ]['args'], $queue[ $job_id ]['priority'], $job_id );
-
 	}
 
 	public function ack( string $job_id, string $queue_name ) {

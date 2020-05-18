@@ -88,7 +88,10 @@ class Image_Size_Generator extends Generator_Command {
 		$crop_string       = is_array( $crop ) ? sprintf( "[ '%s', '%s' ]", $crop[0], $crop[1] ) : ( $crop === true ? 'true' : 'false' );
 		$definition_string = sprintf(
 			"\t\tself::%s => [\n\t\t\t'width'  => %d,\n\t\t\t'height' => %d,\n\t\t\t'crop'   => %s,\n\t\t],\n",
-			$const, $width, $height, $crop_string
+			$const,
+			$width,
+			$height,
+			$crop_string
 		);
 
 		\WP_CLI::log( sprintf( "Adding image size '%s'", $name ) );
@@ -107,7 +110,6 @@ class Image_Size_Generator extends Generator_Command {
 		$this->file_system->insert_into_existing_file( $file_path, $definition_string, 'private $sizes' );
 
 		\WP_CLI::success( sprintf( "Image size '%s' added to %s", $name, $file_path ) );
-
 	}
 
 	/**

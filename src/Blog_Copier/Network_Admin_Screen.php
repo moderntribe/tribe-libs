@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier;
 
-
 class Network_Admin_Screen {
 	const NAME = 'copy-blog';
 
@@ -18,7 +17,8 @@ class Network_Admin_Screen {
 	 */
 	public function register_screen() {
 
-		add_submenu_page( 'sites.php',
+		add_submenu_page(
+			'sites.php',
 			__( 'Blog Copier', 'tribe' ),
 			__( 'Blog Copier', 'tribe' ),
 			'manage_sites',

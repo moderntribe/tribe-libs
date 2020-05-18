@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tribe\Libs\Object_Meta;
-
 
 /**
  * Class Meta_Map
