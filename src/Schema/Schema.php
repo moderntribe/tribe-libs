@@ -70,9 +70,9 @@ abstract class Schema {
 		$version_in_db = get_option($this->version_option, 0 );
 
 		if ( version_compare( $version, $version_in_db ) > 0 ) {
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	public function update_required() {

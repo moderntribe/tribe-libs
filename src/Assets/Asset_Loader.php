@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Assets;
 
-
 class Asset_Loader {
 	private $base_dir = '';
 

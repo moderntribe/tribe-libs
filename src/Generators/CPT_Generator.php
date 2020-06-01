@@ -118,7 +118,6 @@ class CPT_Generator extends Generator_Command {
 			$this->class_name,
 			$this->slug
 		);
-
 	}
 
 	private function get_config_contents() {
@@ -132,7 +131,6 @@ class CPT_Generator extends Generator_Command {
 			$this->assoc_args['plural'],
 			$this->slug
 		);
-
 	}
 
 	private function get_subscriber_contents() {
@@ -143,7 +141,6 @@ class CPT_Generator extends Generator_Command {
 			$template_file,
 			$this->class_name
 		);
-
 	}
 
 }

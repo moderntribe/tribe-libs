@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\ACF;
 
-
 class Repeater extends Field implements ACF_Aggregate {
 	protected $key_prefix = 'field';
 

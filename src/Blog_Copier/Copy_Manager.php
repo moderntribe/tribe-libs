@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier;
 
-
 use Tribe\Libs\Blog_Copier\Tasks\Cleanup;
 use Tribe\Libs\Queues\Contracts\Queue;
 

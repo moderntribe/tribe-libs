@@ -5,17 +5,25 @@
     "license": "GPL-2.0-only",
     "require": {
         "filp/whoops": "^2.2@dev",
-        "mhcg/monolog-wp-cli": "^1.0",
-        "monolog/monolog": "^2.0",
         "php": "^7.2",
         "php-di/php-di": "^6.0",
-        "psr/log": "^1.1",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "symplify/monorepo-builder": "^6.0",
         "lucatume/wp-browser": "^2.3.4",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.0",
+        "automattic/phpcs-neutron-standard": "^1.5",
+        "automattic/vipwpcs": "^2.0.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+        "phpcompatibility/php-compatibility": "*",
+        "phpcompatibility/phpcompatibility-wp": "^2.0",
+        "sirbrillig/phpcs-variable-analysis": "^2.0.1",
+        "squizlabs/php_codesniffer": "^3.4.2",
+        "phpstan/phpstan": "^0.12.25",
+        "szepeviktor/phpstan-wordpress": "^0.6.0",
+        "wp-cli/wp-cli": "^2.4"
     },
     "autoload": {
         "files": [
@@ -48,10 +56,7 @@
             "Tribe\\Libs\\Twig\\": "src/Twig/",
             "Tribe\\Libs\\User\\": "src/User/",
             "Tribe\\Libs\\Utils\\": "src/Utils/",
-            "Tribe\\Libs\\Whoops\\": [
-                "src/Media/",
-                "src/Whoops/"
-            ]
+            "Tribe\\Libs\\Whoops\\": "src/Whoops/"
         }
     },
     "autoload-dev": {

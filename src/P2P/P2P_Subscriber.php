@@ -23,7 +23,6 @@ class P2P_Subscriber extends Abstract_Subscriber {
 		$this->title_filters();
 		$this->event_filters();
 		$this->search_filters();
-
 	}
 
 	protected function title_filters(): void {

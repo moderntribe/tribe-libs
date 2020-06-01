@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\P2P;
 
-
 abstract class Relationship {
 	const NAME = ''; // override this in a child class
 

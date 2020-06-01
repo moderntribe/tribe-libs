@@ -25,6 +25,11 @@ class Request {
 	protected $query_params;
 
 	/**
+	 * @var string
+	 */
+	protected $url;
+
+	/**
 	 * @var Server
 	 */
 	protected $server;
@@ -71,7 +76,7 @@ class Request {
 	/**
 	 * Get a specific header value by the provided key.
 	 *
-	 * @param $key
+	 * @param string $key
 	 *
 	 * @return string|null
 	 */
@@ -82,13 +87,14 @@ class Request {
 	/**
 	 * Retrieve a specific input value (method agnostic) by key.
 	 *
-	 * @param     $key
-	 * @param int $filter
+	 * @param string $key
+	 * @param int    $filter
 	 *
 	 * @return mixed
 	 */
 	public function input( $key, $filter = FILTER_DEFAULT ) {
 		$value = $this->input[ $key ] ?? null;
+
 		return filter_var( $value, $filter );
 	}
 
@@ -149,6 +155,7 @@ class Request {
 	 */
 	public function has( $key ): bool {
 		$keys = is_array( $key ) ? $key : func_get_args();
+
 		return $this->check_for_keys( $keys );
 	}
 
@@ -161,6 +168,7 @@ class Request {
 	 */
 	public function filled( $key ): bool {
 		$keys = is_array( $key ) ? $key : func_get_args();
+
 		return $this->check_for_keys( $keys, true );
 	}
 
@@ -207,8 +215,8 @@ class Request {
 	/**
 	 * Loop through inputs and check if the provided keys exist.
 	 *
-	 * @param      $keys
-	 * @param bool $is_filled
+	 * @param string[] $keys
+	 * @param bool     $is_filled
 	 *
 	 * @return bool
 	 */
@@ -229,7 +237,7 @@ class Request {
 	/**
 	 * Determine if the given input key is an empty string for "has".
 	 *
-	 * @param  string $key
+	 * @param string $key
 	 *
 	 * @return bool
 	 */

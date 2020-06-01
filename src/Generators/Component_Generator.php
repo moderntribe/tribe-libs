@@ -150,7 +150,6 @@ class Component_Generator extends Generator_Command {
 
 	private function make_template( $name, $path, $properties, $dry_run ): void {
 		$directory = $this->component_directory( $path, $name );
-		$this->file_system->create_directory( $directory );
 		$template_file = $directory . $name . '.twig';
 		$props         = implode( "\n\t", array_map( static function ( $prop ) {
 			return sprintf( '{{ %s }}', $prop['name'] );
@@ -167,13 +166,13 @@ class Component_Generator extends Generator_Command {
 			\WP_CLI::log( 'Template contents: ' . "\n" . $template_contents );
 		} else {
 			\WP_CLI::log( 'Writing template file to ' . $template_file );
+			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $template_file, $template_contents );
 		}
 	}
 
 	private function make_context( $name, $path, $properties, $dry_run ): void {
 		$directory = $this->component_directory( $path, $name );
-		$this->file_system->create_directory( $directory );
 		$classname = $this->class_name( $name );
 		$namespace = 'Tribe\Project\Templates\Components';
 		foreach ( $path as $path_part ) {
@@ -208,6 +207,7 @@ class Component_Generator extends Generator_Command {
 			\WP_CLI::log( 'Context contents: ' . "\n" . $context_contents );
 		} else {
 			\WP_CLI::log( 'Writing context file to ' . $context_file );
+			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $context_file, $context_contents );
 		}
 	}
@@ -227,7 +227,6 @@ class Component_Generator extends Generator_Command {
 		}, $properties ) );
 
 		$directory = $this->controller_directory( $path, $name );
-		$this->file_system->create_directory( $directory );
 		$controller_file     = $directory . $classname . '.php';
 		$controller_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/component/controller.php' ),
@@ -243,14 +242,13 @@ class Component_Generator extends Generator_Command {
 			\WP_CLI::log( 'Controller contents: ' . "\n" . $controller_contents );
 		} else {
 			\WP_CLI::log( 'Writing controller file to ' . $controller_file );
+			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $controller_file, $controller_contents );
 		}
 	}
 
 	private function make_css( $name, $path, $dry_run ): void {
 		$directory = $this->component_directory( $path, $name );
-		$this->file_system->create_directory( $directory );
-		$this->file_system->create_directory( $directory . 'css/' );
 		$index_file  = $directory . 'index.pcss';
 		$source_file = $directory . 'css/' . $name . '.pcss';
 		$human_name  = $this->human_name( $name );
@@ -271,16 +269,16 @@ class Component_Generator extends Generator_Command {
 			\WP_CLI::log( 'CSS source contents: ' . "\n" . $source_contents );
 		} else {
 			\WP_CLI::log( 'Writing CSS index file to ' . $index_file );
+			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $index_file, $index_contents );
 			\WP_CLI::log( 'Writing CSS source file to ' . $source_file );
+			$this->file_system->create_directory( $directory . 'css/' );
 			$this->file_system->write_file( $source_file, $source_contents );
 		}
 	}
 
 	private function make_js( $name, $path, $dry_run ): void {
 		$directory = $this->component_directory( $path, $name );
-		$this->file_system->create_directory( $directory );
-		$this->file_system->create_directory( $directory . 'js/' );
 		$index_file  = $directory . 'index.js';
 		$source_file = $directory . 'js/' . $name . '.js';
 		$human_name  = $this->human_name( $name );
@@ -302,8 +300,10 @@ class Component_Generator extends Generator_Command {
 			\WP_CLI::log( 'JS source contents: ' . "\n" . $source_contents );
 		} else {
 			\WP_CLI::log( 'Writing JS index file to ' . $index_file );
+			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $index_file, $index_contents );
 			\WP_CLI::log( 'Writing JS source file to ' . $source_file );
+			$this->file_system->create_directory( $directory . 'js/' );
 			$this->file_system->write_file( $source_file, $source_contents );
 		}
 	}

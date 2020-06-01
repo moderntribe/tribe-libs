@@ -2,7 +2,6 @@
 
 namespace Tribe\Libs\Utils;
 
-
 class Query_Utils {
 
 	/**

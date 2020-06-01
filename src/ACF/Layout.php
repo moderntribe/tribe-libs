@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\ACF;
 
-
 class Layout extends Field implements ACF_Aggregate {
 	protected $key_prefix = 'layout';
 

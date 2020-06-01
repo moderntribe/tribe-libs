@@ -8,7 +8,7 @@ use Tribe\Libs\Container\Abstract_Subscriber;
 
 class Object_Meta_Subscriber extends Abstract_Subscriber {
 	public function register(): void {
-		add_filter( Meta_Repository::GET_REPO_FILTER, function( $repo ) {
+		add_filter( Meta_Repository::GET_REPO_FILTER, function ( $repo ) {
 			return $this->container->get( Meta_Repository::class )->filter_global_instance( $repo );
 		}, 10, 1 );
 

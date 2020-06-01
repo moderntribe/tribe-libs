@@ -2,7 +2,6 @@
 
 namespace Tribe\Libs\P2P;
 
-
 use Tribe\Libs\Assets\Asset_Loader;
 
 class Admin_Search_Filtering {
