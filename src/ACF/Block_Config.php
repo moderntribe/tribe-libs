@@ -16,7 +16,7 @@ abstract class Block_Config {
 	/**
 	 * @var Field_Collection
 	 */
-	protected $settings = [];
+	protected $settings;
 
 	/**
 	 * @var Block
