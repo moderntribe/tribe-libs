@@ -5,4 +5,4 @@ namespace Tribe\Libs\ACF;
 
 use Tribe\Libs\Util\Collection;
 
-class FieldCollection extends Collection {}
+class Field_Collection extends Collection {}

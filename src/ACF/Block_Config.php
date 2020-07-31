@@ -10,12 +10,12 @@ abstract class Block_Config {
 	public const SETTING_TAB = 'settings';
 
 	/**
-	 * @var FieldCollection
+	 * @var Field_Collection
 	 */
 	protected $fields;
 
 	/**
-	 * @var FieldCollection
+	 * @var Field_Collection
 	 */
 	protected $settings = [];
 
@@ -31,8 +31,8 @@ abstract class Block_Config {
 	abstract protected function add_settings();
 
 	public function init() {
-		$this->fields   = new FieldCollection();
-		$this->settings = new FieldCollection();
+		$this->fields   = new Field_Collection();
+		$this->settings = new Field_Collection();
 		$this->add_block();
 		$this->add_fields();
 		$this->add_settings();
