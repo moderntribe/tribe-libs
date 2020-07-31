@@ -3,7 +3,6 @@ declare( strict_types=1 );
 
 namespace Tribe\Libs\ACF;
 
-
 abstract class Block_Config {
 	public const NAME        = '';
 	public const CONTENT_TAB = 'content';
@@ -17,7 +16,7 @@ abstract class Block_Config {
 	/**
 	 * @var Field_Collection
 	 */
-	protected $settings = [];
+	protected $settings;
 
 	/**
 	 * @var Block
@@ -88,7 +87,8 @@ abstract class Block_Config {
 		] );
 
 		$group->add_field( $this->get_tab(
-			self::CONTENT_TAB, __( 'Content', 'tribe' )
+			self::CONTENT_TAB,
+			__( 'Content', 'tribe' )
 		) );
 
 		foreach ( $this->fields as $field ) {
@@ -100,7 +100,8 @@ abstract class Block_Config {
 		}
 
 		$group->add_field( $this->get_tab(
-			self::SETTING_TAB, __( 'Settings', 'tribe' )
+			self::SETTING_TAB,
+			__( 'Settings', 'tribe' )
 		) );
 
 		foreach ( $this->settings as $setting ) {

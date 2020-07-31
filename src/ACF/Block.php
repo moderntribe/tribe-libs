@@ -12,8 +12,8 @@ class Block {
 	/**
 	 * Block constructor.
 	 *
-	 * @param       $name
-	 * @param array $attributes
+	 * @param string $name
+	 * @param array  $attributes
 	 */
 	public function __construct( $name, $attributes = [] ) {
 		$this->attributes           = $attributes;
@@ -21,8 +21,8 @@ class Block {
 	}
 
 	/**
-	 * @param $key
-	 * @param $value
+	 * @param string $key
+	 * @param mixed $value
 	 */
 	public function set( $key, $value ) {
 		$this->attributes[ $key ] = $value;

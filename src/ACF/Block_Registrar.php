@@ -26,6 +26,4 @@ class Block_Registrar {
 	protected function register_fields( Block_Config $block_config ) {
 		acf_add_local_field_group( $block_config->get_field_group()->get_attributes() );
 	}
-
-
 }
