@@ -45,6 +45,23 @@ class Markup_Utils {
 	}
 
 	/**
+	 * @param array $default
+	 * @param array $custom
+	 * @param bool  $to_string
+	 *
+	 * @return array|string
+	 */
+	public static function merge_classes( array $default, array $custom, bool $to_string ) {
+		$classes = ! empty( $custom ) ? array_merge( $default, $custom ) : $default;
+
+		if ( $to_string ) {
+			$classes = implode( ' ', $classes );
+		}
+
+		return $classes;
+	}
+
+	/**
 	 * Truncate an HTML block to the given number of words. Cleanly strips out
 	 * shortcodes to avoid truncating in the middle of one.
 	 *
