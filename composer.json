@@ -5,9 +5,10 @@
     "license": "GPL-2.0-only",
     "require": {
         "filp/whoops": "^2.2@dev",
-        "php": "^7.0",
+        "php": "^7.2",
         "php-di/php-di": "^6.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "symplify/monorepo-builder": "^6.0",
@@ -37,6 +38,7 @@
             "Tribe\\Libs\\Cache\\": "src/Cache/",
             "Tribe\\Libs\\Container\\": "src/Container/",
             "Tribe\\Libs\\Generators\\": "src/Generators/",
+            "Tribe\\Libs\\Log\\": "src/Log/",
             "Tribe\\Libs\\Media\\": "src/Media/",
             "Tribe\\Libs\\Nav\\": "src/Nav/",
             "Tribe\\Libs\\Object_Meta\\": "src/Object_Meta/",
@@ -73,6 +75,7 @@
         "moderntribe/square1-generators": "self.version",
         "moderntribe/square1-media": "self.version",
         "moderntribe/square1-nav": "self.version",
+        "moderntribe/square1-log": "self.version",
         "moderntribe/square1-object-meta": "self.version",
         "moderntribe/square1-oembed": "self.version",
         "moderntribe/square1-p2p": "self.version",

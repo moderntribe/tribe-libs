@@ -1,26 +1,29 @@
 {
-    "name": "moderntribe/square1-queues",
+    "name": "moderntribe/square1-log",
     "type": "library",
-    "description": "A queues provider for square one",
+    "description": "Provides a hook based PSR logger for square one",
     "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"
     },
-    "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-cli": "^2.2",
+        "php": "^7.2",
+        "psr/log": "^1.1",
         "moderntribe/square1-container": "^2.2",
-        "php": "^7.2"
+        "monolog/monolog": "^2.0",
+        "mhcg/monolog-wp-cli": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "Tribe\\Libs\\Queues\\": ""
+            "Tribe\\Libs\\Log\\": ""
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.2-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
