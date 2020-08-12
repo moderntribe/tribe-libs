@@ -43,6 +43,13 @@ abstract class Block_Config {
 	 * @return $this
 	 */
 	public function set_block( Block $block ): Block_Config {
+		$attr = $block->get_attributes();
+		if ( empty( $attr[ 'render_callback' ] ) && empty( $attr[ 'render_template' ] ) ) {
+			$block->set( 'render_callback', function ( ...$args ) {
+				do_action( 'tribe/project/block/render', ...$args );
+			} );
+		}
+
 		$this->block = $block;
 
 		return $this;
