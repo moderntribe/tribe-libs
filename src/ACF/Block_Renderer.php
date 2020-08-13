@@ -25,7 +25,7 @@ class Block_Renderer {
 			return;
 		}
 
-		get_template_part( $path, null, [ 'block' => $block ] );
+		get_template_part( $file_path, null, [ 'block' => $block ] );
 	}
 
 }
