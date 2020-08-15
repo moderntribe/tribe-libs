@@ -64,7 +64,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
       - name: Run PHPCS code sniffer
-        run: ./vendor/bin/phpcs --standard=tests/phpcs.xml
+        run: php vendor/bin/phpcs --standard=tests/phpcs.xml
 
       - name: Run PHPStan static analysis
-        run: vendor/bin/phpstan analyse -c tests/phpstan.neon
+        run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=1G
