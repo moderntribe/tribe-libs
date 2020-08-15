@@ -7,7 +7,7 @@ you on the right path for your custom work.
 ## Component Generator
 
 ```
-wp s1 generate component <component> --properties=<properties>
+wp s1 generate component <component>
 ```
 
 Generates the assorted files required for a theme component.
@@ -15,27 +15,28 @@ Generates the assorted files required for a theme component.
 Example usage:
 
 ```
-wp s1 generate component link --properties=url,target,aria_label,content --css --js
+wp s1 generate component link
 ```
 
 This will create six files for you in the theme:
 
-* `components/link/link.twig`
-* `components/link/Link.php`
+* `components/link/link.php`
+* `components/link/Link_Controller.php`
 * `components/link/index.pcss`
 * `components/link/css/link.pcss`
 * `components/link/index.js`
 * `components/link/js/link.js`
 
-The Twig template (`link.twig`) and the Context class (`Link.php`) will be stubbed out with
-the properties you provided.
+The template (`link.php`) and the Controller class (`Link_Controller.php`) will be stubbed out with
+common properties.
 
-If you also want to create a Controller class in the core plugin, add the `--controller` flag
-to the command.
+Use `--no-template` to skip the template.
 
-Use `--no-template` to skip the Twig template.
+Use `--no-controller` to skip the Controller class.
 
-Use `--no-context` to skip the Context class.
+Use `--no-css` to skip the CSS files.
+
+Use `--no-js` to skip the JS files.
 
 The `--dry-run` flag will show you the files the command would create, without writing to the file system.
 
