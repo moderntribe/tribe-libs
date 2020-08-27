@@ -49,13 +49,14 @@ class Post_Type_Registration {
 				$meta_box_handler->register_meta_boxes( $config );
 			} else {
 				// ...otherwise we'll cover the bases with CMB2 and ACF
-				add_filter( 'cmb2_meta_boxes', function ( $meta_boxes ) use ( $config ) {
+				add_action( 'cmb2_admin_init', function() use ( $config ) {
 					$post_type_meta_boxes = $config->get_meta_boxes();
 					$post_type_meta_boxes = apply_filters( "tribe_{$config->post_type()}_meta_boxes", $post_type_meta_boxes );
-					$meta_boxes           = array_merge( $meta_boxes, $post_type_meta_boxes );
+					foreach ($post_type_meta_boxes as $mb) {
+						new_cmb2_box($mb);
+					}
 
-					return $meta_boxes;
-				} );
+				});
 
 				// acf fires `acf/include_fields` too early to use a callback here, at init:5
 				if ( function_exists( 'acf_add_local_field_group' ) ) {
