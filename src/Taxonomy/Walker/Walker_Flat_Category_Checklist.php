@@ -20,7 +20,7 @@ class Walker_Flat_Category_Checklist extends Walker_Category_Checklist {
 	 * @param array  $args     An array of arguments. @see wp_terms_checklist()
 	 * @param int    $id       ID of the current term.
 	 */
-	public function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $category, $depth = 0, $args = [], $id = 0 ) {
 		if ( empty( $args['taxonomy'] ) ) {
 			$taxonomy = 'category';
 		} else {
@@ -34,10 +34,10 @@ class Walker_Flat_Category_Checklist extends Walker_Category_Checklist {
 		} else {
 			$name = 'tax_input[' . $taxonomy . ']';
 		}
-		$args['popular_cats'] = empty( $args['popular_cats'] ) ? array() : $args['popular_cats'];
+		$args['popular_cats'] = empty( $args['popular_cats'] ) ? [] : $args['popular_cats'];
 		$class = in_array( $category->term_id, $args['popular_cats'] ) ? ' class="popular-category"' : '';
 
-		$args['selected_cats'] = empty( $args['selected_cats'] ) ? array() : $args['selected_cats'];
+		$args['selected_cats'] = empty( $args['selected_cats'] ) ? [] : $args['selected_cats'];
 
 		/** This filter is documented in wp-includes/category-template.php */
 		$output .= "\n<li id='{$taxonomy}-{$category->term_id}'$class>" .

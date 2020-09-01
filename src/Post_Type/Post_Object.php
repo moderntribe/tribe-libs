@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Post_Type;
 
-
 use Tribe\Libs\Object_Meta\Meta_Map;
 use Tribe\Libs\Object_Meta\Meta_Repository;
 
@@ -23,7 +22,7 @@ use Tribe\Libs\Object_Meta\Meta_Repository;
  * called with a registered key.
  */
 class Post_Object {
-	const NAME = '';
+	public const NAME = '';
 
 	/** @var Meta_Map */
 	protected $meta;
@@ -38,7 +37,7 @@ class Post_Object {
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $post_id = 0, Meta_Map $meta = NULL ) {
+	public function __construct( $post_id = 0, Meta_Map $meta = null ) {
 		$this->post_id = $post_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
@@ -54,7 +53,7 @@ class Post_Object {
 	/**
 	 * Get the value for the given meta key corresponding
 	 * to this post.
-	 * 
+	 *
 	 * @param string $key
 	 * @return mixed
 	 */
@@ -71,8 +70,8 @@ class Post_Object {
 	 */
 	public static function factory( $post_id ) {
 		/** @var Meta_Repository $meta_repo */
-		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, NULL );
-		if ( !$meta_repo ) {
+		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
+		if ( empty( $meta_repo ) ) {
 			$meta_repo = new Meta_Repository();
 		}
 		$post_type = static::NAME;

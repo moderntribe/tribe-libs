@@ -6,7 +6,6 @@ class CLI_Generator extends Generator_Command {
 
 	protected $slug = '';
 	protected $class_name = '';
-	protected $namespace = '';
 	protected $assoc_args = [];
 
 	public function command() {
@@ -26,7 +25,7 @@ class CLI_Generator extends Generator_Command {
 				'description' => __( 'The command slug.', 'tribe' ),
 			],
 			[
-				'type'        => 'optional',
+				'type'        => 'assoc',
 				'name'        => 'description',
 				'optional'    => true,
 				'description' => __( 'Command description.', 'tribe' ),
@@ -37,13 +36,12 @@ class CLI_Generator extends Generator_Command {
 	public function run_command( $args, $assoc_args ) {
 		$this->slug       = $this->sanitize_slug( $args );
 		$this->class_name = $this->ucwords( $this->slug );
-		$this->namespace  = 'Tribe\Project\CLI\\' . $this->class_name;
 		// Set up associate args with some defaults.
 		$this->assoc_args = $this->parse_assoc_args( $assoc_args );
 
 		$this->create_cli_file();
 
-		$this->update_service_provider();
+		$this->update_subscriber();
 	}
 
 	protected function parse_assoc_args( $assoc_args ) {
@@ -70,18 +68,14 @@ class CLI_Generator extends Generator_Command {
 		);
 	}
 
-	protected function update_service_provider() {
-		$cli_service_provider = $this->src_path . 'Service_Providers/CLI_Provider.php';
-
-		// Use.
-		$this->file_system->insert_into_existing_file($cli_service_provider, 'use ' . $this->namespace . ';' . PHP_EOL, 'use Tribe\Project\CLI\CLI_Generator;' );
-
-		// Add class to pimple container.
-		$container_partial_file = $this->file_system->get_file( $this->templates_path . 'cli/container_partial.php' );
-		$container_partial = sprintf( $container_partial_file, $this->slug, $this->class_name );
-		$this->file_system->insert_into_existing_file( $cli_service_provider, $container_partial, 'return new CLI_Generator' );
+	protected function update_subscriber() {
+		$cli_subscriber = $this->src_path . 'CLI/CLI_Subscriber.php';
 
 		// Add to hook.
-		$this->file_system->insert_into_existing_file( $cli_service_provider, "\t\t\t" . '$container[\'cli.' . $this->slug . '\']->register();' . PHP_EOL , '$container[\'cli.cli-generator\']->register();' );
+		$this->file_system->insert_into_existing_file(
+			$cli_subscriber,
+			sprintf( "\t\t\t\$container->get( %s::class )->register();%s", $this->class_name, PHP_EOL ),
+			'->register()' // after the first command registration we find
+		);
 	}
 }

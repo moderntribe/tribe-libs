@@ -1,0 +1,26 @@
+{
+    "name": "moderntribe/square1-whoops",
+    "type": "library",
+    "description": "Integrates the Whoops error handler for display errors during development",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0",
+        "filp/whoops": "^2.2@dev",
+        "moderntribe/square1-container": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Whoops\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2-dev"
+        }
+    }
+}

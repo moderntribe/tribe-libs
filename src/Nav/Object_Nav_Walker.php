@@ -2,18 +2,18 @@
 
 
 namespace Tribe\Libs\Nav;
+
 use Walker;
 
-
-abstract class Object_Nav_Walker extends Walker  {
+abstract class Object_Nav_Walker extends Walker {
 
 	/**
 	 * What the class handles.
 	 *
 	 * @see Walker::$tree_type
-	 * @var string
+	 * @var string[]
 	 */
-	public $tree_type = array( 'post_type', 'taxonomy', 'custom' );
+	public $tree_type = [ 'post_type', 'taxonomy', 'custom' ];
 
 	/**
 	 * Database fields to use.
@@ -21,7 +21,7 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * @see Walker::$db_fields
 	 * @var array
 	 */
-	public $db_fields = array( 'parent' => 'menu_item_parent', 'id' => 'db_id' );
+	public $db_fields = [ 'parent' => 'menu_item_parent', 'id' => 'db_id' ];
 
 	/**
 	 * Traverse elements to create list from elements.
@@ -41,49 +41,50 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * @param int    $depth             Depth of current element.
 	 * @param array  $args              An array of arguments.
 	 * @param string $output            Passed by reference. Used to append additional content.
-	 * @return null Null on failure with no changes to parameters.
+	 * @return void Null on failure with no changes to parameters.
 	 */
-	function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
+	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
 		if ( !$element ) {
 			return;
 		}
 
 		if ( !is_array($output) ) {
-			$output = array();
+			$output = [];
 		}
 
 		$id_field = $this->db_fields['id'];
 
 		//display this element
-		if ( isset( $args[0] ) && is_array( $args[0] ) )
+		if ( isset( $args[0] ) && is_array( $args[0] ) ) {
 			$args[0]['has_children'] = ! empty( $children_elements[$element->$id_field] );
-		$cb_args = array_merge( array(&$output, $element, $depth), $args);
-		call_user_func_array(array($this, 'start_el'), $cb_args);
+		}
+		$cb_args = array_merge( [&$output, $element, $depth], $args);
+		call_user_func_array([$this, 'start_el'], $cb_args);
 
 		$id = $element->$id_field;
 
-		$classes = empty( $element->classes ) ? array() : (array) $element->classes;
+		$classes = empty( $element->classes ) ? [] : (array) $element->classes;
 		$classes[] = 'menu-item-' . $element->ID;
 		$classes = apply_filters( 'nav_menu_css_class', array_filter( $classes ), $element, $args[0], $depth );
 		$output['menu_id'] = $id;
 		if ( !isset( $element->post_type ) || $element->post_type !== 'nav_menu_item' ) {
 			if ( $element->type === 'post_type' ) {
 				$output['menu_id'] = $element->post_type . '-' . $output['menu_id'];
-			} elseif( $element->type === 'taxonomy' ) {
+			} elseif ( $element->type === 'taxonomy' ) {
 				$output['menu_id'] = $element->taxonomy . '-' . $output['menu_id'];
 			} else {
 				$output['menu_id'] = $element->type . '-' . $output['menu_id'];
 			}
 		}
-		$output['classes'] = isset( $output['classes'] ) ? $output['classes'] : array();
+		$output['classes'] = isset( $output['classes'] ) ? $output['classes'] : [];
 		$output['classes'] = implode( ' ', array_merge( $output['classes'], $classes ) );
-		
+
 		// descend only when the depth is right and there are children for this element
 		if ( ($max_depth == 0 || $max_depth > $depth+1 ) && isset( $children_elements[$id]) ) {
 			$output['has_children'] = true;
-			foreach( $children_elements[ $id ] as $child ){
-				$child_array = array();
+			foreach ( $children_elements[ $id ] as $child ) {
+				$child_array = [];
 				$this->display_element( $child, $children_elements, $max_depth, $depth + 1, $args, $child_array );
 				$output['menu_items'][] = $child_array;
 			}
@@ -107,15 +108,15 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * @param array  $args              An array of additional arguments.
 	 * @param int    $id ID of the current item.
 	 */
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
 		if ( !is_array($output) ) {
-			$output = array();
+			$output = [];
 		}
 		$id_field = $this->db_fields['id'];
 
 		remove_filter( 'the_title', 'wptexturize' );
 		$output['label'] = apply_filters( 'the_title', $item->title, $item->ID );
-		if( !empty( $args->numeric_ids ) ){
+		if ( !empty( $args->numeric_ids ) ) {
 			$output['id'] = apply_filters( 'nav_menu_item_id', $item->ID, $item, $args, $depth );
 		} else {
 			$output['id'] = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args, $depth );
@@ -123,19 +124,19 @@ abstract class Object_Nav_Walker extends Walker  {
 		$output['excerpt'] = $item->description;
 		$output['summary_link_label'] = apply_filters( 'summary_link_label', $item->summary_link_label, $item->ID );
 		if ( isset( $item->post_type ) && $item->post_type == 'nav_menu_item' ) { // only get classes if we're looking at a nav menu item
-			$classes = get_post_meta( $item->$id_field, '_menu_item_classes', TRUE );
+			$classes = get_post_meta( $item->$id_field, '_menu_item_classes', true );
 		}
 		if ( !empty($classes) && is_array($classes) ) {
 			$output['classes'] = $classes;
 		}
 
-		foreach ( array( 'date', 'time', 'datetime', 'timestamp') as $time_key ) {
+		foreach ( [ 'date', 'time', 'datetime', 'timestamp'] as $time_key ) {
 			if ( !empty($item->$time_key) ) {
 				$output[$time_key] = $item->$time_key;
 			}
 		}
 
-		$atts = array();
+		$atts = [];
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
 		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
 		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
@@ -181,12 +182,12 @@ abstract class Object_Nav_Walker extends Walker  {
 	 *
 	 * @param array $elements  An array of elements.
 	 * @param int   $max_depth The maximum hierarchical depth.
+	 * @param mixed ...$args   Optional additional arguments.
+	 *
 	 * @return string The hierarchical item output.
 	 */
-	function walk( $elements, $max_depth) {
-
-		$args = array_slice(func_get_args(), 2);
-		$menu_items = array();
+	public function walk( $elements, $max_depth, ...$args) {
+		$menu_items = [];
 
 		if ($max_depth < -1) { //invalid parameter
 			return $this->format_output($menu_items);
@@ -201,9 +202,9 @@ abstract class Object_Nav_Walker extends Walker  {
 
 		// flat display
 		if ( -1 == $max_depth ) {
-			$empty_array = array();
+			$empty_array = [];
 			foreach ( $elements as $e ) {
-				$item = array();
+				$item = [];
 				$this->display_element( $e, $empty_array, 1, 0, $args, $item );
 				$menu_items[] = $item;
 			}
@@ -216,13 +217,14 @@ abstract class Object_Nav_Walker extends Walker  {
 		 * Children_elements is two dimensional array, eg.
 		 * Children_elements[10][] contains all sub-elements whose parent is 10.
 		 */
-		$top_level_elements = array();
-		$children_elements  = array();
+		$top_level_elements = [];
+		$children_elements  = [];
 		foreach ( $elements as $e) {
-			if ( 0 == $e->$parent_field )
+			if ( 0 == $e->$parent_field ) {
 				$top_level_elements[] = $e;
-			else
+			} else {
 				$children_elements[ $e->$parent_field ][] = $e;
+			}
 		}
 
 		/*
@@ -234,18 +236,19 @@ abstract class Object_Nav_Walker extends Walker  {
 			$first = array_slice( $elements, 0, 1 );
 			$root = $first[0];
 
-			$top_level_elements = array();
-			$children_elements  = array();
+			$top_level_elements = [];
+			$children_elements  = [];
 			foreach ( $elements as $e) {
-				if ( $root->$parent_field == $e->$parent_field )
+				if ( $root->$parent_field == $e->$parent_field ) {
 					$top_level_elements[] = $e;
-				else
+				} else {
 					$children_elements[ $e->$parent_field ][] = $e;
+				}
 			}
 		}
 
 		foreach ( $top_level_elements as $e ) {
-			$item = array();
+			$item = [];
 			$this->display_element( $e, $children_elements, $max_depth, 0, $args, $item );
 			$menu_items[] = $item;
 		}
@@ -255,10 +258,10 @@ abstract class Object_Nav_Walker extends Walker  {
 		 * then we got orphans, which should be displayed regardless.
 		 */
 		if ( ( $max_depth == 0 ) && count( $children_elements ) > 0 ) {
-			$empty_array = array();
+			$empty_array = [];
 			foreach ( $children_elements as $orphans ) {
-				foreach( $orphans as $op ) {
-					$item = array();
+				foreach ( $orphans as $op ) {
+					$item = [];
 					$this->display_element( $op, $empty_array, 1, 0, $args, $item );
 					$menu_items[] = $item;
 				}
@@ -277,8 +280,8 @@ abstract class Object_Nav_Walker extends Walker  {
 	 * @return array
 	 */
 	protected function format_output( $menu_items ) {
-		return array(
+		return [
 			'menu_items' => $menu_items,
-		);
+		];
 	}
 }

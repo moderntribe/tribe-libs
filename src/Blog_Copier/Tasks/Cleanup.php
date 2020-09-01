@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
-
 use Tribe\Libs\Blog_Copier\Copy_Manager;
 use Tribe\Libs\Queues\Contracts\Task;
 

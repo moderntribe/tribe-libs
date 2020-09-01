@@ -26,9 +26,9 @@ class Purger {
 	 * @return void
 	 */
 	public function hook() {
-		if ( current_user_can( 'manage_options' ) ) {
-			add_action( 'init', array( $this, 'maybe_purge_cache' ), 9, 0 );
-			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_button' ), 100, 1 );
+		if ( current_user_can( $this->cap ) ) {
+			add_action( 'init', [ $this, 'maybe_purge_cache' ], 9, 0 );
+			add_action( 'admin_bar_menu', [ $this, 'add_admin_bar_button' ], 100, 1 );
 		}
 	}
 
@@ -46,7 +46,7 @@ class Purger {
 			return; // user shouldn't be here
 		}
 		$this->do_purge_cache();
-		wp_redirect( esc_url_raw( remove_query_arg( array( $this->query_arg, '_wpnonce' ) ) ) );
+		wp_redirect( esc_url_raw( remove_query_arg( [ $this->query_arg, '_wpnonce' ] ) ) );
 		exit();
 	}
 
@@ -82,13 +82,13 @@ class Purger {
 		if ( ! current_user_can( $this->cap ) ) {
 			return; // user doesn't have access to purge, so no button
 		}
-		$admin_bar->add_menu( array(
+		$admin_bar->add_menu( [
 			'parent' => '',
 			'id'     => 'clear-cache',
 			'title'  => __( 'Clear Cache', 'tribe' ),
-			'meta'   => array( 'title' => __( 'Clear the cache for this site', 'tribe' ) ),
-			'href'   => wp_nonce_url( add_query_arg( array( $this->query_arg => 1 ) ), $this->nonce_action ),
-		) );
+			'meta'   => [ 'title' => __( 'Clear the cache for this site', 'tribe' ) ],
+			'href'   => wp_nonce_url( add_query_arg( [ $this->query_arg => 1 ] ), $this->nonce_action ),
+		] );
 	}
 
 }

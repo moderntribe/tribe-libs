@@ -26,7 +26,7 @@ class MySQL implements Backend {
 		 *
 		 * @param string $table_name Table name with $wpdb->prefix added
 		 */
-		$table_name = apply_filters( 'core_queues_backend_mysql_table_name', $table_name );
+		$table_name = apply_filters( 'tribe/queues/mysql/table_name', $table_name );
 
 		$this->table_name = $table_name;
 	}
@@ -66,7 +66,7 @@ class MySQL implements Backend {
 	 *
 	 * @return Message
 	 *
-	 * @throws /RuntimeException
+	 * @throws \RuntimeException
 	 */
 	public function dequeue( string $queue_name ): Message {
 		global $wpdb;
@@ -75,7 +75,7 @@ class MySQL implements Backend {
 			$wpdb->prepare(
 				"SELECT * FROM $this->table_name
 				WHERE queue = %s
-				AND taken = 0 
+				AND taken = 0
 				AND done = 0
 				AND run_after <= CURRENT_TIME()
 				ORDER BY priority ASC
@@ -90,7 +90,7 @@ class MySQL implements Backend {
 			throw new \RuntimeException( 'No messages available to reserve.' );
 		}
 
-		$queue['args'] = json_decode( $queue['args'], 1 );
+		$queue['args'] = json_decode( $queue['args'], true );
 
 		if ( ! is_array( $queue[ 'args' ] ) ) {
 			// No args, or error decoding args, leaving us
@@ -124,7 +124,6 @@ class MySQL implements Backend {
 		}
 
 		return new Message( $queue['task_handler'], $queue['args'], $queue['priority'], $queue['id'] );
-
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
@@ -182,7 +181,6 @@ class MySQL implements Backend {
 			"SELECT COUNT(*) FROM $this->table_name WHERE queue = %s AND done = 0",
 			$queue_name
 		) );
-
 	}
 
 	public function table_exists() {

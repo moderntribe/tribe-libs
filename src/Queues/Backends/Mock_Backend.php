@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Queues\Backends;
 
-
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Message;
 

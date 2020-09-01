@@ -37,7 +37,7 @@ class WP_Cache implements Backend {
 	 *
 	 * @return Message
 	 *
-	 * @throws /RuntimeException
+	 * @throws \RuntimeException
 	 */
 	public function dequeue( string $queue_name ): Message {
 		$queue = $this->get_queue( $queue_name );
@@ -46,7 +46,8 @@ class WP_Cache implements Backend {
 			throw new \RuntimeException( 'No messages available to reserve.' );
 		}
 
-		$last_key = end( array_keys( $queue ) );
+		$keys = array_keys( $queue );
+		$last_key = end( $keys );
 		reset( $queue );
 		$job_id = key( $queue );
 		$taken  = $queue[ $job_id ]['taken'];
@@ -68,7 +69,6 @@ class WP_Cache implements Backend {
 		$this->save_queue( $queue_name, $queue );
 
 		return new Message( $queue[ $job_id ]['task_handler'], $queue[ $job_id ]['args'], $queue[ $job_id ]['priority'], $job_id );
-
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
@@ -141,6 +141,6 @@ class WP_Cache implements Backend {
 	}
 
 	public function cleanup() {
-		null;
+		return;
 	}
 }
