@@ -2,7 +2,6 @@
 
 namespace Tribe\Libs\Post_Type\Meta_Box_Handlers;
 
-
 use Tribe\Libs\Post_Type\Post_Type_Config;
 
 class CMB2 implements Meta_Box_Handler_Interface {

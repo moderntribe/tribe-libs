@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## v2.1.2 - 2020-04-02
 
 - Added post type registration for blog copier internal post type for compatibility with WP 5.1+

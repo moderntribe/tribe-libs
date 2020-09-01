@@ -65,7 +65,7 @@ class Meta_Importer extends Generator_Command {
 		}
 
 		// Write the meta files.
-		$this->update_service_provider();
+		$this->update_definer();
 		$this->create_object_class();
 
 		// Delete the field group.
@@ -75,7 +75,6 @@ class Meta_Importer extends Generator_Command {
 
 		// Success!
 		\WP_CLI::line( __( 'We did it!', 'tribe' ) );
-
 	}
 
 	protected function get_dynamic_field_groups() {
@@ -104,25 +103,17 @@ class Meta_Importer extends Generator_Command {
 		$this->pimple_key = strtolower( 'object_meta.' . $this->const_name );
 	}
 
-	protected function update_service_provider() {
-		$object_meta_service_provider = trailingslashit( dirname( __DIR__, 2 ) ) . 'Service_Providers/Object_Meta_Provider.php';
-
-		// Insert the Use.
-		$this->file_system->insert_into_existing_file( $object_meta_service_provider, 'use ' . $this->namespace . ';' . PHP_EOL, 'use Tribe\Libs\Object_Meta\Meta_Repository;' );
-
-		// Constant.
-		$constant = "\tconst {$this->const_name} = '{$this->pimple_key}';" . PHP_EOL;
-		$this->file_system->insert_into_existing_file( $object_meta_service_provider, $constant, 'const REPO    = \'object_meta.collection_repo\';' );
+	protected function update_definer() {
+		$definer = $this->src_path . 'Object_Meta/Object_Meta_Definer.php';
 
 		// Keys.
-		$key = "\t\tself::" . $this->const_name . ',' . PHP_EOL;
-		$this->file_system->insert_into_existing_file( $object_meta_service_provider, $key, 'private $keys = [' );
+		$key = "\t\t\t\tDI\get( {$this->class_name}::class )," . PHP_EOL;
+		$this->file_system->insert_into_existing_file( $definer, $key, 'self::GROUPS => [' );
 
 		// public function register( Container $container ) {
 		$container_partial_file = file_get_contents( $this->templates_path . 'object_meta/container_partial.php' );
 		$container_partial      = sprintf( $container_partial_file, $this->class_name, $this->file_system->format_array_for_file( $this->build_object_array(), 16 ), $this->const_name );
-		$this->file_system->insert_into_existing_file( $object_meta_service_provider, $container_partial, 'public function register( Container $container ) {' );
-
+		$this->file_system->insert_into_existing_file( $definer, $container_partial, '->constructor( DI\get( self::GROUPS ) )' );
 	}
 
 	protected function build_object_array() {
@@ -232,7 +223,7 @@ class Meta_Importer extends Generator_Command {
 	}
 
 	private function prepare_field( $field ) {
-		unset ( $field['key'], $field['wrapper'], $field['prepend'], $field['append'] );
+		unset( $field['key'], $field['wrapper'], $field['prepend'], $field['append'] );
 
 		$field = array_filter( $field, function ( $element ) {
 			return '' !== $element;
@@ -265,7 +256,7 @@ class Meta_Importer extends Generator_Command {
 
 	private function get_repeater( $field ) {
 		$write_field = $field;
-		unset ( $write_field['sub_fields'] );
+		unset( $write_field['sub_fields'] );
 
 		$group_partial = file_get_contents( $this->templates_path . 'object_meta/repeater_function_partial.php' );
 		$group         = sprintf(

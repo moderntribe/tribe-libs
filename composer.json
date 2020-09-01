@@ -4,13 +4,25 @@
     "description": "A library for use on Modern Tribe service projects.",
     "license": "GPL-2.0-only",
     "require": {
-        "jbzoo/pimpledumper": "^1.2",
+        "filp/whoops": "^2.2@dev",
         "php": "^7.0",
-        "pimple/pimple": "~3.0@dev"
+        "php-di/php-di": "^6.0",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
-        "lucatume/wp-browser": "^2.2",
-        "symplify/monorepo-builder": "^6.0"
+        "symplify/monorepo-builder": "^6.0",
+        "lucatume/wp-browser": "^2.3.4",
+        "phpunit/phpunit": "^8.0",
+        "automattic/phpcs-neutron-standard": "^1.5",
+        "automattic/vipwpcs": "^2.0.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+        "phpcompatibility/php-compatibility": "*",
+        "phpcompatibility/phpcompatibility-wp": "^2.0",
+        "sirbrillig/phpcs-variable-analysis": "^2.0.1",
+        "squizlabs/php_codesniffer": "^3.4.2",
+        "phpstan/phpstan": "^0.12.25",
+        "szepeviktor/phpstan-wordpress": "^0.6.0",
+        "wp-cli/wp-cli": "^2.4"
     },
     "autoload": {
         "files": [
@@ -25,6 +37,7 @@
             "Tribe\\Libs\\Cache\\": "src/Cache/",
             "Tribe\\Libs\\Container\\": "src/Container/",
             "Tribe\\Libs\\Generators\\": "src/Generators/",
+            "Tribe\\Libs\\Media\\": "src/Media/",
             "Tribe\\Libs\\Nav\\": "src/Nav/",
             "Tribe\\Libs\\Object_Meta\\": "src/Object_Meta/",
             "Tribe\\Libs\\Oembed\\": "src/Oembed/",
@@ -33,16 +46,21 @@
             "Tribe\\Libs\\Post_Type\\": "src/Post_Type/",
             "Tribe\\Libs\\Queues\\": "src/Queues/",
             "Tribe\\Libs\\Queues_Mysql\\": "src/Queues_Mysql/",
+            "Tribe\\Libs\\Request\\": "src/Request/",
+            "Tribe\\Libs\\Required_Page\\": "src/Required_Page/",
             "Tribe\\Libs\\Schema\\": "src/Schema/",
             "Tribe\\Libs\\Settings\\": "src/Settings/",
             "Tribe\\Libs\\Taxonomy\\": "src/Taxonomy/",
+            "Tribe\\Libs\\Twig\\": "src/Twig/",
             "Tribe\\Libs\\User\\": "src/User/",
-            "Tribe\\Libs\\Utils\\": "src/Utils/"
+            "Tribe\\Libs\\Utils\\": "src/Utils/",
+            "Tribe\\Libs\\Whoops\\": "src/Whoops/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tribe\\Libs\\": "tests/integration/Tribe/Libs"
+            "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
+            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src"
         }
     },
     "replace": {
@@ -53,6 +71,7 @@
         "moderntribe/square1-cli": "self.version",
         "moderntribe/square1-container": "self.version",
         "moderntribe/square1-generators": "self.version",
+        "moderntribe/square1-media": "self.version",
         "moderntribe/square1-nav": "self.version",
         "moderntribe/square1-object-meta": "self.version",
         "moderntribe/square1-oembed": "self.version",
@@ -61,16 +80,22 @@
         "moderntribe/square1-post-type": "self.version",
         "moderntribe/square1-queues": "self.version",
         "moderntribe/square1-queues-mysql": "self.version",
+        "moderntribe/square1-request": "self.version",
+        "moderntribe/square1-required-page": "self.version",
         "moderntribe/square1-schema": "self.version",
         "moderntribe/square1-settings": "self.version",
         "moderntribe/square1-taxonomy": "self.version",
+        "moderntribe/square1-twig": "self.version",
         "moderntribe/square1-user": "self.version",
-        "moderntribe/square1-utils": "self.version"
+        "moderntribe/square1-utils": "self.version",
+        "moderntribe/square1-whoops": "self.version"
     },
     "config": {
         "vendor-dir": "vendor",
         "preferred-install": "dist"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.2-dev"

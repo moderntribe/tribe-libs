@@ -66,9 +66,13 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 * Add a field to the group.
 	 *
 	 * @param Field $field
+	 *
+	 * @return $this
 	 */
-	public function add_field( Field $field ) {
+	public function add_field( Field $field ): Group {
 		$this->fields[] = $field;
+
+		return $this;
 	}
 
 	/**
@@ -92,7 +96,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	/**
 	 * Assign the location restrictions for this group.
 	 *
-	 * @param $attributes
+	 * @param array $attributes
 	 *
 	 * @return array
 	 */

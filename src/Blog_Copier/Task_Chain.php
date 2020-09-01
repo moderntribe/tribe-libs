@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier;
 
-
 class Task_Chain {
 	/** @var string[] */
 	private $tasks = [];
@@ -57,7 +56,7 @@ class Task_Chain {
 	}
 
 	/**
-	 * @param $prev
+	 * @param string $prev
 	 *
 	 * @return string
 	 */

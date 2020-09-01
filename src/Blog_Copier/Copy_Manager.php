@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier;
 
-
 use Tribe\Libs\Blog_Copier\Tasks\Cleanup;
 use Tribe\Libs\Queues\Contracts\Queue;
 
@@ -107,5 +106,11 @@ class Copy_Manager {
 			\WP_CLI::debug( sprintf( 'Error in blog copy task: %s.', $failed_task ) );
 			\WP_CLI::debug( sprintf( 'Error message: %s.', $error->get_error_message() ) );
 		}
+	}
+
+	public static function register_post_type(): void {
+		register_post_type( self::POST_TYPE, [
+			'public' => false,
+		] );
 	}
 }

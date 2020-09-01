@@ -10,7 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.0",
-        "pimple/pimple": "~3.0@dev"
+        "moderntribe/square1-container": "^2.2"
     },
     "autoload": {
         "psr-4": {

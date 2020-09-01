@@ -37,13 +37,6 @@ class CPT_Generator extends Generator_Command {
 				'optional'    => true,
 				'description' => __( 'Plural CPT.', 'tribe' ),
 			],
-			[
-				'type'        => 'flag',
-				'name'        => 'config',
-				'optional'    => true,
-				'description' => __( 'Whether or not to create a config file by default. Defaults to true, pass --no-config if you don\'t need one.', 'tribe' ),
-				'default'     => true,
-			],
 		];
 	}
 
@@ -61,8 +54,8 @@ class CPT_Generator extends Generator_Command {
 		// Create post object.
 		$this->new_post_object_class();
 
-		// Create service provider.
-		$this->new_service_provider_file();
+		// Create subscriber.
+		$this->new_subscriber_file();
 
 		// Update Core.
 		$this->update_core();
@@ -80,7 +73,6 @@ class CPT_Generator extends Generator_Command {
 		$defaults = [
 			'single' => $this->ucwords( $this->slug ),
 			'plural' => $this->ucwords( $this->slug ) . 's',
-			'config' => true,
 		];
 
 		return wp_parse_args( $assoc_args, $defaults );
@@ -88,28 +80,21 @@ class CPT_Generator extends Generator_Command {
 
 	private function new_post_object_class() {
 		$this->new_post_object_class_file();
-		if ( $this->assoc_args['config'] ) {
-			$this->new_post_object_config_file();
-		}
+		$this->new_post_object_config_file();
 	}
 
-	private function new_service_provider_file() {
-		$new_service_provider         = trailingslashit( $this->src_path ) . 'Service_Providers/Post_Types/' . $this->ucwords( $this->slug ) . '_Service_Provider.php';
-		$this->service_provider_class = $this->ucwords( $this->slug );
-		$this->file_system->write_file( $new_service_provider, $this->get_service_provider_contents() );
+	private function new_subscriber_file() {
+		$new_subscriber         = trailingslashit( $this->src_path ) . 'Post_Types/' . $this->class_name . '/Subscriber.php';
+		$this->file_system->write_file( $new_subscriber, $this->get_subscriber_contents() );
 	}
 
 	private function update_core() {
 		$core_file = $this->src_path . 'Core.php';
 
-		$new_service_provider_registration   = "\t\t" . sprintf( '$this->providers[\'post_type.%s\'] = new %s_Service_Provider();', $this->slug, $this->class_name ) . "\n";
-		$below_service_provider_registration = 'private function load_post_type_providers() {';
+		$new_subscriber_registration   = "\t\t" . sprintf( 'Post_Types\%s\Subscriber::class,', $this->class_name ) . "\n";
+		$below_line = '// our post types';
 
-		$below_use = 'use Tribe\Project\Service_Providers\Post_Types\Post_Service_Provider';
-		$use       = 'use Tribe\Project\Service_Providers\Post_Types\\' . $this->class_name . '_Service_Provider;' . PHP_EOL;
-
-		$this->file_system->insert_into_existing_file( $core_file, $new_service_provider_registration, $below_service_provider_registration );
-		$this->file_system->insert_into_existing_file( $core_file, $use, $below_use );
+		$this->file_system->insert_into_existing_file( $core_file, $new_subscriber_registration, $below_line );
 	}
 
 	private function new_post_object_class_file() {
@@ -130,11 +115,9 @@ class CPT_Generator extends Generator_Command {
 
 		return sprintf(
 			$post_type_file,
-			$this->namespace,
 			$this->class_name,
 			$this->slug
 		);
-
 	}
 
 	private function get_config_contents() {
@@ -143,24 +126,21 @@ class CPT_Generator extends Generator_Command {
 
 		return sprintf(
 			$config_file,
-			$this->namespace,
 			$this->class_name,
 			$this->assoc_args['single'],
 			$this->assoc_args['plural'],
 			$this->slug
 		);
-
 	}
 
-	private function get_service_provider_contents() {
+	private function get_subscriber_contents() {
 
-		$service_provider_file = $this->file_system->get_file( $this->templates_path . 'post_type/service_provider.php' );
+		$template_file = $this->file_system->get_file( $this->templates_path . 'post_type/subscriber.php' );
 
 		return sprintf(
-			$service_provider_file,
+			$template_file,
 			$this->class_name
 		);
-
 	}
 
 }

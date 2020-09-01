@@ -1,9 +1,10 @@
 <?php
+declare( strict_types=1 );
 
-namespace %1$s;
+namespace Tribe\Project\Post_Types\%1$s;
 
 use Tribe\Libs\Post_Type\Post_Object;
 
-class %2$s extends Post_Object {
-	const NAME = '%3$s';
+class %1$s extends Post_Object {
+	public const NAME = '%2$s';
 }

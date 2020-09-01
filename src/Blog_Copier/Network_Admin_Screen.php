@@ -3,7 +3,6 @@
 
 namespace Tribe\Libs\Blog_Copier;
 
-
 class Network_Admin_Screen {
 	const NAME = 'copy-blog';
 
@@ -18,7 +17,8 @@ class Network_Admin_Screen {
 	 */
 	public function register_screen() {
 
-		add_submenu_page( 'sites.php',
+		add_submenu_page(
+			'sites.php',
 			__( 'Blog Copier', 'tribe' ),
 			__( 'Blog Copier', 'tribe' ),
 			'manage_sites',
@@ -117,7 +117,7 @@ class Network_Admin_Screen {
 		global $wpdb;
 
 		$query = "SELECT b.blog_id, CONCAT(b.domain, b.path) as domain_path
-              FROM {$wpdb->blogs} b 
+              FROM {$wpdb->blogs} b
               WHERE b.site_id = %d
                 AND b.blog_id > 1
                 AND b.deleted = 0
@@ -210,7 +210,7 @@ class Network_Admin_Screen {
 	}
 
 	/**
-	 * @param $submission
+	 * @param array $submission
 	 *
 	 * @return \WP_Error
 	 */

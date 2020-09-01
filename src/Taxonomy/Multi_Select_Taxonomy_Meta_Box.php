@@ -18,7 +18,7 @@ class Multi_Select_Taxonomy_Meta_Box {
 	}
 
 	public function get_callback() {
-		return array( $this, 'callback' );
+		return [ $this, 'callback' ];
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Multi_Select_Taxonomy_Meta_Box {
 				echo "<input type='hidden' name='{$name}[]' value='0' />"; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
 				?>
 				<ul id="<?php echo $this->taxonomy; ?>checklist" data-wp-lists="list:<?php echo $this->taxonomy; ?>" class="categorychecklist form-no-clear">
-					<?php wp_terms_checklist( $post->ID, array( 'taxonomy' => $this->taxonomy, 'walker' => new Walker_Flat_Category_Checklist() ) ); ?>
+					<?php wp_terms_checklist( $post->ID, [ 'taxonomy' => $this->taxonomy, 'walker' => new Walker_Flat_Category_Checklist() ] ); ?>
 				</ul>
 			</div>
 		</div>

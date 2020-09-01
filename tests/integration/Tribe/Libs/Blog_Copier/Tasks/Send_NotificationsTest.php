@@ -33,10 +33,9 @@ class Send_NotificationsTest extends \Codeception\TestCase\WPTestCase {
 
 		/** @var \MockPHPMailer $mailer */
 		$mailer = tests_retrieve_phpmailer_instance();
-		$sent = $mailer->get_sent();
 
-		$this->assertEqualSets( [ 'alpha@example.com', 'beta@example.com' ], array_column( $sent->to, 0 ) );
-		$this->assertEquals( 'Blog Copy Complete', $sent->subject );
-		$this->assertStringContainsString( $config->get_title(), $sent->body );
+		$this->assertEqualSets( [ 'alpha@example.com', 'beta@example.com' ], array_column( $mailer->getToAddresses(), 0 ) );
+		$this->assertEquals( 'Blog Copy Complete', $mailer->Subject );
+		$this->assertStringContainsString( $config->get_title(), $mailer->Body );
 	}
 }
