@@ -9,7 +9,7 @@
     },
     "require": {
         "php": "^7.0",
-        "moderntribe/square1-object-meta": "^2.2"
+        "moderntribe/square1-object-meta": "^3.0"
     },
     "autoload": {
         "psr-4": {
