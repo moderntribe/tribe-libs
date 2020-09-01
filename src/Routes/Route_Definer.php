@@ -8,11 +8,18 @@ use Tribe\Libs\Container\Definer_Interface;
 
 class Route_Definer implements Definer_Interface {
     /**
-     * The DI group to use.
+     * The Route DI group to use.
      *
      * @var string
      */
-	public const ROUTES = 'libs.routes.groups';
+	public const ROUTES = 'libs.routes';
+
+    /**
+     * The REST DI group to use.
+     *
+     * @var string
+     */
+	public const REST_ROUTES = 'libs.rest_routes';
 
     /**
      * Defines routes.
