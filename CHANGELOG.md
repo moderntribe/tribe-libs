@@ -4,8 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## v3.0.0 - 2020-09-01
 
-## v3.0.0 - 2020-09-01
-
 - Many updates to libs in support of the SquareOne framework Fidgety Feet epic.
 
 ## v2.1.2 - 2020-04-02
