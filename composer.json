@@ -5,13 +5,13 @@
     "license": "GPL-2.0-only",
     "require": {
         "filp/whoops": "^2.2@dev",
-        "php": "^7.0",
+        "php": "^7.2",
         "php-di/php-di": "^6.0",
         "twig/twig": "^3.0"
     },
     "require-dev": {
-        "symplify/monorepo-builder": "^6.0",
-        "lucatume/wp-browser": "^2.3.4",
+        "symplify/monorepo-builder": "^8.2",
+        "lucatume/wp-browser": "^2.6.10",
         "phpunit/phpunit": "^8.0",
         "automattic/phpcs-neutron-standard": "^1.5",
         "automattic/vipwpcs": "^2.0.0",
@@ -92,7 +92,10 @@
     },
     "config": {
         "vendor-dir": "vendor",
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "platform": {
+            "php": "7.2.32"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
