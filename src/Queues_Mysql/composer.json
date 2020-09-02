@@ -12,7 +12,7 @@
         "moderntribe/square1-cli": "^3.1",
         "moderntribe/square1-container": "^3.1",
         "moderntribe/square1-queues": "^3.1",
-        "php": "^7.0"
+        "php": "^7.2"
     },
     "autoload": {
         "psr-4": {

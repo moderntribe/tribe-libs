@@ -19,8 +19,8 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 			],
 		],
 		'require-dev'  => [
-			"symplify/monorepo-builder"                      => "^6.0",
-			"lucatume/wp-browser"                            => "^2.3.4",
+			"symplify/monorepo-builder"                      => "^8.2",
+			"lucatume/wp-browser"                            => "^2.6.10",
 			"phpunit/phpunit"                                => "^8.0",
 			"automattic/phpcs-neutron-standard"              => "^1.5",
 			"automattic/vipwpcs"                             => "^2.0.0",
