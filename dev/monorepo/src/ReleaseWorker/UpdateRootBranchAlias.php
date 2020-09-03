@@ -40,7 +40,7 @@ class UpdateRootBranchAlias implements ReleaseWorkerInterface {
 		$nextAlias = $this->versionUtils->getNextAliasFormat( $version );
 
 		$this->devMasterAliasUpdater->updateFileInfosWithAlias(
-			[ $this->composerJsonProvider->getRootAndPackageFileInfos() ],
+			$this->composerJsonProvider->getRootAndPackageFileInfos(),
 			$nextAlias
 		);
 	}
