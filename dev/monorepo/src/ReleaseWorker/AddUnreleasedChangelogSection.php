@@ -9,11 +9,6 @@ use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
 class AddUnreleasedChangelogSection implements ReleaseWorkerInterface {
-
-	public function getPriority(): int {
-		return 90;
-	}
-
 	public function work( Version $version ): void {
 		$changelogFilePath = getcwd() . '/CHANGELOG.md';
 		if ( ! file_exists( $changelogFilePath ) ) {

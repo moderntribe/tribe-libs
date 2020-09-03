@@ -36,15 +36,11 @@ class UpdateRootBranchAlias implements ReleaseWorkerInterface {
 		$this->versionUtils          = $versionUtils;
 	}
 
-	public function getPriority(): int {
-		return 99;
-	}
-
 	public function work( Version $version ): void {
 		$nextAlias = $this->versionUtils->getNextAliasFormat( $version );
 
 		$this->devMasterAliasUpdater->updateFileInfosWithAlias(
-			[ $this->composerJsonProvider->getRootAndPackageFileInfos() ],
+			$this->composerJsonProvider->getRootAndPackageFileInfos(),
 			$nextAlias
 		);
 	}

@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Update release script for monorepo-builder 8.0 compatibility
+- Minimum PHP version bump to 7.2
+
 ## v3.0.0 - 2020-09-01
 
 - Many updates to libs in support of the SquareOne framework Fidgety Feet epic.
