@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v3.1.0 - 2020-09-03
 
 - Update release script for monorepo-builder 8.0 compatibility
 - Minimum PHP version bump to 7.2
