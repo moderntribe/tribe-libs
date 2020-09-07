@@ -246,7 +246,7 @@ class Router extends Abstract_Subscriber {
 	}
 
 	/**
-	 * Adds the custom CK query vars to WordPress.
+	 * Adds the custom query vars.
 	 *
 	 * Tied to query_vars hook
 	 *
