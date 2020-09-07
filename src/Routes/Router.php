@@ -36,8 +36,6 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Class constructor.
 	 *
-	 * @param array $routes      WP routes to register.
-	 * @param array $rest_routes REST routes to register.
 	 * @return void
 	 */
 	public function register() : void {
