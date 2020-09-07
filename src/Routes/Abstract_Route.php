@@ -41,7 +41,7 @@ namespace Tribe\Libs\Routes;
 /**
  * Base class for routes.
  */
-abstract class Route {
+abstract class Abstract_Route {
 	/**
 	 * Registers any hooks for the route.
 	 *

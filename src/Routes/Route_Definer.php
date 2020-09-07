@@ -45,9 +45,8 @@ class Route_Definer implements Definer_Interface {
 			 */
 			self::REST_ROUTES => DI\add( [] ),
 
-
-			Router::class => DI\create()
-				->constructor( DI\get( self::ROUTES, self::REST_ROUTES ) ),
+			// Router::class => DI\create()
+			// 	->constructor( DI\get( self::ROUTES, self::REST_ROUTES ) ),
 		];
 	}
 }

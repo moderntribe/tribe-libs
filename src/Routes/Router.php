@@ -1,7 +1,4 @@
 <?php
-
-namespace Tribe\Libs\Routes;
-
 /**
  * Class Router
  *
@@ -9,7 +6,12 @@ namespace Tribe\Libs\Routes;
  *
  * @package Tribe\Project\Routes
  */
-class Router {
+
+namespace Tribe\Libs\Routes;
+
+use Tribe\Libs\Container\Abstract_Subscriber;
+
+class Router extends Abstract_Subscriber {
 	/**
 	 * Defined routes.
 	 *
@@ -52,9 +54,8 @@ class Router {
 	 * @param array $rest_routes REST routes to register.
 	 * @return void
 	 */
-	public function __construct( array $routes = [], array $rest_routes = [] ) {
-		$this->defined_routes      = $routes;
-		$this->defined_est_routes = $rest_routes;
+	public function register() : void {
+		
 	}
 
 	/**
@@ -173,7 +174,7 @@ class Router {
 		$this->routes      = [];
 		$this->router_vars = [];
 
-		foreach ( $this->defined_routes as $route ) {
+		foreach ( $this->container->get( Route_Definer::ROUTES ) as $route ) {
 			// Register any route hooks.
 			$route->register();
 
@@ -196,7 +197,7 @@ class Router {
 	 * @return void
 	 */
 	public function init_rest_routes() : void {
-		foreach ( $this->defined_rest_routes as $route ) {
+		foreach ( $this->container->get( Route_Definer::REST_ROUTES ) as $route ) {
 			$route->register();
 		}
 	}
