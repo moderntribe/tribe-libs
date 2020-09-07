@@ -10,7 +10,7 @@ namespace Tribe\Libs\Routes;
 /**
  * Base class for REST API endpoints to extend.
  */
-abstract class Abstract_Rest_Route {
+abstract class Abstract_REST_Route {
 	/**
 	 * Determines if the object should be registered.
 	 *

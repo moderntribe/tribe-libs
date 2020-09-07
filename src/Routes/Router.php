@@ -249,6 +249,7 @@ class Router extends Abstract_Subscriber {
 	 * @return array            Modified query vars.
 	 */
 	public function did_query_vars( $query_vars ) {
+		// Bail early if no query vars are defined for the router.
 		if ( empty( $this->router_vars ) ) {
 			return $query_vars;
 		}
