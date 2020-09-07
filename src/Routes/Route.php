@@ -1,6 +1,6 @@
 <?php // phpcs:disable WordPress.Files.FileName.NotHyphenatedLowercase
 /**
- * AbstractRoute is the base class for MTTrial Routes. At the least a Route must
+ * Route is the base class for Routes. At the least a Route must
  * declare,
  *
  * 1. Name
@@ -13,7 +13,7 @@
  *
  * Usage: To create a new route /things/<thing>/ at ThingRoute,
  *
- * class ThingRoute extends AbstractRoute {
+ * class ThingRoute extends Route {
  *
  *     public function get_name() {
  *         return 'things';

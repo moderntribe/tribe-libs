@@ -5,6 +5,7 @@ namespace Tribe\Libs\Routes;
 
 use DI;
 use Tribe\Libs\Container\Definer_Interface;
+use Tribe\Libs\Routes\Router;
 
 class Route_Definer implements Definer_Interface {
     /**
@@ -29,26 +30,24 @@ class Route_Definer implements Definer_Interface {
 	public function define(): array {
 		return [
 			/**
-			 * The array of routes that will be registered with the Route Repository.
-			 * Add more in other Definers using Route_Definer::ROUTES => DI\add( [ ... ] ).
+			 * The array of routes that will be registered.
+			 * Add more in other Definers using \Tribe\Libs\Routes\Route_Definer::ROUTES => DI\add( [ ... ] ).
 			 *
 			 * ROUTES should extend \Tribe\Libs\Routes\Route
 			 */
-            self::ROUTES => DI\add( [] ),
-
-			Route_Repository::class => DI\create()
-				->constructor( DI\get( self::ROUTES ) ),
+			self::ROUTES => DI\add( [] ),
 
 			/**
-			 * The array of routes that will be registered with the Route Repository.
-			 * Add more in other Definers using Route_Definer::ROUTES => DI\add( [ ... ] ).
+			 * The array of REST routes that will be registered.
+			 * Add more in other Definers using \Tribe\Libs\Routes\Route_Definer::REST_ROUTES => DI\add( [ ... ] ).
 			 *
 			 * ROUTES should extend \Tribe\Libs\Routes\Rest_Route
 			 */
 			self::REST_ROUTES => DI\add( [] ),
 
-			Route_Repository::class => DI\create()
-				->constructor( DI\get( self::REST_ROUTES ) ),
+
+			Router::class => DI\create()
+				->constructor( DI\get( self::ROUTES, self::REST_ROUTES ) ),
 		];
 	}
 }
