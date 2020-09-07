@@ -7,7 +7,7 @@ use Tribe\Libs\Container\Abstract_Subscriber;
 use Tribe\Libs\Routes\Router;
 
 class Route_Subscriber extends Abstract_Subscriber {
-	public function register(): void {        
+	public function register(): void {      
 		add_action(
 			'wp_loaded', 
 			function ( ...$args ) {
@@ -28,12 +28,12 @@ class Route_Subscriber extends Abstract_Subscriber {
 			function ( ...$args ) {
 				return $this->container->get( Router::class )->did_query_vars( ...$args );
 			}
-		);
+        );
 
 		add_filter(
 			'rewrite_rules_array', 
 			function ( ...$args ) {
-                wp_die( __LINE__ );
+
 				return $this->container->get( Router::class )->load( ...$args );
 			},
 			999

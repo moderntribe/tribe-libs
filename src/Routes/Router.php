@@ -13,20 +13,6 @@ use Tribe\Libs\Container\Abstract_Subscriber;
 
 class Router extends Abstract_Subscriber {
 	/**
-	 * Defined routes.
-	 *
-	 * @var array
-	 */
-	public $defined_routes = [];
-
-	/**
-	 * Defined REST routes.
-	 *
-	 * @var array
-	 */
-	public $defined_rest_routes = [];
-
-	/**
 	 * Currently matched route.
 	 *
 	 * @var string
@@ -55,7 +41,7 @@ class Router extends Abstract_Subscriber {
 	 * @return void
 	 */
 	public function register() : void {
-		
+
 	}
 
 	/**

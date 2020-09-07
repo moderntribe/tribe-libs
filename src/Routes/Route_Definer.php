@@ -44,9 +44,6 @@ class Route_Definer implements Definer_Interface {
 			 * ROUTES should extend \Tribe\Libs\Routes\Rest_Route
 			 */
 			self::REST_ROUTES => DI\add( [] ),
-
-			// Router::class => DI\create()
-			// 	->constructor( DI\get( self::ROUTES, self::REST_ROUTES ) ),
 		];
 	}
 }
