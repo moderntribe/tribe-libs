@@ -197,10 +197,7 @@ class Router extends Abstract_Subscriber {
 	 * @return array          The modified rewrite rules array.
 	 */
 	public function load( $wp_rules = [] ) : array {
-		$mt_trial_rules = $this->get_rules();
-		$new_rules      = array_merge( $mt_trial_rules, $wp_rules );
-
-		return $new_rules;
+		return array_merge( $this->get_rules(), $wp_rules );
 	}
 
 	/**
