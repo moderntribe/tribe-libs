@@ -7,7 +7,29 @@
         "filp/whoops": "^2.2@dev",
         "php-di/php-di": "^6.0",
         "twig/twig": "^3.0",
-        "moderntribe/square1-container": "dev-master"
+        "moderntribe/square1-acf": "dev-master",
+        "moderntribe/square1-assets": "dev-master",
+        "moderntribe/square1-blog-copier": "dev-master",
+        "moderntribe/square1-cache": "dev-master",
+        "moderntribe/square1-cli": "dev-master",
+        "moderntribe/square1-container": "dev-master",
+        "moderntribe/square1-generators": "dev-master",
+        "moderntribe/square1-media": "dev-master",
+        "moderntribe/square1-nav": "dev-master",
+        "moderntribe/square1-object-meta": "dev-master",
+        "moderntribe/square1-oembed": "dev-master",
+        "moderntribe/square1-p2p": "dev-master",
+        "moderntribe/square1-post-meta": "dev-master",
+        "moderntribe/square1-post-type": "dev-master",
+        "moderntribe/square1-queues": "dev-master",
+        "moderntribe/square1-queues-mysql": "dev-master",
+        "moderntribe/square1-required-page": "dev-master",
+        "moderntribe/square1-schema": "dev-master",
+        "moderntribe/square1-settings": "dev-master",
+        "moderntribe/square1-taxonomy": "dev-master",
+        "moderntribe/square1-user": "dev-master",
+        "moderntribe/square1-utils": "dev-master",
+        "moderntribe/square1-whoops": "dev-master"
     },
     "require-dev": {
         "automattic/phpcs-neutron-standard": "^1.5",
@@ -24,69 +46,10 @@
         "szepeviktor/phpstan-wordpress": "^0.6.0",
         "wp-cli/wp-cli": "^2.4"
     },
-    "autoload": {
-        "files": [
-            "src/Assets/version.php",
-            "src/Cache/functions.php"
-        ],
-        "psr-4": {
-            "Tribe\\Libs\\ACF\\": "src/ACF/",
-            "Tribe\\Libs\\Assets\\": "src/Assets/",
-            "Tribe\\Libs\\Blog_Copier\\": "src/Blog_Copier/",
-            "Tribe\\Libs\\CLI\\": "src/CLI/",
-            "Tribe\\Libs\\Cache\\": "src/Cache/",
-            "Tribe\\Libs\\Generators\\": "src/Generators/",
-            "Tribe\\Libs\\Media\\": "src/Media/",
-            "Tribe\\Libs\\Nav\\": "src/Nav/",
-            "Tribe\\Libs\\Object_Meta\\": "src/Object_Meta/",
-            "Tribe\\Libs\\Oembed\\": "src/Oembed/",
-            "Tribe\\Libs\\P2P\\": "src/P2P/",
-            "Tribe\\Libs\\Post_Meta\\": "src/Post_Meta/",
-            "Tribe\\Libs\\Post_Type\\": "src/Post_Type/",
-            "Tribe\\Libs\\Queues\\": "src/Queues/",
-            "Tribe\\Libs\\Queues_Mysql\\": "src/Queues_Mysql/",
-            "Tribe\\Libs\\Request\\": "src/Request/",
-            "Tribe\\Libs\\Required_Page\\": "src/Required_Page/",
-            "Tribe\\Libs\\Schema\\": "src/Schema/",
-            "Tribe\\Libs\\Settings\\": "src/Settings/",
-            "Tribe\\Libs\\Taxonomy\\": "src/Taxonomy/",
-            "Tribe\\Libs\\Twig\\": "src/Twig/",
-            "Tribe\\Libs\\User\\": "src/User/",
-            "Tribe\\Libs\\Utils\\": "src/Utils/",
-            "Tribe\\Libs\\Whoops\\": "src/Whoops/"
-        }
-    },
     "autoload-dev": {
         "psr-4": {
-            "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
-            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src"
+            "Tribe\\Libs\\": "tests/integration/Tribe/Libs"
         }
-    },
-    "replace": {
-        "moderntribe/square1-acf": "self.version",
-        "moderntribe/square1-assets": "self.version",
-        "moderntribe/square1-blog-copier": "self.version",
-        "moderntribe/square1-cache": "self.version",
-        "moderntribe/square1-cli": "self.version",
-        "moderntribe/square1-generators": "self.version",
-        "moderntribe/square1-media": "self.version",
-        "moderntribe/square1-nav": "self.version",
-        "moderntribe/square1-object-meta": "self.version",
-        "moderntribe/square1-oembed": "self.version",
-        "moderntribe/square1-p2p": "self.version",
-        "moderntribe/square1-post-meta": "self.version",
-        "moderntribe/square1-post-type": "self.version",
-        "moderntribe/square1-queues": "self.version",
-        "moderntribe/square1-queues-mysql": "self.version",
-        "moderntribe/square1-request": "self.version",
-        "moderntribe/square1-required-page": "self.version",
-        "moderntribe/square1-schema": "self.version",
-        "moderntribe/square1-settings": "self.version",
-        "moderntribe/square1-taxonomy": "self.version",
-        "moderntribe/square1-twig": "self.version",
-        "moderntribe/square1-user": "self.version",
-        "moderntribe/square1-utils": "self.version",
-        "moderntribe/square1-whoops": "self.version"
     },
     "config": {
         "vendor-dir": "vendor",
