@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added missing packages to the monorepo config
+
 ## v3.1.0 - 2020-09-03
 
 - Update release script for monorepo-builder 8.0 compatibility
