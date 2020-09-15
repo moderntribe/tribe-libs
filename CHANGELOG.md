@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v3.1.1 - 2020-09-15
 
 - Added missing packages to the monorepo config
 
