@@ -3,22 +3,17 @@
 
 namespace Tribe\Libs\ACF;
 
+use Tribe\Libs\ACF\Traits\With_Sub_Fields;
+
 class Layout extends Field implements ACF_Aggregate {
+	use With_Sub_Fields;
 	protected $key_prefix = 'layout';
 
-	/** @var Field[] */
-	protected $fields = [ ];
-
-	public function add_field( Field $field ) {
-		$this->fields[] = $field;
-	}
-
 	public function get_attributes() {
-		$attributes = parent::get_attributes();
-		$attributes[ 'sub_fields' ] = [ ];
-		foreach ( $this->fields as $f ) {
-			$attributes[ 'sub_fields' ][] = $f->get_attributes();
-		}
+		$attributes                 = parent::get_attributes();
+		$attributes[ 'sub_fields' ] = $this->get_sub_field_attributes();
+
 		return $attributes;
 	}
+
 }

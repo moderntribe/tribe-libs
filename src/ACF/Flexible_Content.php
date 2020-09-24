@@ -7,13 +7,15 @@ class Flexible_Content extends Field {
 	/** @var Layout[] */
 	protected $layouts = [ ];
 
-	public function __construct( $key ) {
-		parent::__construct( $key );
+	public function __construct( $key, $attributes = [] ) {
+		parent::__construct( $key, $attributes );
 		$this->attributes[ 'type' ] = 'flexible_content';
 	}
 
 	public function add_layout( Layout $layout ) {
 		$this->layouts[] = $layout;
+
+		return $this;
 	}
 
 	public function get_attributes() {
