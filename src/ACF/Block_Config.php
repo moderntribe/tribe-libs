@@ -25,10 +25,12 @@ abstract class Block_Config {
 
 	abstract public function add_block();
 
-	abstract protected function add_fields();
+	protected function add_fields() {
+		//overwrite in sub class to add fields
+	}
 
 	protected function add_settings() {
-		//overrite in sub class to add settings
+		//overwrite in sub class to add settings
 	}
 
 	public function init() {
