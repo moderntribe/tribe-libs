@@ -9,13 +9,15 @@ class Repeater extends Field implements ACF_Aggregate {
 	/** @var Field[] */
 	protected $fields = [ ];
 
-	public function __construct( $key ) {
-		parent::__construct( $key );
+	public function __construct( $key, $attributes = [] ) {
+		parent::__construct( $key, $attributes );
 		$this->attributes[ 'type' ] = 'repeater';
 	}
 
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
+
+		return $this;
 	}
 
 	public function get_attributes() {
