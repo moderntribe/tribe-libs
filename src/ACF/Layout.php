@@ -9,8 +9,10 @@ class Layout extends Field implements ACF_Aggregate {
 	/** @var Field[] */
 	protected $fields = [ ];
 
+
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
+		return $this;
 	}
 
 	public function get_attributes() {
