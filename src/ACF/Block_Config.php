@@ -27,7 +27,9 @@ abstract class Block_Config {
 
 	abstract protected function add_fields();
 
-	abstract protected function add_settings();
+	protected function add_settings() {
+		//overrite in sub class to add settings
+	}
 
 	public function init() {
 		$this->fields   = new Field_Collection();
