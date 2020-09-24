@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## v3.1.2 - 2020-09-24
 
 - Added Field_Group class
 - Improvements to Repeater and Block_Config
