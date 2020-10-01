@@ -4,9 +4,20 @@ declare( strict_types=1 );
 namespace Tribe\Libs\ACF;
 
 class Field_Section {
-	protected string $type;
-	protected string $label;
-	protected Field_Collection $fields;
+	/**
+	 * @var string
+	 */
+	protected $type;
+
+	/**
+	 * @var string
+	 */
+	protected $label;
+
+	/**
+	 * @var Field_Collection
+	 */
+	protected $fields;
 
 	/**
 	 * Field_Section constructor.
@@ -42,7 +53,7 @@ class Field_Section {
 	 * @return Field
 	 */
 	public function get_section_field() {
-		//Since a section is really a faux field, we don't need a real name for it.
+		//Since a section is really a faux field, we don't really need a real name for it.
 		return new Field( uniqid( 'section-' ), [
 			'type'  => $this->type,
 			'label' => $this->label,

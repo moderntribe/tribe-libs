@@ -34,7 +34,6 @@ abstract class Block_Config {
 	}
 
 	public function init() {
-		$this->fields = new Field_Collection();
 		$this->add_block();
 		$this->add_fields();
 	}
