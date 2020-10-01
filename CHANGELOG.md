@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Reworks Block_Config to remove sections and add method if doing this in the plugin instead
+- Adds Field_Section
 
 ## v3.1.2 - 2020-09-24
 
