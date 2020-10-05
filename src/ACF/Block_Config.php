@@ -9,12 +9,18 @@ abstract class Block_Config {
 	/**
 	 * @var array
 	 */
-	protected $items = [];
+	protected $fields = [];
 
 	/**
 	 * @var Block
 	 */
 	protected $block;
+
+	public function __construct() {
+		$this->fields = new Field_Collection();
+		$this->add_block();
+		$this->add_fields();
+	}
 
 	abstract public function add_block();
 
@@ -28,14 +34,9 @@ abstract class Block_Config {
 	 * @return Field_Section
 	 */
 	public function add_section( Field_Section $section ): Field_Section {
-		$this->items[] = $section;
+		$this->fields[] = $section;
 
 		return $section;
-	}
-
-	public function init() {
-		$this->add_block();
-		$this->add_fields();
 	}
 
 	/**
@@ -66,7 +67,7 @@ abstract class Block_Config {
 	 * @return Block_Config
 	 */
 	public function add_field( Field $field ): Block_Config {
-		$this->items[] = $field;
+		$this->fields[] = $field;
 
 		return $this;
 	}
@@ -83,15 +84,8 @@ abstract class Block_Config {
 			'block' => [ static::NAME ],
 		] );
 
-		foreach ( $this->items as $block_item ) {
-			if ( $block_item instanceof Field_Section ) {
-				$group->add_field( $block_item->get_section_field() );
-				foreach ( $block_item->get_fields() as $field ) {
-					$group->add_field( $field );
-				}
-				continue;
-			}
-			$group->add_field( $block_item );
+		foreach ( $this->fields as $field ) {
+			$group->add_field( $field );
 		}
 
 		return $group;

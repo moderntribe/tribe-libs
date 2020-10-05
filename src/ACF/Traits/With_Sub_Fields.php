@@ -20,9 +20,14 @@ trait With_Sub_Fields {
 	}
 
 	public function get_sub_field_attributes(): array {
-		return array_map( static function ( Field $f ) {
-			return $f->get_attributes();
-		}, $this->fields );
+		$field_attributes = [];
+
+		/** @var Field $field */
+		foreach ( $this->fields as $field ) {
+			$field_attributes = array_merge( $field_attributes, $field->get_attributes() );
+		}
+
+		return $field_attributes;
 	}
 
 }

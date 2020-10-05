@@ -3,31 +3,30 @@ declare( strict_types=1 );
 
 namespace Tribe\Libs\ACF;
 
-class Field_Section {
-	/**
-	 * @var string
-	 */
-	protected $type;
-
-	/**
-	 * @var string
-	 */
-	protected $label;
-
+class Field_Section extends Field implements ACF_Aggregate {
 	/**
 	 * @var Field_Collection
 	 */
 	protected $fields;
 
 	/**
+	 * @var string
+	 */
+	protected $key_prefix = 'section_';
+
+	/**
 	 * Field_Section constructor.
 	 *
+	 * @param string $name
 	 * @param string $label
 	 * @param string $type
 	 */
-	public function __construct( string $label, string $type ) {
-		$this->label  = $label;
-		$this->type   = $type;
+	public function __construct( string $name, string $label, string $type ) {
+		parent::__construct( $name, [
+			'type'  => $type,
+			'label' => $label,
+			'name'  => $name,
+		] );
 		$this->fields = new Field_Collection();
 	}
 
@@ -50,14 +49,18 @@ class Field_Section {
 	}
 
 	/**
-	 * @return Field
+	 * @return array
 	 */
-	public function get_section_field() {
-		//Since a section is really a faux field, we don't really need a real name for it.
-		return new Field( uniqid( 'section-' ), [
-			'type'  => $this->type,
-			'label' => $this->label,
-		] );
+	public function get_attributes() {
+		$field_attributes   = [];
+		$field_attributes[] = $this->attributes;
+
+		/** @var Field $field */
+		foreach ( $this->fields as $field ) {
+			$field_attributes = array_merge($field_attributes, $field->get_attributes());
+		}
+
+		return $field_attributes;
 	}
 
 }

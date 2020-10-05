@@ -52,7 +52,7 @@ abstract class ACF_Configuration {
 	 * @return array
 	 */
 	public function get_attributes() {
-		return $this->attributes;
+		return [ $this->attributes ];
 	}
 
 	/**
@@ -62,10 +62,11 @@ abstract class ACF_Configuration {
 	 * @return mixed
 	 */
 	public function get( $key ) {
-		$attributes = $this->get_attributes();
+		$attributes = $this->attributes;
 		if ( isset( $attributes[ $key ] ) ) {
 			return $attributes[ $key ];
 		}
+
 		return null;
 	}
 }
