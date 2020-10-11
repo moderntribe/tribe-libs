@@ -8,6 +8,7 @@ use Tribe\Libs\Container\Abstract_Subscriber;
 class Media_Subscriber extends Abstract_Subscriber {
 	public function register(): void {
 		$this->full_size_gif();
+		$this->svg_sizes();
 		$this->disable_responsive_images();
 	}
 
@@ -20,7 +21,13 @@ class Media_Subscriber extends Abstract_Subscriber {
 		}, 10, 3 );
 	}
 
-	private function disable_responsive_images():  void {
+	private function svg_sizes(): void {
+		add_filter( 'wp_get_attachment_image_src', function ( $image, $attachment_id, $size, $icon ) {
+			return $this->container->get( SVG_Sizes::class )->set_accurate_sizes( $image, $attachment_id, $size, $icon );
+		}, 11, 4 );
+	}
+
+	private function disable_responsive_images(): void {
 		if ( defined( 'DISABLE_WP_RESPONSIVE_IMAGES' ) && DISABLE_WP_RESPONSIVE_IMAGES === false ) {
 			return;
 		}
