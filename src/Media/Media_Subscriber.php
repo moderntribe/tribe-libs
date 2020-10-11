@@ -22,6 +22,9 @@ class Media_Subscriber extends Abstract_Subscriber {
 	}
 
 	private function svg_sizes(): void {
+		if ( defined( 'TRIBE_SET_SVG_SIZE_ATTRIBUTES' ) && TRIBE_SET_SVG_SIZE_ATTRIBUTES === false ) {
+			return;
+		}
 		add_filter( 'wp_get_attachment_image_src', function ( $image, $attachment_id, $size, $icon ) {
 			return $this->container->get( SVG_Sizes::class )->set_accurate_sizes( $image, $attachment_id, $size, $icon );
 		}, 11, 4 );
