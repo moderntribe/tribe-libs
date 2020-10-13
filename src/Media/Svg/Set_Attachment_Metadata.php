@@ -23,8 +23,8 @@ class Set_Attachment_Metadata {
 			return $metadata;
 		}
 
-		$svg_path               = get_attached_file( $attachment_id );
-		$filename               = basename( $svg_path );
+		$svg_path = get_attached_file( $attachment_id );
+		$filename = basename( $svg_path );
 
 		$dimensions = $this->svg_dimensions( $svg_path );
 
@@ -73,7 +73,7 @@ class Set_Attachment_Metadata {
 
 
 	/**
-	 * Get SVG size from the width/height or viewport.
+	 * Get SVG size from the width/height or viewBox.
 	 *
 	 * @param string $file_path Path to the SVG file.
 	 *

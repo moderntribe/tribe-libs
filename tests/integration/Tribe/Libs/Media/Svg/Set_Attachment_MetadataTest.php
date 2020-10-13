@@ -44,7 +44,7 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 
 		// set up our filter
 		$enable = new Enable_Uploads();
-		$setter           = new Set_Attachment_Metadata();
+		$setter = new Set_Attachment_Metadata();
 		add_filter( 'wp_generate_attachment_metadata', [ $setter, 'generate_metadata' ], 10, 2 );
 		add_filter( 'mime_types', [ $enable, 'set_svg_mimes' ], 10, 1 );
 
