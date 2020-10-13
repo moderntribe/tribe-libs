@@ -51,6 +51,7 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 		$setter = new Set_Attachment_Metadata();
 		add_filter( 'wp_generate_attachment_metadata', [ $setter, 'generate_metadata' ], 10, 2 );
 		add_filter( 'mime_types', [ $enable, 'set_svg_mimes' ], 10, 1 );
+		add_filter( 'upload_mimes', [ $enable, 'set_svg_mimes' ], 10, 1 );
 
 		// create the test file
 		// intrinsic width: 146
@@ -72,6 +73,7 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 		wp_delete_attachment( $attachment_id, true );
 		remove_filter( 'wp_generate_attachment_metadata', [ $setter, 'generate_metadata' ], 10 );
 		remove_filter( 'mime_types', [ $enable, 'set_svg_mimes' ], 10 );
+		remove_filter( 'upload_mimes', [ $enable, 'set_svg_mimes' ], 10 );
 
 		self::assertEquals( [ 146, 106 ], $resized['full'] );
 		self::assertEquals( [ 2000, 1452 ], $resized['test_large'] );

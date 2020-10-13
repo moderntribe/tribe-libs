@@ -15,6 +15,7 @@ class Enable_Uploads {
 	 *
 	 * @return array
 	 * @filter mime_types
+	 * @filter upload_mimes
 	 */
 	public function set_svg_mimes( array $mimes ): array {
 		$mimes['svg|svgz'] = 'image/svg+xml';
