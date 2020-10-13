@@ -14,7 +14,7 @@ class Full_Size_GifsTest extends \Codeception\TestCase\WPTestCase {
 		add_filter( 'image_downsize', [ $full_size_gif, 'full_size_only_gif' ], 10, 3 );
 
 		// create the test file
-		$filename       = codecept_data_dir( 'test.gif' );
+		$filename       = codecept_data_dir( 'media/test.gif' );
 		$parent_post_id = wp_insert_post( [ 'title' => 'test_gifs', 'post_type' => 'post' ] );
 		$attachment_id = self::factory()->attachment->create_upload_object( $filename, $parent_post_id );
 
