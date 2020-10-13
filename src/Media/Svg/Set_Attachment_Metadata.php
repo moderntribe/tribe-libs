@@ -80,7 +80,12 @@ class Set_Attachment_Metadata {
 	 * @return int[]|bool [ $width, $height ], or false if it can't be extracted
 	 */
 	protected function svg_dimensions( string $file_path ) {
-		$svg    = @simplexml_load_file( $file_path );
+		$filedata = file_get_contents( $file_path );
+		if ( $this->is_gzipped( $filedata ) ) {
+			$svg = @simplexml_load_string( gzdecode( $filedata ) );
+		} else {
+			$svg = @simplexml_load_string( $filedata );
+		}
 		$width  = 0;
 		$height = 0;
 		if ( $svg ) {
@@ -100,5 +105,23 @@ class Set_Attachment_Metadata {
 		}
 
 		return [ (int) round( $width ), (int) round( $height ) ];
+	}
+
+
+	/**
+	 * Check if the contents are gzipped
+	 *
+	 * @see http://www.gzip.org/zlib/rfc-gzip.html#member-format
+	 *
+	 * @param string $contents
+	 *
+	 * @return bool
+	 */
+	protected function is_gzipped( $contents ): bool {
+		if ( function_exists( 'mb_strpos' ) ) {
+			return 0 === mb_strpos( $contents, "\x1f" . "\x8b" . "\x08" );
+		}
+
+		return 0 === strpos( $contents, "\x1f" . "\x8b" . "\x08" );
 	}
 }

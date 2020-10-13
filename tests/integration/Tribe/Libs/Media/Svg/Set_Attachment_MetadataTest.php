@@ -30,7 +30,11 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 		}
 	}
 
-	public function test_sets_size_metadata(): void {
+	/**
+	 * @return void
+	 * @dataProvider sample_logos
+	 */
+	public function test_sets_size_metadata( string $filename ): void {
 		$image_sizes = [
 			'test_large'         => [ 2000, 2000, false ],
 			'test_large_cropped' => [ 2000, 2000, true ],
@@ -51,7 +55,6 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 		// create the test file
 		// intrinsic width: 146
 		// intrinsic height: 106
-		$filename      = codecept_data_dir( 'media/logo.svg' );
 		$attachment_id = self::factory()->attachment->create_upload_object( $filename );
 
 		// get the full and resized image dimensions
@@ -75,5 +78,12 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 		self::assertEquals( [ 2000, 2000 ], $resized['test_large_cropped'] );
 		self::assertEquals( [ 100, 73 ], $resized['test_small'] );
 		self::assertEquals( [ 100, 100 ], $resized['test_small_cropped'] );
+	}
+
+	public function sample_logos(): array {
+		return [
+			[ codecept_data_dir( 'media/logo.svg' ) ],
+			[ codecept_data_dir( 'media/logo.svgz' ) ],
+		];
 	}
 }
