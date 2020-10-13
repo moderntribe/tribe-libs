@@ -57,6 +57,7 @@ class Sanitize_Uploads {
 			}
 		}
 
+		/** @var string|false $clean */
 		$clean = $this->sanitizer->sanitize( $dirty );
 
 		if ( $clean === false ) {
@@ -78,7 +79,7 @@ class Sanitize_Uploads {
 	 *
 	 * @see http://www.gzip.org/zlib/rfc-gzip.html#member-format
 	 *
-	 * @param $contents
+	 * @param string $contents
 	 *
 	 * @return bool
 	 */

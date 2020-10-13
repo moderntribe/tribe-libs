@@ -85,7 +85,7 @@ class Set_Attachment_Metadata {
 		$height = 0;
 		if ( $svg ) {
 			$attributes = $svg->attributes();
-			if ( isset( $attributes->width, $attributes->height ) && is_numeric( $attributes->width ) && is_numeric( $attributes->height ) ) {
+			if ( isset( $attributes->width, $attributes->height ) && is_numeric( (string) $attributes->width ) && is_numeric( (string) $attributes->height ) ) {
 				$width  = (float) $attributes->width;
 				$height = (float) $attributes->height;
 			} elseif ( isset( $attributes->viewBox ) ) {
