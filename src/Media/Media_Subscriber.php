@@ -4,11 +4,14 @@ declare( strict_types=1 );
 namespace Tribe\Libs\Media;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
+use Tribe\Libs\Media\Svg\Enable_Uploads;
+use Tribe\Libs\Media\Svg\Sanitize_Uploads;
+use Tribe\Libs\Media\Svg\Set_Attachment_Metadata;
 
 class Media_Subscriber extends Abstract_Subscriber {
 	public function register(): void {
 		$this->full_size_gif();
-		$this->svg_sizes();
+		$this->svg_uploads();
 		$this->disable_responsive_images();
 	}
 
@@ -21,13 +24,26 @@ class Media_Subscriber extends Abstract_Subscriber {
 		}, 10, 3 );
 	}
 
-	private function svg_sizes(): void {
-		if ( defined( 'TRIBE_SET_SVG_SIZE_ATTRIBUTES' ) && TRIBE_SET_SVG_SIZE_ATTRIBUTES === false ) {
+	private function svg_uploads(): void {
+		if ( defined( 'TRIBE_ENABLE_SVG_UPLOADS' ) && TRIBE_ENABLE_SVG_UPLOADS === false ) {
 			return;
 		}
-		add_filter( 'wp_get_attachment_image_src', function ( $image, $attachment_id, $size, $icon ) {
-			return $this->container->get( SVG_Sizes::class )->set_accurate_sizes( $image, $attachment_id, $size, $icon );
-		}, 11, 4 );
+
+		add_filter( 'mime_types', function ( $mimes ) {
+			return $this->container->get( Enable_Uploads::class )->set_svg_mimes( $mimes );
+		}, 10, 1 );
+
+		add_filter( 'wp_check_filetype_and_ext', function ( $data, $file ) {
+			return $this->container->get( Enable_Uploads::class )->set_upload_mime( $data, $file );
+		}, 10, 2 );
+
+		add_filter( 'wp_handle_upload_prefilter', function ( $file ) {
+			return $this->container->get( Sanitize_Uploads::class )->filter_svg_uploads( $file );
+		}, 10, 1 );
+
+		add_filter( 'wp_generate_attachment_metadata', function ( $metadata, $attachment_id ) {
+			return $this->container->get( Set_Attachment_Metadata::class )->generate_metadata( $metadata, (int) $attachment_id );
+		}, 10, 2 );
 	}
 
 	private function disable_responsive_images(): void {
