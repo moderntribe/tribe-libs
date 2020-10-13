@@ -15,7 +15,7 @@ class Sanitize_Uploads {
 	/**
 	 * @var Sanitizer
 	 */
-	private Sanitizer $sanitizer;
+	private $sanitizer;
 
 	public function __construct( Sanitizer $sanitizer ) {
 		$this->sanitizer = $sanitizer;
