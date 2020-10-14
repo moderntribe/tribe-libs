@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added SVG support to the Media package. This replaces the Safe SVG plugin with a more
+  robust implementation that efficiently handles sanitization, scaling, and metadata
+  regeneration. This is backwards compatible, but to take advantage of SVG minification,
+  the new `Media_Definer` should be registered with the DI container.
+
 ## v3.1.2 - 2020-09-24
 
 - Added Field_Group class
