@@ -11,6 +11,8 @@ namespace Tribe\Libs\Media\Svg;
 class Enable_Uploads {
 
 	/**
+	 * Registers the SVG mime type as a permitted file type
+	 *
 	 * @param array $mimes
 	 *
 	 * @return array
@@ -26,8 +28,8 @@ class Enable_Uploads {
 	/**
 	 * Fixes the issue in WordPress 4.7.1 being unable to correctly identify SVGs
 	 *
-	 * @param array       $data
-	 * @param string      $file
+	 * @param array  $data
+	 * @param string $file
 	 *
 	 * @return array
 	 * @filter wp_check_filetype_and_ext
@@ -46,5 +48,22 @@ class Enable_Uploads {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Registers our stub image editor for use in regenerating
+	 * media metadata
+	 *
+	 * @param array $editors
+	 *
+	 * @return array
+	 * @filter wp_image_editors
+	 */
+	public function filter_image_editors( array $editors ): array {
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			$editors[] = Image_Editor_Svg::class;
+		}
+
+		return $editors;
 	}
 }

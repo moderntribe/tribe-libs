@@ -37,6 +37,10 @@ class Media_Subscriber extends Abstract_Subscriber {
 			return $this->container->get( Enable_Uploads::class )->set_svg_mimes( $mimes );
 		}, 10, 1 );
 
+		add_filter( 'wp_image_editors', function ( $editors ) {
+			return $this->container->get( Enable_Uploads::class )->filter_image_editors( $editors );
+		}, 10, 1 );
+
 		add_filter( 'wp_check_filetype_and_ext', function ( $data, $file ) {
 			return $this->container->get( Enable_Uploads::class )->set_upload_mime( $data, $file );
 		}, 10, 2 );
