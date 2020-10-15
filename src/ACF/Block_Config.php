@@ -17,7 +17,6 @@ abstract class Block_Config {
 	protected $block;
 
 	public function __construct() {
-		$this->fields = new Field_Collection();
 		$this->add_block();
 		$this->add_fields();
 	}

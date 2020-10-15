@@ -2,6 +2,7 @@
 
 namespace Tribe\Libs\ACF\Traits;
 
+use Tribe\Libs\ACF\ACF_Configuration;
 use Tribe\Libs\ACF\Field;
 
 trait With_Sub_Fields {
@@ -19,15 +20,13 @@ trait With_Sub_Fields {
 		return $this;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function get_sub_field_attributes(): array {
-		$field_attributes = [];
-
-		/** @var Field $field */
-		foreach ( $this->fields as $field ) {
-			$field_attributes = array_merge( $field_attributes, $field->get_attributes() );
-		}
-
-		return $field_attributes;
+		return array_merge( ... array_map( static function ( ACF_Configuration $field ) {
+			return $field->get_attributes();
+		}, $this->fields ) );
 	}
 
 }
