@@ -23,7 +23,6 @@ parameters:
 		- '#Extensible_Walker_Nav_Menu.*should be compatible#'
 		- '#JSON_Nav_Walker.*should be compatible#'
 		- '#Object_Nav_Walker.*should return string#'
-		- '#Function get_template_part invoked with 3 parameters, 1-2 required.#'
 	earlyTerminatingMethodCalls:
 		WP_CLI:
 		  - error
