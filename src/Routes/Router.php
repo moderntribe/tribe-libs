@@ -12,6 +12,7 @@ declare( strict_types=1 );
 namespace Tribe\Libs\Routes;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
+use Tribe\Libs\Routes\Tribe\Libs\Routes\Route;
 
 /**
  * Class to register routers for normal and REST API endpoints.
@@ -20,7 +21,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Currently matched route.
 	 *
-	 * @var Tribe\Libs\Routes\Route|string
+	 * @var Route|string
 	 */
 	public $matched_route;
 
@@ -232,7 +233,7 @@ class Router extends Abstract_Subscriber {
 	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
-	 * @return \Tribe\Libs\Routes\Route|bool The matched route on success, false on failure.
+	 * @return Route|bool The matched route on success, false on failure.
 	 */
 	public function did_parse_request( $wp ) {
 		$pattern       = $wp->matched_rule;
