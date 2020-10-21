@@ -42,7 +42,7 @@ class Route_Subscriber extends Abstract_Subscriber {
 			function ( ...$args ) {
 				return $this->container->get( Router::class )->did_query_vars( ...$args );
 			}
-        );
+		);
 
 		add_filter(
 			'rewrite_rules_array', 
@@ -58,5 +58,5 @@ class Route_Subscriber extends Abstract_Subscriber {
 				$this->container->get( Router::class )->init_rest_routes( ...$args );
 			}
 		);
-    }
+	}
 }
