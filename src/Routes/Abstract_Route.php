@@ -33,8 +33,10 @@
  *
  * }
  *
- * @package tribe-lib
+ * @package Tribe\Project\Routes
  */
+
+declare( strict_types=1 );
 
 namespace Tribe\Libs\Routes;
 

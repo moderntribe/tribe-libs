@@ -1,9 +1,19 @@
 <?php
+/**
+ * Base class for routes.
+ *
+ * @package Tribe\Project\Routes
+ */
+
+declare( strict_types=1 );
 
 namespace Tribe\Project\Routes;
 
 use Tribe\Libs\Routes\Abstract_Route;
 
+/**
+ * Class to define a sample route.
+ */
 class Sample_Route extends Abstract_Route {
 	/**
 	 * Registers routes.
@@ -21,7 +31,7 @@ class Sample_Route extends Abstract_Route {
 	 * @return array      Modified core JS configuration.
 	 */
 	public function js_config( array $data = [] ) : array {
-		$data['FormSubmitEndpoint'] = rest_url( '/mt-trial/v1/submit-form/' );
+		$data['FormSubmitEndpoint'] = rest_url( '/tribe/v1/submit-form/' );
 		return $data;
 	}
 
