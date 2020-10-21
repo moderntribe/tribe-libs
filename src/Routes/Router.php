@@ -20,7 +20,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Currently matched route.
 	 *
-	 * @var string
+	 * @var Tribe\Libs\Routes\Route|string
 	 */
 	public $matched_route;
 
@@ -220,7 +220,7 @@ class Router extends Abstract_Subscriber {
 
 		// Bail early if the route pattern doesn't exist.
 		if ( empty( $this->routes[ $pattern ] ) ) {
-			return null;
+			return false;
 		}
 
 		return $this->routes[ $pattern ];
