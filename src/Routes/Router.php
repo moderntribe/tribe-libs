@@ -233,7 +233,7 @@ class Router extends Abstract_Subscriber {
 	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
-	 * @return Route|bool The matched route on success, false on failure.
+	 * @return Abstract_Route|bool The matched route on success, false on failure.
 	 */
 	public function did_parse_request( $wp ) {
 		$pattern       = $wp->matched_rule;
