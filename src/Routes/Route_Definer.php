@@ -8,25 +8,25 @@ use Tribe\Libs\Container\Definer_Interface;
 use Tribe\Libs\Routes\Router;
 
 class Route_Definer implements Definer_Interface {
-    /**
-     * The Route DI group to use.
-     *
-     * @var string
-     */
+	/**
+	 * The Route DI group to use.
+	 *
+	 * @var string
+	 */
 	public const ROUTES = 'libs.routes';
 
-    /**
-     * The REST DI group to use.
-     *
-     * @var string
-     */
+	/**
+	 * The REST DI group to use.
+	 *
+	 * @var string
+	 */
 	public const REST_ROUTES = 'libs.rest_routes';
 
-    /**
-     * Defines routes.
-     *
-     * @return array
-     */
+	/**
+	 * Defines routes.
+	 *
+	 * @return array
+	 */
 	public function define(): array {
 		return [
 			/**
