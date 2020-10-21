@@ -192,7 +192,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Merges the WordPress Rewrite Rules with the CS Rules.
 	 *
-	 * Tied to the rewrite_rules_array hook.
+	 * @hook rewrite_rules_array hook
 	 *
 	 * @param array $wp_rules The wp rules array.
 	 * @return array          The modified rewrite rules array.
@@ -225,7 +225,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Checks if the current route is a custom route and activates it if matched.
 	 *
-	 * Tied to parse_request hook.
+	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
 	 * @return string|bool The matched route on success, false on failure.
@@ -248,7 +248,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Adds the custom query vars.
 	 *
-	 * Tied to query_vars hook
+	 * @hook query_vars
 	 *
 	 * @param array $query_vars WordPress query vars.
 	 * @return array            Modified query vars.
