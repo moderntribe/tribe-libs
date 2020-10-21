@@ -39,6 +39,15 @@ class Router extends Abstract_Subscriber {
 	public $router_vars;
 
 	/**
+	 * Register to WP lifecycle hooks.
+	 *
+	 * @return void
+	 */
+	public function register() : void {
+		return;
+	}
+
+	/**
 	 * The current router version. This should be bumped whenever
 	 * changes are made to this file.
 	 *
