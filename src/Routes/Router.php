@@ -7,10 +7,15 @@
  * @package Tribe\Project\Routes
  */
 
+declare( strict_types=1 );
+
 namespace Tribe\Libs\Routes;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
 
+/**
+ * Class to register routers for normal and REST API endpoints.
+ */
 class Router extends Abstract_Subscriber {
 	/**
 	 * Currently matched route.
@@ -80,7 +85,6 @@ class Router extends Abstract_Subscriber {
 		$version = $this->get_version();
 		update_option( 'lib_router_version', $version );
 	}
-
 
 	/**
 	 * Converts Route instances into Rewrite rules for adding to

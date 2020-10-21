@@ -1,4 +1,10 @@
 <?php
+/**
+ * Route subscriber class.
+ *
+ * @package Tribe\Project\Routes
+ */
+
 declare( strict_types=1 );
 
 namespace Tribe\Libs\Routes;
@@ -6,8 +12,16 @@ namespace Tribe\Libs\Routes;
 use Tribe\Libs\Container\Abstract_Subscriber;
 use Tribe\Libs\Routes\Router;
 
+/**
+ * Class to subscribe routes to the WP lifecycle hooks.
+ */
 class Route_Subscriber extends Abstract_Subscriber {
-	public function register(): void {      
+	/**
+	 * Subscribes router to WP lifecycle hooks.
+	 *
+	 * @return void
+	 */
+	public function register() : void {      
 		add_action(
 			'wp_loaded', 
 			function ( ...$args ) {
@@ -33,7 +47,6 @@ class Route_Subscriber extends Abstract_Subscriber {
 		add_filter(
 			'rewrite_rules_array', 
 			function ( ...$args ) {
-
 				return $this->container->get( Router::class )->load( ...$args );
 			},
 			999
