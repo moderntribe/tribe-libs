@@ -12,7 +12,7 @@ declare( strict_types=1 );
 namespace Tribe\Libs\Routes;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
-use Tribe\Libs\Routes\Route;
+use Tribe\Libs\Routes\Abstract_Route;
 
 /**
  * Class to register routers for normal and REST API endpoints.
@@ -21,7 +21,7 @@ class Router extends Abstract_Subscriber {
 	/**
 	 * Currently matched route.
 	 *
-	 * @var Route|string
+	 * @var Abstract_Route|string
 	 */
 	public $matched_route;
 
@@ -211,7 +211,7 @@ class Router extends Abstract_Subscriber {
 	 * if not found.
 	 *
 	 * @param string $pattern The regex pattern to lookup.
-	 * @return Route|false The route or false on failure.
+	 * @return Abstract_Route|false The route or false on failure.
 	 */
 	public function find_route( $pattern ) {
 		// Load routes if not already loaded.
