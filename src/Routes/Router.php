@@ -220,7 +220,7 @@ class Router extends Abstract_Subscriber {
 
 		// Bail early if the route pattern doesn't exist.
 		if ( empty( $this->routes[ $pattern ] ) ) {
-			return false;
+			return null;
 		}
 
 		return $this->routes[ $pattern ];
@@ -232,7 +232,7 @@ class Router extends Abstract_Subscriber {
 	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
-	 * @return string|bool The matched route on success, false on failure.
+	 * @return \Tribe\Libs\Routes\Route|bool The matched route on success, false on failure.
 	 */
 	public function did_parse_request( $wp ) {
 		$pattern       = $wp->matched_rule;
@@ -244,7 +244,10 @@ class Router extends Abstract_Subscriber {
 		}
 
 		$this->matched_route = $matched_route;
-		$this->matched_route->activate( $wp );
+
+		if ( method_exists( $this->matched_route, 'activate' ) ) {
+			$this->matched_route->activate( $wp );
+		}
 
 		return $matched_route;
 	}
