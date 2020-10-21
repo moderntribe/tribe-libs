@@ -47,9 +47,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return void
 	 */
-	public function register() : void {
-
-	}
+	abstract public function register() : void;
 
 	/**
 	 * Required - The Route's name. This is useful to refer to the route
