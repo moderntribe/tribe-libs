@@ -158,13 +158,15 @@ class Router extends Abstract_Subscriber {
 		$this->routes      = [];
 		$this->router_vars = [];
 
+		// Register any routes defined.
 		foreach ( $this->container->get( Route_Definer::ROUTES ) as $route ) {
-			// Register any route hooks.
+			// Register route hooks.
 			$route->register();
 
 			$patterns   = $route->get_patterns();
 			$route_vars = $route->get_query_var_names();
 
+			// Add patterns to routes array.
 			foreach ( $patterns as $pattern ) {
 				$this->routes[ $pattern ] = $route;
 			}
@@ -181,6 +183,7 @@ class Router extends Abstract_Subscriber {
 	 * @return void
 	 */
 	public function init_rest_routes() : void {
+		// Register all REST routes defined.
 		foreach ( $this->container->get( Route_Definer::REST_ROUTES ) as $route ) {
 			$route->register();
 		}
@@ -206,10 +209,12 @@ class Router extends Abstract_Subscriber {
 	 * @return Route|false The route or false on failure.
 	 */
 	public function find_route( $pattern ) {
+		// Load routes if not already loaded.
 		if ( empty( $this->routes ) ) {
 			$this->routes = $this->get_route_objects();
 		}
 
+		// Bail early if the route pattern doesn't exist.
 		if ( empty( $this->routes[ $pattern ] ) ) {
 			return false;
 		}
