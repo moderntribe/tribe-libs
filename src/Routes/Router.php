@@ -12,7 +12,7 @@ declare( strict_types=1 );
 namespace Tribe\Libs\Routes;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
-use Tribe\Libs\Routes\Tribe\Libs\Routes\Route;
+use Tribe\Libs\Routes\Route;
 
 /**
  * Class to register routers for normal and REST API endpoints.
