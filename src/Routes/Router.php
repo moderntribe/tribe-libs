@@ -39,15 +39,6 @@ class Router extends Abstract_Subscriber {
 	public $router_vars;
 
 	/**
-	 * Class constructor.
-	 *
-	 * @return void
-	 */
-	public function register() : void {
-
-	}
-
-	/**
 	 * The current router version. This should be bumped whenever
 	 * changes are made to this file.
 	 *
