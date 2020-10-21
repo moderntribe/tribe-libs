@@ -9,12 +9,12 @@ declare( strict_types=1 );
 
 namespace Tribe\Project\Routes;
 
-use Tribe\Libs\Routes\Abstract_Rest_Route;
+use Tribe\Libs\Routes\Abstract_REST_Route;
 
 /**
  * Creates a sample REST endpoint.
  */
-class Sample_REST_Route extends Abstract_Rest_Route {
+class Sample_REST_Route extends Abstract_REST_Route {
 	/**
 	 * Registers routes.
 	 *

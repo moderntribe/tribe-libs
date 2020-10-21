@@ -273,7 +273,7 @@ abstract class Abstract_Route {
 		$template_path = $this->get_template();
 
 		// Bail early if no template path.
-		if ( false === $template_path ) {
+		if ( empty( $template_path ) ) {
 			return $template;
 		}
 
