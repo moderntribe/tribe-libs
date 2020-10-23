@@ -9,8 +9,8 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-container": "^3.2",
-        "moderntribe/square1-queues": "^3.2",
+        "moderntribe/square1-container": "^3.3",
+        "moderntribe/square1-queues": "^3.3",
         "php": "^7.2"
     },
     "autoload": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     }
 }
