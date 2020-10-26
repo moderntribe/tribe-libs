@@ -4,6 +4,7 @@
     "license": "GPL-2.0-only",
     "require": {
         "php": "^7.2",
+        "enshrined/svg-sanitize": "^0.13.3",
         "filp/whoops": "^2.2@dev",
         "php-di/php-di": "^6.0",
         "twig/twig": "^3.0"
@@ -100,7 +101,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     },
     "minimum-stability": "dev",

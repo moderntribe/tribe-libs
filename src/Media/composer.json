@@ -10,7 +10,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
-        "moderntribe/square1-container": "^3.2"
+        "enshrined/svg-sanitize": "^0.13.3",
+        "moderntribe/square1-container": "^3.3"
     },
     "autoload": {
         "psr-4": {
@@ -19,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     }
 }
