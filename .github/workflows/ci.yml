@@ -97,7 +97,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
 
       - name: Install composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+        run: composer self-update --1 && composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
       - name: Run integration tests
         run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration
