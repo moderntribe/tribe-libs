@@ -4,6 +4,7 @@
     "license": "GPL-2.0-only",
     "require": {
         "php": "^7.2",
+        "enshrined/svg-sanitize": "^0.13.3",
         "filp/whoops": "^2.2@dev",
         "php-di/php-di": "^6.0",
         "twig/twig": "^3.0"
@@ -47,7 +48,6 @@
             "Tribe\\Libs\\Queues_Mysql\\": "src/Queues_Mysql/",
             "Tribe\\Libs\\Request\\": "src/Request/",
             "Tribe\\Libs\\Required_Page\\": "src/Required_Page/",
-            "Tribe\\Libs\\Routes\\": "src/Routes/",
             "Tribe\\Libs\\Schema\\": "src/Schema/",
             "Tribe\\Libs\\Settings\\": "src/Settings/",
             "Tribe\\Libs\\Taxonomy\\": "src/Taxonomy/",
@@ -82,7 +82,6 @@
         "moderntribe/square1-queues-mysql": "self.version",
         "moderntribe/square1-request": "self.version",
         "moderntribe/square1-required-page": "self.version",
-        "moderntribe/square1-routes": "self.version",
         "moderntribe/square1-schema": "self.version",
         "moderntribe/square1-settings": "self.version",
         "moderntribe/square1-taxonomy": "self.version",
@@ -100,7 +99,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     },
     "minimum-stability": "dev",
