@@ -4,70 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01ef435f1db541af310c2477a350d4a3",
+    "content-hash": "225bd706511ec2058871498bf322dd65",
     "packages": [
         {
-            "name": "enshrined/svg-sanitize",
-            "version": "0.13.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-                "reference": "bc66593f255b7d2613d8f22041180036979b6403"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/bc66593f255b7d2613d8f22041180036979b6403",
-                "reference": "bc66593f255b7d2613d8f22041180036979b6403",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-libxml": "*"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "^0.1.2",
-                "phpunit/phpunit": "^6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "enshrined\\svgSanitize\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Daryll Doyle",
-                    "email": "daryll@enshrined.co.uk"
-                }
-            ],
-            "description": "An SVG sanitizer for PHP",
-            "time": "2020-01-20T01:34:17+00:00"
-        },
-        {
             "name": "filp/whoops",
-            "version": "2.7.3",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "5d5fe9bb3d656b514d455645b3addc5f7ba7714d"
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/5d5fe9bb3d656b514d455645b3addc5f7ba7714d",
-                "reference": "5d5fe9bb3d656b514d455645b3addc5f7ba7714d",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0",
+                "php": "^5.5.9 || ^7.0 || ^8.0",
                 "psr/log": "^1.0.1"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9 || ^1.0",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
                 "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
             },
             "suggest": {
@@ -77,7 +36,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -106,7 +65,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2020-06-14T09:00:00+00:00"
+            "time": "2020-10-20T12:00:00+00:00"
         },
         {
             "name": "opis/closure",
@@ -573,16 +532,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.0.5",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9b76b1535483cdf4edf01bb787b0217b62bd68a5"
+                "reference": "9a29e1fa7b5431969f96878b8662e3fcb18601b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9b76b1535483cdf4edf01bb787b0217b62bd68a5",
-                "reference": "9b76b1535483cdf4edf01bb787b0217b62bd68a5",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9a29e1fa7b5431969f96878b8662e3fcb18601b7",
+                "reference": "9a29e1fa7b5431969f96878b8662e3fcb18601b7",
                 "shasum": ""
             },
             "require": {
@@ -597,7 +556,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -641,7 +600,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-05T15:13:19+00:00"
+            "time": "2020-10-21T12:45:34+00:00"
         }
     ],
     "packages-dev": [
@@ -1125,16 +1084,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.10.13",
+            "version": "1.10.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "47c841ba3b2d3fc0b4b13282cf029ea18b66d78b"
+                "reference": "547c9ee73fe26c77af09a0ea16419176b1cdbd12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/47c841ba3b2d3fc0b4b13282cf029ea18b66d78b",
-                "reference": "47c841ba3b2d3fc0b4b13282cf029ea18b66d78b",
+                "url": "https://api.github.com/repos/composer/composer/zipball/547c9ee73fe26c77af09a0ea16419176b1cdbd12",
+                "reference": "547c9ee73fe26c77af09a0ea16419176b1cdbd12",
                 "shasum": ""
             },
             "require": {
@@ -1215,7 +1174,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-09T09:46:34+00:00"
+            "time": "2020-10-13T13:59:09+00:00"
         },
         {
             "name": "composer/package-versions-deprecated",
@@ -2267,16 +2226,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "2.6.13",
+            "version": "2.6.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "ca70454c8df6194584c6780f426e802e20c86a12"
+                "reference": "151cf379d6706e12f2c71a7aebe5a36a13968e3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/ca70454c8df6194584c6780f426e802e20c86a12",
-                "reference": "ca70454c8df6194584c6780f426e802e20c86a12",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/151cf379d6706e12f2c71a7aebe5a36a13968e3b",
+                "reference": "151cf379d6706e12f2c71a7aebe5a36a13968e3b",
                 "shasum": ""
             },
             "require": {
@@ -2346,7 +2305,13 @@
                 "codeception",
                 "wordpress"
             ],
-            "time": "2020-09-22T21:54:15+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/lucatume",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-21T11:53:37+00:00"
         },
         {
             "name": "mck89/peast",
@@ -2600,16 +2565,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.41.2",
+            "version": "2.41.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "35959c93ada06469107a05df6b15b65074a960cf"
+                "reference": "e148788eeae9b9b7b87996520358b86faad37b52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/35959c93ada06469107a05df6b15b65074a960cf",
-                "reference": "35959c93ada06469107a05df6b15b65074a960cf",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e148788eeae9b9b7b87996520358b86faad37b52",
+                "reference": "e148788eeae9b9b7b87996520358b86faad37b52",
                 "shasum": ""
             },
             "require": {
@@ -2685,7 +2650,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-10T23:35:06+00:00"
+            "time": "2020-10-12T20:36:09+00:00"
         },
         {
             "name": "nette/finder",
@@ -3341,16 +3306,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.49",
+            "version": "0.12.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05"
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9a6136c2b39d5214da78de37128d5fe08e5d5b05",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b8248f9c81265af75d6d969ca3252aaf3e998f3a",
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a",
                 "shasum": ""
             },
             "require": {
@@ -3393,7 +3358,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-12T14:10:44+00:00"
+            "time": "2020-10-16T12:22:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5547,16 +5512,16 @@
         },
         {
             "name": "symfony/http-client-contracts",
-            "version": "v2.2.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client-contracts.git",
-                "reference": "3a5d0fe7908daaa23e3dbf4cee3ba4bfbb19fdd3"
+                "reference": "41db680a15018f9c1d4b23516059633ce280ca33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/3a5d0fe7908daaa23e3dbf4cee3ba4bfbb19fdd3",
-                "reference": "3a5d0fe7908daaa23e3dbf4cee3ba4bfbb19fdd3",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/41db680a15018f9c1d4b23516059633ce280ca33",
+                "reference": "41db680a15018f9c1d4b23516059633ce280ca33",
                 "shasum": ""
             },
             "require": {
@@ -5567,8 +5532,9 @@
             },
             "type": "library",
             "extra": {
+                "branch-version": "2.3",
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-main": "2.3-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -5618,7 +5584,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-07T11:33:47+00:00"
+            "time": "2020-10-14T17:08:19+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -6684,23 +6650,23 @@
         },
         {
             "name": "symplify/autowire-array-parameter",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/autowire-array-parameter.git",
-                "reference": "7183c3bb301e205596cf6162835f0a0ef5418da1"
+                "reference": "18c1f44bc98830f138ab46f1140c66d3dc436052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/autowire-array-parameter/zipball/7183c3bb301e205596cf6162835f0a0ef5418da1",
-                "reference": "7183c3bb301e205596cf6162835f0a0ef5418da1",
+                "url": "https://api.github.com/repos/symplify/autowire-array-parameter/zipball/18c1f44bc98830f138ab46f1140c66d3dc436052",
+                "reference": "18c1f44bc98830f138ab46f1140c66d3dc436052",
                 "shasum": ""
             },
             "require": {
                 "nette/utils": "^3.0",
                 "php": ">=7.2",
                 "symfony/dependency-injection": "^4.4|^5.1",
-                "symplify/package-builder": "^8.3.33"
+                "symplify/package-builder": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -6731,20 +6697,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "symplify/composer-json-manipulator",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/composer-json-manipulator.git",
-                "reference": "fd3570c4bf5088c73ea8c2a864fc0556ab877114"
+                "reference": "3df9dd90d127fbaa4848a70b9b7a36300cee71ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/composer-json-manipulator/zipball/fd3570c4bf5088c73ea8c2a864fc0556ab877114",
-                "reference": "fd3570c4bf5088c73ea8c2a864fc0556ab877114",
+                "url": "https://api.github.com/repos/symplify/composer-json-manipulator/zipball/3df9dd90d127fbaa4848a70b9b7a36300cee71ab",
+                "reference": "3df9dd90d127fbaa4848a70b9b7a36300cee71ab",
                 "shasum": ""
             },
             "require": {
@@ -6755,8 +6721,8 @@
                 "symfony/dependency-injection": "^4.4|^5.1",
                 "symfony/filesystem": "^4.4|^5.1",
                 "symfony/http-kernel": "^4.4|^5.1",
-                "symplify/package-builder": "^8.3.33",
-                "symplify/smart-file-system": "^8.3.33"
+                "symplify/package-builder": "^8.3.41",
+                "symplify/smart-file-system": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -6787,20 +6753,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "symplify/monorepo-builder",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/monorepo-builder.git",
-                "reference": "3e88efb574d10d5a5776b075f5bf41ea06d854e6"
+                "reference": "fd3dbadcbb0a62bb55bd2c4b913f4f9b5208dd6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/monorepo-builder/zipball/3e88efb574d10d5a5776b075f5bf41ea06d854e6",
-                "reference": "3e88efb574d10d5a5776b075f5bf41ea06d854e6",
+                "url": "https://api.github.com/repos/symplify/monorepo-builder/zipball/fd3dbadcbb0a62bb55bd2c4b913f4f9b5208dd6a",
+                "reference": "fd3dbadcbb0a62bb55bd2c4b913f4f9b5208dd6a",
                 "shasum": ""
             },
             "require": {
@@ -6812,12 +6778,12 @@
                 "symfony/console": "^4.4|^5.1",
                 "symfony/dependency-injection": "^4.4|^5.1",
                 "symfony/finder": "^4.4|^5.1",
-                "symplify/autowire-array-parameter": "^8.3.33",
-                "symplify/composer-json-manipulator": "^8.3.33",
-                "symplify/package-builder": "^8.3.33",
-                "symplify/set-config-resolver": "^8.3.33",
-                "symplify/smart-file-system": "^8.3.33",
-                "symplify/symplify-kernel": "^8.3.33"
+                "symplify/autowire-array-parameter": "^8.3.41",
+                "symplify/composer-json-manipulator": "^8.3.41",
+                "symplify/package-builder": "^8.3.41",
+                "symplify/set-config-resolver": "^8.3.41",
+                "symplify/smart-file-system": "^8.3.41",
+                "symplify/symplify-kernel": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -6856,20 +6822,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "symplify/package-builder",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/package-builder.git",
-                "reference": "c77474a2fcf037d2e5628f237fb4c10090e65e8d"
+                "reference": "8dadce4f1bdb0f3cb42e0e6a5961bc87165fef18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/package-builder/zipball/c77474a2fcf037d2e5628f237fb4c10090e65e8d",
-                "reference": "c77474a2fcf037d2e5628f237fb4c10090e65e8d",
+                "url": "https://api.github.com/repos/symplify/package-builder/zipball/8dadce4f1bdb0f3cb42e0e6a5961bc87165fef18",
+                "reference": "8dadce4f1bdb0f3cb42e0e6a5961bc87165fef18",
                 "shasum": ""
             },
             "require": {
@@ -6882,8 +6848,8 @@
                 "symfony/finder": "^4.4|^5.1",
                 "symfony/http-kernel": "^4.4|^5.1",
                 "symfony/yaml": "^4.4|^5.1",
-                "symplify/autowire-array-parameter": "^8.3.33",
-                "symplify/symplify-kernel": "^8.3.33"
+                "symplify/autowire-array-parameter": "^8.3.41",
+                "symplify/symplify-kernel": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -6914,20 +6880,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "symplify/set-config-resolver",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "012e002053785b5a0bbd5ae953172af3a8dd6d77"
+                "reference": "7eb7d560e5d9b66947cc2dc79f424dbe53e12d94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/012e002053785b5a0bbd5ae953172af3a8dd6d77",
-                "reference": "012e002053785b5a0bbd5ae953172af3a8dd6d77",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/7eb7d560e5d9b66947cc2dc79f424dbe53e12d94",
+                "reference": "7eb7d560e5d9b66947cc2dc79f424dbe53e12d94",
                 "shasum": ""
             },
             "require": {
@@ -6939,8 +6905,8 @@
                 "symfony/filesystem": "^4.4|^5.1",
                 "symfony/finder": "^4.4|^5.1",
                 "symfony/yaml": "^4.4|^5.1",
-                "symplify/smart-file-system": "^8.3.33",
-                "symplify/symplify-kernel": "^8.3.33"
+                "symplify/smart-file-system": "^8.3.41",
+                "symplify/symplify-kernel": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -6971,20 +6937,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "symplify/smart-file-system",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "fc70123c37fafcfdeca33f23042eafe9c1491ed0"
+                "reference": "f59c8a42025f2f0a3078dc29950f8f2de4bdb7ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/fc70123c37fafcfdeca33f23042eafe9c1491ed0",
-                "reference": "fc70123c37fafcfdeca33f23042eafe9c1491ed0",
+                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/f59c8a42025f2f0a3078dc29950f8f2de4bdb7ca",
+                "reference": "f59c8a42025f2f0a3078dc29950f8f2de4bdb7ca",
                 "shasum": ""
             },
             "require": {
@@ -7023,20 +6989,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-05T09:48:44+00:00"
+            "time": "2020-10-14T11:43:23+00:00"
         },
         {
             "name": "symplify/symplify-kernel",
-            "version": "8.3.33",
+            "version": "8.3.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/symplify-kernel.git",
-                "reference": "4f60b1e36f1e485861f8b6038d373ec052abf308"
+                "reference": "5688e4d55ab0f3e559fc67879bfc68db44715e95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/symplify-kernel/zipball/4f60b1e36f1e485861f8b6038d373ec052abf308",
-                "reference": "4f60b1e36f1e485861f8b6038d373ec052abf308",
+                "url": "https://api.github.com/repos/symplify/symplify-kernel/zipball/5688e4d55ab0f3e559fc67879bfc68db44715e95",
+                "reference": "5688e4d55ab0f3e559fc67879bfc68db44715e95",
                 "shasum": ""
             },
             "require": {
@@ -7044,8 +7010,8 @@
                 "symfony/console": "^4.4|^5.1",
                 "symfony/dependency-injection": "^4.4|^5.1",
                 "symfony/http-kernel": "^4.4|^5.1",
-                "symplify/package-builder": "^8.3.33",
-                "symplify/smart-file-system": "^8.3.33"
+                "symplify/package-builder": "^8.3.41",
+                "symplify/smart-file-system": "^8.3.41"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -7066,20 +7032,20 @@
                 "MIT"
             ],
             "description": "Internal Kernel for Symplify packages",
-            "time": "2020-10-10T21:52:31+00:00"
+            "time": "2020-10-19T16:15:07+00:00"
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "v0.6.5",
+            "version": "v0.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "b931433daa21e7e757d93906283337c1be174f21"
+                "reference": "f5040549dc5f46d81ea2432de726c2a0a4ad1141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/b931433daa21e7e757d93906283337c1be174f21",
-                "reference": "b931433daa21e7e757d93906283337c1be174f21",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/f5040549dc5f46d81ea2432de726c2a0a4ad1141",
+                "reference": "f5040549dc5f46d81ea2432de726c2a0a4ad1141",
                 "shasum": ""
             },
             "require": {
@@ -7126,7 +7092,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-09-25T16:39:39+00:00"
+            "time": "2020-10-18T12:11:45+00:00"
         },
         {
             "name": "theseer/tokenizer",
