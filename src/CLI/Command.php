@@ -26,15 +26,16 @@ abstract class Command extends \WP_CLI_Command implements Command_Interface {
 		global $wpdb, $wp_actions, $wp_filter, $wp_object_cache;
 
 		// Reset queries.
-		$wpdb->queries = array();
+		$wpdb->queries = [];
 
 		// Prevent wp_actions from growing out of control.
-		$wp_actions = array(); // @codingStandardsIgnoreLine
+
+		$wp_actions = []; // @codingStandardsIgnoreLine
 		if ( is_object( $wp_object_cache ) ) {
-			$wp_object_cache->group_ops      = array();
-			$wp_object_cache->stats          = array();
-			$wp_object_cache->memcache_debug = array();
-			$wp_object_cache->cache          = array();
+			$wp_object_cache->group_ops      = [];
+			$wp_object_cache->stats          = [];
+			$wp_object_cache->memcache_debug = [];
+			$wp_object_cache->cache          = [];
 			if ( method_exists( $wp_object_cache, '__remoteset' ) ) {
 				$wp_object_cache->__remoteset();
 			}
