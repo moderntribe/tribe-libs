@@ -68,7 +68,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
           coverage: none
-          tools: codeception, composer
+          tools: codeception, composer:v1
 
       - name: Download WordPress and plugins
         run: |
