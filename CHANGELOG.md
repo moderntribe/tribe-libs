@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v3.2.1 - 2020-10-27
+
 - Force Composer v1 instead of v2 to avoid failing installs and tests due to unsupported dependencies.
+- Adds CLI helper method for freeing up memory during long running processes.
 
 ## v3.2.0 - 2020-10-23
 
