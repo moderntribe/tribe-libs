@@ -61,7 +61,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
 
       - name: Install composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+        run: composer self-update --1 && composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
       - name: Run PHPCS code sniffer
         run: php vendor/bin/phpcs --standard=tests/phpcs.xml
