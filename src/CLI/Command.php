@@ -29,7 +29,6 @@ abstract class Command extends \WP_CLI_Command implements Command_Interface {
 		$wpdb->queries = [];
 
 		// Prevent wp_actions from growing out of control.
-
 		$wp_actions = []; // @codingStandardsIgnoreLine
 
 		if ( is_object( $wp_object_cache ) ) {
