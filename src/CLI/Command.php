@@ -31,11 +31,13 @@ abstract class Command extends \WP_CLI_Command implements Command_Interface {
 		// Prevent wp_actions from growing out of control.
 
 		$wp_actions = []; // @codingStandardsIgnoreLine
+
 		if ( is_object( $wp_object_cache ) ) {
 			$wp_object_cache->group_ops      = [];
 			$wp_object_cache->stats          = [];
 			$wp_object_cache->memcache_debug = [];
 			$wp_object_cache->cache          = [];
+
 			if ( method_exists( $wp_object_cache, '__remoteset' ) ) {
 				$wp_object_cache->__remoteset();
 			}
@@ -53,15 +55,8 @@ abstract class Command extends \WP_CLI_Command implements Command_Interface {
 		 * once occupied by a WP_Query object.
 		 */
 		if ( isset( $wp_filter['get_term_metadata'] ) ) {
-			/*
-			 * WordPress 4.7 has a new Hook infrastructure, so we need to make sure
-			 * we're accessing the global array properly.
-			 */
-			if ( class_exists( 'WP_Hook' ) && $wp_filter['get_term_metadata'] instanceof \WP_Hook ) {
-				$filter_callbacks = &$wp_filter['get_term_metadata']->callbacks;
-			} else {
-				$filter_callbacks = &$wp_filter['get_term_metadata'];
-			}
+			$filter_callbacks = &$wp_filter['get_term_metadata']->callbacks;
+
 			if ( isset( $filter_callbacks[10] ) ) {
 				foreach ( $filter_callbacks[10] as $hook => $content ) {
 					if ( preg_match( '#^[0-9a-f]{32}lazyload_term_meta$#', $hook ) ) {
