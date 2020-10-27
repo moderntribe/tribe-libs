@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Force Composer v1 instead of v2 to avoid failing installs and tests due to unsupported dependencies.
+
 ## v3.2.0 - 2020-10-23
 
 - Added SVG support to the Media package. This replaces the Safe SVG plugin with a more
