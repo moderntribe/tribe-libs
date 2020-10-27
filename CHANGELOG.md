@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## v3.2.1 - 2020-10-27
 
 ## v3.2.1 - 2020-10-27
