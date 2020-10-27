@@ -2267,16 +2267,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "2.6.15",
+            "version": "2.6.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "151cf379d6706e12f2c71a7aebe5a36a13968e3b"
+                "reference": "241ffdc6e953122fe4285e620798f17fb2739c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/151cf379d6706e12f2c71a7aebe5a36a13968e3b",
-                "reference": "151cf379d6706e12f2c71a7aebe5a36a13968e3b",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/241ffdc6e953122fe4285e620798f17fb2739c23",
+                "reference": "241ffdc6e953122fe4285e620798f17fb2739c23",
                 "shasum": ""
             },
             "require": {
@@ -2312,7 +2312,7 @@
                 "codeception/module-webdriver": "Codeception 4.0 compatibility; required by the WPWebDriver module.",
                 "codeception/util-universalframework": "Codeception 4.0 compatibility; required by the WordPress framework module.",
                 "gumlet/php-image-resize": "To handle runtime image modification in the WPDb::haveAttachmentInDatabase method.",
-                "vlucas/phpdotenv": "To manage env file based configuration of the suites."
+                "vlucas/phpdotenv:^4.0": "To manage more complex environment file based configuration of the suites."
             },
             "type": "library",
             "extra": {
@@ -2352,7 +2352,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-21T11:53:37+00:00"
+            "time": "2020-10-26T15:15:29+00:00"
         },
         {
             "name": "mck89/peast",
