@@ -224,13 +224,13 @@ class Component_Generator extends Generator_Command {
 	}
 
 	protected function class_name( string $component_name ): string {
-		$parts = array_map( 'ucwords', explode( '-', $component_name ) );
+		$parts = array_map( 'ucwords', preg_split( '/(-|_)/', $component_name ) );
 
 		return implode( '_', $parts );
 	}
 
 	protected function human_name( string $component_name ): string {
-		$parts = array_map( 'ucwords', explode( '-', $component_name ) );
+		$parts = array_map( 'ucwords', preg_split( '/(-|_)/', $component_name ) );
 
 		return implode( ' ', $parts );
 	}

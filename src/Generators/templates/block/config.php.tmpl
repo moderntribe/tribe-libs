@@ -1,0 +1,62 @@
+<?php
+declare( strict_types=1 );
+
+namespace Tribe\Project\Blocks\Types\%1$s;
+
+use Tribe\Libs\ACF\Block;
+use Tribe\Libs\ACF\Block_Config;
+use Tribe\Libs\ACF\Field;
+use Tribe\Libs\ACF\Field_Section;
+
+class %1$s extends Block_Config {
+	public const NAME = '%2$s';
+
+	public const SECTION_CONTENT  = 's-content';
+	public const SECTION_SETTINGS = 's-settings';
+
+	public const TITLE       = 'title';
+	public const DESCRIPTION = 'description';
+
+	public function add_block() {
+		$this->set_block( new Block( self::NAME, [
+			'title'       => __( '%3$s', 'tribe' ),
+			'description' => __( 'A succesful run of the Tribe Libs block generator', 'tribe' ), // TODO: describe the block
+			'icon'        => '<svg width="28" height="19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.254 5.968H19.85v1.054H8.254V5.968zm1.462 1.57h8.568v1.053H9.716V7.538z" fill="#000"/><path d="M2.82 2.437v14.126H25.2V2.437H2.82zm21.482 13.176H3.866V3.366h20.436v12.247z" fill="#000"/><path d="M10.092 16.15H2.884l10.614-3.242 1.693 1.012 5.433-3.243 4.409 2.623v2.85h-14.94z" fill="#000"/></svg>', // TODO: set SVG icon
+			'keywords'    => [ __( 'placeholder', 'tribe' ) ], // TODO: select appropriate keywords
+			'category'    => 'common', // core categories: common, formatting, layout, widgets, embed
+			'supports'    => [
+				'align'  => false,
+				'anchor' => true,
+				'html'   => false,
+			],
+		] ) );
+	}
+
+	/**
+	 * Register Fields for block
+	 */
+	public function add_fields() {
+		//==========================================
+		// Content Fields
+		//==========================================
+		$this->add_section( new Field_Section( self::SECTION_CONTENT, __( 'Content', 'tribe' ), 'accordion' ) )
+			->add_field( new Field( self::NAME . '_' . self::TITLE, [
+					'label' => __( 'Title', 'tribe' ),
+					'name'  => self::TITLE,
+					'type'  => 'text',
+				] )
+			)->add_field( new Field( self::NAME . '_' . self::DESCRIPTION, [
+					'label'        => __( 'Description', 'tribe' ),
+					'name'         => self::DESCRIPTION,
+					'type'         => 'wysiwyg',
+					'toolbar'      => 'basic',
+					'media_upload' => 0,
+				] )
+			);
+
+		//==========================================
+		// Setting Fields
+		//==========================================
+		$this->add_section( new Field_Section( self::SECTION_SETTINGS, __( 'Settings', 'tribe' ), 'accordion' ) );
+	}
+}
