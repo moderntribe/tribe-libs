@@ -9,7 +9,7 @@
     },
     "require": {
         "php": "^7.2",
-        "moderntribe/square1-object-meta": "^3.3"
+        "moderntribe/square1-object-meta": "^3.4"
     },
     "autoload": {
         "psr-4": {
@@ -18,7 +18,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.3-dev"
+            "dev-master": "3.4-dev"
         }
     }
 }
