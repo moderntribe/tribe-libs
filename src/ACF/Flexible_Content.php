@@ -24,6 +24,7 @@ class Flexible_Content extends Field {
 		foreach ( $this->layouts as $layout ) {
 			$attributes[ 'layouts' ][] = $layout->get_attributes();
 		}
-		return $attributes;
+
+		return [ $attributes ];
 	}
 }
