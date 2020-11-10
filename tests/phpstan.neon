@@ -2,21 +2,22 @@ includes:
 	- ../vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
 	level: 5
-	bootstrapFiles:
-		- phpstan/boostrap.php
-		- ../vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
-	scanFiles:
-		- ../vendor/paulthewalton/acf-pro-stubs/acf-pro-stubs.php
-		- ../vendor/johnbillion/extended-cpts/functions.php
 	treatPhpDocTypesAsCertain: false
 	earlyTerminatingMethodCalls:
 		WP_CLI:
 			- error
+	bootstrapFiles:
+		- phpstan/boostrap.php
+		- ../vendor/wp-cli/wp-cli/php/class-wp-cli.php
+		- ../vendor/wp-cli/wp-cli/php/class-wp-cli-command.php
+		- ../vendor/wp-cli/wp-cli/php/utils.php
+	scanFiles:
+		- ../vendor/paulthewalton/acf-pro-stubs/acf-pro-stubs.php
+		- ../vendor/johnbillion/extended-cpts/functions.php
 	paths:
-		- ../src
+		- ../src/
 	excludes_analyse:
 		- ../src/Generators/templates/
-#		- ../src/P2P/
 	ignoreErrors:
 		# TODO Consider going "final"
 		- '#^Unsafe usage of new static\(\)\.$#'

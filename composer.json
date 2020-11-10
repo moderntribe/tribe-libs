@@ -29,7 +29,6 @@
         "symplify/monorepo-builder": "^8.2",
         "szepeviktor/phpstan-wordpress": "^0.6.0",
         "wp-cli/wp-cli": "^2.4",
-        "php-stubs/wp-cli-stubs": "^2.4",
         "paulthewalton/acf-pro-stubs": "5.8.9.1",
         "johnbillion/extended-cpts": "^4.4",
         "sunra/php-simple-html-dom-parser": "^1.5",
