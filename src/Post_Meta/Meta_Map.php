@@ -11,13 +11,15 @@ use Tribe\Libs\Object_Meta\Meta_Group;
  * Maps requests for meta keys to the Meta_Group responsible for handling it
  */
 class Meta_Map {
-	private $post_type = '';
+	/** @var string */
+	private $post_type;
 
 	/** @var Meta_Group[] */
-	private $keys = [];
+	private $keys;
 
 	public function __construct( $post_type ) {
 		$this->post_type = $post_type;
+		$this->keys = [];
 	}
 
 	/**
@@ -44,12 +46,13 @@ class Meta_Map {
 	/**
 	 * @param int $post_id
 	 * @param string $key
-	 * @return mixed The value for the given key
+	 * @return mixed The value for the given key or null
 	 */
 	public function get_value( $post_id, $key ) {
-		if ( isset( $this->keys[ $key ] ) ) {
-			return $this->keys[ $key ]->get_value( $post_id, $key );
+		if ( ! array_key_exists( $key, $this->keys ) ) {
+			return null;
 		}
-		return null;
+
+		return $this->keys[ $key ]->get_value( $post_id, $key );
 	}
 }
