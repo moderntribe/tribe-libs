@@ -153,7 +153,7 @@ class Connections {
 	/**
 	 * Grab the newest connection made for a p2p_type
 	 *
-	 * @param $p2p_type
+	 * @param string $p2p_type
 	 *
 	 * @return array
 	 */
@@ -168,7 +168,7 @@ class Connections {
 	 * Get any p2p rows that have a connection to a specific id, pass p2p types in an array to limit
 	 * the kind of connection types returned and pass in a direction to get where the passed id is that direction
 	 *
-	 * @param $id
+	 * @param int $id
 	 * @param array $types
 	 * @param string $direction - 'to', 'from' or blank for any direction, this is where the $id parameter would be located
 	 *
@@ -197,7 +197,7 @@ class Connections {
 	}
 
 	/**
-	 * @param $type
+	 * @param string $type
 	 *
 	 * @return string
 	 */

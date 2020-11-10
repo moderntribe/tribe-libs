@@ -162,8 +162,9 @@ class P2P_Query extends \P2P_Query {
 	 */
 	private function should_override_parent() {
 		foreach ( $this->ctypes as $directed ) {
+			/** @phpstan-ignore-next-line */
 			if ( null === $directed ) { // used by migration script
-				false;
+				return false;
 			}
 			switch ( $directed->get_direction() ) {
 				case 'from':

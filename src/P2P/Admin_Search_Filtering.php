@@ -123,9 +123,9 @@ class Admin_Search_Filtering {
 	}
 
 	/**
-	 * @param $query_vars
-	 * @param $connection
-	 * @param $post
+	 * @param array $query_vars
+	 * @param \P2P_Directed_Connection_Type $connection
+	 * @param \WP_Post $post
 	 * @return mixed
 	 *
 	 * @filter p2p_connectable_args

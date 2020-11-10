@@ -48,7 +48,7 @@ class Titles_Filter {
 	}
 
 	/**
-	 * @param $title
+	 * @param string $title
 	 * @param \WP_Post|\WP_User $object
 	 *
 	 * @return string
@@ -80,7 +80,7 @@ class Titles_Filter {
 	}
 
 	private function get_connection_type() {
-		return isset( $_REQUEST ) && isset( $_REQUEST['p2p_type'] ) ? $_REQUEST['p2p_type'] : false;
+		return isset( $_REQUEST['p2p_type'] ) ? $_REQUEST['p2p_type'] : false;
 	}
 
 	private function get_post_type_label( $post_type ) {
