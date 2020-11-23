@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## v3.4.0 - 2020-11-23
 
 - Added a CLI block generator
