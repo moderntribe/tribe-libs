@@ -24,6 +24,7 @@ class Email implements Task {
 			return false;
 		}
 
+		/** @phpstan-ignore-next-line */
 		return is_bool( $return ) ? $return : true;
 	}
 
