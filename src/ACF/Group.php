@@ -81,12 +81,11 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 	 * @return array
 	 */
 	public function get_attributes() {
-		$attributes           = parent::get_attributes();
-		$attributes['fields'] = [];
+		$attributes = $this->attributes;
 
-		foreach ( $this->fields as $f ) {
-			$attributes['fields'][] = $f->get_attributes();
-		}
+		$attributes[ 'fields' ] = $this->fields ? array_merge( ... array_map( function ( Field $f ) {
+			return $f->get_attributes();
+		}, $this->fields ) ) : [];
 
 		$attributes = $this->set_location_restrictions( $attributes );
 
@@ -104,7 +103,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 
 		foreach ( $this->post_types as $post_type ) {
 			if ( $post_type === 'attachment' ) {
-				$attributes['location'][] = [
+				$attributes[ 'location' ][] = [
 					[
 						'param'    => 'attachment',
 						'operator' => '==',
@@ -112,7 +111,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 					],
 				];
 			} else {
-				$attributes['location'][] = [
+				$attributes[ 'location' ][] = [
 					[
 						'param'    => 'post_type',
 						'operator' => '==',
@@ -123,7 +122,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->taxonomies as $taxonomy ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'taxonomy',
 					'operator' => '==',
@@ -133,7 +132,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->settings_pages as $page ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'options_page',
 					'operator' => '==',
@@ -143,7 +142,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		if ( $this->users ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'user_form',
 					'operator' => '==',
@@ -153,7 +152,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->nav_menus as $nav_menu ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'nav_menu',
 					'operator' => '==',
@@ -163,7 +162,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->nav_menu_items as $nav_menu_item ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'nav_menu_item',
 					'operator' => '==',
@@ -173,7 +172,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->widgets as $widget ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'widget',
 					'operator' => '==',
@@ -183,7 +182,7 @@ class Group extends ACF_Configuration implements ACF_Aggregate {
 		}
 
 		foreach ( $this->blocks as $block ) {
-			$attributes['location'][] = [
+			$attributes[ 'location' ][] = [
 				[
 					'param'    => 'block',
 					'operator' => '==',

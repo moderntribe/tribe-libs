@@ -20,9 +20,9 @@ class Field_Group extends Field implements ACF_Aggregate {
 	}
 
 	public function get_attributes() {
-		$attributes                 = parent::get_attributes();
+		$attributes                 = $this->attributes;
 		$attributes[ 'sub_fields' ] = $this->get_sub_field_attributes();
 
-		return $attributes;
+		return [ $attributes ];
 	}
 }

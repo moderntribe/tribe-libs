@@ -87,6 +87,34 @@ This will create three files for you in the core plugin:
 
 And it will add a reference to the subscriber in `Tribe\Project\Core`.
 
+# Block Generator
+
+```
+wp s1 generate block <name>
+```
+
+Generate the files required to register a new block with ACF.
+
+Example usage:
+
+```
+wp s1 generate block image-gallery
+```
+
+This will create two files for you in the core plugin:
+
+* `src/Blocks/Types/Image_Gallery/Image_Gallery.php`
+* `src/Blocks/Types/Image_Gallery/Image_Gallery_Model.php`
+
+And create the block template in the theme:
+
+* `blocks/imagegallery.php`
+
+And then delegates to the component generator (see above) to generate
+the `image_gallery` component.
+
+The `--dry-run` flag will show you the files the command would create, without writing to the file system.
+
 # Settings Page Generator
 
 TODO: write documentation for the settings page generator

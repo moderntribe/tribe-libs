@@ -13,7 +13,7 @@ class Layout extends Field implements ACF_Aggregate {
 		$attributes                 = parent::get_attributes();
 		$attributes[ 'sub_fields' ] = $this->get_sub_field_attributes();
 
-		return $attributes;
+		return [ $attributes ];
 	}
 
 }

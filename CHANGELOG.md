@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v3.4.0 - 2020-11-23
+
+- Added a CLI block generator
+
+## v3.3.0 - 2020-11-04
+
+- Reworks Block_Config to remove sections and add method if doing this in the plugin instead
+- Adds Field_Section
+
 ## v3.2.1 - 2020-10-27
 
 - Force Composer v1 instead of v2 to avoid failing installs and tests due to unsupported dependencies.
