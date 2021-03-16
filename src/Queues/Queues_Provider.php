@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Queues;
 
 use Pimple\Container;
@@ -43,7 +42,7 @@ class Queues_Provider extends Service_Provider {
 	}
 
 	protected function cache_backend( Container $container ) {
-		$container[ self::WP_CACHE ] = function () {
+		$container[ self::WP_CACHE ] = static function () {
 			return new WP_Cache();
 		};
 	}
@@ -55,7 +54,7 @@ class Queues_Provider extends Service_Provider {
 	 *
 	 */
 	protected function queues( Container $container ) {
-		$container[ self::DEFAULT_QUEUE ] = function ( $container ) {
+		$container[ self::DEFAULT_QUEUE ] = static function ( $container ) {
 			/**
 			 * Filter the backend supplied to the default queue.
 			 */
@@ -67,7 +66,7 @@ class Queues_Provider extends Service_Provider {
 			return new DefaultQueue( $backend );
 		};
 
-		$container[ self::COLLECTION ] = function ( $container ) {
+		$container[ self::COLLECTION ] = static function ( $container ) {
 			$collection = new Queue_Collection();
 			$collection->add( $container[ self::DEFAULT_QUEUE ] );
 
@@ -76,23 +75,23 @@ class Queues_Provider extends Service_Provider {
 	}
 
 	protected function cli( Container $container ) {
-		$container[ self::QUEUES_LIST ] = function ( $container ) {
+		$container[ self::QUEUES_LIST ] = static function ( $container ) {
 			return new List_Queues( $container[ self::COLLECTION ] );
 		};
 
-		$container[ self::QUEUES_CLEANUP ] = function ( $container ) {
+		$container[ self::QUEUES_CLEANUP ] = static function ( $container ) {
 			return new Cleanup( $container[ self::COLLECTION ] );
 		};
 
-		$container[ self::QUEUES_PROCESS ] = function ( $container ) {
+		$container[ self::QUEUES_PROCESS ] = static function ( $container ) {
 			return new Process( $container[ self::COLLECTION ] );
 		};
 
-		$container[ self::QUEUES_ADD_TASK ] = function ( $container ) {
+		$container[ self::QUEUES_ADD_TASK ] = static function ( $container ) {
 			return new Add_Tasks( $container[ self::COLLECTION ] );
 		};
 
-		add_action( 'init', function () use ( $container ) {
+		add_action( 'init', static function () use ( $container ) {
 			if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 				return;
 			}
@@ -108,22 +107,23 @@ class Queues_Provider extends Service_Provider {
 	 * @param Container $container
 	 */
 	protected function cron( Container $container ) {
-		$container[ self::CRON ] = function ( $container ) {
+		$container[ self::CRON ] = static function ( $container ) {
 			return new Cron();
 		};
 
 		if ( ! defined( 'DISABLE_WP_CRON' ) || false === DISABLE_WP_CRON ) {
-			add_filter( 'cron_schedules', function ( $schedules ) use ( $container ) {
+			add_filter( 'cron_schedules', static function ( $schedules ) use ( $container ) {
 				return $container[ self::CRON ]->add_interval( $schedules );
 			}, 10, 1 );
 
-			add_action( 'admin_init', function () use ( $container ) {
+			add_action( 'admin_init', static function () use ( $container ) {
 				$container[ self::CRON ]->schedule_cron();
 			}, 10, 0 );
 
-			add_action( Cron::CRON_ACTION, function () use ( $container ) {
+			add_action( Cron::CRON_ACTION, static function () use ( $container ) {
 				foreach ( $container[ self::COLLECTION ]->queues() as $queue ) {
 					$container[ self::CRON ]->process_queues( $queue );
+					$container[ self::CRON ]->cleanup( $queue );
 				}
 			}, 10, 0 );
 		}
