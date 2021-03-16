@@ -1,31 +1,44 @@
-<?php
-
+<?php declare( strict_types=1 );
 
 namespace Tribe\Libs\Queues;
 
-use Tribe\Libs\Queues\Contracts\Queue;
+use Exception;
 use Tribe\Libs\Queues\Contracts\Task;
+use Tribe\Libs\Queues\Contracts\Queue;
 
+/**
+ * Process queues via the WordPress cron
+ *
+ * @package Tribe\Libs\Queues
+ */
 class Cron {
-	const CRON_ACTION = 'tribe_queue_cron';
-	const FREQUENCY   = 'tribe_queue_frequency';
 
-	private $frequency_in_seconds = 60;
-	private $timelimit_in_seconds = 15;
+	public const CRON_ACTION = 'tribe_queue_cron';
+	public const FREQUENCY   = 'tribe_queue_frequency';
 
-	public function __construct( $frequency = 60, $timelimit = 15 ) {
+	private $frequency_in_seconds;
+	private $timelimit_in_seconds;
+
+	/**
+	 * Cron constructor.
+	 *
+	 * @param  int  $frequency
+	 * @param  int  $timelimit
+	 */
+	public function __construct( int $frequency = 60, int $timelimit = 15 ) {
 		$this->frequency_in_seconds = $frequency;
 		$this->timelimit_in_seconds = $timelimit;
 	}
 
 	/**
-	 * @return void
+	 * Process a Queue's tasks.
+	 *
+	 * @param  \Tribe\Libs\Queues\Contracts\Queue  $queue
+	 *
 	 * @action self::CRON_ACTION
 	 */
-	public function process_queues( Queue $queue ) {
+	public function process_queues( Queue $queue ): void {
 		$end_time = time() + $this->timelimit_in_seconds;
-
-		$queue->cleanup();
 
 		while ( time() < $end_time ) {
 
@@ -35,7 +48,7 @@ class Cron {
 
 			try {
 				$job = $queue->reserve();
-			} catch ( \Exception $e ) {
+			} catch ( Exception $e ) {
 				return;
 			}
 
@@ -60,22 +73,26 @@ class Cron {
 	}
 
 	/**
-	 * @return void
+	 * Schedule a cron job.
+	 *
 	 * @action admin_init
 	 */
-	public function schedule_cron() {
+	public function schedule_cron(): void {
 		if ( ! wp_next_scheduled( self::CRON_ACTION ) ) {
 			wp_schedule_event( time(), self::FREQUENCY, self::CRON_ACTION );
 		}
 	}
 
 	/**
-	 * @param array $cron_schedules
+	 * Filter existing WordPress cron schedules.
+	 *
+	 * @param  array  $cron_schedules
 	 *
 	 * @return array
+	 *
 	 * @filter cron_schedules
 	 */
-	public function add_interval( $cron_schedules ) {
+	public function add_interval( array $cron_schedules = [] ): array {
 		$cron_schedules[ self::FREQUENCY ] = [
 			'interval' => $this->frequency_in_seconds,
 			'display'  => __( 'Queue Cron Schedule', 'tribe' ),
@@ -83,4 +100,14 @@ class Cron {
 
 		return $cron_schedules;
 	}
+
+	/**
+	 * Remove completed and timed out tasks from the queue after a certain ttl.
+	 *
+	 * @param  \Tribe\Libs\Queues\Contracts\Queue  $queue
+	 */
+	public function cleanup( Queue $queue ): void {
+		$queue->cleanup();
+	}
+
 }
