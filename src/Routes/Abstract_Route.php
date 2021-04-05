@@ -272,7 +272,7 @@ abstract class Abstract_Route {
 		// Bail early if this is the 404 template.
 		if ( strpos( $template_path, '404' ) !== false ) {
 			$wp_query->is_404 = true;
-			$protocol         = filter_input( INPUT_SERVER, 'SERVER_PROTOCOL', FILTER_SANITIZE_SPECIAL_CHARS );
+			$protocol         = $_SERVER['SERVER_PROTOCOL'] ?? 'none';
 			header( "{$protocol} 404 Not Found", true, 404 );
 		}
 
@@ -336,7 +336,6 @@ abstract class Abstract_Route {
 			return $valid;
 		}
 
-		header( 'HTTP/1.1 403 Forbidden' );
 		wp_die( 'Not Authorized', 403 );
 	}
 }
