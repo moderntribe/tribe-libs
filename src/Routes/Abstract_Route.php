@@ -313,11 +313,7 @@ abstract class Abstract_Route {
 	 * @return bool True if the request method is valid, false otherwise.
 	 */
 	public function is_valid_request_method(): bool {
-		$method = filter_input( INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS );
-
-		if ( empty( $method ) && isset( $_SERVER['REQUEST_METHOD'] ) ) {
-			$method = $_SERVER['REQUEST_METHOD'];
-		}
+		$method = $_SERVER['REQUEST_METHOD'] ?? false;
 
 		return in_array( $method, $this->get_request_methods(), true );
 	}
