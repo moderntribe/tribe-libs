@@ -270,9 +270,9 @@ abstract class Abstract_Route {
 		global $wp_query;
 
 		// Bail early if this is the 404 template.
-		if ( strpos( $template_path, '404' ) !== false ) {
+		if ( false !== strpos( $template_path, '404' ) ) {
 			$wp_query->is_404 = true;
-			$protocol         = $_SERVER['SERVER_PROTOCOL'] ?? 'none';
+			$protocol         = $_SERVER['SERVER_PROTOCOL'] ?? '';
 			header( "{$protocol} 404 Not Found", true, 404 );
 		}
 
