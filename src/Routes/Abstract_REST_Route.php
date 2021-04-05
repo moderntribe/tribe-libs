@@ -19,15 +19,6 @@ abstract class Abstract_REST_Route {
 	abstract public function register(): void;
 
 	/**
-	 * Returns the WP API namespace.
-	 *
-	 * @return string The WP API namespace.
-	 */
-	public function get_api_namespace(): string {
-		return 'wp/v2';
-	}
-
-	/**
 	 * Returns the project namespace.
 	 *
 	 * @return string The project's namespace.
