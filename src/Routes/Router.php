@@ -1,4 +1,4 @@
-<?php
+<?php declare( strict_types=1 );
 /**
  * Class Router
  *
@@ -7,23 +7,27 @@
  * @package Tribe\Project\Routes
  */
 
-declare( strict_types=1 );
-
 namespace Tribe\Libs\Routes;
 
-use Tribe\Libs\Container\Abstract_Subscriber;
 use Tribe\Libs\Routes\Abstract_Route;
 
 /**
  * Class to register routers for normal and REST API endpoints.
  */
-class Router extends Abstract_Subscriber {
+class Router {
 	/**
 	 * Currently matched route.
 	 *
 	 * @var Abstract_Route|string
 	 */
 	public $matched_route;
+
+	/**
+	 * List of Registered Routes.
+	 *
+	 * @var array
+	 */
+	public $registered_routes;
 
 	/**
 	 * List of Route Instances.
@@ -40,31 +44,24 @@ class Router extends Abstract_Subscriber {
 	public $router_vars;
 
 	/**
-	 * Register to WP lifecycle hooks.
-	 *
-	 * @return void
-	 */
-	public function register(): void {
-		return;
-	}
-
-	/**
 	 * The current router version. This should be bumped whenever
 	 * changes are made to this file.
 	 *
 	 * @return string The current version of routes.
 	 */
 	public function get_version(): string {
-		return '1.0.0';
+		return apply_filters( 'tribe_libs_router_version', '1.0.0' );
 	}
 
 	/**
 	 * Conditionally (soft) flushes rewrite rules. Ignored silently
 	 * if the saved version in the DB is also the version in code.
 	 *
+	 * @param array $routes Routes to register.
 	 * @return void
 	 */
-	public function flush_if_changed(): void {
+	public function flush_if_changed( array $routes = [] ): void {
+		$this->registered_routes = $routes;
 		$version_in_code = $this->get_version();
 		$version_in_db   = get_option( 'lib_router_version' );
 
@@ -164,7 +161,7 @@ class Router extends Abstract_Subscriber {
 		$this->router_vars = [];
 
 		// Register any routes defined.
-		foreach ( $this->container->get( Route_Definer::ROUTES ) as $route ) {
+		foreach ( $this->registered_routes as $route ) {
 			$patterns   = $route->get_patterns();
 			$route_vars = $route->get_query_var_names();
 
@@ -184,9 +181,9 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function init_rest_routes(): void {
+	public function init_rest_routes( array $rest_routes = [] ): void {
 		// Register all REST routes defined.
-		foreach ( $this->container->get( Route_Definer::REST_ROUTES ) as $route ) {
+		foreach ( $rest_routes as $route ) {
 			$route->register();
 		}
 	}

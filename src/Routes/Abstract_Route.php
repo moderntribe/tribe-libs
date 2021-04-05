@@ -1,7 +1,6 @@
-<?php // phpcs:disable WordPress.Files.FileName.NotHyphenatedLowercase
+<?php declare( strict_types=1 );
 /**
- * Route is the base class for Routes. At the least a Route must
- * declare,
+ * Route is the base class for Routes. At the least a Route must declare,
  *
  * 1. Name
  * 2. Pattern
@@ -35,8 +34,6 @@
  *
  * @package Tribe\Project\Routes
  */
-
-declare( strict_types=1 );
 
 namespace Tribe\Libs\Routes;
 

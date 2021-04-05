@@ -1,6 +1,9 @@
-<?php
-declare( strict_types=1 );
-
+<?php declare( strict_types=1 );
+/**
+ * Defines any routes to be registered for the project.
+ *
+ * @package Tribe\Project\Routes
+ */
 namespace Tribe\Libs\Routes;
 
 use DI;

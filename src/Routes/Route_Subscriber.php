@@ -1,11 +1,9 @@
-<?php
+<?php declare( strict_types=1 );
 /**
  * Route subscriber class.
  *
  * @package Tribe\Project\Routes
  */
-
-declare( strict_types=1 );
 
 namespace Tribe\Libs\Routes;
 
@@ -24,8 +22,8 @@ class Route_Subscriber extends Abstract_Subscriber {
 	public function register() : void {      
 		add_action(
 			'wp_loaded', 
-			function ( ...$args ) {
-				$this->container->get( Router::class )->flush_if_changed( ...$args );
+			function () {
+				$this->container->get( Router::class )->flush_if_changed( $this->container->get( Route_Definer::ROUTES ) );
 			},
 			999
 		);
@@ -54,8 +52,8 @@ class Route_Subscriber extends Abstract_Subscriber {
 
 		add_action(
 			'rest_api_init', 
-			function ( ...$args ) {
-				$this->container->get( Router::class )->init_rest_routes( ...$args );
+			function () {
+				$this->container->get( Router::class )->init_rest_routes( $this->container->get( Route_Definer::REST_ROUTES ) );
 			}
 		);
 	}
