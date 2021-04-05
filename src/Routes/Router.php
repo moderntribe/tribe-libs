@@ -44,7 +44,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function register() : void {
+	public function register(): void {
 		return;
 	}
 
@@ -54,7 +54,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return string The current version of routes.
 	 */
-	public function get_version() : string {
+	public function get_version(): string {
 		return '1.0.0';
 	}
 
@@ -64,7 +64,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function flush_if_changed() : void {
+	public function flush_if_changed(): void {
 		$version_in_code = $this->get_version();
 		$version_in_db   = get_option( 'lib_router_version' );
 
@@ -80,7 +80,7 @@ class Router extends Abstract_Subscriber {
 	 * Wrapper to the WordPress's rewrite flushing API. Triggers the
 	 * router_changed action on flush.
 	 */
-	public function flush() : void {
+	public function flush(): void {
 		flush_rewrite_rules();
 
 		$version = $this->get_version();
@@ -93,7 +93,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return array Rules for the route instances.
 	 */
-	public function get_rules() : array {
+	public function get_rules(): array {
 		$rules = [];
 
 		foreach ( $this->get_route_objects() as $pattern => $route ) {
@@ -122,7 +122,7 @@ class Router extends Abstract_Subscriber {
 	 * @param array $params The query params.
 	 * @return string       Query string.
 	 */
-	public function get_redirect_params( $params ) : string {
+	public function get_redirect_params( $params ): string {
 		$query_params = [];
 
 		foreach ( $params as $key => $value ) {
@@ -143,7 +143,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return array Route instances.
 	 */
-	public function get_route_objects() : array {
+	public function get_route_objects(): array {
 		$this->init_routes();
 
 		return $this->routes;
@@ -154,7 +154,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function init_routes() : void {
+	public function init_routes(): void {
 		// Bail early if routes are already defined.
 		if ( ! empty( $this->routes ) ) {
 			return;
@@ -184,7 +184,7 @@ class Router extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function init_rest_routes() : void {
+	public function init_rest_routes(): void {
 		// Register all REST routes defined.
 		foreach ( $this->container->get( Route_Definer::REST_ROUTES ) as $route ) {
 			$route->register();
@@ -199,7 +199,7 @@ class Router extends Abstract_Subscriber {
 	 * @param array $wp_rules The wp rules array.
 	 * @return array          The modified rewrite rules array.
 	 */
-	public function load( $wp_rules = [] ) : array {
+	public function load( $wp_rules = [] ): array {
 		return array_merge( $this->get_rules(), $wp_rules );
 	}
 
@@ -207,10 +207,10 @@ class Router extends Abstract_Subscriber {
 	 * Looks up the custom route for the pattern matched. Returns false
 	 * if not found.
 	 *
-	 * @param string $pattern The regex pattern to lookup.
-	 * @return Abstract_Route|false The route or false on failure.
+	 * @param string $pattern      The regex pattern to lookup.
+	 * @return Abstract_Route|null The route or null on failure.
 	 */
-	public function find_route( $pattern ) {
+	public function find_route( $pattern ): ?Abstract_Route {
 		// Load routes if not already loaded.
 		if ( empty( $this->routes ) ) {
 			$this->routes = $this->get_route_objects();
@@ -218,7 +218,7 @@ class Router extends Abstract_Subscriber {
 
 		// Bail early if the route pattern doesn't exist.
 		if ( empty( $this->routes[ $pattern ] ) ) {
-			return false;
+			return null;
 		}
 
 		return $this->routes[ $pattern ];
@@ -230,15 +230,15 @@ class Router extends Abstract_Subscriber {
 	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
-	 * @return Abstract_Route|bool The matched route on success, false on failure.
+	 * @return Abstract_Route|null The matched route on success, null on failure.
 	 */
-	public function did_parse_request( $wp ) {
+	public function did_parse_request( $wp ): ?Abstract_Route {
 		$pattern       = $wp->matched_rule;
 		$matched_route = $this->find_route( $pattern );
 
 		// Bail early if no matched route.
 		if ( empty( $matched_route ) ) {
-			return false;
+			return null;
 		}
 
 		$this->matched_route = $matched_route;
@@ -258,7 +258,7 @@ class Router extends Abstract_Subscriber {
 	 * @param array $query_vars WordPress query vars.
 	 * @return array            Modified query vars.
 	 */
-	public function did_query_vars( $query_vars ) {
+	public function did_query_vars( $query_vars ): array {
 		// Bail early if no query vars are defined for the router.
 		if ( empty( $this->router_vars ) ) {
 			return $query_vars;
