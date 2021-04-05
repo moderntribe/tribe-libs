@@ -344,6 +344,6 @@ abstract class Abstract_Route {
 		}
 
 		header( 'HTTP/1.1 403 Forbidden' );
-		wp_die( 'Not Authorized' );
+		wp_die( 'Not Authorized', 403 );
 	}
 }
