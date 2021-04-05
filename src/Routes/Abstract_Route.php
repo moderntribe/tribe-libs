@@ -45,13 +45,6 @@ namespace Tribe\Libs\Routes;
  */
 abstract class Abstract_Route {
 	/**
-	 * Registers any hooks for the route.
-	 *
-	 * @return void
-	 */
-	abstract public function register() : void;
-
-	/**
 	 * Required - The Route's name. This is useful to refer to the route
 	 * by name. Eg:- \MTTrial\is_route( 'foo' );
 	 *

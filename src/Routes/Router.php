@@ -165,9 +165,6 @@ class Router extends Abstract_Subscriber {
 
 		// Register any routes defined.
 		foreach ( $this->container->get( Route_Definer::ROUTES ) as $route ) {
-			// Register route hooks.
-			$route->register();
-
 			$patterns   = $route->get_patterns();
 			$route_vars = $route->get_query_var_names();
 
