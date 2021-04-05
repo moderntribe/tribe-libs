@@ -47,7 +47,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return string The name for the route.
 	 */
-	public function get_name() : string {
+	public function get_name(): string {
 		return 'base_route';
 	}
 
@@ -56,7 +56,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return string The pattern for the route.
 	 */
-	public function get_pattern() : string {
+	public function get_pattern(): string {
 		return '^$';
 	}
 
@@ -65,7 +65,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return array Patterns for the route.
 	 */
-	public function get_patterns() : array {
+	public function get_patterns(): array {
 		return [ $this->get_pattern() ];
 	}
 
@@ -84,7 +84,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return array Matches for the route.
 	 */
-	public function get_matches() : array {
+	public function get_matches(): array {
 		return [
 			'base_route' => true,
 		];
@@ -96,7 +96,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return string The template to use for the route.
 	 */
-	public function get_template() : string {
+	public function get_template(): string {
 		return 'index.php';
 	}
 
@@ -105,7 +105,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return bool True if the route is an admin only route, false otherwise.
 	 */
-	public function is_admin() : bool {
+	public function is_admin(): bool {
 		return false;
 	}
 
@@ -114,7 +114,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return bool
 	 */
-	public function is_public() : bool {
+	public function is_public(): bool {
 		return ! $this->is_admin();
 	}
 
@@ -125,7 +125,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return bool
 	 */
-	public function is_core() : bool {
+	public function is_core(): bool {
 		return false;
 	}
 
@@ -134,7 +134,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return string The title for this route.
 	 */
-	public function get_title() : string {
+	public function get_title(): string {
 		return ucwords( str_replace( '_', ' ', $this->get_name() ) );
 	}
 
@@ -144,7 +144,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return string Returns body classes for this route.
 	 */
-	public function get_body_class() : string {
+	public function get_body_class(): string {
 		return sanitize_title_with_dashes( $this->get_title() );
 	}
 
@@ -162,7 +162,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return array Query variable names.
 	 */
-	public function get_query_var_names() : array {
+	public function get_query_var_names(): array {
 		return array_keys( $this->get_matches() );
 	}
 
@@ -182,7 +182,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return array
 	 */
-	public function get_query_vars() : array {
+	public function get_query_vars(): array {
 		$query_vars = $this->get_query_var_names();
 		$values     = [];
 
@@ -199,9 +199,9 @@ abstract class Abstract_Route {
 	 *
 	 * @return array Accepted request methods for the route.
 	 */
-	public function get_request_methods() : array {
+	public function get_request_methods(): array {
 		return [
-			'GET',
+			\WP_REST_Server::READABLE,
 		];
 	}
 
@@ -211,7 +211,7 @@ abstract class Abstract_Route {
 	 * @param \WP $wp The main WordPress object.
 	 * @return void
 	 */
-	public function activate( $wp ) : void {
+	public function activate( $wp ): void {
 		add_filter( 'template_include', [ $this, 'did_template_include' ] );
 		add_filter( 'pre_get_document_title', [ $this, 'did_pre_get_document_title' ] );
 
@@ -229,7 +229,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return void
 	 */
-	public function authorize() : void {
+	public function authorize(): void {
 		$this->authorize_request_method();
 	}
 
@@ -239,7 +239,7 @@ abstract class Abstract_Route {
 	 * @param \WP $wp The WP object.
 	 * @return void
 	 */
-	public function parse( \WP $wp ) : void {
+	public function parse( \WP $wp ): void {
 		return;
 	}
 
@@ -249,7 +249,7 @@ abstract class Abstract_Route {
 	 * @param \WP_Query $wp_query The WP query object.
 	 * @return void
 	 */
-	public function before( \WP_Query $wp_query ) : void {
+	public function before( \WP_Query $wp_query ): void {
 		return;
 	}
 
@@ -259,7 +259,7 @@ abstract class Abstract_Route {
 	 * @param string $template The template name.
 	 * @return string          The modified template path.
 	 */
-	public function did_template_include( $template ) {
+	public function did_template_include( $template ): string {
 		$template_path = $this->get_template();
 
 		// Bail early if no template path.
@@ -297,7 +297,7 @@ abstract class Abstract_Route {
 	 * @param string $title The current document title.
 	 * @return string       The modified document title.
 	 */
-	public function did_pre_get_document_title( $title ) : string {
+	public function did_pre_get_document_title( $title ): string {
 		$route_title = $this->get_title();
 
 		if ( ! empty( $route_title ) ) {
@@ -312,7 +312,7 @@ abstract class Abstract_Route {
 	 *
 	 * @return bool True if the request method is valid, false otherwise.
 	 */
-	public function is_valid_request_method() : bool {
+	public function is_valid_request_method(): bool {
 		$method = filter_input( INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_SPECIAL_CHARS );
 
 		if ( empty( $method ) && isset( $_SERVER['REQUEST_METHOD'] ) ) {
