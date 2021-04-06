@@ -61,6 +61,15 @@ abstract class Abstract_Route {
 	}
 
 	/**
+	 * Returns the priority of the rewrite rule.
+	 *
+	 * @return string
+	 */
+	public function get_priority(): string {
+		return 'top';
+	}
+
+	/**
 	 * Multi-pattern routes can use this to declare their patterns.
 	 *
 	 * @return array Patterns for the route.
@@ -211,7 +220,7 @@ abstract class Abstract_Route {
 	 * @param \WP $wp The main WordPress object.
 	 * @return void
 	 */
-	public function activate( $wp ): void {
+	public function activate( \WP $wp ): void {
 		add_filter( 'template_include', [ $this, 'did_template_include' ] );
 		add_filter( 'pre_get_document_title', [ $this, 'did_pre_get_document_title' ] );
 

@@ -106,7 +106,10 @@ class Router {
 				$redirect .= '?' . $this->get_redirect_params( $matches );
 			}
 
-			$rules[ $pattern ] = $redirect;
+			$rules[ $pattern ] = [
+				'redirect' => $redirect,
+				'priority' => $route->get_priority(),
+			];
 		}
 
 		return $rules;
@@ -197,7 +200,16 @@ class Router {
 	 * @return array          The modified rewrite rules array.
 	 */
 	public function load( $wp_rules = [] ): array {
-		return array_merge( $this->get_rules(), $wp_rules );
+		$rules = $this->get_rules();
+
+		// Loop through rules to determine where to add the rule.
+		foreach ( $rules as $pattern => $rule ) {
+			$wp_rules = ( 'top' === $rule['priority'] )
+				? [ $pattern => $rule['redirect'] ] + $wp_rules
+				: $wp_rules + [ $pattern => $rule['redirect'] ];
+		}
+
+		return $wp_rules;
 	}
 
 	/**
