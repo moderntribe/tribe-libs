@@ -8,7 +8,6 @@ namespace Tribe\Libs\Routes;
 
 use DI;
 use Tribe\Libs\Container\Definer_Interface;
-use Tribe\Libs\Routes\Router;
 
 class Route_Definer implements Definer_Interface {
 	/**

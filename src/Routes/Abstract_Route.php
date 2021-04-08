@@ -215,23 +215,6 @@ abstract class Abstract_Route {
 	}
 
 	/**
-	 * Starts the Route's lifecyle hooks by activating the route.
-	 *
-	 * @param \WP $wp The main WordPress object.
-	 * @return void
-	 */
-	public function activate( \WP $wp ): void {
-		add_filter( 'template_include', [ $this, 'did_template_include' ] );
-		add_filter( 'pre_get_document_title', [ $this, 'did_pre_get_document_title' ] );
-
-		// Avoid a canonical redirect since we're using a route.
-		add_filter( 'redirect_canonical', '__return_false' );
-
-		$this->authorize();
-		$this->parse( $wp );
-	}
-
-	/**
 	 * Authorization hook. Custom authorization can be done here.
 	 *
 	 * By default only checks if request method is authorized.
