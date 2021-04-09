@@ -9,6 +9,9 @@ namespace Tribe\Libs\Routes;
 use DI;
 use Tribe\Libs\Container\Definer_Interface;
 
+/**
+ * Class to define custom routes used in the project.
+ */
 class Route_Definer implements Definer_Interface {
 	/**
 	 * The Route DI group to use.

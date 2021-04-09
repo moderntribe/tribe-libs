@@ -158,4 +158,21 @@ class Router_Rule_Manager {
 
 		$this->router_vars = array_unique( $this->router_vars );
 	}
+
+	/**
+	 * Adds the custom query vars.
+	 *
+	 * @hook query_vars
+	 *
+	 * @param array $query_vars WordPress query vars.
+	 * @return array            Modified query vars.
+	 */
+	public function did_query_vars( $query_vars ): array {
+		// Bail early if no query vars are defined for the router.
+		if ( empty( $this->router_vars ) ) {
+			return $query_vars;
+		}
+
+		return array_merge( $query_vars, $this->router_vars );
+	}
 }
