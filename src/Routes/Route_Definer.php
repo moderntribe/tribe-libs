@@ -38,7 +38,7 @@ class Route_Definer implements Definer_Interface {
 			 * The array of routes that will be registered.
 			 * Add more in other Definers using \Tribe\Libs\Routes\Route_Definer::ROUTES => DI\add( [ ... ] ).
 			 *
-			 * ROUTES should extend \Tribe\Libs\Routes\Route
+			 * ROUTES should extend \Tribe\Libs\Routes\Abstract_Route
 			 */
 			self::ROUTES => DI\add( [] ),
 
@@ -46,7 +46,7 @@ class Route_Definer implements Definer_Interface {
 			 * The array of REST routes that will be registered.
 			 * Add more in other Definers using \Tribe\Libs\Routes\Route_Definer::REST_ROUTES => DI\add( [ ... ] ).
 			 *
-			 * ROUTES should extend \Tribe\Libs\Routes\Rest_Route
+			 * REST ROUTES should extend \Tribe\Libs\Routes\Abstract_REST_Route
 			 */
 			self::REST_ROUTES => DI\add( [] ),
 		];
