@@ -6,8 +6,6 @@ All notable changes to this project will be documented in this file.
 
 ## v3.4.1 - 2021-04-22
 
-## v3.4.1 - 2021-04-21
-
  - Adds update for routing
 ## v3.4.0 - 2020-11-23
 
