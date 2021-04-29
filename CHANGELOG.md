@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 
 ## v3.4.2 - 2021-04-29
-
+ - Adds docs for routing
 ## v3.4.1 - 2021-04-22
 
  - Adds update for routing
