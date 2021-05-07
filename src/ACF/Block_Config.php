@@ -1,13 +1,13 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\ACF;
 
 abstract class Block_Config {
+
 	public const NAME = '';
 
 	/**
-	 * @var array
+	 * @var Field[]
 	 */
 	protected $fields = [];
 
@@ -23,8 +23,20 @@ abstract class Block_Config {
 
 	abstract public function add_block();
 
+	/**
+	 * Overload in a subclass to add fields
+	 *
+	 * @return void
+	 */
 	protected function add_fields() {
-		//overwrite in sub class to add fields
+
+	}
+
+	/**
+	 * @return Field[]
+	 */
+	public function get_fields(): array {
+		return $this->fields;
 	}
 
 	/**
@@ -56,6 +68,9 @@ abstract class Block_Config {
 		return $this;
 	}
 
+	/**
+	 * @return \Tribe\Libs\ACF\Block
+	 */
 	public function get_block() {
 		return $this->block;
 	}
@@ -82,10 +97,6 @@ abstract class Block_Config {
 		$group = new Group( static::NAME, [
 			'block' => [ static::NAME ],
 		] );
-
-		foreach ( $this->fields as $field ) {
-			$group->add_field( $field );
-		}
 
 		return $group;
 	}
