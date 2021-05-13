@@ -7,8 +7,8 @@ class Block_Registrar {
 	 * @param Block_Config $block_config
 	 */
 	public function register( Block_Config $block_config ) {
-		$this->register_block( $block_config );
 		$this->register_fields( $block_config );
+		$this->register_block( $block_config );
 	}
 
 	/**
