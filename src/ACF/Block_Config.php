@@ -29,7 +29,6 @@ abstract class Block_Config {
 	 * @return void
 	 */
 	protected function add_fields() {
-
 	}
 
 	/**
