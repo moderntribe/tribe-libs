@@ -28,6 +28,13 @@ class Router_Rule_Manager {
 	public $routes;
 
 	/**
+	 * List of router variables.
+	 *
+	 * @var array
+	 */
+	public $router_vars;
+
+	/**
 	 * Register REST API routes.
 	 *
 	 * @return void

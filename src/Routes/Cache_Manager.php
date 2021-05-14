@@ -25,7 +25,6 @@ class Cache_Manager {
 	 * Conditionally (soft) flushes rewrite rules. Ignored silently
 	 * if the saved version in the DB is also the version in code.
 	 *
-	 * @param array $routes Routes to register.
 	 * @return void
 	 */
 	public function flush_if_changed(): void {
