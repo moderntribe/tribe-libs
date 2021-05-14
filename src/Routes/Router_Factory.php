@@ -55,7 +55,7 @@ class Router_Factory {
 	 * if not found.
 	 *
 	 * @param string $pattern      The regex pattern to lookup.
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return Abstract_Route|null The route or null on failure.
 	 */
 	public function find_route( $pattern, $registered_routes ): ?Abstract_Route {
@@ -78,7 +78,7 @@ class Router_Factory {
 	 * @hook parse_request
 	 *
 	 * @param \WP $wp The global wp object.
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return Abstract_Route|null The matched route on success, null on failure.
 	 */
 	public function did_parse_request( \WP $wp, $registered_routes ): ?Abstract_Route {
