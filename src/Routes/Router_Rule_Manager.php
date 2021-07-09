@@ -147,7 +147,7 @@ class Router_Rule_Manager {
 			return;
 		}
 
-		$this->routes      = [];
+		$this->routes = [];
 
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
