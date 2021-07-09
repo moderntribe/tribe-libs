@@ -170,7 +170,7 @@ class Router_Rule_Manager {
 	 * @return array            Modified query vars.
 	 */
 	public function did_query_vars( $query_vars, array $registered_routes ): array {
-		// Register any routes defined.
+		// Register any route variables defined.
 		foreach ( $registered_routes as $route ) {
 			$this->router_vars = array_merge( $this->router_vars, $route->get_query_var_names() );
 		}
