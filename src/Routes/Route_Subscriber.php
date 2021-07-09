@@ -45,9 +45,11 @@ class Route_Subscriber extends Abstract_Subscriber {
 
 		add_filter(
 			'query_vars', 
-			function ( ...$args ) {
-				return $this->container->get( Router_Rule_Manager::class )->did_query_vars( ...$args );
-			}
+			function ( $vars ) {
+				return $this->container->get( Router_Rule_Manager::class )->did_query_vars( $vars, $this->container->get( Route_Definer::ROUTES ) );
+			},
+			10,
+			2
 		);
 
 		add_action(

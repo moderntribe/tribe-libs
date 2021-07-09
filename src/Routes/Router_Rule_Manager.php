@@ -28,6 +28,13 @@ class Router_Rule_Manager {
 	public $routes;
 
 	/**
+	 * Query parameters for the router.
+	 *
+	 * @var array
+	 */
+	public $router_vars = [];
+
+	/**
 	 * Register REST API routes.
 	 *
 	 * @return void
@@ -167,11 +174,13 @@ class Router_Rule_Manager {
 	 * @param array $query_vars WordPress query vars.
 	 * @return array            Modified query vars.
 	 */
-	public function did_query_vars( $query_vars ): array {
-		// Bail early if no query vars are defined for the router.
-		if ( empty( $this->router_vars ) ) {
-			return $query_vars;
+	public function did_query_vars( $query_vars, array $registered_routes ): array {
+		// Register any routes defined.
+		foreach ( $registered_routes as $route ) {
+			$this->router_vars = array_merge( $this->router_vars, $route->get_query_var_names() );
 		}
+
+		$this->router_vars = array_unique( $this->router_vars );
 
 		return array_merge( $query_vars, $this->router_vars );
 	}
