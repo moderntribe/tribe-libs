@@ -148,7 +148,6 @@ class Router_Rule_Manager {
 		}
 
 		$this->routes      = [];
-		$this->router_vars = [];
 
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
@@ -159,11 +158,7 @@ class Router_Rule_Manager {
 			foreach ( $patterns as $pattern ) {
 				$this->routes[ $pattern ] = $route;
 			}
-
-			$this->router_vars = array_merge( $this->router_vars, $route_vars );
 		}
-
-		$this->router_vars = array_unique( $this->router_vars );
 	}
 
 	/**
