@@ -25,7 +25,7 @@ class Router_Rule_Manager {
 	 *
 	 * @var array
 	 */
-	public $routes;
+	public $routes = [];
 
 	/**
 	 * Query parameters for the router.
@@ -146,8 +146,6 @@ class Router_Rule_Manager {
 		if ( ! empty( $this->routes ) ) {
 			return;
 		}
-
-		$this->routes = [];
 
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
