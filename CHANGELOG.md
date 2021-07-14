@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## 3.4.3 - 2021-07-14
 
-## v3.4.3 - 2021-04-29
+## v3.4.3 - 2021-07-14
 
 - Fix query vars in routing package
 
