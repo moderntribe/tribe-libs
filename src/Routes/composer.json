@@ -9,7 +9,7 @@
     },
     "require": {
         "php": "^7.0",
-        "moderntribe/square1-container": "^3.4.3"
+        "moderntribe/square1-container": "^3.5"
     },
     "autoload": {
         "psr-4": {
