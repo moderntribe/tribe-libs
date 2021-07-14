@@ -25,7 +25,14 @@ class Router_Rule_Manager {
 	 *
 	 * @var array
 	 */
-	public $routes;
+	public $routes = [];
+
+	/**
+	 * Query parameters for the router.
+	 *
+	 * @var array
+	 */
+	public $router_vars = [];
 
 	/**
 	 * Register REST API routes.
@@ -45,7 +52,7 @@ class Router_Rule_Manager {
 	 * @hook rewrite_rules_array hook
 	 *
 	 * @param array $wp_rules          The WP rules array.
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return array                   The modified rewrite rules array.
 	 */
 	public function load( $wp_rules = [], array $registered_routes = [] ): array {
@@ -65,7 +72,7 @@ class Router_Rule_Manager {
 	 * Converts Route instances into Rewrite rules for adding to
 	 * the WordPress rewrites
 	 *
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return array Rules for the route instances.
 	 */
 	public function get_rules( array $registered_routes ): array {
@@ -114,12 +121,12 @@ class Router_Rule_Manager {
 		return implode( '&', $query_params );
 	}
 
-    /**
+	/**
 	 * Stores the route instances locally in an associative array on the
 	 * regex pattern. Any custom query vars are also scanned and stored
 	 * here.
 	 *
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return array Route instances.
 	 */
 	public function get_route_objects( array $registered_routes = [] ): array {
@@ -131,7 +138,7 @@ class Router_Rule_Manager {
 	/**
 	 * Lazy init routes and route vars.
 	 *
-     * @param array $registered_routes Routes registered.
+	 * @param array $registered_routes Routes registered.
 	 * @return void
 	 */
 	public function init_routes( array $registered_routes = [] ): void {
@@ -139,9 +146,6 @@ class Router_Rule_Manager {
 		if ( ! empty( $this->routes ) ) {
 			return;
 		}
-
-		$this->routes      = [];
-		$this->router_vars = [];
 
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
@@ -152,11 +156,7 @@ class Router_Rule_Manager {
 			foreach ( $patterns as $pattern ) {
 				$this->routes[ $pattern ] = $route;
 			}
-
-			$this->router_vars = array_merge( $this->router_vars, $route_vars );
 		}
-
-		$this->router_vars = array_unique( $this->router_vars );
 	}
 
 	/**
@@ -167,11 +167,13 @@ class Router_Rule_Manager {
 	 * @param array $query_vars WordPress query vars.
 	 * @return array            Modified query vars.
 	 */
-	public function did_query_vars( $query_vars ): array {
-		// Bail early if no query vars are defined for the router.
-		if ( empty( $this->router_vars ) ) {
-			return $query_vars;
+	public function did_query_vars( $query_vars, array $registered_routes ): array {
+		// Register any route variables defined.
+		foreach ( $registered_routes as $route ) {
+			$this->router_vars = array_merge( $this->router_vars, $route->get_query_var_names() );
 		}
+
+		$this->router_vars = array_unique( $this->router_vars );
 
 		return array_merge( $query_vars, $this->router_vars );
 	}

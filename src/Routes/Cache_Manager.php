@@ -25,7 +25,6 @@ class Cache_Manager {
 	 * Conditionally (soft) flushes rewrite rules. Ignored silently
 	 * if the saved version in the DB is also the version in code.
 	 *
-	 * @param array $routes Routes to register.
 	 * @return void
 	 */
 	public function flush_if_changed(): void {
@@ -40,8 +39,8 @@ class Cache_Manager {
 	/**
 	 * Wrapper to the WordPress's rewrite flushing API. Triggers the
 	 * router_changed action on flush.
-     *
-     * @return void
+	 *
+	 * @return void
 	 */
 	public function flush(): void {
 		flush_rewrite_rules();
