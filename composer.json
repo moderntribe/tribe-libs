@@ -12,7 +12,7 @@
     "require-dev": {
         "automattic/phpcs-neutron-standard": "^1.5",
         "automattic/vipwpcs": "^2.0.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "0.7.1",
         "lucatume/wp-browser": "^2.6.10",
         "phpcompatibility/php-compatibility": "*",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
