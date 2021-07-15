@@ -2,9 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.4.4 - 2021-07-14
+
+- Add composer v2 support
+- Fix cron queues from cleaning up before finishing
 
 ## 3.4.3 - 2021-07-14
+
+- Fix router query vars
 
 ## v3.4.3 - 2021-07-14
 
