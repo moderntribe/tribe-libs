@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      cache_version: 0 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_version: '7.3'
 
     steps:
