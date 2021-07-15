@@ -53,7 +53,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
-          key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}
+          key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-${{ matrix.wordpress-version }}
 
       - name: Cache PHP extensions
         uses: actions/cache@v2
