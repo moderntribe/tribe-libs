@@ -57,6 +57,11 @@ class Process extends Command {
 
 		$queue_name = $args[0];
 
+		// Override the timeout
+		if ( isset( $args[0] ) && is_int( $args[0] ) ) {
+			$this->timelimit = $args[0];
+		}
+
 		if ( ! array_key_exists( $queue_name, $this->queues->queues() ) ) {
 			\WP_CLI::error( __( "That queue name doesn't appear to be valid.", 'tribe' ) );
 		}
