@@ -8,7 +8,7 @@ time consuming, or network-dependent tasks.
 While it is possible (and in rare cases appropriate) to have multiple queues, most often
 a project will use a single default queue. Using the DI container, your class constructor
 should receive a `\Tribe\Libs\Queues\Contracts\Queue`. Autowiring should take care of the
-reset to give you an instance of the appropriate queue class with the configured backend.
+rest to give you an instance of the appropriate queue class with the configured backend.
 
 ```php
 class Example_Class {
