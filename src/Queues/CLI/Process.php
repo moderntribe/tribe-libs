@@ -41,6 +41,12 @@ class Process extends Command {
 				'optional'    => false,
 				'description' => __( 'The name of the Queue.', 'tribe' ),
 			],
+			[
+				'type'        => 'positional',
+				'name'        => 'timelimit',
+				'optional'    => true,
+				'description' => __( 'The max process execution.', 'tribe' ),
+			],
 		];
 	}
 
