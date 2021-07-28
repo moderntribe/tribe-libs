@@ -18,7 +18,7 @@ class Process extends Command {
 	 *          the process will run until it meets a fatal error
 	 *          (e.g., out of memory).
 	 */
-	private $timelimit = 300;
+	protected $timelimit = 300;
 
 	public function __construct( Queue_Collection $queue_collection ) {
 		$this->queues = $queue_collection;
