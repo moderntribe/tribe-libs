@@ -7,11 +7,11 @@
 
 namespace Tribe\Libs\Routes;
 
-
 /**
  * Class to manage rewrite rules.
  */
 class Router_Rule_Manager {
+
 	/**
 	 * Currently matched route.
 	 *
