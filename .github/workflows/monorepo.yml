@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      cache_version: 0 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_version: '7.3'
 
     steps:
@@ -32,7 +32,7 @@ jobs:
         with:
           php-version: ${{ env.php_version }}
           coverage: none
-          tools: composer:v1
+          tools: composer
 
       - name: Get composer cache directory
         id: composer-cache
@@ -40,7 +40,7 @@ jobs:
 
       - name: Check for Cached Composer Dependencies
         id: cache-composer-dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.lock') }}

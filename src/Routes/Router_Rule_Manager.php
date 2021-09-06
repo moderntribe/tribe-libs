@@ -25,7 +25,14 @@ class Router_Rule_Manager {
 	 *
 	 * @var array
 	 */
-	public $routes;
+	public $routes = [];
+
+	/**
+	 * Query parameters for the router.
+	 *
+	 * @var array
+	 */
+	public $router_vars = [];
 
 	/**
 	 * List of router variables.
@@ -147,9 +154,6 @@ class Router_Rule_Manager {
 			return;
 		}
 
-		$this->routes      = [];
-		$this->router_vars = [];
-
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
 			$patterns   = $route->get_patterns();
@@ -159,11 +163,7 @@ class Router_Rule_Manager {
 			foreach ( $patterns as $pattern ) {
 				$this->routes[ $pattern ] = $route;
 			}
-
-			$this->router_vars = array_merge( $this->router_vars, $route_vars );
 		}
-
-		$this->router_vars = array_unique( $this->router_vars );
 	}
 
 	/**
@@ -174,11 +174,13 @@ class Router_Rule_Manager {
 	 * @param array $query_vars WordPress query vars.
 	 * @return array            Modified query vars.
 	 */
-	public function did_query_vars( $query_vars ): array {
-		// Bail early if no query vars are defined for the router.
-		if ( empty( $this->router_vars ) ) {
-			return $query_vars;
+	public function did_query_vars( $query_vars, array $registered_routes ): array {
+		// Register any route variables defined.
+		foreach ( $registered_routes as $route ) {
+			$this->router_vars = array_merge( $this->router_vars, $route->get_query_var_names() );
 		}
+
+		$this->router_vars = array_unique( $this->router_vars );
 
 		return array_merge( $query_vars, $this->router_vars );
 	}
