@@ -16,7 +16,7 @@ jobs:
         php-versions: [ '7.3' ]
 
     env:
-      cache_version: 0 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_extensions: tokenizer, xmlwriter, simplexml
 
     steps:
