@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace %2$s;
 
@@ -8,34 +7,24 @@ use Tribe\Project\Templates\Components\Abstract_Controller;
 
 class %1$s extends Abstract_Controller {
 
-	public const CLASSES = 'classes';
 	public const ATTRS   = 'attrs';
+	public const CLASSES = 'classes';
 
-	/**
-	 * @var string[]
-	 */
-	private array $classes;
 	/**
 	 * @var string[]
 	 */
 	private array $attrs;
 
+	/**
+	 * @var string[]
+	 */
+	private array $classes;
+
 	public function __construct( array $args = [] ) {
 		$args = $this->parse_args( $args );
 
-		$this->classes = (array) $args[ self::CLASSES ];
 		$this->attrs   = (array) $args[ self::ATTRS ];
-	}
-
-	protected function defaults(): array {
-		return [
-			self::CLASSES => [],
-			self::ATTRS   => [],
-		];
-	}
-
-	protected function required(): array {
-		return [];
+		$this->classes = (array) $args[ self::CLASSES ];
 	}
 
 	public function get_classes(): string {
@@ -45,4 +34,16 @@ class %1$s extends Abstract_Controller {
 	public function get_attributes(): string {
 		return Markup_Utils::concat_attrs( $this->attrs );
 	}
+
+	protected function defaults(): array {
+		return [
+			self::ATTRS   => [],
+			self::CLASSES => [],
+		];
+	}
+
+	protected function required(): array {
+		return [];
+	}
+
 }
