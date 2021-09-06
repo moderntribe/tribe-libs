@@ -141,14 +141,12 @@ class Block_Generator extends Generator_Command {
 	private function update_definer( string $type_name, string $class_name, bool $dry_run ): void {
 		$definer_path           = $this->src_path . 'Blocks/Blocks_Definer.php';
 		$type_registration      = "\t\t\t\t" . sprintf( 'DI\get( Types\%1$s\%1$s::class ),', $class_name ) . "\n";
-		$allowlist_registration = "\t\t\t\t" . sprintf( "'acf/%s',", $type_name ) . "\n";
 
 		if ( $dry_run ) {
 			\WP_CLI::log( '[Dry Run] Skipping registration of block type in Blocks_Definer.php ' );
 		} else {
 			\WP_CLI::log( 'Registering block type in Blocks_Definer.php ' );
 			$this->file_system->insert_into_existing_file( $definer_path, $type_registration, 'self::TYPES' );
-			$this->file_system->insert_into_existing_file( $definer_path, $allowlist_registration, 'self::ALLOW_LIST' );
 		}
 	}
 
