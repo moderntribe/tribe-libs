@@ -7,7 +7,6 @@
 
 namespace Tribe\Libs\Routes;
 
-use Tribe\Libs\Routes\Abstract_Route;
 
 /**
  * Class to manage rewrite rules.
@@ -35,14 +34,9 @@ class Router_Rule_Manager {
 	public $router_vars = [];
 
 	/**
-	 * List of router variables.
-	 *
-	 * @var array
-	 */
-	public $router_vars;
-
-	/**
 	 * Register REST API routes.
+	 *
+	 * @param  array  $rest_routes
 	 *
 	 * @return void
 	 */
