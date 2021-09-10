@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 3.4.5 - 2021-09-10
 - Update wp-cli to ^2.5
 - Replace deleted repo https://github.com/hautelook/phpass with https://github.com/bordoni/phpass
