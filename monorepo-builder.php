@@ -20,7 +20,7 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 		],
 		'require-dev'  => [
 			"symplify/monorepo-builder"                      => "^8.2",
-			"lucatume/wp-browser"                            => "^2.6.10",
+			"lucatume/wp-browser"                            => "^3.0.9",
 			"phpunit/phpunit"                                => "^8.0",
 			"automattic/phpcs-neutron-standard"              => "^1.5",
 			"automattic/vipwpcs"                             => "^2.0.0",
@@ -31,7 +31,7 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 			"squizlabs/php_codesniffer"                      => "^3.4.2",
 			"phpstan/phpstan"                                => "^0.12.25",
 			"szepeviktor/phpstan-wordpress"                  => "^0.6.0",
-			"wp-cli/wp-cli"                                  => "^2.4",
+			"wp-cli/wp-cli"                                  => "^2.5",
 		],
 	] );
 
