@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.4.6 - 2021-09-10
 
 ## 3.4.5 - 2021-09-10
 - Update wp-cli to ^2.5
