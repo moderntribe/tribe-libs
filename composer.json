@@ -2,6 +2,16 @@
     "name": "moderntribe/tribe-libs",
     "description": "A library for use on Modern Tribe service projects.",
     "license": "GPL-2.0-only",
+    "repositories": [
+      {
+        "type": "composer",
+        "url": "https://wpackagist.org"
+      },
+      {
+        "type": "vcs",
+        "url": "https://github.com/bordoni/phpass"
+      }
+    ],
     "require": {
         "php": "^7.2",
         "enshrined/svg-sanitize": "^0.13.3",
@@ -13,7 +23,7 @@
         "automattic/phpcs-neutron-standard": "^1.5",
         "automattic/vipwpcs": "^2.0.0",
         "dealerdirect/phpcodesniffer-composer-installer": "0.7.1",
-        "lucatume/wp-browser": "^2.6.10",
+        "lucatume/wp-browser": "^3.0.9",
         "phpcompatibility/php-compatibility": "*",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
         "phpstan/phpstan": "^0.12.25",

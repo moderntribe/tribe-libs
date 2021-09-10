@@ -82,7 +82,7 @@ $config_defaults = [
 	// Debug
 	'WP_DEBUG'                       => tribe_getenv( 'WP_DEBUG', true ),
 	'WP_DEBUG_LOG'                   => tribe_getenv( 'WP_DEBUG_LOG', true ),
-	'WP_DEBUG_DISPLAY'               => tribe_getenv( 'WP_DEBUG_DISPLAY', true ),
+	'WP_DEBUG_DISPLAY'               => tribe_getenv( 'WP_DEBUG_DISPLAY', false ),
 	'SAVEQUERIES'                    => tribe_getenv( 'SAVEQUERIES', true ),
 	'SCRIPT_DEBUG'                   => tribe_getenv( 'SCRIPT_DEBUG', false ),
 	'CONCATENATE_SCRIPTS'            => tribe_getenv( 'CONCATENATE_SCRIPTS', false ),
@@ -99,7 +99,7 @@ $config_defaults = [
 // Use defaults array to define constants where applicable
 // ==============================================================
 
-foreach ( $config_defaults AS $config_default_key => $config_default_value ) {
+foreach ( $config_defaults as $config_default_key => $config_default_value ) {
 	if ( ! defined( $config_default_key ) ) {
 		define( $config_default_key, $config_default_value );
 	}
@@ -112,4 +112,26 @@ foreach ( $config_defaults AS $config_default_key => $config_default_value ) {
 
 if ( empty( $table_prefix ) ) {
 	$table_prefix = tribe_getenv( 'DB_TABLE_PREFIX', 'tribe_' );
+}
+
+// ==============================================================
+// Manually back up the WP_DEBUG_DISPLAY directive
+// ==============================================================
+
+if ( ! defined( 'WP_DEBUG_DISPLAY' ) || ! WP_DEBUG_DISPLAY ) {
+	ini_set( 'display_errors', '0' );
+}
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	\WP_CLI::add_wp_hook(
+		'enable_wp_debug_mode_checks',
+		static function ( $ret ) {
+			if ( WP_DEBUG_LOG && is_string( WP_DEBUG_LOG ) ) {
+				ini_set( 'error_log', WP_DEBUG_LOG );
+			}
+
+			return $ret;
+		},
+		11
+	);
 }

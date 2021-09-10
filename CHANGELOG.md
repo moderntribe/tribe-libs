@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.4.5 - 2021-09-10
+- Replace deleted repo https://github.com/hautelook/phpass with https://github.com/bordoni/phpass
+- Updated wp-browser to 3.0.9
+- Updated wp-config-environment.php from square-one
+
 ## 3.4.4 - 2021-07-14
 
 - Add composer v2 support
