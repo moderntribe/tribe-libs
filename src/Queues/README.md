@@ -8,7 +8,7 @@ time consuming, or network-dependent tasks.
 While it is possible (and in rare cases appropriate) to have multiple queues, most often
 a project will use a single default queue. Using the DI container, your class constructor
 should receive a `\Tribe\Libs\Queues\Contracts\Queue`. Autowiring should take care of the
-reset to give you an instance of the appropriate queue class with the configured backend.
+rest to give you an instance of the appropriate queue class with the configured backend.
 
 ```php
 class Example_Class {
@@ -133,6 +133,13 @@ Using the system crontab, set up a job to run every 5 minutes to kick off the qu
 task will run for approximately five minutes, polling the queue every second for something to do
 (and sitting idle if there is nothing). After the five-minute time limit, the process will gracefully
 terminate.
+
+You can customize the timelimit with the `--timelimit=<time in seconds>` option, e.g. to change from the default
+`300` to `500` seconds:
+
+```bash
+wp s1 queues process default --timelimit=500
+```
 
 Along with the cron to process the queue, also set a cron to clean up old data from the queue.
 `wp s1 queues cleanup <queue-name>`
