@@ -52,7 +52,7 @@ class Pipeline implements PipelineContract {
 	/**
 	 * Create a new class instance.
 	 *
-	 * @param  \DI\FactoryInterface|null  $container
+	 * @param  \DI\FactoryInterface $container
 	 */
 	public function __construct( DI\FactoryInterface $container ) {
 		$this->container = $container;
