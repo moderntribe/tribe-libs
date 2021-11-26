@@ -4,8 +4,6 @@ namespace Tribe\Libs\Pipeline;
 
 use Closure;
 use DI;
-use RuntimeException;
-use Throwable;
 use Tribe\Libs\Pipeline\Contracts\Pipeline as PipelineContract;
 
 /**
@@ -150,11 +148,7 @@ class Pipeline implements PipelineContract {
 	 */
 	protected function prepareDestination( Closure $destination ): Closure {
 		return function ( $passable ) use ( $destination ) {
-			try {
-				return $destination( $passable );
-			} catch ( Throwable $e ) {
-				return $this->handleException( $passable, $e );
-			}
+			return $destination( $passable );
 		};
 	}
 
@@ -166,32 +160,28 @@ class Pipeline implements PipelineContract {
 	protected function carry(): Closure {
 		return function ( $stack, $pipe ) {
 			return function ( $passable ) use ( $stack, $pipe ) {
-				try {
-					// Merge default parameters with additional parameters
-					$parameters = array_merge( [ $passable, $stack ], $this->parameters );
+				// Merge default parameters with additional parameters
+				$parameters = array_merge( [ $passable, $stack ], $this->parameters );
 
-					if ( is_callable( $pipe ) ) {
-						// If the pipe is a callable, then we will call it directly, but otherwise we
-						// will resolve the pipes out of the dependency container and call it with
-						// the appropriate method and arguments, returning the results back out.
-						return $pipe( ...$parameters );
-					}
-
-					if ( ! is_object( $pipe ) ) {
-						// If the pipe is a string we will parse the string and resolve the class out
-						// of the dependency injection container. We can then build a callable and
-						// execute the pipe function giving in the parameters that are required.
-						$pipe = $this->getContainer()->make( $pipe );
-					}
-
-					$carry = method_exists( $pipe, $this->method )
-						? $pipe->{$this->method}( ...$parameters )
-						: $pipe( ...$parameters );
-
-					return $this->handleCarry( $carry );
-				} catch ( Throwable $e ) {
-					return $this->handleException( $passable, $e );
+				if ( is_callable( $pipe ) ) {
+					// If the pipe is a callable, then we will call it directly, but otherwise we
+					// will resolve the pipes out of the dependency container and call it with
+					// the appropriate method and arguments, returning the results back out.
+					return $pipe( ...$parameters );
 				}
+
+				if ( ! is_object( $pipe ) ) {
+					// If the pipe is a string we will parse the string and resolve the class out
+					// of the dependency injection container. We can then build a callable and
+					// execute the pipe function giving in the parameters that are required.
+					$pipe = $this->getContainer()->make( $pipe );
+				}
+
+				$carry = method_exists( $pipe, $this->method )
+					? $pipe->{$this->method}( ...$parameters )
+					: $pipe( ...$parameters );
+
+				return $this->handleCarry( $carry );
 			};
 		};
 	}
@@ -208,15 +198,9 @@ class Pipeline implements PipelineContract {
 	/**
 	 * Get the container instance.
 	 *
-	 * @throws \RuntimeException
-	 *
 	 * @return \DI\FactoryInterface
 	 */
-	protected function getContainer(): ?DI\FactoryInterface {
-		if ( ! $this->container ) {
-			throw new RuntimeException( 'A container instance has not been passed to the Pipeline.' );
-		}
-
+	protected function getContainer(): DI\FactoryInterface {
 		return $this->container;
 	}
 
@@ -229,20 +213,6 @@ class Pipeline implements PipelineContract {
 	 */
 	protected function handleCarry( $carry ) {
 		return $carry;
-	}
-
-	/**
-	 * Handle the given exception.
-	 *
-	 * @param  mixed       $passable
-	 * @param  \Throwable  $e
-	 *
-	 * @throws \Throwable
-	 *
-	 * @return mixed
-	 */
-	protected function handleException( $passable, Throwable $e ) {
-		throw $e;
 	}
 
 }
