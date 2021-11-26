@@ -21,18 +21,18 @@ final class PipelineTest extends WPTestCase {
 
 	public function test_it_runs_a_pipeline_with_closures() {
 		$result = $this->pipeline->send( 'a sample string that is passed through to all pipes.' )
-			->through(
-				static function ( string $passable, Closure $next ) {
-					$passable = ucwords( $passable );
+						->through(
+							static function ( string $passable, Closure $next ) {
+								$passable = ucwords( $passable );
 
-					return $next( $passable );
-				},
-				static function ( string $passable, Closure $next ) {
-					$passable = str_ireplace( 'All', 'All The', $passable );
+								return $next( $passable );
+							},
+							static function ( string $passable, Closure $next ) {
+								$passable = str_ireplace( 'All', 'All The', $passable );
 
-					return $next( $passable );
-				}
-			)->thenReturn();
+								return $next( $passable );
+							}
+						)->thenReturn();
 
 		$this->assertSame( 'A Sample String That Is Passed Through To All The Pipes.', $result );
 	}
@@ -55,10 +55,10 @@ final class PipelineTest extends WPTestCase {
 		};
 
 		$result = $this->pipeline->send( 'a sample string that is passed through to all pipes.' )
-								 ->through(
-									 $stage1,
-									 $stage2
-								 )->thenReturn();
+						 ->through(
+							 $stage1,
+							 $stage2
+						 )->thenReturn();
 
 		$this->assertSame( 'A Sample String That Is Passed Through To All The Pipes.', $result );
 	}
@@ -82,11 +82,11 @@ final class PipelineTest extends WPTestCase {
 
 		// Tell the pipeline to use the "run" method instead of the default "handle" on all stages.
 		$result = $this->pipeline->via( 'run' )
-				 ->send( 'a sample string that is passed through to all pipes.' )
-				 ->through(
-					 $stage1,
-					 $stage2
-				 )->thenReturn();
+						 ->send( 'a sample string that is passed through to all pipes.' )
+						 ->through(
+							 $stage1,
+							 $stage2
+						 )->thenReturn();
 
 		$this->assertSame( 'A Sample String That Is Passed Through To All The Pipes.', $result );
 	}
@@ -221,6 +221,5 @@ final class PipelineTest extends WPTestCase {
 		$this->assertSame( 20, $result );
 		$this->assertSame( [ 5, 10, 20 ], $cache->all() );
 	}
-
 
 }
