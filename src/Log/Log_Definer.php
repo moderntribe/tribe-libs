@@ -19,6 +19,7 @@ class Log_Definer implements Definer_Interface {
 	public function define(): array {
 		return [
 			StreamHandler::class   => static function ( ContainerInterface $c ) {
+				// @phpstan-ignore-next-line
 				$path = WP_CONTENT_DIR . '/square-one-' . date( 'Y-m-d' ) . '.log';
 				$path = apply_filters( 'tribe/log/path', $path );
 
