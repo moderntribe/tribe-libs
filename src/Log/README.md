@@ -55,7 +55,7 @@ Logs are written to the `/wp-content` folder, in a file called `square-one-<toda
 **Change Log Path and Name**
 
 ```php
-add_filter( 'tribe/log/path', fn ( $path ) => '/server/path/to/my.log' );
+add_filter( 'tribe/log/path', static fn ( $path ) => '/server/path/to/my.log' );
 ```
 
 **Change the Default Log Level**
@@ -73,7 +73,7 @@ define( 'TRIBE_LOG_LEVEL', \Psr\Log\LogLevel::EMERGENCY );
 The log channel is a descriptive name attached to all log message. The default is `square-one`. Change with:
 
 ```php
-add_filter( 'tribe/log/channel', fn ( $channel ) => 'my-client-name' );
+add_filter( 'tribe/log/channel', static fn ( $channel ) => 'my-client-name' );
 ```
 
 ## WP CLI Logging
