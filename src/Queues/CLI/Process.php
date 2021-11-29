@@ -88,6 +88,20 @@ class Process extends Command {
 
 		$endtime = time() + $this->timelimit;
 
+		$runtime_message = sprintf( 'The queue will run for %d seconds', $this->timelimit );
+
+		if ( $this->timelimit === 0 ) {
+			$runtime_message = 'Timelimit set to 0. The queue will run indefinitely or until memory is exhausted';
+		}
+
+		WP_CLI::log(
+			sprintf(
+				__( 'Processing queue: %s. %s. Run with the --debug option to see additional details.', 'tribe' ),
+				$queue_name,
+				$runtime_message
+			)
+		);
+
 		// Run forever.
 		while ( $this->timelimit === 0 || time() < $endtime ) {
 
