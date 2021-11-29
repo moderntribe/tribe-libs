@@ -28,7 +28,7 @@ class Log_Definer implements Definer_Interface {
 
 			// Define the default MonoLogger handlers
 			self::HANDLERS         => DI\add( [
-				StreamHandler::class,
+				DI\get( StreamHandler::class ),
 			] ),
 
 			self::LOG_LEVEL        => static function () {
