@@ -33,7 +33,7 @@ if ( $status !== 200 ) {
 }
 
 ```
-## Log Action List
+## Log Level Action List
 
 ```php
 do_action( Log_Actions::EMERGENCY, 'This is an emergency!', [ 'emergency' ] );
