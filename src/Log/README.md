@@ -29,7 +29,7 @@ do_action( \Tribe\Libs\Log\Log_Actions::INFO, 'Starting connection...' );
 // ... more logic
 
 if ( $status !== 200 ) {
-    do_action( \Tribe\Libs\Log\Log_Actions::ERROR, 'Invalid status returned from API.', [ "status" => $status ] );
+    do_action( \Tribe\Libs\Log\Log_Actions::ERROR, 'Invalid status returned from API.', [ 'status' => $status ] );
 }
 ```
 
@@ -37,7 +37,7 @@ This would generate the following output in your log file:
 
 ```shell
 [2021-11-29T22:26:43.350715+00:00] square-one.INFO: Starting connection... [] []
-[2021-11-29T22:26:45.028586+00:00] square-one.ERROR: Invalid status returned from API. [ 'status' => 400 ] []
+[2021-11-29T22:26:45.028586+00:00] square-one.ERROR: Invalid status returned from API. [ "status" => 400 ] []
 ```
 ## Log Level Action List
 
