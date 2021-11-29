@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added `.gitattributes` file to make package smaller
+- Added the Pipeline feature
+- Added custom Log package to use WordPress actions to log via Monolog.
+- Fixed allowing composer v1 + v2.
+- Fixed Routes having the wrong PHP version.
 - Added informative message when running the `wp s1 queues process` CLI command.
 
 ## 3.4.7 - 2021-11-22

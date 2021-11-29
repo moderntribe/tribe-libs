@@ -1,0 +1,11 @@
+# Path-based git attributes
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+
+# Ignore paths when git creates an archive of this package
+/.gitattributes         export-ignore
+/.github                export-ignore
+/.gitignore             export-ignore
+/monorepo.sh            export-ignore
+/monorepo-builder.php   export-ignore
+/tests                  export-ignore
+/dev                    export-ignore

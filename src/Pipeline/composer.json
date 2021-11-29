@@ -1,7 +1,7 @@
 {
-    "name": "moderntribe/square1-routes",
+    "name": "moderntribe/square1-pipeline",
     "type": "library",
-    "description": "Provides route wrappers for square one.",
+    "description": "A pipeline implementation for square one",
     "license": "GPL-2.0-only",
     "config": {
         "vendor-dir": "vendor",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Tribe\\Libs\\Routes\\": ""
+            "Tribe\\Libs\\Pipeline\\": ""
         }
     },
     "extra": {
