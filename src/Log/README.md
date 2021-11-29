@@ -96,7 +96,7 @@ define( 'TRIBE_LOG_CLI', true );
 Then in your command code, instead of calling `WP_CLI::warning( 'This is a warning message' );` you can call
 `do_action( Log_Actions::WARNING, 'This is a warning message' );`.
 
-This is powered by the [Monolog WP-CLI Handler](https://github.com/mhcg/monolog-wp-cli). Just be mindful that WP_CLI does not support all log levels.
+This is powered by the [Monolog WP-CLI Handler](https://github.com/mhcg/monolog-wp-cli).
 
 ## Adding Monolog Handlers
 
