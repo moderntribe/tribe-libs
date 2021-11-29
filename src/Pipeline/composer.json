@@ -1,0 +1,24 @@
+{
+    "name": "moderntribe/square1-pipeline",
+    "type": "library",
+    "description": "A pipeline implementation for square one",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": "^7.2",
+        "moderntribe/square1-container": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Pipeline\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}
