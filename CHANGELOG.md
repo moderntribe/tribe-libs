@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added `.gitattributes` file to make package smaller
 - Added the Pipeline feature
 
 ## 3.4.7 - 2021-11-22
