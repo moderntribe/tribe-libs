@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed allowing composer v1 + v2.
 - Fixed Routes having the wrong PHP version.
 - Added informative message when running the `wp s1 queues process` CLI command.
+- Added `.gitattributes` file to make package smaller
 
 ## 3.4.7 - 2021-11-22
 - Added `--timeout=<time in seconds>` to the `wp s1 queues process` command
