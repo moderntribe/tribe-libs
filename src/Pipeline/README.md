@@ -8,7 +8,7 @@ This system is what powers [Laravel's Middleware](https://laravel.com/docs/8.x/m
 
 Each stage can perform a specific operation, or decide to skip that operation based on some condition and pass the data to the next stage in line.
 
-See the [integration tests](/tests/integration/Tribe/Libs/Pipeline/PipelineTest.php) for some basic example use cases.
+See the [integration tests](https://github.com/moderntribe/tribe-libs/blob/master/tests/integration/Tribe/Libs/Pipeline/PipelineTest.php) for some basic example use cases.
 
 ## Example Use Cases
 
