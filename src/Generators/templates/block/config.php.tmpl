@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare( strict_types=1 );
 
 namespace Tribe\Project\Blocks\Types\%1$s;
 
@@ -9,6 +8,7 @@ use Tribe\Libs\ACF\Field;
 use Tribe\Libs\ACF\Field_Section;
 
 class %1$s extends Block_Config {
+
 	public const NAME = '%2$s';
 
 	public const SECTION_CONTENT  = 's-content';
@@ -59,4 +59,5 @@ class %1$s extends Block_Config {
 		//==========================================
 		$this->add_section( new Field_Section( self::SECTION_SETTINGS, __( 'Settings', 'tribe' ), 'accordion' ) );
 	}
+
 }
