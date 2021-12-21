@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Update block templates to match coding standards (#98)
 
 ## 3.4.8 - 2021-11-29
 - Added `.gitattributes` file to make package smaller
