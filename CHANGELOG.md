@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated Queue Tasks run via WordPress cron to be created by the container so that dependency injection works.
 
 ## 3.4.8 - 2021-11-29
 - Added `.gitattributes` file to make package smaller
