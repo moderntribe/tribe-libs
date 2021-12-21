@@ -14,7 +14,7 @@ use Tribe\Libs\Queues\Message;
 class Mock_Backend implements Backend {
 
 	/**
-	 * @var array<string, list<string>>
+	 * @var array<string, Message[]>
 	 */
 	private $queues = [];
 
