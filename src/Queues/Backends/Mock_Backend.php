@@ -36,11 +36,13 @@ class Mock_Backend implements Backend {
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
-		if ( ! isset( $this->queues[ $queue_name ][0] ) ) {
+		$id = (int) $job_id;
+
+		if ( ! isset( $this->queues[ $queue_name ][ $id ] ) ) {
 			return;
 		}
 
-		unset( $this->queues[ $queue_name ][0] );
+		unset( $this->queues[ $queue_name ][ $id ] );
 	}
 
 	public function nack( string $job_id, string $queue_name ) {

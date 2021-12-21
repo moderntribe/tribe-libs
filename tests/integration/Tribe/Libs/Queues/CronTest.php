@@ -49,7 +49,7 @@ final class CronTest extends WPTestCase {
 		$backend = new Mock_Backend();
 		$cron    = new Cron( $builder->build() );
 
-		$message = new Message( 'TestTask', [], 10, 'test_task' );
+		$message = new Message( 'TestTask', [], 10, '0' );
 
 		$backend->enqueue( DefaultQueue::NAME, $message );
 
@@ -77,7 +77,7 @@ final class CronTest extends WPTestCase {
 		$backend = new Mock_Backend();
 		$cron    = new Cron( $builder->build() );
 
-		$message = new Message( 'TaskDoesNotExist', [], 10, 'test_task' );
+		$message = new Message( 'TaskDoesNotExist', [], 10, '0' );
 
 		$backend->enqueue( DefaultQueue::NAME, $message );
 
