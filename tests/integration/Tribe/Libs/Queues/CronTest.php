@@ -62,6 +62,34 @@ final class CronTest extends WPTestCase {
 		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
 	}
 
+	public function test_the_queue_stops_processing_when_task_cannot_be_instantiated(): void {
+		$task = new class implements Task {
+			public function handle( array $args ): bool {
+				return true;
+			}
+		};
+
+		$builder = new ContainerBuilder();
+		$builder->addDefinitions( [
+			'TestTask' => $task,
+		] );
+
+		$backend = new Mock_Backend();
+		$cron    = new Cron( $builder->build() );
+
+		$message = new Message( 'TaskDoesNotExist', [], 10, 'test_task' );
+
+		$backend->enqueue( DefaultQueue::NAME, $message );
+
+		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
+
+		$queue = new DefaultQueue( $backend );
+
+		$cron->process_queues( $queue );
+
+		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
+	}
+
 	public function test_it_cleans_up_the_queue(): void {
 		$cron    = new Cron( ( new ContainerBuilder() )->build() );
 		$backend = new Mock_Backend();
