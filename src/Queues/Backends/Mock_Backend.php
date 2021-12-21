@@ -29,19 +29,18 @@ class Mock_Backend implements Backend {
 	 */
 	public function dequeue( string $queue_name ): Message {
 		if ( array_key_exists( $queue_name, $this->queues ) && ! empty( $this->queues[ $queue_name ] ) ) {
-			$message = reset( $this->queues[ $queue_name ] );
-
-			// Remove from the stack after use to mark as done
-			unset( $this->queues[ $queue_name ][0] );
-
-			return $message;
+			return reset( $this->queues[ $queue_name ] );
 		}
 
 		throw new RuntimeException( 'No messages available to reserve.' );
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
-		// does nothing
+		if ( ! isset( $this->queues[ $queue_name ][0] ) ) {
+			return;
+		}
+
+		unset( $this->queues[ $queue_name ][0] );
 	}
 
 	public function nack( string $job_id, string $queue_name ) {
