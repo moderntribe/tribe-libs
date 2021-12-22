@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
+use Tribe\Project\Blocks\Type\%1$s\%1$s_Model;
+
 /**
  * @var array $args Arguments passed to the template
  */
-$model = new \Tribe\Project\Blocks\Types\%1$s\%1$s_Model( $args['block'] );
+$model = new %1$s_Model( $args['block'] );
 get_template_part( 'components/blocks/%2$s/%2$s', null, $model->get_data() );
