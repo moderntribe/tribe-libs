@@ -1,7 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues_Mysql\Backends;
 
+use DateTime;
+use DateTimeZone;
+use RuntimeException;
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Message;
 
@@ -33,6 +36,8 @@ class MySQL implements Backend {
 
 	public function enqueue( string $queue_name, Message $message ) {
 		global $wpdb;
+
+		$wpdb->flush();
 
 		$data          = $this->prepare_data( $message );
 		$data['queue'] = $queue_name;
@@ -71,13 +76,15 @@ class MySQL implements Backend {
 	public function dequeue( string $queue_name ): Message {
 		global $wpdb;
 
+		$wpdb->flush();
+
 		$queue = $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT * FROM $this->table_name
 				WHERE queue = %s
 				AND taken = 0
 				AND done = 0
-				AND run_after <= CURRENT_TIME()
+				AND run_after <= UTC_TIMESTAMP()
 				ORDER BY priority ASC
 				LIMIT 0,1
 				",
@@ -87,7 +94,7 @@ class MySQL implements Backend {
 		);
 
 		if ( empty( $queue ) ) {
-			throw new \RuntimeException( 'No messages available to reserve.' );
+			throw new RuntimeException( 'No messages available to reserve.' );
 		}
 
 		$queue['args'] = json_decode( $queue['args'], true );
@@ -100,14 +107,15 @@ class MySQL implements Backend {
 				$this->table_name,
 				[
 					'taken' => time(),
-					'done' => time(),
+					'done'  => time(),
 				],
 				[
-					'id' => $queue[ 'id' ],
+					'id'    => $queue['id'],
 					'taken' => 0,
 				]
 			);
-			throw new \RuntimeException( 'Unprocessable record' );
+
+			throw new RuntimeException( 'Unprocessable record' );
 		}
 
 		$wpdb->update(
@@ -120,13 +128,13 @@ class MySQL implements Backend {
 		);
 
 		if ( 0 === $wpdb->rows_affected ) {
-			throw new \RuntimeException( 'All messages have been reserved.' );
+			throw new RuntimeException( 'All messages have been reserved.' );
 		}
 
-		return new Message( $queue['task_handler'], $queue['args'], $queue['priority'], $queue['id'] );
+		return new Message( $queue['task_handler'], $queue['args'], (int) $queue['priority'], $queue['id'] );
 	}
 
-	public function ack( string $job_id, string $queue_name ) {
+	public function ack( string $job_id, string $queue_name ): void {
 		global $wpdb;
 
 		$wpdb->update(
@@ -136,8 +144,13 @@ class MySQL implements Backend {
 		);
 	}
 
-	public function nack( string $job_id, string $queue_name ) {
+	/**
+	 * @throws \Exception
+	 */
+	public function nack( string $job_id, string $queue_name ): void {
 		global $wpdb;
+
+		$wpdb->flush();
 
 		$priority = $this->get_priority( $job_id );
 
@@ -146,16 +159,24 @@ class MySQL implements Backend {
 			[
 				'taken'     => 0,
 				'priority'  => $priority + 1,
-				'run_after' => ( new \DateTime( sprintf('+%d seconds', absint( $priority ) ) ) )->format( 'Y-m-d H:i:s' ),
+				'run_after' => ( new DateTime(
+					sprintf( '+%d seconds', absint( $priority ) ),
+					new DateTimeZone( 'UTC' )
+				) )->format( 'Y-m-d H:i:s' ),
 			],
 			[ 'id' => $job_id ]
 		);
 	}
 
-	public function cleanup() {
+	/**
+	 * @throws \Exception
+	 */
+	public function cleanup(): void {
 		global $wpdb;
 
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$this->table_name} WHERE done != 0 AND done < %d", time() - $this->ttl ) );
+		$wpdb->flush();
+
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE done != 0 AND done < %d", time() - $this->ttl ) );
 
 		$stale = $wpdb->get_col(
 			$wpdb->prepare(
@@ -177,7 +198,9 @@ class MySQL implements Backend {
 	public function count( string $queue_name ): int {
 		global $wpdb;
 
-		return $wpdb->get_var( $wpdb->prepare(
+		$wpdb->flush();
+
+		return (int) $wpdb->get_var( $wpdb->prepare(
 			"SELECT COUNT(*) FROM $this->table_name WHERE queue = %s AND done = 0",
 			$queue_name
 		) );
@@ -226,8 +249,9 @@ class MySQL implements Backend {
 	}
 
 	/**
-	 * @return array|bool
 	 * @action tribe/project/queues/mysql/init_table
+	 *
+	 * @return array|bool
 	 */
 	public function initialize_table() {
 		if ( $this->table_exists() ) {
@@ -235,4 +259,5 @@ class MySQL implements Backend {
 		}
 		return $this->create_table();
 	}
+
 }
