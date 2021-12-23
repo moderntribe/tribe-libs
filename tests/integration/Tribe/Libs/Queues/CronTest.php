@@ -3,14 +3,13 @@
 namespace Tribe\Libs\Queues;
 
 use Codeception\TestCase\WPTestCase;
-use DI\ContainerBuilder;
+use Tribe\Libs\Container\Container;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
-use Tribe\Libs\Queues\Contracts\Task;
 
 final class CronTest extends WPTestCase {
 
 	public function test_it_schedules_the_queue_cron(): void {
-		$cron = new Cron( ( new ContainerBuilder() )->build() );
+		$cron = new Cron( new Container() );
 
 		add_filter( 'cron_schedules', static function ( $schedules ) use ( $cron ) {
 			return $cron->add_interval( $schedules );
@@ -35,21 +34,11 @@ final class CronTest extends WPTestCase {
 	}
 
 	public function test_it_processes_the_queue(): void {
-		$task = new class implements Task {
-			public function handle( array $args ): bool {
-				return true;
-			}
-		};
+		$container = new Container();
+		$backend   = new Mock_Backend();
+		$cron      = new Cron( $container );
 
-		$builder = new ContainerBuilder();
-		$builder->addDefinitions( [
-			'TestTask' => $task,
-		] );
-
-		$backend = new Mock_Backend();
-		$cron    = new Cron( $builder->build() );
-
-		$message = new Message( 'TestTask', [], 10, '0' );
+		$message = new Message( SampleTask::class, [ 5 ], 10, '0' );
 
 		$backend->enqueue( DefaultQueue::NAME, $message );
 
@@ -60,22 +49,16 @@ final class CronTest extends WPTestCase {
 		$cron->process_queues( $queue );
 
 		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $container->get( SampleTask::class );
+
+		$this->assertSame( 5, $task->get_number() );
 	}
 
 	public function test_the_queue_stops_processing_when_task_cannot_be_instantiated(): void {
-		$task = new class implements Task {
-			public function handle( array $args ): bool {
-				return true;
-			}
-		};
-
-		$builder = new ContainerBuilder();
-		$builder->addDefinitions( [
-			'TestTask' => $task,
-		] );
-
-		$backend = new Mock_Backend();
-		$cron    = new Cron( $builder->build() );
+		$container = new Container();
+		$backend   = new Mock_Backend();
+		$cron      = new Cron( $container );
 
 		$message = new Message( 'TaskDoesNotExist', [], 10, '0' );
 
@@ -88,18 +71,27 @@ final class CronTest extends WPTestCase {
 		$cron->process_queues( $queue );
 
 		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $container->get( SampleTask::class );
+
+		$this->assertSame( 0, $task->get_number() );
 	}
 
 	public function test_it_cleans_up_the_queue(): void {
-		$cron    = new Cron( ( new ContainerBuilder() )->build() );
-		$backend = new Mock_Backend();
-		$message = new Message( 'TestTask', [], 10, 'test_task' );
-		$queue   = new DefaultQueue( $backend );
+		$container = new Container();
+		$cron      = new Cron( $container );
+		$backend   = new Mock_Backend();
+		$message   = new Message( SampleTask::class, [ 5 ], 10, '0' );
+		$queue     = new DefaultQueue( $backend );
 
 		$backend->enqueue( DefaultQueue::NAME, $message );
 		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
 		$cron->cleanup( $queue );
 		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $container->get( SampleTask::class );
+
+		$this->assertSame( 0, $task->get_number() );
 	}
 
 }
