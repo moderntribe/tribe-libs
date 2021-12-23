@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues\CLI;
 
-use DI;
 use Exception;
 use Throwable;
 use Tribe\Libs\CLI\Command;
+use Tribe\Libs\Container\StatefulContainer;
 use Tribe\Libs\Queues\Contracts\Task;
 use Tribe\Libs\Queues\Queue_Collection;
 use WP_CLI;
@@ -18,7 +18,7 @@ class Process extends Command {
 	protected $queues;
 
 	/**
-	 * @var \DI\FactoryInterface
+	 * @var \Tribe\Libs\Container\StatefulContainer
 	 */
 	protected $container;
 
@@ -29,7 +29,7 @@ class Process extends Command {
 	 */
 	private $timelimit = 300;
 
-	public function __construct( Queue_Collection $queue_collection, DI\FactoryInterface $container ) {
+	public function __construct( Queue_Collection $queue_collection, StatefulContainer $container ) {
 		$this->queues    = $queue_collection;
 		$this->container = $container;
 		parent::__construct();
@@ -95,7 +95,7 @@ class Process extends Command {
 
 			try {
 				/** @var Task $task */
-				$task = $this->container->make( $task_class );
+				$task = $this->container->refresh()->make( $task_class );
 			} catch ( Throwable $e ) {
 				WP_CLI::debug( sprintf( __( 'Unable to create task instance for class "%s". Error: %s', 'tribe' ), $task_class, $e->getMessage() ) );
 				$queue->nack( $job->get_job_id() );
