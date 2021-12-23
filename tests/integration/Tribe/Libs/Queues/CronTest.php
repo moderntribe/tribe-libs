@@ -55,6 +55,44 @@ final class CronTest extends WPTestCase {
 		$this->assertSame( 5, $task->get_number() );
 	}
 
+	public function test_it_creates_new_task_instances_when_processing_the_queue(): void {
+		$container = new Container();
+		$backend   = new Mock_Backend();
+		$cron      = new Cron( $container );
+
+		$message = new Message( SampleTask::class, [ 5 ], 10, '0' );
+
+		$backend->enqueue( DefaultQueue::NAME, $message );
+
+		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
+
+		$queue = new DefaultQueue( $backend );
+
+		$cron->process_queues( $queue );
+
+		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $container->get( SampleTask::class );
+
+		$this->assertSame( 5, $task->get_number() );
+
+		$message = new Message( SampleTask::class, [ 10 ], 10, '1' );
+
+		$backend->enqueue( DefaultQueue::NAME, $message );
+
+		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
+
+		$queue = new DefaultQueue( $backend );
+
+		$cron->process_queues( $queue );
+
+		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $container->get( SampleTask::class );
+
+		$this->assertSame( 10, $task->get_number() );
+	}
+
 	public function test_the_queue_stops_processing_when_task_cannot_be_instantiated(): void {
 		$container = new Container();
 		$backend   = new Mock_Backend();
