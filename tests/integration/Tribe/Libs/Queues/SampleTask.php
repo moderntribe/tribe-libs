@@ -10,13 +10,13 @@ use Tribe\Libs\Queues\Contracts\Task;
  */
 class SampleTask implements Task {
 
+	public const CACHE_KEY = 'test_task_number';
+
 	private $cache;
 
 	public function __construct( Cache $cache ) {
 		$this->cache = $cache;
 	}
-
-	public const CACHE_KEY = 'test_task_number';
 
 	public function handle( array $args ): bool {
 		[ $number ] = $args;
