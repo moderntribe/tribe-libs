@@ -2,9 +2,9 @@
 
 namespace Tribe\Libs\Queues;
 
-use DI;
 use Exception;
 use Throwable;
+use Tribe\Libs\Container\StatefulContainer;
 use Tribe\Libs\Queues\Contracts\Task;
 use Tribe\Libs\Queues\Contracts\Queue;
 
@@ -25,11 +25,11 @@ class Cron {
 	/**
 	 * Cron constructor.
 	 *
-	 * @param  \DI\FactoryInterface  $container
-	 * @param  int                   $frequency
-	 * @param  int                   $timelimit
+	 * @param  \Tribe\Libs\Container\StatefulContainer  $container
+	 * @param  int                                      $frequency
+	 * @param  int                                      $timelimit
 	 */
-	public function __construct( DI\FactoryInterface $container, int $frequency = 60, int $timelimit = 15 ) {
+	public function __construct( StatefulContainer $container, int $frequency = 60, int $timelimit = 15 ) {
 		$this->container            = $container;
 		$this->frequency_in_seconds = $frequency;
 		$this->timelimit_in_seconds = $timelimit;
@@ -61,7 +61,7 @@ class Cron {
 
 			try {
 				/** @var Task $task */
-				$task = $this->container->make( $task_class );
+				$task = $this->container->refresh()->make( $task_class );
 			} catch ( Throwable $e ) {
 				$queue->nack( $job->get_job_id() );
 
