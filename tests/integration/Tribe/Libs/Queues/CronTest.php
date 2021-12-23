@@ -3,6 +3,8 @@
 namespace Tribe\Libs\Queues;
 
 use Codeception\TestCase\WPTestCase;
+use Tribe\Libs\Support\SampleOutputTask;
+use Tribe\Libs\Support\SampleTask;
 use Tribe\Libs\Container\Container;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
 
@@ -60,7 +62,15 @@ final class CronTest extends WPTestCase {
 		$backend   = new Mock_Backend();
 		$cron      = new Cron( $container );
 
-		$message = new Message( SampleTask::class, [ 5 ], 10, '0' );
+		$task      = $container->get( SampleOutputTask::class );
+		$object_id = $task->get_object_id();
+
+		$this->assertGreaterThan( 0, $object_id );
+
+		$task = $container->get( SampleOutputTask::class );
+		$this->assertSame( $task->get_object_id(), $object_id );
+
+		$message = new Message( SampleOutputTask::class, [ 5 ], 10, '0' );
 
 		$backend->enqueue( DefaultQueue::NAME, $message );
 
@@ -68,29 +78,22 @@ final class CronTest extends WPTestCase {
 
 		$queue = new DefaultQueue( $backend );
 
+		// Capture the object ID of the task being run in the queue
+		ob_start();
 		$cron->process_queues( $queue );
+		$cron_task_object_id = ob_get_clean();
+
+		$this->assertGreaterThan( 0, $cron_task_object_id );
 
 		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
 
-		$task = $container->get( SampleTask::class );
+		$task        = $container->make( SampleOutputTask::class );
+		$object_id_2 = $task->get_object_id();
 
-		$this->assertSame( 5, $task->get_number() );
-
-		$message = new Message( SampleTask::class, [ 10 ], 10, '1' );
-
-		$backend->enqueue( DefaultQueue::NAME, $message );
-
-		$this->assertSame( 1, $backend->count( DefaultQueue::NAME ) );
-
-		$queue = new DefaultQueue( $backend );
-
-		$cron->process_queues( $queue );
-
-		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
-
-		$task = $container->get( SampleTask::class );
-
-		$this->assertSame( 10, $task->get_number() );
+		// All of these task instances should be different
+		$this->assertNotEquals( $object_id_2, $object_id );
+		$this->assertNotEquals( $cron_task_object_id, $object_id );
+		$this->assertNotEquals( $cron_task_object_id, $object_id_2 );
 	}
 
 	public function test_the_queue_stops_processing_when_task_cannot_be_instantiated(): void {
