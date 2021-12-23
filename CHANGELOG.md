@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- MySQL Queue Backend bugfixes.
+- New Tribe Container that allows forced instance creation.
 - Updated Queue Tasks run via WordPress cron to be created by the container so that dependency injection works.
 
 ## 3.4.8 - 2021-11-29
