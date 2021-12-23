@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated Queue Tasks run via WordPress cron to be created by the container so that dependency injection works.
+
+## 3.4.8 - 2021-11-29
+- Added `.gitattributes` file to make package smaller
+- Added the Pipeline feature
+- Added custom Log package to use WordPress actions to log via Monolog.
+- Fixed allowing composer v1 + v2.
+- Fixed Routes having the wrong PHP version.
+- Added informative message when running the `wp s1 queues process` CLI command.
+
+## 3.4.7 - 2021-11-22
+- Added `--timeout=<time in seconds>` to the `wp s1 queues process` command
+- Updated Queue Tasks to be created by the container so that dependency injection works.
+- Update Queues documentation with examples.
 
 ## 3.4.6 - 2021-09-10
 

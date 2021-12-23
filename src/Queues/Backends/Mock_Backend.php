@@ -1,8 +1,8 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues\Backends;
 
+use RuntimeException;
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Message;
 
@@ -12,7 +12,10 @@ use Tribe\Libs\Queues\Message;
  * A trivial backend for use when running tests
  */
 class Mock_Backend implements Backend {
-	/** @var array[] */
+
+	/**
+	 * @var array<string, Message[]>
+	 */
 	private $queues = [];
 
 	public function enqueue( string $queue_name, Message $m ) {
@@ -20,7 +23,7 @@ class Mock_Backend implements Backend {
 	}
 
 	/**
-	 * @param string $queue_name
+	 * @param  string  $queue_name
 	 *
 	 * @return Message The first message in the queue. Nothing will be reserved.
 	 */
@@ -28,15 +31,22 @@ class Mock_Backend implements Backend {
 		if ( array_key_exists( $queue_name, $this->queues ) && ! empty( $this->queues[ $queue_name ] ) ) {
 			return reset( $this->queues[ $queue_name ] );
 		}
-		throw new \RuntimeException( 'No messages available to reserve.' );
+
+		throw new RuntimeException( 'No messages available to reserve.' );
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
-		return; // does nothing
+		$id = (int) $job_id;
+
+		if ( ! isset( $this->queues[ $queue_name ][ $id ] ) ) {
+			return;
+		}
+
+		unset( $this->queues[ $queue_name ][ $id ] );
 	}
 
 	public function nack( string $job_id, string $queue_name ) {
-		return; // does nothing
+		// does nothing
 	}
 
 	public function get_type(): string {
@@ -59,4 +69,5 @@ class Mock_Backend implements Backend {
 	public function cleanup() {
 		$this->queues = [];
 	}
+
 }
