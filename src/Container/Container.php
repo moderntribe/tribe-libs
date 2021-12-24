@@ -2,13 +2,15 @@
 
 namespace Tribe\Libs\Container;
 
+use DI\FactoryInterface;
+use Invoker\InvokerInterface;
 use Psr\Container\ContainerInterface;
 use ReflectionObject;
 
 /**
  * A scoped container wrapper.
  */
-class Container extends \DI\Container implements ScopedContainer {
+class Container extends \DI\Container implements ScopedContainer, ContainerInterface, FactoryInterface, InvokerInterface {
 
 	/**
 	 * A reflection of the wrapper container.
@@ -27,6 +29,10 @@ class Container extends \DI\Container implements ScopedContainer {
 	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	public function wrap( ?ContainerInterface $container = null ) {
+		if ( $container ) {
+			$container = clone $container;
+		}
+
 		$this->delegateContainer = $container ?: $this;
 
 		$object = new self( null, null, $container );
