@@ -171,7 +171,7 @@ class Process extends Command {
 		}
 	}
 
-	protected function build_command_options( string $job_id , string $queue_name, string $task_class ): string {
+	protected function build_command_options( string $job_id, string $queue_name, string $task_class ): string {
 		$args = [
 			Run::OPTION_JOB_ID => $job_id,
 			Run::OPTION_QUEUE  => $queue_name,
@@ -180,7 +180,7 @@ class Process extends Command {
 
 		$options = '';
 
-		foreach( $args as $option => $value ) {
+		foreach ( $args as $option => $value ) {
 			$options .= sprintf( '--%s=%s ', $option, escapeshellarg( $value ) );
 		}
 
