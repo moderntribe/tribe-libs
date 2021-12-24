@@ -18,8 +18,6 @@ parameters:
 		# Undefined functions are expected to be calling WP functions
 		- '#^Function \S+ not found\.$#'
 		- '#Unsafe usage of new static\(\)\.$#'
-		- '#Used function WP_CLI\\Utils\\get_flag_value not found\.$#'
-		- '#Used function WP_CLI\\Utils\\check_proc_available not found\.$#'
 		- '#Function apply_filters(_ref_array)? invoked with \d+ parameters, 2 required\.$#'
 		- '#Extensible_Walker_Nav_Menu.*should be compatible#'
 		- '#JSON_Nav_Walker.*should be compatible#'
