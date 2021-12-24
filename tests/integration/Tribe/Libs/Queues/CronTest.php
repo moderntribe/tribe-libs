@@ -3,7 +3,7 @@
 namespace Tribe\Libs\Queues;
 
 use Codeception\TestCase\WPTestCase;
-use DI\ContainerBuilder;
+use Tribe\Libs\Container\Container;
 use Tribe\Libs\Support\SampleTask;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
 
@@ -17,7 +17,7 @@ final class CronTest extends WPTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->container = ( new ContainerBuilder() )->build();
+		$this->container = new Container();
 	}
 
 	public function test_it_schedules_the_queue_cron(): void {
