@@ -1,10 +1,11 @@
-<?php declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues;
 
+use DI\FactoryInterface;
 use Exception;
-use Tribe\Libs\Queues\Contracts\Task;
 use Tribe\Libs\Queues\Contracts\Queue;
+use Tribe\Libs\Queues\Contracts\Task;
 
 /**
  * Process queues via the WordPress cron
@@ -16,16 +17,30 @@ class Cron {
 	public const CRON_ACTION = 'tribe_queue_cron';
 	public const FREQUENCY   = 'tribe_queue_frequency';
 
+	/**
+	 * @var \DI\FactoryInterface
+	 */
+	protected $container;
+
+	/**
+	 * @var int
+	 */
 	private $frequency_in_seconds;
+
+	/**
+	 * @var int
+	 */
 	private $timelimit_in_seconds;
 
 	/**
 	 * Cron constructor.
 	 *
-	 * @param  int  $frequency
-	 * @param  int  $timelimit
+	 * @param FactoryInterface $container
+	 * @param int              $frequency
+	 * @param int              $timelimit
 	 */
-	public function __construct( int $frequency = 60, int $timelimit = 15 ) {
+	public function __construct( FactoryInterface $container, int $frequency = 60, int $timelimit = 15 ) {
+		$this->container            = $container;
 		$this->frequency_in_seconds = $frequency;
 		$this->timelimit_in_seconds = $timelimit;
 	}
@@ -54,14 +69,14 @@ class Cron {
 
 			$task_class = $job->get_task_handler();
 
-			if ( ! class_exists( $task_class ) ) {
+			try {
+				/** @var Task $task */
+				$task = $this->container->make( $task_class );
+			} catch ( Throwable $e ) {
 				$queue->nack( $job->get_job_id() );
 
 				return;
 			}
-
-			/** @var Task $task */
-			$task = new $task_class();
 
 			if ( $task->handle( $job->get_args() ) ) {
 				// Acknowledge.
