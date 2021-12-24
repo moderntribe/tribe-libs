@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues;
 
@@ -11,6 +10,7 @@ use Tribe\Libs\Queues\CLI\Add_Tasks;
 use Tribe\Libs\Queues\CLI\Cleanup;
 use Tribe\Libs\Queues\CLI\List_Queues;
 use Tribe\Libs\Queues\CLI\Process;
+use Tribe\Libs\Queues\CLI\Run;
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Contracts\Queue;
 
@@ -30,6 +30,7 @@ class Queues_Definer implements Definer_Interface {
 				DI\get( Add_Tasks::class ),
 				DI\get( Cleanup::class ),
 				DI\get( Process::class ),
+				DI\get( Run::class ),
 			] ),
 		];
 	}
