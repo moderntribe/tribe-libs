@@ -4,6 +4,7 @@ namespace Tribe\Libs\Queues;
 
 use DI\FactoryInterface;
 use Exception;
+use Throwable;
 use Tribe\Libs\Queues\Contracts\Queue;
 use Tribe\Libs\Queues\Contracts\Task;
 

@@ -3,6 +3,7 @@
 namespace Tribe\Libs\Queues\CLI;
 
 use DI\FactoryInterface;
+use Throwable;
 use Tribe\Libs\CLI\Command;
 use Tribe\Libs\Queues\Contracts\Task;
 use Tribe\Libs\Queues\Queue_Collection;
@@ -35,6 +36,8 @@ class Run extends Command {
 	public function __construct( Queue_Collection $queue_collection, FactoryInterface $container ) {
 		$this->queues    = $queue_collection;
 		$this->container = $container;
+
+		parent::__construct();
 	}
 
 	public function command(): string {
@@ -83,8 +86,7 @@ class Run extends Command {
 	 * @param array $assoc_args
 	 *
 	 * @throws WP_CLI\ExitException
-	 * @throws \DI\DependencyException
-	 * @throws \DI\NotFoundException
+	 *
 	 * @return void
 	 */
 	public function run_command( $args, $assoc_args ): void {
@@ -103,7 +105,7 @@ class Run extends Command {
 
 		try {
 			$queue = $this->queues->get( $queue_name );
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			WP_CLI::error( $e->getMessage() );
 		}
 
@@ -130,4 +132,5 @@ class Run extends Command {
 			$queue->nack( $job_id );
 		}
 	}
+
 }

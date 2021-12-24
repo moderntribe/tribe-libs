@@ -29,3 +29,4 @@ parameters:
 	bootstrapFiles:
 		- ../vendor/wp-cli/wp-cli/php/class-wp-cli.php
 		- ../vendor/wp-cli/wp-cli/php/class-wp-cli-command.php
+		- ../vendor/wp-cli/wp-cli/php/utils.php
