@@ -4,7 +4,7 @@ namespace Tribe\Libs\Queues;
 
 use Exception;
 use Throwable;
-use Tribe\Libs\Container\ScopedContainer;
+use Tribe\Libs\Container\MutableContainer;
 use Tribe\Libs\Queues\Contracts\Queue;
 use Tribe\Libs\Queues\Contracts\Task;
 
@@ -19,7 +19,7 @@ class Cron {
 	public const FREQUENCY   = 'tribe_queue_frequency';
 
 	/**
-	 * @var ScopedContainer
+	 * @var MutableContainer
 	 */
 	protected $container;
 
@@ -36,11 +36,11 @@ class Cron {
 	/**
 	 * Cron constructor.
 	 *
-	 * @param  \Tribe\Libs\Container\ScopedContainer  $container
-	 * @param  int                                    $frequency
-	 * @param  int                                    $timelimit
+	 * @param  \Tribe\Libs\Container\MutableContainer  $container
+	 * @param  int                                     $frequency
+	 * @param  int                                     $timelimit
 	 */
-	public function __construct( ScopedContainer $container, int $frequency = 60, int $timelimit = 15 ) {
+	public function __construct( MutableContainer $container, int $frequency = 60, int $timelimit = 15 ) {
 		$this->container            = $container;
 		$this->frequency_in_seconds = $frequency;
 		$this->timelimit_in_seconds = $timelimit;

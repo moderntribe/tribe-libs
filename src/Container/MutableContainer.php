@@ -4,7 +4,7 @@ namespace Tribe\Libs\Container;
 
 use Psr\Container\ContainerInterface;
 
-interface ScopedContainer {
+interface MutableContainer {
 
 	/**
 	 * Wrap an existing container and create a new instance of this container.
@@ -13,7 +13,7 @@ interface ScopedContainer {
 	 *
 	 * @param  \Psr\Container\ContainerInterface|null  $container
 	 *
-	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
+	 * @return \Tribe\Libs\Container\MutableContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	public function wrap( ?ContainerInterface $container = null );
 
@@ -35,7 +35,7 @@ interface ScopedContainer {
 	 * Flush the container of all bindings and resolved instances in this
 	 * container and the wrapped container.
 	 *
-	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
+	 * @return \Tribe\Libs\Container\MutableContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	public function flush();
 

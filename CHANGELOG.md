@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - Added command constants to make building WP CLI commands with arguments and options easier.
-- Added a "scoped container", to allow us to flush the PHP-DI container in specific situations and create completely new instances.
+- Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
 - Added `wp s1 queues run` command, which is now used by `wp s1 queues process <name>` command to run each queue task as a child PHP process.
 - Updated the Cron Queue processing to also create task instances from the container.
 - Updated the MySQL Queue backend to force use UTC time for comparing jobs.

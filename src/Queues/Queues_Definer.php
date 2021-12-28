@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 use Tribe\Libs\CLI\CLI_Definer;
 use Tribe\Libs\Container\Container;
 use Tribe\Libs\Container\Definer_Interface;
-use Tribe\Libs\Container\ScopedContainer;
+use Tribe\Libs\Container\MutableContainer;
 use Tribe\Libs\Queues\Backends\WP_Cache;
 use Tribe\Libs\Queues\CLI\Add_Tasks;
 use Tribe\Libs\Queues\CLI\Cleanup;
@@ -20,7 +20,7 @@ use Tribe\Libs\Queues\Contracts\Queue;
 class Queues_Definer implements Definer_Interface {
 	public function define(): array {
 		return [
-			ScopedContainer::class  => static function ( ContainerInterface $c ) {
+			MutableContainer::class => static function ( ContainerInterface $c ) {
 				return ( new Container() )->wrap( $c );
 			},
 			Backend::class          => DI\create( WP_Cache::class ),

@@ -7,7 +7,7 @@ use DI;
 use DI\ContainerBuilder;
 use Tribe\Libs\Support\SampleClass;
 
-final class ScopedContainerTest extends WPTestCase {
+final class MutableContainerTest extends WPTestCase {
 
 	public function test_it_makes_fresh_instances_of_the_same_class() {
 		$builder   = new ContainerBuilder();

@@ -8,12 +8,12 @@ use Psr\Container\ContainerInterface;
 use ReflectionObject;
 
 /**
- * A scoped container wrapper.
+ * A mutable container wrapper.
  */
-class Container extends \DI\Container implements ScopedContainer, ContainerInterface, FactoryInterface, InvokerInterface {
+class Container extends \DI\Container implements MutableContainer, ContainerInterface, FactoryInterface, InvokerInterface {
 
 	/**
-	 * A reflection of the wrapper container.
+	 * A reflection of the wrapped container.
 	 *
 	 * @var ReflectionObject|null
 	 */
@@ -26,7 +26,7 @@ class Container extends \DI\Container implements ScopedContainer, ContainerInter
 	 *
 	 * @param  \Psr\Container\ContainerInterface|null  $container
 	 *
-	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
+	 * @return \Tribe\Libs\Container\MutableContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	public function wrap( ?ContainerInterface $container = null ) {
 		if ( $container ) {
@@ -68,7 +68,7 @@ class Container extends \DI\Container implements ScopedContainer, ContainerInter
 	 *
 	 * @throws \ReflectionException
 	 *
-	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
+	 * @return \Tribe\Libs\Container\MutableContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	public function flush() {
 		$this->resetEntries();
@@ -91,7 +91,7 @@ class Container extends \DI\Container implements ScopedContainer, ContainerInter
 	 */
 	protected function resetEntries(): array {
 		return $this->resolvedEntries = [
-			ScopedContainer::class => $this,
+			MutableContainer::class => $this,
 		];
 	}
 
@@ -100,7 +100,7 @@ class Container extends \DI\Container implements ScopedContainer, ContainerInter
 	 *
 	 * @param  \Psr\Container\ContainerInterface|null  $container
 	 *
-	 * @return \Tribe\Libs\Container\ScopedContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
+	 * @return \Tribe\Libs\Container\MutableContainer|\DI\Container|ContainerInterface|\DI\FactoryInterface|\Invoker\InvokerInterface
 	 */
 	protected function setReflectionContainer( ?ContainerInterface $container = null ) {
 		$this->reflectionContainer = $container ? new ReflectionObject( $container ) : null;
