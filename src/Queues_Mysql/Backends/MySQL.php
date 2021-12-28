@@ -167,7 +167,7 @@ class MySQL implements Backend {
 	public function cleanup() {
 		global $wpdb;
 
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$this->table_name} WHERE done != 0 AND done < %d", time() - $this->ttl ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE done != 0 AND done < %d", time() - $this->ttl ) );
 
 		$stale = $wpdb->get_col(
 			$wpdb->prepare(
