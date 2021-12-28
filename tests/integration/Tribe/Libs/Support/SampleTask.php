@@ -30,4 +30,8 @@ class SampleTask implements Task {
 		return $this->cache->get( self::CACHE_KEY ) ?: 0;
 	}
 
+	public function get_sub_object_id(): int {
+		return spl_object_id( $this->cache );
+	}
+
 }

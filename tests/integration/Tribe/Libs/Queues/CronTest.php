@@ -4,8 +4,8 @@ namespace Tribe\Libs\Queues;
 
 use Codeception\TestCase\WPTestCase;
 use Tribe\Libs\Container\Container;
-use Tribe\Libs\Support\SampleTask;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
+use Tribe\Libs\Support\SampleTask;
 
 final class CronTest extends WPTestCase {
 
@@ -64,6 +64,34 @@ final class CronTest extends WPTestCase {
 		$task = $this->container->get( SampleTask::class );
 
 		$this->assertSame( 5, $task->get_number() );
+	}
+
+	public function test_it_processes_multiple_queue_tasks_with_unique_instances(): void {
+		$backend   = new Mock_Backend();
+		$cron      = new Cron( $this->container );
+
+		$message1 = new Message( SampleTask::class, [ 5 ], 10, '0' );
+		$message2 = new Message( SampleTask::class, [ 10 ], 10, '1' );
+
+		$backend->enqueue( DefaultQueue::NAME, $message1 );
+		$backend->enqueue( DefaultQueue::NAME, $message2 );
+		$this->assertSame( 2, $backend->count( DefaultQueue::NAME ) );
+
+		$task     = $this->container->get( SampleTask::class );
+		$class_id = spl_object_id( $task );
+		$sub_id   = $task->get_sub_object_id();
+		$this->assertSame( 0, $task->get_number() );
+
+		$queue = new DefaultQueue( $backend );
+
+		$cron->process_queues( $queue );
+
+		$this->assertSame( 0, $backend->count( DefaultQueue::NAME ) );
+
+		$task = $this->container->get( SampleTask::class );
+		$this->assertSame( 10, $task->get_number() );
+		$this->assertNotEquals( $class_id, spl_object_id( $task ) );
+		$this->assertNotEquals( $sub_id, $task->get_sub_object_id() );
 	}
 
 	public function test_it_stops_processing_when_task_cannot_be_instantiated(): void {
