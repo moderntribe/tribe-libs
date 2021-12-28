@@ -3,6 +3,15 @@
 The Queue library provides a utility for background processing of potentially slow,
 time consuming, or network-dependent tasks.
 
+## Configure queues with the MySQL Backend
+
+Include [Queue_Definer](https://github.com/moderntribe/tribe-libs/blob/master/src/Queues/Queues_Definer.php), [Queue_Subscriber](https://github.com/moderntribe/tribe-libs/blob/master/src/Queues/Queues_Subscriber.php) and the [Mysql_Backend_Definer](https://github.com/moderntribe/tribe-libs/blob/master/src/Queues_Mysql/Mysql_Backend_Definer.php), [Mysql_Backend_Subscriber](https://github.com/moderntribe/tribe-libs/blob/master/src/Queues_Mysql/Mysql_Backend_Subscriber.php) in your [Core.php](https://github.com/moderntribe/square-one/blob/main/wp-content/plugins/core/src/Core.php), **ensuring to add the MySQL providers items _after_ the Queue providers.**
+
+Run the following to create the queues database table:
+```shell
+wp s1 queues add-table
+```
+
 ## Getting the Queue Object
 
 While it is possible (and in rare cases appropriate) to have multiple queues, most often
@@ -22,7 +31,7 @@ class Example_Class {
 ## Creating a task handler
 
 If you are putting things into queue, it is very likely you will need to create a custom task handler.
-To create a Task class implement `Tribe\Project\Queues\Contracts\Task`.
+To create a Task class, implement `Tribe\Project\Queues\Contracts\Task`.
 
 The `handle( array $args )` method is required and must return `true` on success (the task is marked as complete
 and removed from the queue), `false` on failure (the task is added back into the queue to try again).
@@ -144,9 +153,20 @@ wp s1 queues process default --timelimit=500
 Along with the cron to process the queue, also set a cron to clean up old data from the queue.
 `wp s1 queues cleanup <queue-name>`
 
-In the event that WP CLI is not available (such as on WP Engine), then the queues can be processed on WP Cron.
+In the event that WP CLI is not available (such as on older WP Engine stacks), then the queues can be processed on WP Cron.
 Cron support is disabled by default, but is enabled by setting `WP_DISABLE_CRON` to false. **This is not the preferred way
 of using Queues, but can be used when system level CLI access is not available.**
+
+## Cron jobs
+The queue should run on a cronjob for as long as the timelimit.
+
+```shell
+# Run for the default 300 seconds/5 minutes
+*/5 * * * * wp --path=/path/to/wordpress s1 queues process default
+
+# Clean up old queue tasks every 30 minutes
+*/30 * * * * wp --path=/path/to/wordpress s1 queues cleanup default
+```
 
 ## Creating additional queues
 
