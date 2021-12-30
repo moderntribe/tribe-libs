@@ -18,6 +18,15 @@ class Mock_Backend implements Backend {
 	 */
 	private $queues = [];
 
+	/**
+	 * Allow returning the internal properties for tests.
+	 *
+	 * @return array<string, Message[]>
+	 */
+	public function queues(): array {
+		return $this->queues;
+	}
+
 	public function enqueue( string $queue_name, Message $m ) {
 		$this->queues[ $queue_name ][] = $m;
 	}
