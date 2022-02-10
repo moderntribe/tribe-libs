@@ -8,8 +8,6 @@
  * @description TODO: add a description to this file
  */
 
-// import * as tools from 'utils/tools';
-
 /**
  * @function init
  * @description Kick off this module's functions
