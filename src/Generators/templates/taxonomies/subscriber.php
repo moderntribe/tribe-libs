@@ -6,5 +6,7 @@ namespace Tribe\Project\Taxonomies\%1$s;
 use Tribe\Libs\Taxonomy\Taxonomy_Subscriber;
 
 class Subscriber extends Taxonomy_Subscriber {
-	protected $config_class   = Config::class;
+
+	protected string $config_class = Config::class;
+
 }
