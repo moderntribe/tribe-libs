@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 3.4.9 - 2022-02-10
 - Update block templates to match coding standards (#98)
 
