@@ -122,11 +122,13 @@ class Component_Generator extends Generator_Command {
 	private function make_template( $name, $path, $dry_run ): void {
 		$directory        = $this->component_directory( $path, $name );
 		$template_file    = $directory . $name . '.php';
-		$controller_class = '\\' . $this->controller_namespace( $path, $name ) . '\\' . $this->controller_classname( $name );
-
+		$namespace        = $this->controller_namespace( $path, $name );
+		$class_name       = $this->controller_classname( $name );
+		
 		$template_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/component/template.php.tmpl' ),
-			$controller_class
+			$namespace,
+			$class_name
 		);
 
 

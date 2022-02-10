@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Project\Blocks\Types\%1$s;
 
@@ -9,13 +8,16 @@ use %2$s\%3$s;
  * Class %1$s_Model
  *
  * Responsible for mapping values from the block to arguments
- * for the component
+ * for the component.
  */
 class %1$s_Model extends \Tribe\Project\Blocks\Types\Base_Model {
+
 	public function get_data(): array {
 		return [
-			%3$s::CLASSES     => $this->get_classes(),
+			%3$s::ATTRS   => $this->get_attrs(),
+			%3$s::CLASSES => $this->get_classes(),
 			// TODO: map values from the block to the controller
 		];
 	}
+
 }
