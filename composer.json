@@ -116,6 +116,9 @@
         "preferred-install": "dist",
         "platform": {
             "php": "7.2.32"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
