@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - Fixed nesting issue when using ACF classes to build Flexible Content Fields with Layout Fields [(#105)](https://github.com/moderntribe/tribe-libs/pull/105)
+- Allow composer plugins [(#108)](https://github.com/moderntribe/tribe-libs/pull/108)
 
 ## 3.4.9 - 2022-02-10
 - Update block templates to match coding standards (#98)
