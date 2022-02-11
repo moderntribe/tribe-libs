@@ -9,9 +9,9 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-cli": "^3.4.10",
-        "moderntribe/square1-container": "^3.4.10",
-        "moderntribe/square1-queues": "^3.4.10",
+        "moderntribe/square1-cli": "^3.5",
+        "moderntribe/square1-container": "^3.5",
+        "moderntribe/square1-queues": "^3.5",
         "php": "^7.2"
     },
     "autoload": {
