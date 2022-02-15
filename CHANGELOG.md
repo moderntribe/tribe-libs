@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added command constants to make building WP CLI commands with arguments and options easier.
+- Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
+- Added `wp s1 queues run` command, which is now used by `wp s1 queues process <name>` command to run each queue task as a child PHP process.
+- Updated the Cron Queue processing to also create task instances from the container.
+- Updated the MySQL Queue backend to force use UTC time for comparing jobs.
+
+## 3.4.8 - 2021-11-29
+- Added `.gitattributes` file to make package smaller
+- Added the Pipeline feature
+- Added custom Log package to use WordPress actions to log via Monolog.
+- Fixed allowing composer v1 + v2.
+- Fixed Routes having the wrong PHP version.
+- Added informative message when running the `wp s1 queues process` CLI command.
 
 ## 3.4.7 - 2021-11-22
 - Added `--timeout=<time in seconds>` to the `wp s1 queues process` command

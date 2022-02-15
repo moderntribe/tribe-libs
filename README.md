@@ -5,7 +5,7 @@ Square One core plugin.
 ## Installation
 
 ```
-composer require moderntribe/tribe-libs:dev-master
+composer require moderntribe/tribe-libs
 ```
 
 ## Usage
