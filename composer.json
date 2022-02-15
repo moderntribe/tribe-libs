@@ -15,7 +15,7 @@
     "require": {
         "php": "^7.2",
         "composer-plugin-api": "^1.0 || ^2.0",
-        "enshrined/svg-sanitize": "^0.13.3",
+        "enshrined/svg-sanitize": "^0.15.0",
         "filp/whoops": "^2.2@dev",
         "mhcg/monolog-wp-cli": "^1.0",
         "monolog/monolog": "^2.0",
