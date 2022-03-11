@@ -42,7 +42,8 @@
     "autoload": {
         "files": [
             "src/Assets/version.php",
-            "src/Cache/functions.php"
+            "src/Cache/functions.php",
+            "src/Container/functions.php"
         ],
         "psr-4": {
             "Tribe\\Libs\\ACF\\": "src/ACF/",
