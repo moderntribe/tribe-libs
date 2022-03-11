@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 - Updated the Cron Queue processing to also create task instances from the container.
 - Updated the MySQL Queue backend to force use UTC time for comparing jobs.
 
+## 3.4.10 - 2022-02-11
+- Fixed nesting issue when using ACF classes to build Flexible Content Fields with Layout Fields in [#105](https://github.com/moderntribe/tribe-libs/pull/105)
+- Allow composer plugins in [#108](https://github.com/moderntribe/tribe-libs/pull/108)
+
+## 3.4.9 - 2022-02-10
+- Update block templates to match coding standards (#98)
+
 ## 3.4.8 - 2021-11-29
 - Added `.gitattributes` file to make package smaller
 - Added the Pipeline feature

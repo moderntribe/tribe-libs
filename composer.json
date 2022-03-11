@@ -42,7 +42,8 @@
     "autoload": {
         "files": [
             "src/Assets/version.php",
-            "src/Cache/functions.php"
+            "src/Cache/functions.php",
+            "src/Container/functions.php"
         ],
         "psr-4": {
             "Tribe\\Libs\\ACF\\": "src/ACF/",
@@ -116,6 +117,9 @@
         "preferred-install": "dist",
         "platform": {
             "php": "7.2.32"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
