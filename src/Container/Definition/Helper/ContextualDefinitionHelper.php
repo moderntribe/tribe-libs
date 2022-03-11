@@ -5,23 +5,27 @@ namespace Tribe\Libs\Container\Definition\Helper;
 use DI\Definition\AutowireDefinition;
 use DI\Definition\Definition;
 use DI\Definition\Exception\InvalidDefinition;
-use DI\Definition\Helper\DefinitionHelper;
+use DI\Definition\Helper\AutowireDefinitionHelper;
 use DI\Definition\ObjectDefinition;
 use DI\Definition\ObjectDefinition\MethodInjection;
 use ReflectionClass;
 use ReflectionException;
-use Tribe\Libs\Container\Definition\ContextualDefinition;
+use ReflectionNamedType;
 
 /**
  * Helps define how to create a concrete instance based on a provided
  * interface.
  */
-class ContextualDefinitionHelper implements DefinitionHelper {
+class ContextualDefinitionHelper extends AutowireDefinitionHelper {
+
+	public const DEFINITION_CLASS = AutowireDefinition::class;
 
 	/**
+	 * The class name.
+	 *
 	 * @var string|null
 	 */
-	protected $className;
+	protected $class;
 
 	/**
 	 * The interface => concrete relationship.
@@ -29,13 +33,6 @@ class ContextualDefinitionHelper implements DefinitionHelper {
 	 * @var array<string, string|callable>
 	 */
 	protected $contextual = [];
-
-	/**
-	 * @param  string|null  $className  If null, will automatically use the FQCN in the container.
-	 */
-	public function __construct( ?string $className = null ) {
-		$this->className = $className;
-	}
 
 	/**
 	 * Map a concrete class/instance to an interface/abstract or even another concrete class.
@@ -52,7 +49,7 @@ class ContextualDefinitionHelper implements DefinitionHelper {
 	}
 
 	/**
-	 * Create the definition with the replaced concretes.
+	 * Create the definition with the replaced concrete instances.
 	 *
 	 * @param  string  $entryName
 	 *
@@ -61,13 +58,17 @@ class ContextualDefinitionHelper implements DefinitionHelper {
 	 * @return \DI\Definition\Definition
 	 */
 	public function getDefinition( string $entryName ): Definition {
-		$definition = new ContextualDefinition( $entryName, $this->className );
-		$definition->setContextualBinding( $this->contextual );
+		$definition = parent::getDefinition( $entryName );
 
-		$parameters           = $this->replaceParameters( $definition, $this->contextual );
-		$constructorInjection = MethodInjection::constructor( $parameters );
+		if ( ! empty( $this->contextual ) ) {
+			$parameters           = $this->replaceParameters( $definition, $this->contextual );
+			$constructorInjection = MethodInjection::constructor( $parameters );
 
-		$definition->setConstructorInjection( $constructorInjection );
+			$definition->setConstructorInjection( $constructorInjection );
+
+			// We now perform all the constructor injection, make sure the parent doesn't.
+			unset( $this->constructor );
+		}
 
 		return $definition;
 	}
@@ -93,6 +94,14 @@ class ContextualDefinitionHelper implements DefinitionHelper {
 
 		// Map constructor parameters to their numbered index. The order must match what's in the constructor.
 		foreach ( $constructorParameters as $index => $parameter ) {
+			$type = $parameter->getType();
+
+			// Get built in type values from the constructor parameters
+			if ( $type instanceof ReflectionNamedType && $type->isBuiltin() ) {
+				$replaced[ $index ] = $this->constructor[ $parameter->getName() ];
+				continue;
+			}
+
 			$interface = $parameter->getClass()->getName();
 
 			// Keep existing parameters if they haven't been specifically defined.

@@ -5,7 +5,8 @@ namespace Tribe\Libs\Container;
 use Tribe\Libs\Container\Definition\Helper\ContextualDefinitionHelper;
 
 /**
- * Extend the PHP-DI container to allow for contextual binding.
+ * Extend the PHP-DI container to allow for contextual binding with
+ * our own autowire() function.
  *
  * @example Tribe\Libs\Container\autowire()->contextualParameter( Interface::class, Concrete::class );
  * @example Tribe\Libs\Container\autowire()->contextualParameter( Interface::class, static fn () => new Concrete() );
