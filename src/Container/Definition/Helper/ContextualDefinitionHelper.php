@@ -104,9 +104,8 @@ class ContextualDefinitionHelper extends AutowireDefinitionHelper {
 
 			$interface = $parameter->getClass()->getName();
 
-			// Keep existing parameters if they haven't been specifically defined.
+			// Skip parameters that haven't been defined
 			if ( ! isset( $parameters[ $interface ] ) ) {
-				$replaced[ $index ] = $parameter;
 				continue;
 			}
 
