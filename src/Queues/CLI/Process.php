@@ -7,9 +7,9 @@ use Exception;
 use Tribe\Libs\CLI\Command;
 use Tribe\Libs\Queues\Message;
 use Tribe\Libs\Queues\Queue_Collection;
+use Tribe\Libs\Queues\Subprocess_Checker;
 use WP_CLI;
 
-use function WP_CLI\Utils\check_proc_available;
 use function WP_CLI\Utils\get_flag_value;
 
 /**
@@ -45,10 +45,10 @@ class Process extends Command {
 	 */
 	private $proc_enabled;
 
-	public function __construct( Queue_Collection $queue_collection, DI\FactoryInterface $container ) {
+	public function __construct( Queue_Collection $queue_collection, DI\FactoryInterface $container, Subprocess_Checker $subprocess_checker ) {
 		$this->queues       = $queue_collection;
 		$this->container    = $container;
-		$this->proc_enabled = check_proc_available( 'runcommand', true );
+		$this->proc_enabled = $subprocess_checker->enabled();
 
 		parent::__construct();
 	}
@@ -150,7 +150,12 @@ class Process extends Command {
 					)
 				);
 
-				WP_CLI::debug( __( 'Running task via WP_CLI::run_command() instead, which runs in the same process.', 'tribe' ) );
+				WP_CLI::debug(
+					__(
+						'Running task via WP_CLI::run_command() instead, which runs in the same process but will utilize the mutable container.',
+						'tribe'
+					)
+				);
 
 				WP_CLI::run_command( array_merge( [
 					's1',

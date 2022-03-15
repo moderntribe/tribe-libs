@@ -18,6 +18,7 @@ use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Contracts\Queue;
 
 class Queues_Definer implements Definer_Interface {
+
 	public function define(): array {
 		return [
 			MutableContainer::class => static function ( ContainerInterface $c ) {
@@ -28,10 +29,21 @@ class Queues_Definer implements Definer_Interface {
 			Queue_Collection::class => DI\create()
 				->method( 'add', DI\get( Queue::class ) ),
 
+			Run::class              => static function ( ContainerInterface $c ): Run {
+				$container = DI\FactoryInterface::class;
+
+				// No subprocess support, utilize the mutable container to ensure fresh instances.
+				if ( ! $c->get( Subprocess_Checker::class )->enabled() ) {
+					$container = MutableContainer::class;
+				}
+
+				return new Run( $c->get( Queue_Collection::class ), $c->get( $container ) );
+			},
+
 			/**
 			 * Add commands for the CLI subscriber to register
 			 */
-			CLI_Definer::COMMANDS => DI\add( [
+			CLI_Definer::COMMANDS   => DI\add( [
 				DI\get( List_Queues::class ),
 				DI\get( Add_Tasks::class ),
 				DI\get( Cleanup::class ),
@@ -40,4 +52,5 @@ class Queues_Definer implements Definer_Interface {
 			] ),
 		];
 	}
+
 }

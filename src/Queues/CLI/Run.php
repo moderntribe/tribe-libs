@@ -2,9 +2,9 @@
 
 namespace Tribe\Libs\Queues\CLI;
 
-use DI\FactoryInterface;
 use Throwable;
 use Tribe\Libs\CLI\Command;
+use Tribe\Libs\Container\MutableContainer;
 use Tribe\Libs\Queues\Contracts\Task;
 use Tribe\Libs\Queues\Queue_Collection;
 use WP_CLI;
@@ -29,11 +29,11 @@ class Run extends Command {
 	protected $queues;
 
 	/**
-	 * @var \DI\FactoryInterface
+	 * @var \DI\FactoryInterface|\Tribe\Libs\Container\MutableContainer
 	 */
 	protected $container;
 
-	public function __construct( Queue_Collection $queue_collection, FactoryInterface $container ) {
+	public function __construct( Queue_Collection $queue_collection, $container ) {
 		$this->queues    = $queue_collection;
 		$this->container = $container;
 
@@ -110,8 +110,14 @@ class Run extends Command {
 		}
 
 		try {
-			/** @var Task $task */
-			$task = $this->container->make( $task_class );
+			// No subprocess support, utilize the mutable container to ensure fresh instances.
+			if ( $this->container instanceof MutableContainer ) {
+				/** @var Task $task */
+				$task = $this->container->makeFresh( $task_class );
+			} else {
+				/** @var Task $task */
+				$task = $this->container->make( $task_class );
+			}
 		} catch ( Throwable $e ) {
 			WP_CLI::debug( sprintf( __( 'Unable to create task instance for class "%s". Error: %s', 'tribe' ), $task_class, $e->getMessage() ) );
 			$queue->nack( $job_id );
