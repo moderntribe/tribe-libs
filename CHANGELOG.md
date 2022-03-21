@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed missing post titles in the P2P metabox
 
 ## 3.4.10 - 2022-02-11
 - Fixed nesting issue when using ACF classes to build Flexible Content Fields with Layout Fields in [#105](https://github.com/moderntribe/tribe-libs/pull/105)
