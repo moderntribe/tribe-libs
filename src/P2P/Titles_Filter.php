@@ -31,7 +31,7 @@ class Titles_Filter {
 	 */
 	public function filter_connection_name( $title, $object, $connection_type ) {
 
-		if ( empty($title) && $object instanceof \WP_Post ) {
+		if ( empty( $title ) && $object instanceof \WP_Post ) {
 			$title = $object->post_title;
 		}
 
@@ -61,7 +61,7 @@ class Titles_Filter {
 	 */
 	public function filter_candidate_name( $title, $object ) {
 
-		if ( empty($title) && $object instanceof \WP_Post ) {
+		if ( empty( $title ) && $object instanceof \WP_Post ) {
 			$title = $object->post_title;
 		}
 
