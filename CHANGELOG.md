@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.4.11 - 2022-03-23
 - Fixed missing post titles in the P2P metabox
 - Added command constants to make building WP CLI commands with arguments and options easier.
 - Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
