@@ -30,6 +30,11 @@ class Titles_Filter {
 	 * @filter p2p_connected_title
 	 */
 	public function filter_connection_name( $title, $object, $connection_type ) {
+
+		if ( empty( $title ) && $object instanceof \WP_Post ) {
+			$title = $object->post_title;
+		}
+
 		if ( empty( $this->connection_types ) ) {
 			return $title;
 		}
@@ -55,6 +60,11 @@ class Titles_Filter {
 	 * @filter p2p_candidate_title
 	 */
 	public function filter_candidate_name( $title, $object ) {
+
+		if ( empty( $title ) && $object instanceof \WP_Post ) {
+			$title = $object->post_title;
+		}
+
 		if ( empty( $this->connection_types ) ) {
 			return $title;
 		}

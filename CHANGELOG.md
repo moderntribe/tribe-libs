@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed missing post titles in the P2P metabox
 - Added command constants to make building WP CLI commands with arguments and options easier.
 - Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
 - Added `wp s1 queues run` command, which is now used by `wp s1 queues process <name>` command to run each queue task as a child PHP process.
