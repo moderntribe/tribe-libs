@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - Fixed missing post titles in the P2P metabox
+- Added command constants to make building WP CLI commands with arguments and options easier.
+- Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
+- Added `wp s1 queues run` command, which is now used by `wp s1 queues process <name>` command to run each queue task as a child PHP process.
+- Updated the Cron Queue processing to also create task instances from the container.
+- Updated the MySQL Queue backend to force use UTC time for comparing jobs.
 
 ## 3.4.10 - 2022-02-11
 - Fixed nesting issue when using ACF classes to build Flexible Content Fields with Layout Fields in [#105](https://github.com/moderntribe/tribe-libs/pull/105)
