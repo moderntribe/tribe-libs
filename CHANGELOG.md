@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed Missing titles and missing post type prefixes in P2P metaboxes (take 2)
 
 ## 3.4.11 - 2022-03-23
 - Fixed missing post titles in the P2P metabox
