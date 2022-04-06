@@ -33,7 +33,6 @@ class Titles_Filter {
 		if ( empty( $this->connection_types ) ) {
 			return $title;
 		}
-
 		$p2p_id = $connection_type->name;
 		if ( !in_array( $p2p_id, $this->connection_types_to_label(), true ) ) {
 			return $title;
@@ -76,7 +75,9 @@ class Titles_Filter {
 	}
 
 	private function connection_types_to_label() {
-		return $this->connection_types;
+		return array_map( static function ( $connection_type ) {
+			return $connection_type::NAME;
+		}, $this->connection_types );
 	}
 
 	private function get_connection_type() {

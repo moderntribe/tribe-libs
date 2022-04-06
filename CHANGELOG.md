@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+
+## 3.4.13 - 2022-04-05
+- Updated the `wp s1 genereate block` command to generate block model views using the container as a companion update to [#970](https://github.com/moderntribe/square-one/pull/970).
+
+## 3.4.12 - 2022-03-24
+- Fixed Missing titles and missing post type prefixes in P2P metaboxes (take 2)
+
+## 3.4.11 - 2022-03-23
+- Fixed missing post titles in the P2P metabox
 - Added command constants to make building WP CLI commands with arguments and options easier.
 - Added a "mutable container", to allow us to flush the PHP-DI container in specific situations and create completely fresh instances.
 - Added `wp s1 queues run` command, which is now used by `wp s1 queues process <name>` command to run each queue task as a child PHP process.
