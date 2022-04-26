@@ -20,11 +20,11 @@ jobs:
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
       WP_ROOT_FOLDER: ${{ github.workspace }}/wordpress
-      WP_DOMAIN: "localhost"
+      WP_DOMAIN: "tribe-libs.tribe"
       WP_ADMIN_PATH: "/wp-admin"
       WP_ADMIN_USERNAME: "admin"
       WP_ADMIN_PASSWORD: "password"
-      WP_URL: "http://localhost"
+      WP_URL: "http://tribe-libs.tribe"
       TEST_DB_HOST: 127.0.0.1
       TEST_DB_NAME: wordpress
       TEST_DB_USER: root
