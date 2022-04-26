@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed: tests that use `wp_mail` with the latest WordPress, making validation fail with `Invalid address:  (From): wordpress@localhost` by adjusting the test domains we use to build a valid email address.
 
 ## 3.4.13 - 2022-04-05
 - Updated the `wp s1 genereate block` command to generate block model views using the container as a companion update to [#970](https://github.com/moderntribe/square-one/pull/970).
