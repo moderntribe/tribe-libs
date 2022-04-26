@@ -26,10 +26,12 @@ class Send_NotificationsTest extends \Codeception\TestCase\WPTestCase {
 
 		update_post_meta( $post_id, Copy_Manager::DESTINATION_BLOG, 3 );
 
-		$task = new Send_Notifications();
-		$task->handle( [
+		$task   = new Send_Notifications();
+		$result = $task->handle( [
 			'post_id' => $post_id,
 		] );
+
+		$this->assertTrue( $result );
 
 		/** @var \MockPHPMailer $mailer */
 		$mailer = tests_retrieve_phpmailer_instance();
