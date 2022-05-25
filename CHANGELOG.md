@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed: Added missing `thenReturn()` method to the Pipeline interface.
 
 ## 3.4.14 - 2022-04-26
 - Fixed: tests that use `wp_mail` with the latest WordPress, making validation fail with `Invalid address:  (From): wordpress@localhost` by adjusting the test domains we use to build a valid email address.
