@@ -42,4 +42,11 @@ interface Pipeline {
 	 */
 	public function then( Closure $destination );
 
+	/**
+	 * Run the pipeline and return the result.
+	 *
+	 * @return mixed
+	 */
+	public function thenReturn();
+
 }
