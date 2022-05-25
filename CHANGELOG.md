@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added: `With_Get_Field` ACF trait.
 - Fixed: Added missing `thenReturn()` method to the Pipeline interface.
 
 ## 3.4.14 - 2022-04-26
