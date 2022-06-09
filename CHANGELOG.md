@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.4.16 - 2022-06-09
 - Updated: security updates for mustache / guzzle.
 
 ## 3.4.15 - 2022-05-25
