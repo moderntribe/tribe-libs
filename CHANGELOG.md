@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated: security updates for mustache / guzzle.
 
 ## 3.4.15 - 2022-05-25
 - Added: `With_Get_Field` ACF trait.
