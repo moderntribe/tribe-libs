@@ -1,0 +1,26 @@
+<?php declare(strict_types=1);
+
+namespace Tribe\Libs\ACF\Contracts;
+
+use Tribe\Libs\ACF\Field;
+
+/**
+ * Used in combination with the subfield trait.
+ *
+ * @see \Tribe\Libs\ACF\Traits\With_Sub_Fields
+ */
+interface Has_Sub_Fields {
+
+	/**
+	 * Add a field to a field type that supports subfields.
+	 *
+	 * @param  \Tribe\Libs\ACF\Field  $field
+	 *
+	 * @return static
+	 */
+	public function add_field( Field $field );
+
+
+	public function get_sub_field_attributes(): array;
+
+}
