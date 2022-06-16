@@ -9,11 +9,12 @@ interface Pipeline {
 	/**
 	 * Set the traveler object being sent on the pipeline.
 	 *
-	 * @param  mixed  $traveler
+	 * @param  mixed  $passable
+	 * @param  array  $parameters Additional parameters that get passed through the stages.
 	 *
 	 * @return $this
 	 */
-	public function send( $traveler ): Pipeline;
+	public function send( $passable, array $parameters = [] ): Pipeline;
 
 	/**
 	 * Set the stops of the pipeline.

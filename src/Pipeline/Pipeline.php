@@ -62,6 +62,7 @@ class Pipeline implements PipelineContract {
 	 * Set the object being sent through the pipeline.
 	 *
 	 * @param mixed $passable
+	 * @param array $parameters
 	 *
 	 * @return $this
 	 */
