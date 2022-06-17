@@ -23,10 +23,26 @@ abstract class Block_Config {
 		$this->add_fields();
 	}
 
+	/**
+	 * Add an ACF Block to the Block_Config
+	 *
+	 * @see \Tribe\Libs\ACF\Block_Config::set_block()
+	 *
+	 * @return void
+	 */
 	abstract public function add_block();
 
+	/**
+	 * Override this method in your subclass to add fields.
+	 *
+	 * @TODO we should make this an abstract in the next major version of tribe-libs.
+	 *
+	 * @see \Tribe\Libs\ACF\Block_Config::add_section()
+	 * @see \Tribe\Libs\ACF\Block_Config::add_field()
+	 *
+	 * @return void
+	 */
 	protected function add_fields() {
-		//overwrite in subclass to add fields
 	}
 
 	/**
@@ -76,7 +92,7 @@ abstract class Block_Config {
 	}
 
 	/**
-	 * Get the current field objects.
+	 * Get the currently set field objects.
 	 *
 	 * @return \Tribe\Libs\ACF\Field[]
 	 */
