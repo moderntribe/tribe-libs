@@ -20,7 +20,14 @@ interface Has_Sub_Fields {
 	 */
 	public function add_field( Field $field );
 
+	/**
+	 * @return \Tribe\Libs\ACF\Field[]
+	 */
+	public function get_fields(): array;
 
+	/**
+	 * @return array[]
+	 */
 	public function get_sub_field_attributes(): array;
 
 }

@@ -7,10 +7,11 @@ use Tribe\Libs\ACF\Field;
 
 /**
  * @mixin Field
+ * @mixin \Tribe\Libs\ACF\Contracts\Has_Sub_Fields
  */
 trait With_Sub_Fields {
 
-	/** @var Field[] */
+	/** @var \Tribe\Libs\ACF\Field[] */
 	protected $fields = [];
 
 	/**
@@ -22,6 +23,13 @@ trait With_Sub_Fields {
 		$this->fields[] = $field;
 
 		return $this;
+	}
+
+	/**
+	 * @return \Tribe\Libs\ACF\Field[]
+	 */
+	public function get_fields(): array {
+		return $this->fields;
 	}
 
 	/**
