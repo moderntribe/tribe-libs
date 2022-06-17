@@ -30,13 +30,6 @@ class Field_Section extends Field implements ACF_Aggregate, Has_Sub_Fields {
 	}
 
 	/**
-	 * @return \Tribe\Libs\ACF\Field[]
-	 */
-	public function get_fields(): array {
-		return $this->fields;
-	}
-
-	/**
 	 * @return array[]
 	 */
 	public function get_attributes() {
