@@ -1,18 +1,20 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\ACF;
 
+use InvalidArgumentException;
+
 abstract class Block_Config {
+
 	public const NAME = '';
 
 	/**
-	 * @var array
+	 * @var \Tribe\Libs\ACF\Field[]
 	 */
 	protected $fields = [];
 
 	/**
-	 * @var Block
+	 * @var \Tribe\Libs\ACF\Block
 	 */
 	protected $block;
 
@@ -21,10 +23,26 @@ abstract class Block_Config {
 		$this->add_fields();
 	}
 
+	/**
+	 * Add an ACF Block to the Block_Config
+	 *
+	 * @see \Tribe\Libs\ACF\Block_Config::set_block()
+	 *
+	 * @return void
+	 */
 	abstract public function add_block();
 
+	/**
+	 * Override this method in your subclass to add fields.
+	 *
+	 * @TODO we should make this an abstract in the next major version of tribe-libs.
+	 *
+	 * @see \Tribe\Libs\ACF\Block_Config::add_section()
+	 * @see \Tribe\Libs\ACF\Block_Config::add_field()
+	 *
+	 * @return void
+	 */
 	protected function add_fields() {
-		//overwrite in sub class to add fields
 	}
 
 	/**
@@ -39,7 +57,7 @@ abstract class Block_Config {
 	}
 
 	/**
-	 * @param Block $block
+	 * @param  \Tribe\Libs\ACF\Block  $block
 	 *
 	 * @return $this
 	 */
@@ -56,14 +74,16 @@ abstract class Block_Config {
 		return $this;
 	}
 
-	public function get_block() {
+	public function get_block(): ?Block {
 		return $this->block;
 	}
 
 	/**
-	 * @param Field $field
+	 * Append a field object to the block.
 	 *
-	 * @return Block_Config
+	 * @param  \Tribe\Libs\ACF\Field  $field
+	 *
+	 * @return $this
 	 */
 	public function add_field( Field $field ): Block_Config {
 		$this->fields[] = $field;
@@ -72,11 +92,31 @@ abstract class Block_Config {
 	}
 
 	/**
-	 * @return Group
+	 * Get the currently set field objects.
+	 *
+	 * @return \Tribe\Libs\ACF\Field[]
 	 */
-	public function get_field_group() {
+	public function get_fields(): array {
+		return $this->fields;
+	}
+
+	/**
+	 * Allow fields to be mutated after run time for block middleware
+	 * etc...
+	 *
+	 * @param  \Tribe\Libs\ACF\Field[]  $fields
+	 *
+	 * @return $this
+	 */
+	public function set_fields( array $fields ): Block_Config {
+		$this->fields = $fields;
+
+		return $this;
+	}
+
+	public function get_field_group(): Group {
 		if ( static::NAME == '' ) {
-			throw new \InvalidArgumentException( "Block requires a NAME constant in " . static::class );
+			throw new InvalidArgumentException( 'Block requires a NAME constant in ' . static::class );
 		}
 
 		$group = new Group( static::NAME, [

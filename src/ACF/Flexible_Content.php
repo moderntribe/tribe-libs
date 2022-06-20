@@ -1,9 +1,9 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\ACF;
 
 class Flexible_Content extends Field {
+
 	/** @var Layout[] */
 	protected $layouts = [ ];
 
@@ -27,4 +27,5 @@ class Flexible_Content extends Field {
 
 		return [ $attributes ];
 	}
+
 }
