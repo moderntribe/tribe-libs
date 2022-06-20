@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated: Block_Config class to allow for mutation for upcoming block middleware.
 
 ## 3.4.16 - 2022-06-09
 - Updated: security updates for mustache / guzzle.
