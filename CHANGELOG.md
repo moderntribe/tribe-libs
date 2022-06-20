@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.4.17 - 2022-06-20
 - Updated: Block_Config class to allow for mutation for upcoming block middleware.
 
 ## 3.4.16 - 2022-06-09

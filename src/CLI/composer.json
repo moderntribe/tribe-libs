@@ -10,7 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
-        "moderntribe/square1-container": "^3.5"
+        "moderntribe/square1-container": "^3.4.17"
     },
     "autoload": {
         "psr-4": {
