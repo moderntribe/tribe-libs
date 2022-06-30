@@ -16,9 +16,19 @@ class Block_Renderer {
 	 */
 	public function render_template( $block, $content, $is_preview, $post_id ) {
 		$name      = str_replace( 'acf/', '', $block['name'] );
-		$file_path = sprintf( self::THEME_PATH_TEMPLATE, $name );
 
-		$path = locate_template( $file_path . '.php' );
+		/**
+		 * Allow the file path to be dynamically changed.
+		 *
+		 * @param  string  $file_path   The server path with the slug to the template, e.g. 'components/blocks/accordion/accordion'
+		 * @param  string  $theme_path  The server path to the directory we're looking for the template in, e.g. 'components/blocks/accordion'
+		 * @param  string  $slug        The template slug, e.g. 'accordion'
+		 * @param  array   $block       The block arguments.
+		 * @param  bool    $is_preview  The block preview context.
+		 * @param  int     $post_id     The current post id.
+		 */
+		$file_path = (string) apply_filters( 'tribe/project/block/template_path', sprintf( self::THEME_PATH_TEMPLATE, $name ), self::THEME_PATH_TEMPLATE, $name, $block, $is_preview, $post_id );
+		$path      = locate_template( $file_path . '.php' );
 
 		if ( ! file_exists( $path ) ) {
 			if ( ! WP_DEBUG ) {
