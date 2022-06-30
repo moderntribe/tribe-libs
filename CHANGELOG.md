@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated: `so wp s1 generate block <name>` will use `esc_html__()` instead of `__()` for field labels.
 
 ## 3.4.17 - 2022-06-20
 - Updated: Block_Config class to allow for mutation for upcoming block middleware.
