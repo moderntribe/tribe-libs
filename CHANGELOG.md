@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated: Block_Config Template to set the block category slug.
 
 ## 3.4.18 - 2022-06-30
 - Updated: `so wp s1 generate block <name>` will use `esc_html__()` instead of `__()` for field labels.
