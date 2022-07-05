@@ -83,7 +83,7 @@ class Block_Generator extends Generator_Command {
 			file_get_contents( __DIR__ . '/templates/block/config.php.tmpl' ),
 			$class_name,
 			$name,
-			$this->human_name( $class_name ),
+			$this->human_name( $class_name )
 		);
 
 		if ( $dry_run ) {
@@ -104,6 +104,7 @@ class Block_Generator extends Generator_Command {
 		$directory     = $this->config_directory( $class_name );
 		$file_path     = $directory . $class_name . '_Model.php';
 		// Check for updated Base_Model method for versions of square-one that have block middleware.
+		// @phpstan-ignore-next-line
 		$template_path = method_exists( '\Tribe\Project\Blocks\Types\Base_Model', 'init_data' )
 			? __DIR__ . '/templates/block/model-35.php.tmpl' // tribe libs 3.5 version
 			: __DIR__ . '/templates/block/model.php.tmpl'; // tribe libs 3.4.x version
