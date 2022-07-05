@@ -12,7 +12,7 @@ use %2$s\%3$s;
  */
 class %1$s_Model extends \Tribe\Project\Blocks\Types\Base_Model {
 
-	public function get_data(): array {
+	public function init_data(): array {
 		return [
 			%3$s::ATTRS   => $this->get_attrs(),
 			%3$s::CLASSES => $this->get_classes(),
