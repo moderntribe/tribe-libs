@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added: Adds a version 3.5 `model-35.php.tmpl` block model template to adjust the class if the square-one project has block middelware implemented.
 
 ## 3.4.18 - 2022-06-30
 - Updated: `so wp s1 generate block <name>` will use `esc_html__()` instead of `__()` for field labels.
