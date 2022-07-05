@@ -2,6 +2,7 @@
 
 namespace Tribe\Libs\Generators;
 
+use WP_CLI;
 use function WP_CLI\Utils\get_flag_value;
 
 class Block_Generator extends Generator_Command {
@@ -55,11 +56,11 @@ class Block_Generator extends Generator_Command {
 		$this->make_component( $component_name, $dry_run );
 		$this->update_definer( $type_name, $class_name, $dry_run );
 
-		\WP_CLI::success( 'Way to go! ' . \WP_CLI::colorize( "%W{$type_name}%n" ) . ' block has been created' );
+		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W{$type_name}%n" ) . ' block has been created' );
 	}
 
 	private function make_component( $name, $dry_run ): void {
-		\WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s', $name, $dry_run ? '--dry-run' : '' ), [
+		WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s', $name, $dry_run ? '--dry-run' : '' ), [
 			'return'     => false,
 			'launch'     => false,
 			'exit_error' => true,
@@ -86,10 +87,10 @@ class Block_Generator extends Generator_Command {
 		);
 
 		if ( $dry_run ) {
-			\WP_CLI::log( '[Dry Run] Block config file: ' . $file_path );
-			\WP_CLI::log( 'Block config contents: ' . "\n" . $file_contents );
+			WP_CLI::log( '[Dry Run] Block config file: ' . $file_path );
+			WP_CLI::log( 'Block config contents: ' . "\n" . $file_contents );
 		} else {
-			\WP_CLI::log( 'Writing block config file to ' . $file_path );
+			WP_CLI::log( 'Writing block config file to ' . $file_path );
 			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $file_path, $file_contents );
 		}
@@ -102,18 +103,23 @@ class Block_Generator extends Generator_Command {
 	private function make_block_model( string $class_name, string $component_name, bool $dry_run ): void {
 		$directory     = $this->config_directory( $class_name );
 		$file_path     = $directory . $class_name . '_Model.php';
+		// Check for updated Base_Model method for versions of square-one that have block middleware.
+		$template_path = method_exists( '\Tribe\Project\Blocks\Types\Base_Model', 'init_data' )
+			? __DIR__ . '/templates/block/model-35.php.tmpl' // tribe libs 3.5 version
+			: __DIR__ . '/templates/block/model.php.tmpl'; // tribe libs 3.4.x version
+
 		$file_contents = sprintf(
-			file_get_contents( __DIR__ . '/templates/block/model.php.tmpl' ),
+			file_get_contents( $template_path ),
 			$class_name,
 			$this->controller_namespace( $component_name ),
 			$this->controller_classname( $component_name )
 		);
 
 		if ( $dry_run ) {
-			\WP_CLI::log( '[Dry Run] Block model file: ' . $file_path );
-			\WP_CLI::log( 'Block model contents: ' . "\n" . $file_contents );
+			WP_CLI::log( '[Dry Run] Block model file: ' . $file_path );
+			WP_CLI::log( 'Block model contents: ' . "\n" . $file_contents );
 		} else {
-			\WP_CLI::log( 'Writing block model file to ' . $file_path );
+			WP_CLI::log( 'Writing block model file to ' . $file_path );
 			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $file_path, $file_contents );
 		}
@@ -129,10 +135,10 @@ class Block_Generator extends Generator_Command {
 		);
 
 		if ( $dry_run ) {
-			\WP_CLI::log( '[Dry Run] Block template file: ' . $file_path );
-			\WP_CLI::log( 'Block template contents: ' . "\n" . $file_contents );
+			WP_CLI::log( '[Dry Run] Block template file: ' . $file_path );
+			WP_CLI::log( 'Block template contents: ' . "\n" . $file_contents );
 		} else {
-			\WP_CLI::log( 'Writing block template file to ' . $file_path );
+			WP_CLI::log( 'Writing block template file to ' . $file_path );
 			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $file_path, $file_contents );
 		}
@@ -144,9 +150,9 @@ class Block_Generator extends Generator_Command {
 		$allowlist_registration = "\t\t\t\t" . sprintf( "'acf/%s',", $type_name ) . "\n";
 
 		if ( $dry_run ) {
-			\WP_CLI::log( '[Dry Run] Skipping registration of block type in Blocks_Definer.php ' );
+			WP_CLI::log( '[Dry Run] Skipping registration of block type in Blocks_Definer.php ' );
 		} else {
-			\WP_CLI::log( 'Registering block type in Blocks_Definer.php ' );
+			WP_CLI::log( 'Registering block type in Blocks_Definer.php ' );
 			$this->file_system->insert_into_existing_file( $definer_path, $type_registration, 'self::TYPES' );
 			$this->file_system->insert_into_existing_file( $definer_path, $allowlist_registration, 'self::ALLOW_LIST' );
 		}
