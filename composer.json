@@ -78,7 +78,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
-            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src"
+            "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src",
+            "Tribe\\Libs\\Tests\\Fixtures\\": "tests/_support/Fixtures/"
         }
     },
     "replace": {
