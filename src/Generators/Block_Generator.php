@@ -137,15 +137,14 @@ class Block_Generator extends Generator_Command {
 		$file_path     = $directory . $class_name . '_Model.php';
 		// Check for updated Base_Model method for versions of square-one that have block middleware.
 
-		$template_path = $this->supports_middelware
-			? __DIR__ . '/templates/block/model-35.php.tmpl' // tribe libs 3.5 version
-			: __DIR__ . '/templates/block/model.php.tmpl'; // tribe libs 3.4.x version
+		$template_path = __DIR__ . '/templates/block/model.php.tmpl';
 
 		$file_contents = sprintf(
 			file_get_contents( $template_path ),
 			$class_name,
 			$this->controller_namespace( $component_name ),
-			$this->controller_classname( $component_name )
+			$this->controller_classname( $component_name ),
+			$this->supports_middelware ? 'init_data' : 'get_data' // method differs depending on the version of Square one
 		);
 
 		if ( $dry_run ) {
