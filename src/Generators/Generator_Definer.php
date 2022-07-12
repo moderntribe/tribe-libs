@@ -24,14 +24,15 @@ class Generator_Definer implements Definer_Interface {
 
 			File_System::class => DI\create(),
 
-			CLI_Generator::class        => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
-			CPT_Generator::class        => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
-			Component_Generator::class  => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
-			Block_Generator::class      => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
-			Settings_Generator::class   => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
-			Taxonomy_Generator::class   => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
-			Image_Size_Generator::class => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
-			Meta_Importer::class        => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			CLI_Generator::class              => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			CPT_Generator::class              => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Component_Generator::class        => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
+			Block_Generator::class            => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
+			Block_Middleware_Generator::class => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Settings_Generator::class         => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Taxonomy_Generator::class         => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Image_Size_Generator::class       => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Meta_Importer::class              => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
 
 			/**
 			 * Add commands for the CLI subscriber to register
@@ -41,6 +42,7 @@ class Generator_Definer implements Definer_Interface {
 				DI\get( CPT_Generator::class ),
 				DI\get( Component_Generator::class ),
 				DI\get( Block_Generator::class ),
+				DI\get( Block_Middleware_Generator::class ),
 				DI\get( Settings_Generator::class ),
 				DI\get( Taxonomy_Generator::class ),
 				DI\get( Image_Size_Generator::class ),
