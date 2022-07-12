@@ -76,8 +76,9 @@ class Block_Middleware_Generator extends Generator_Command {
 	}
 
 	private function make_field_middleware( string $class_name ): void {
-		$directory = $this->config_directory( $class_name );
-		$file_path = $directory . $class_name . '.php';
+		$directory  = $this->config_directory( $class_name );
+		$directory .= trailingslashit( 'Field_Middleware' );
+		$file_path  = $directory . $class_name . '.php';
 
 		$file_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/middleware/field.php.tmpl' ),
@@ -95,8 +96,9 @@ class Block_Middleware_Generator extends Generator_Command {
 	}
 
 	private function make_model_middleware( string $class_name ): void {
-		$directory = $this->config_directory( $class_name );
-		$file_path = $directory . $class_name . '.php';
+		$directory  = $this->config_directory( $class_name );
+		$directory .= trailingslashit( 'Model_Middleware' );
+		$file_path  = $directory . $class_name . '.php';
 
 		$file_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/middleware/model.php.tmpl' ),
