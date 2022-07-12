@@ -7,6 +7,7 @@ use function WP_CLI\Utils\get_flag_value;
 
 class Block_Generator extends Generator_Command {
 
+	public const ARG_NAME               = 'name';
 	public const OPTION_DRY_RUN         = 'dry-run';
 	public const OPTION_WITH_MIDDLEWARE = 'with-middleware';
 
@@ -39,7 +40,7 @@ class Block_Generator extends Generator_Command {
 		return [
 			[
 				'type'        => self::ARGUMENT,
-				'name'        => 'name',
+				'name'        => self::ARG_NAME,
 				'optional'    => false,
 				'description' => __( 'The name of the block type', 'tribe' ),
 			],
