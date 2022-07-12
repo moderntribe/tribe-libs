@@ -72,7 +72,7 @@ class Block_Middleware_Generator extends Generator_Command {
 		$this->make_model_middleware( $class_name );
 		$this->update_definer( $class_name );
 
-		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W$class_name" ) . ' block middleware has been created' );
+		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W$class_name%n" ) . ' block middleware has been created' );
 	}
 
 	private function make_field_middleware( string $class_name ): void {
