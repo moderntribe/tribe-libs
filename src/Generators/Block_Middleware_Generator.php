@@ -119,8 +119,8 @@ class Block_Middleware_Generator extends Generator_Command {
 
 	private function update_definer( string $class_name ): void {
 		$definer_path       = $this->src_path . 'Block_Middleware/Block_Middleware_Definer.php';
-		$field_registration = "\t\t\t\t" . sprintf( 'DI\get( \Tribe\Project\Blocks\Middleware\%1$s\Field_Middleware\%1$s_Field_Middleware::class ),', $class_name ) . "\n";
-		$model_registration = "\t\t\t\t" . sprintf( 'DI\get( \Tribe\Project\Blocks\Middleware\%1$s\Model_Middleware\%1$s_Model_Middleware::class ),', $class_name ) . "\n";
+		$field_registration = "\t\t\t\t" . sprintf( 'DI\get( \Tribe\Project\Blocks\Middleware\%1$s\Field_Middleware\%1$s_Field_Middleware::class ), // @TODO: replace with use import', $class_name ) . "\n";
+		$model_registration = "\t\t\t\t" . sprintf( 'DI\get( \Tribe\Project\Blocks\Middleware\%1$s\Model_Middleware\%1$s_Model_Middleware::class ), // @TODO: replace with use import', $class_name ) . "\n";
 
 		if ( $this->dry_run ) {
 			WP_CLI::log( '[Dry Run] Skipping registration of block middleware in Block_Middleware_Definer.php ' );
