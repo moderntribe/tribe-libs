@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 - Added: `wp s1 generate block:middleware <name>` CLI command to create sample block middleware.
 - Added: `wp s1 generate block <name> --with-middleware` that adds the appropriate interface and a stub middleware parameters method to a generated block config.
-- Added: Adds a version 3.5 `model-35.php.tmpl` block model template to adjust the class if the square-one project has block middelware implemented.
+- Updated: Block model generator template `model.php.tmpl` will use a different method name depending on if block middleware is detected in the version of Square One this library is included in.
 
 ## 3.4.18 - 2022-06-30
 - Updated: `so wp s1 generate block <name>` will use `esc_html__()` instead of `__()` for field labels.
