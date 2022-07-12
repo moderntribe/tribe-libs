@@ -38,20 +38,20 @@ class Block_Generator extends Generator_Command {
 	public function arguments(): array {
 		return [
 			[
-				'type'        => 'positional',
+				'type'        => self::ARGUMENT,
 				'name'        => 'name',
 				'optional'    => false,
 				'description' => __( 'The name of the block type', 'tribe' ),
 			],
 			[
-				'type'        => 'flag',
+				'type'        => self::FLAG,
 				'name'        => self::OPTION_DRY_RUN,
 				'optional'    => true,
 				'description' => __( 'During a dry-run, no files will be written', 'tribe' ),
 				'default'     => false,
 			],
 			[
-				'type'        => 'flag',
+				'type'        => self::FLAG,
 				'name'        => self::OPTION_WITH_MIDDLEWARE,
 				'optional'    => true,
 				'description' => __( 'Automatically adds middleware params to the block config', 'tribe' ),
