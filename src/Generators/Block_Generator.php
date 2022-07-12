@@ -118,8 +118,6 @@ class Block_Generator extends Generator_Command {
 			$middleware_method
 		);
 
-		//$file_contents = mb_convert_encoding( $file_contents, 'UTF-8' );
-
 		if ( $dry_run ) {
 			WP_CLI::log( '[Dry Run] Block config file: ' . $file_path );
 			WP_CLI::log( 'Block config contents: ' . "\n" . $file_contents );
