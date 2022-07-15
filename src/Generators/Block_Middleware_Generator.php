@@ -69,7 +69,9 @@ class Block_Middleware_Generator extends Generator_Command {
 		$class_name = $this->class_name( $args[0] );
 
 		$this->make_field_middleware( $class_name );
+		$this->make_field_middleware_test( $class_name );
 		$this->make_model_middleware( $class_name );
+		$this->make_model_middleware_test( $class_name );
 		$this->update_definer( $class_name );
 
 		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W$class_name%n" ) . ' block middleware has been created' );
@@ -96,11 +98,32 @@ class Block_Middleware_Generator extends Generator_Command {
 		}
 	}
 
+	private function make_field_middleware_test( string $class_name ): void {
+		$suffix     = 'Field_Middleware';
+		$directory  = $this->integration_tests_directory( $class_name );
+		$directory .= trailingslashit( $suffix );
+		$file_path  = sprintf( '%s%s_%s_Test.php', $directory, $class_name, $suffix );
+
+		$file_contents = sprintf(
+			file_get_contents( __DIR__ . '/templates/middleware/tests/field.php.tmpl' ),
+			$class_name
+		);
+
+		if ( $this->dry_run ) {
+			WP_CLI::log( '[Dry Run] Block field middleware test file: ' . $file_path );
+			WP_CLI::log( 'Block field middleware test contents: ' . "\n" . $file_contents );
+		} else {
+			WP_CLI::log( 'Writing block field middleware test file to ' . $file_path );
+			$this->file_system->create_directory( $directory );
+			$this->file_system->write_file( $file_path, $file_contents );
+		}
+	}
+
 	private function make_model_middleware( string $class_name ): void {
 		$suffix     = 'Model_Middleware';
 		$directory  = $this->config_directory( $class_name );
 		$directory .= trailingslashit( $suffix );
-		$file_path  = sprintf( '%s%s_%s.php', $directory, $class_name, $suffix );
+		$file_path  = sprintf( '%s%s_%s_Test.php', $directory, $class_name, $suffix );
 
 		$file_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/middleware/model.php.tmpl' ),
@@ -112,6 +135,27 @@ class Block_Middleware_Generator extends Generator_Command {
 			WP_CLI::log( 'Block model middleware contents: ' . "\n" . $file_contents );
 		} else {
 			WP_CLI::log( 'Writing model field middleware file to ' . $file_path );
+			$this->file_system->create_directory( $directory );
+			$this->file_system->write_file( $file_path, $file_contents );
+		}
+	}
+
+	private function make_model_middleware_test( string $class_name ): void {
+		$suffix     = 'Model_Middleware';
+		$directory  = $this->integration_tests_directory( $class_name );
+		$directory .= trailingslashit( $suffix );
+		$file_path  = sprintf( '%s%s_%s.php', $directory, $class_name, $suffix );
+
+		$file_contents = sprintf(
+			file_get_contents( __DIR__ . '/templates/middleware/tests/model.php.tmpl' ),
+			$class_name
+		);
+
+		if ( $this->dry_run ) {
+			WP_CLI::log( '[Dry Run] Block model middleware test file: ' . $file_path );
+			WP_CLI::log( 'Block model middleware test contents: ' . "\n" . $file_contents );
+		} else {
+			WP_CLI::log( 'Writing model field middleware test file to ' . $file_path );
 			$this->file_system->create_directory( $directory );
 			$this->file_system->write_file( $file_path, $file_contents );
 		}
@@ -147,6 +191,12 @@ class Block_Middleware_Generator extends Generator_Command {
 
 	private function config_directory( string $class_name ): string {
 		return trailingslashit( $this->src_path . 'Blocks/Middleware/' . $class_name . '/' );
+	}
+
+	private function integration_tests_directory( string $class_name ): string {
+		$tests = realpath( $this->src_path . '/../../../tests/tests/integration/Tribe/Project/' );
+
+		return trailingslashit( $tests . 'Blocks/Middleware/' . $class_name . '/' );
 	}
 
 }

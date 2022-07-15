@@ -1,0 +1,84 @@
+<?php declare(strict_types=1);
+
+namespace Tribe\Project\Blocks\Middleware\%1$s\Model_Middleware;
+
+use Mockery;
+use Tribe\Project\Block_Middleware\Guards\Block_Model_Middleware_Guard;
+use Tribe\Project\Blocks\Contracts\Model;
+use Tribe\Project\Blocks\Middleware\Inject_Css\Field_Middleware\%1$s_Field_Middleware;
+use Tribe\Project\Blocks\Types\Base_Model;
+use Tribe\Tests\Test_Case;
+
+final class %1$s_Model_Middleware_Test extends Test_Case {
+
+	/**
+	 * @var Block_Model_Middleware_Guard|\Mockery\MockInterface
+	 */
+	private $guard;
+	private %1$s_Model_Middleware $middleware;
+
+	public function _setUp() {
+		parent::_setUp();
+
+		$this->guard      = Mockery::mock( Block_Model_Middleware_Guard::class );
+		$this->middleware = $this->container->make( %1$s_Model_Middleware::class, [
+			'guard' => $this->guard,
+		] );
+	}
+
+	public function _tearDown(): void {
+		parent::_tearDown();
+
+		// Reset post global after each test has run.
+		$GLOBALS['post'] = null;
+	}
+
+	/**
+	 * @TODO adjust this test's logic to match your custom middleware, or if
+	 *       your middleware doesn't require Model Middleware, delete the test file.
+	 */
+	public function test_it_merges_css_class_into_model_data(): void {
+		$post_id = $this->factory()->post->create( [
+			'post_type'   => 'post',
+			'post_status' => 'publish',
+		] );
+
+		update_field( %1$s_Field_Middleware::FIELD_CSS_CLASS, 'hello-world', $post_id );
+
+		// Set the current post global
+		$GLOBALS['post'] = get_post( $post_id );
+
+		// Create an anonymous block model
+		$block_model = new class( [
+			'className' => 'existing-css-class',
+		] ) extends Base_Model {
+
+			protected function init_data(): array {
+				return [
+					'classes' => $this->get_classes(),
+				];
+			}
+
+		};
+
+		// Tell our mock that when it receives an allowed() method call, to return true.
+		$this->guard->shouldReceive( 'allowed' )->andReturnTrue();
+
+		// The pipeline stage requires a closure, just make one that returns the model.
+		$closure = static function ( Model $model ): Model {
+			return $model;
+		};
+
+		// Run the model through our middleware
+		$model = $this->middleware->set_data( $block_model, $closure );
+
+		// See that we've appended the CSS class to any existing model classes.
+		$this->assertSame( [
+			'classes' => [
+				'existing-css-class',
+				'hello-world',
+			],
+		], $model->get_data() );
+	}
+
+}

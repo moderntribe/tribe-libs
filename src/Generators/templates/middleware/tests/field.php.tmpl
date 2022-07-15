@@ -1,0 +1,79 @@
+<?php declare(strict_types=1);
+
+namespace Tribe\Project\Blocks\Middleware\Inject_Css\Field_Middleware;
+
+use Ds\Map;
+use Tribe\Libs\ACF\Block;
+use Tribe\Libs\ACF\Block_Config;
+use Tribe\Libs\ACF\Field;
+use Tribe\Libs\Pipeline\Pipeline;
+use Tribe\Project\Block_Middleware\Guards\Block_Field_Middleware_Guard;
+use Tribe\Project\Block_Middleware\Pipelines\Add_Fields_Pipeline;
+use Tribe\Tests\Test_Case;
+
+final class %1$s_Field_Middleware_Test extends Test_Case {
+
+	/**
+	 * @TODO Adjust this test's logic to your custom middleware
+	 *       implementation.
+	 *
+	 * @throws \DI\DependencyException
+	 * @throws \DI\NotFoundException
+	 */
+	public function test_it_injects_css_section_and_field_into_a_block(): void {
+		// Create an anonymous block to pass through the middleware.
+		$block = new class extends Block_Config {
+
+			public const NAME = 'test_block';
+
+			public const FIELD_TITLE = 'title';
+
+			public function add_block() {
+				$this->set_block( new Block( self::NAME, [
+					'title' => esc_html__( 'A Test Block', 'tribe' ),
+				] ) );
+			}
+
+			public function add_fields() {
+				$this->add_field( new Field( self::NAME . '_' . self::FIELD_TITLE, [
+					'label' => esc_html__( 'Title', 'tribe' ),
+					'name'  => self::FIELD_TITLE,
+					'type'  => 'text',
+				] ) );
+			}
+
+		};
+
+		// Assert we only have the single field we created in the block.
+		$this->assertCount( 1, $block->get_fields() );
+
+		// Assert this is the same field we created.
+		$this->assertSame( 'title', $block->get_fields()[0]->get( 'name' ) );
+		$this->assertSame( 'field_test_block_title', $block->get_fields()[0]->get( 'key' ) );
+
+		// Create the middleware guard and allow our middleware for this block.
+		$block_field_guard = new Block_Field_Middleware_Guard( new Map( [
+			get_class( $block ) => [
+				%1$s_Field_Middleware::class,
+			],
+		] ) );
+
+		// Create a pipeline and add our middleware to it.
+		$pipeline = $this->container->make( Pipeline::class )
+                            ->via( 'add_fields' )
+                            ->through( [
+	                            new %1$s_Field_Middleware( $block_field_guard ),
+                            ] );
+
+		// Pass the block through the middleware pipeline.
+		$processed_block = ( new Add_Fields_Pipeline( $pipeline ) )->process( $block );
+
+		// Assert we've added our custom section and CSS field via middleware.
+		$this->assertCount( 3, $processed_block->get_fields() );
+
+		// Assert the field has been appended and the data matches our middleware field
+		$this->assertSame( %1$s_Field_Middleware::FIELD_CSS_CLASS, $processed_block->get_fields()[2]->get( 'name' ) );
+		$this->assertSame( 'field_global_customization_css_class', $processed_block->get_fields()[2]->get( 'key' ) );
+	}
+
+}
