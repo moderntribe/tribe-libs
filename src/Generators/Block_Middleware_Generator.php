@@ -144,7 +144,7 @@ class Block_Middleware_Generator extends Generator_Command {
 		$suffix     = 'Model_Middleware';
 		$directory  = $this->integration_tests_directory( $class_name );
 		$directory .= trailingslashit( $suffix );
-		$file_path  = sprintf( '%s%s_%s.php', $directory, $class_name, $suffix );
+		$file_path  = sprintf( '%s%s_%s_Test.php', $directory, $class_name, $suffix );
 
 		$file_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/middleware/tests/model.php.tmpl' ),
