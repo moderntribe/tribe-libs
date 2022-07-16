@@ -200,7 +200,7 @@ class Block_Middleware_Generator extends Generator_Command {
 	}
 
 	private function integration_tests_directory( string $class_name ): string {
-		return trailingslashit( $this->tests_path . 'integration/Blocks/Middleware/' . $class_name . '/' );
+		return trailingslashit( $this->tests_path . 'integration/Tribe/Project/Blocks/Middleware/' . $class_name . '/' );
 	}
 
 }
