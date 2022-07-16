@@ -71,7 +71,7 @@ final class %1$s_Field_Middleware_Test extends Test_Case {
 		// Assert we've added our custom section and CSS field via middleware.
 		$this->assertCount( 3, $processed_block->get_fields() );
 
-		// Assert the field has been appended and the data matches our middleware field
+		// Assert the field has been appended and the data matches our middleware field.
 		$this->assertSame( %1$s_Field_Middleware::FIELD_CSS_CLASS, $processed_block->get_fields()[2]->get( 'name' ) );
 		$this->assertSame( 'field_global_customization_css_class', $processed_block->get_fields()[2]->get( 'key' ) );
 	}
