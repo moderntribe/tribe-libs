@@ -20,11 +20,17 @@ class Block_Middleware_Generator extends Generator_Command {
 	 */
 	private $dry_run = false;
 
-	public function __construct( File_System $file_system, $src_path ) {
+	/**
+	 * @var string The absolute path to the tests directory
+	 */
+	private $tests_path;
+
+	public function __construct( File_System $file_system, $src_path, $tests_path ) {
 		parent::__construct( $file_system, $src_path );
 
-				// @phpstan-ignore-next-line
+		// @phpstan-ignore-next-line
 		$this->supports_middelware = method_exists( '\Tribe\Project\Blocks\Types\Base_Model', 'init_data' );
+		$this->tests_path          = $tests_path;
 	}
 
 	/**
@@ -194,9 +200,7 @@ class Block_Middleware_Generator extends Generator_Command {
 	}
 
 	private function integration_tests_directory( string $class_name ): string {
-		$tests = realpath( $this->src_path . '/../../../tests/tests/integration/Tribe/Project/' );
-
-		return trailingslashit( $tests . 'Blocks/Middleware/' . $class_name . '/' );
+		return trailingslashit( $this->tests_path . 'integration/Blocks/Middleware/' . $class_name . '/' );
 	}
 
 }

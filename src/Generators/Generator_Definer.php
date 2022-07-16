@@ -9,8 +9,10 @@ use Tribe\Libs\CLI\CLI_Definer;
 use Tribe\Libs\Container\Definer_Interface;
 
 class Generator_Definer implements Definer_Interface {
+
 	public const SRC_PATH   = 'libs.generator.path.src';
 	public const THEME_PATH = 'libs.generator.path.theme';
+	public const TESTS_PATH = 'libs.generator.path.tests';
 
 	public function define(): array {
 		return [
@@ -22,13 +24,17 @@ class Generator_Definer implements Definer_Interface {
 				return get_template_directory();
 			},
 
+			self::TESTS_PATH => static function () {
+				return trailingslashit( realpath( ABSPATH . '/../dev/tests/tests' ) );
+			},
+
 			File_System::class => DI\create(),
 
 			CLI_Generator::class              => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
 			CPT_Generator::class              => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
 			Component_Generator::class        => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
 			Block_Generator::class            => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::THEME_PATH ) ),
-			Block_Middleware_Generator::class => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
+			Block_Middleware_Generator::class => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ), DI\get( self::TESTS_PATH ) ),
 			Settings_Generator::class         => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
 			Taxonomy_Generator::class         => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
 			Image_Size_Generator::class       => DI\create()->constructor( DI\get( File_System::class ), DI\get( self::SRC_PATH ) ),
