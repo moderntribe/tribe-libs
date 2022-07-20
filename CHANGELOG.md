@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-- Updated: Block_Config Template to set the block category slug.
+- Updated: Block_Config Template to show block category option in category list.
 
 ## 3.5.0 - 2022-07-20
 - Added: `wp s1 generate block:middleware <name>` CLI command to create sample block middleware.
