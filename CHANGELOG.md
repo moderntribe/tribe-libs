@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 3.5.0 - 2022-07-20
 - Added: `wp s1 generate block:middleware <name>` CLI command to create sample block middleware.
 - Added: `wp s1 generate block <name> --with-middleware` that adds the appropriate interface and a stub middleware parameters method to a generated block config.
