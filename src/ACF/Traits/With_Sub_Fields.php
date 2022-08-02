@@ -38,7 +38,7 @@ trait With_Sub_Fields {
 	 * @return array[]
 	 */
 	public function get_sub_field_attributes(): array {
-		return array_merge( ... array_map( static function ( ACF_Configuration $field ) {
+		return array_merge( [], ... array_map( static function ( ACF_Configuration $field ) {
 			return $field->get_attributes();
 		}, $this->fields ) );
 	}
