@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added: `With_Field_Prefix` trait to make fetching full key names easier for conditional logic and block middleware.
 
 ## 3.5.0 - 2022-07-20
 - Added: `wp s1 generate block:middleware <name>` CLI command to create sample block middleware.
