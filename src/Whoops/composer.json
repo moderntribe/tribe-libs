@@ -11,7 +11,7 @@
     "require": {
         "php": "^7.2",
         "filp/whoops": "^2.2@dev",
-        "moderntribe/square1-container": "^3.6"
+        "moderntribe/square1-container": "^3.5.1"
     },
     "autoload": {
         "psr-4": {

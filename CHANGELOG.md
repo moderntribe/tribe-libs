@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 3.5.1 - 2022-08-05
 - Added: `With_Field_Prefix` trait to make fetching full key names easier for conditional logic and block middleware.
 
 ## 3.5.0 - 2022-07-20
