@@ -281,7 +281,7 @@ class Block_Generator extends Generator_Command {
 		}
 
 		$definer_path      = $this->src_path . 'Block_Middleware/Block_Middleware_Definer.php';
-		$type_registration = sprintf( '%2$s// TODO: use fully qualified class name%2$s\Tribe\Project\Blocks\Types\%1$s\%1$s::class => [ %3$s ],', $class_name, "\t\t\t\t", "\r\n\t\t\t\t\tPost_Loop_Field_Middleware::class,\r\n\t\t\t\t" );
+		$type_registration = $this->get_post_loop_block_middleware_definition( $class_name );
 
 		if ( $dry_run ) {
 			WP_CLI::log( '[Dry Run] Skipping registration of block in Block_Middleware_Definer.php ' );
@@ -349,5 +349,16 @@ METHOD;
 	}
 			
 CONSTRUC;
+	}
+
+	private function get_post_loop_block_middleware_definition( string $class_name ): string {
+		$class = "\Tribe\Project\Blocks\Types\$class\$class::class";
+
+		return <<<DEFINITION
+				// TODO: use fully qualified class name
+				$class    => [
+					Post_Loop_Field_Middleware::class,
+				],
+DEFINITION;
 	}
 }
