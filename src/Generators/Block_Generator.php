@@ -167,7 +167,7 @@ class Block_Generator extends Generator_Command {
 			$this->controller_namespace( $component_name ),
 			$this->controller_classname( $component_name ),
 			$this->supports_middelware ? 'init_data' : 'get_data', // method differs depending on the version of Square one
-			( $with_post_loop_middleware && $this->supports_middelware ) ? "\r\nuse Tribe\Project\Blocks\Middleware\Post_Loop\Post_Loop_Repository;\r\n" : '',
+			( $with_post_loop_middleware && $this->supports_middelware ) ? "use Tribe\Project\Blocks\Middleware\Post_Loop\Post_Loop_Repository;\r\n" : '',
 			( $with_post_loop_middleware && $this->supports_middelware ) ? $this->get_block_model_post_loop_middleware_constructor() : '',
 			( $with_post_loop_middleware && $this->supports_middelware ) ? sprintf( '%s::POSTS   => $this->post_loop->get_posts( (array) $this->get( %s::POST_LIST ) ),', $this->controller_classname( $component_name ), $class_name ) : ''
 		);
