@@ -243,12 +243,14 @@ class Block_Generator extends Generator_Command {
 	/**
 	 * @TODO Provide specific middleware parameters.
 	 *
-	 * @return string[][]
+	 * @return array<int, array<string, array<int, mixed>>>
 	 */
 	public function get_middleware_params(): array {
 		return [
 			[
-				'the_middleware_key' => 'the_middleware_data',		
+				'the_middleware_key' => [
+					'the_middleware_data',
+				],		
 			],
 		];
 	}
