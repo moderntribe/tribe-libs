@@ -88,7 +88,7 @@ class Block_Generator extends Generator_Command {
 	}
 
 	private function make_component( $name, $dry_run, $with_post_loop_middleware ): void {
-		WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s %s', $name, $dry_run ? '--' . self::OPTION_DRY_RUN : '', $with_post_loop_middleware ? '--' . Component_Generator::OPTION_WITH_POST_LOOP_MIDDLEWARE : '' ), [
+		WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s %s', $name, $dry_run ? '--' . Component_Generator::OPTION_DRY_RUN : '', $with_post_loop_middleware ? '--' . Component_Generator::OPTION_WITH_POST_LOOP_MIDDLEWARE : '' ), [
 			'return'     => false,
 			'launch'     => false,
 			'exit_error' => true,
