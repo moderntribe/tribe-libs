@@ -352,7 +352,7 @@ CONSTRUC;
 	}
 
 	private function get_post_loop_block_middleware_definition( string $class_name ): string {
-		$class = "\Tribe\Project\Blocks\Types\$class\$class::class";
+		$class = sprintf( '\Tribe\Project\Blocks\Types\%1$s\%1$s::class', $class_name );
 
 		return <<<DEFINITION
 				// TODO: use fully qualified class name
