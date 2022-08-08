@@ -122,10 +122,8 @@ class Block_Generator extends Generator_Command {
 
 		if ( $with_post_loop_middleware && $this->supports_middelware ) {
 			$middleware_method    = $this->get_block_config_post_loop_middleware_method();
-			$additional_constants = "public const SECTION_CARDS = 's-cards';\r\n
-									public const POST_LIST = 'post_list';\r\n";
-			$additional_section   = '// Post loop fields will be added to this section via block middleware. ' . "\r\n" .
-									'$this->add_section( new Field_Section( self::SECTION_CARDS, esc_html__( \'Cards\', \'tribe\' ), \'accordion\' ) );';
+			$additional_constants = "public const SECTION_CARDS = 's-cards';\r\n    public const POST_LIST = 'post_list';\r\n";
+			$additional_section   = '// Post loop fields will be added to this section via block middleware. ' . "\r\n" . ' $this->add_section( new Field_Section( self::SECTION_CARDS, esc_html__( \'Cards\', \'tribe\' ), \'accordion\' ) );';
 		} elseif ( $with_middleware && $this->supports_middelware ) {
 			$middleware_method = $this->get_block_config_middleware_method();
 		}
