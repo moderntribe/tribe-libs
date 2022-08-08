@@ -114,7 +114,19 @@ class Block_Generator extends Generator_Command {
 			WP_CLI::warning( 'Sorry, this version of Square One does not support block middleware.' );
 		}
 
-		$middleware_use_statement = ( $this->supports_middelware && ( $with_middleware || $with_post_loop_middleware ) ) ? 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;' : '';
+		$middleware_use_statement = '';
+
+		if ( $this->supports_middelware ) {
+			if ( $with_middleware || $with_post_loop_middleware ) {
+				$middleware_use_statement = 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;';
+			}
+
+			if ( $with_post_loop_middleware ) {
+				$middleware_use_statement .= "\r\n" . 'use Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config;';
+				$middleware_use_statement .= "\r\n" . 'use Tribe\Project\Blocks\Middleware\Post_Loop\Field_Middleware\Post_Loop_Field_Middleware;';
+			}
+		}
+
 		$middleware_interface     = ( $this->supports_middelware && ( $with_middleware || $with_post_loop_middleware ) ) ? ' implements Has_Middleware_Params' : '';
 		$middleware_method        = '';
 		$additional_constants     = '';
@@ -287,18 +299,18 @@ METHOD;
 		return <<<'METHOD'
 		
 	/**
-	 * @TODO Provide specific Post Loop Config and import to use statements.
+	 * @TODO Customize the Post Loop Field Configuration.
 	 *
 	 * @return array<array{post_loop_field_configs: \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config[]}>
 	 */
 	public function get_middleware_params(): array {
-		$config             = new \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config();
+		$config             = new Post_Loop_Field_Config();
 		$config->field_name = self::POST_LIST;
 		$config->group      = $this->get_section_key( self::SECTION_CARDS );
 		
 		return [
 			[
-				\Tribe\Project\Blocks\Middleware\Post_Loop\Field_Middleware\Post_Loop_Field_Middleware::MIDDLEWARE_KEY => [
+				Post_Loop_Field_Middleware::MIDDLEWARE_KEY => [
 					$config,
 				],		
 			],
