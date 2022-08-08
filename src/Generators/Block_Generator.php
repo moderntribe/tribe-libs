@@ -118,7 +118,7 @@ class Block_Generator extends Generator_Command {
 
 		if ( $this->supports_middelware ) {
 			if ( $with_middleware || $with_post_loop_middleware ) {
-				$middleware_use_statement = 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;';
+				$middleware_use_statement = "\r\n" . 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;';
 			}
 
 			if ( $with_post_loop_middleware ) {
@@ -135,7 +135,7 @@ class Block_Generator extends Generator_Command {
 		if ( $with_post_loop_middleware && $this->supports_middelware ) {
 			$middleware_method    = $this->get_block_config_post_loop_middleware_method();
 			$additional_constants = "public const SECTION_CARDS = 's-cards';\r\n    public const POST_LIST = 'post_list';\r\n";
-			$additional_section   = "\r\n" . '		// Post loop fields will be added to this section via block middleware. ' . "\r\n" . '		$this->add_section( new Field_Section( self::SECTION_CARDS, esc_html__( \'Cards\', \'tribe\' ), \'accordion\' ) );';
+			$additional_section   = "\r\n\r\n" . '		// Post loop fields will be added to this section via block middleware. ' . "\r\n" . '		$this->add_section( new Field_Section( self::SECTION_CARDS, esc_html__( \'Cards\', \'tribe\' ), \'accordion\' ) );';
 		} elseif ( $with_middleware && $this->supports_middelware ) {
 			$middleware_method = $this->get_block_config_middleware_method();
 		}
@@ -181,7 +181,7 @@ class Block_Generator extends Generator_Command {
 			$this->supports_middelware ? 'init_data' : 'get_data', // method differs depending on the version of Square one
 			( $with_post_loop_middleware && $this->supports_middelware ) ? "use Tribe\Project\Blocks\Middleware\Post_Loop\Post_Loop_Repository;\r\n" : '',
 			( $with_post_loop_middleware && $this->supports_middelware ) ? $this->get_block_model_post_loop_middleware_constructor() : '',
-			( $with_post_loop_middleware && $this->supports_middelware ) ? sprintf( '%s::POSTS   => $this->post_loop->get_posts( (array) $this->get( %s::POST_LIST ) ),', $this->controller_classname( $component_name ), $class_name ) : ''
+			( $with_post_loop_middleware && $this->supports_middelware ) ? sprintf( '			%s::POSTS   => $this->post_loop->get_posts( (array) $this->get( %s::POST_LIST ) ),' . "\r\n", $this->controller_classname( $component_name ), $class_name ) : ''
 		);
 
 		if ( $dry_run ) {

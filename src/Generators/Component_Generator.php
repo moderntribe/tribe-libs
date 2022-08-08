@@ -172,7 +172,7 @@ class Component_Generator extends Generator_Command {
 		if ( $with_post_loop_middelware ) {
 			$constants   = "public const POSTS   = 'posts';\r\n";
 			$properties  = $this->get_block_controller_middleware_properties();
-			$assignments = '$this->posts   = (array) $args[ self::POSTS ];';
+			$assignments = "\r\n" . '		$this->posts   = (array) $args[ self::POSTS ];';
 			$defaults    = 'self::POSTS   => [],';
 		}
 
@@ -265,7 +265,8 @@ class Component_Generator extends Generator_Command {
 	/**
 	 * @var \Tribe\Libs\Field_Models\Models\Post_Proxy[]
 	 */
-	private array $posts;		
+	private array $posts;
+			
 PROPS;
 	}
 
