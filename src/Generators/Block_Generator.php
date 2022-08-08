@@ -7,9 +7,10 @@ use function WP_CLI\Utils\get_flag_value;
 
 class Block_Generator extends Generator_Command {
 
-	public const ARG_NAME               = 'name';
-	public const OPTION_DRY_RUN         = 'dry-run';
-	public const OPTION_WITH_MIDDLEWARE = 'with-middleware';
+	public const ARG_NAME                         = 'name';
+	public const OPTION_DRY_RUN                   = 'dry-run';
+	public const OPTION_WITH_MIDDLEWARE           = 'with-middleware';
+	public const OPTION_WITH_POST_LOOP_MIDDLEWARE = 'with-post-loop-middleware';
 
 	/**
 	 * @var string Path to the theme's directory, with a trailing slash.
@@ -58,6 +59,13 @@ class Block_Generator extends Generator_Command {
 				'description' => __( 'Automatically adds middleware params to the block config', 'tribe' ),
 				'default'     => false,
 			],
+			[
+				'type'        => self::FLAG,
+				'name'        => self::OPTION_WITH_POST_LOOP_MIDDLEWARE,
+				'optional'    => true,
+				'description' => __( 'Automatically adds Post Loop Field middleware to the block config and model', 'tribe' ),
+				'default'     => false,
+			],
 		];
 	}
 
@@ -66,20 +74,21 @@ class Block_Generator extends Generator_Command {
 		$class_name     = $this->class_name( $args[0] );
 		$component_name = $this->component_name( $args[0] );
 
-		$dry_run         = get_flag_value( $assoc_args, self::OPTION_DRY_RUN, false );
-		$with_middleware = get_flag_value( $assoc_args, self::OPTION_WITH_MIDDLEWARE, false );
+		$dry_run                   = get_flag_value( $assoc_args, self::OPTION_DRY_RUN, false );
+		$with_middleware           = get_flag_value( $assoc_args, self::OPTION_WITH_MIDDLEWARE, false );
+		$with_post_loop_middleware = get_flag_value( $assoc_args, self::OPTION_WITH_POST_LOOP_MIDDLEWARE, false );
 
-		$this->make_block_config( $type_name, $class_name, $dry_run, $with_middleware );
-		$this->make_block_model( $class_name, $component_name, $dry_run );
+		$this->make_block_config( $type_name, $class_name, $dry_run, $with_middleware, $with_post_loop_middleware );
+		$this->make_block_model( $class_name, $component_name, $dry_run, $with_post_loop_middleware );
 		$this->make_block_template( $type_name, $class_name, $component_name, $dry_run );
-		$this->make_component( $component_name, $dry_run );
+		$this->make_component( $component_name, $dry_run, $with_post_loop_middleware );
 		$this->update_definer( $type_name, $class_name, $dry_run );
 
 		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W{$type_name}%n" ) . ' block has been created' );
 	}
 
-	private function make_component( $name, $dry_run ): void {
-		WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s', $name, $dry_run ? '--dry-run' : '' ), [
+	private function make_component( $name, $dry_run, $with_post_loop_middleware ): void {
+		WP_CLI::runcommand( sprintf( 's1 generate component blocks/%s %s %s', $name, $dry_run ? '--' . self::OPTION_DRY_RUN : '', $with_post_loop_middleware ? '--' . Component_Generator::OPTION_WITH_POST_LOOP_MIDDLEWARE : '' ), [
 			'return'     => false,
 			'launch'     => false,
 			'exit_error' => true,
@@ -93,10 +102,11 @@ class Block_Generator extends Generator_Command {
 	 * @param  string  $class_name
 	 * @param  bool    $dry_run
 	 * @param  bool    $with_middleware
+	 * @param  bool    $with_post_loop_middleware
 	 *
 	 * @return void
 	 */
-	private function make_block_config( string $name, string $class_name, bool $dry_run, bool $with_middleware ): void {
+	private function make_block_config( string $name, string $class_name, bool $dry_run, bool $with_middleware, bool $with_post_loop_middleware ): void {
 		$directory = $this->config_directory( $class_name );
 		$file_path = $directory . $class_name . '.php';
 
@@ -106,7 +116,19 @@ class Block_Generator extends Generator_Command {
 
 		$middleware_use_statement = ( $with_middleware && $this->supports_middelware ) ? 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params' : '';
 		$middleware_interface     = ( $with_middleware && $this->supports_middelware ) ? ' implements Has_Middleware_Params' : '';
-		$middleware_method        = ( $with_middleware && $this->supports_middelware ) ? $this->get_block_config_middleware_method() : '';
+		$middleware_method        = '';
+		$additional_constants     = '';
+		$additional_section       = '';
+
+		if ( $with_post_loop_middleware && $this->supports_middelware ) {
+			$middleware_method    = $this->get_block_config_post_loop_middleware_method();
+			$additional_constants = "public const SECTION_CARDS = 's-cards';\r\n
+									public const POST_LIST = 'post_list';\r\n";
+			$additional_section   = '// Post loop fields will be added to this section via block middleware. ' . "\r\n" .
+									'$this->add_section( new Field_Section( self::SECTION_CARDS, esc_html__( \'Cards\', \'tribe\' ), \'accordion\' ) );';
+		} elseif ( $with_middleware && $this->supports_middelware ) {
+			$middleware_method = $this->get_block_config_middleware_method();
+		}
 
 		$file_contents = sprintf(
 			file_get_contents( __DIR__ . '/templates/block/config.php.tmpl' ),
@@ -115,7 +137,9 @@ class Block_Generator extends Generator_Command {
 			$this->human_name( $class_name ),
 			$middleware_use_statement,
 			$middleware_interface,
-			$middleware_method
+			$middleware_method,
+			$additional_constants,
+			$additional_section
 		);
 
 		if ( $dry_run ) {
@@ -132,7 +156,7 @@ class Block_Generator extends Generator_Command {
 		return trailingslashit( $this->src_path . 'Blocks/Types/' . $class_name . '/' );
 	}
 
-	private function make_block_model( string $class_name, string $component_name, bool $dry_run ): void {
+	private function make_block_model( string $class_name, string $component_name, bool $dry_run, bool $with_post_loop_middleware ): void {
 		$directory     = $this->config_directory( $class_name );
 		$file_path     = $directory . $class_name . '_Model.php';
 		// Check for updated Base_Model method for versions of square-one that have block middleware.
@@ -144,7 +168,10 @@ class Block_Generator extends Generator_Command {
 			$class_name,
 			$this->controller_namespace( $component_name ),
 			$this->controller_classname( $component_name ),
-			$this->supports_middelware ? 'init_data' : 'get_data' // method differs depending on the version of Square one
+			$this->supports_middelware ? 'init_data' : 'get_data', // method differs depending on the version of Square one
+			( $with_post_loop_middleware && $this->supports_middelware ) ? "\r\nuse Tribe\Project\Blocks\Middleware\Post_Loop\Post_Loop_Repository;\r\n" : '',
+			( $with_post_loop_middleware && $this->supports_middelware ) ? $this->get_block_model_post_loop_middleware_constructor() : '',
+			( $with_post_loop_middleware && $this->supports_middelware ) ? sprintf( "%s::POSTS   => $this->post_loop->get_posts( (array) $this->get( %s::POST_LIST ) ),", $this->controller_classname( $component_name ), $class_name ) : ''
 		);
 
 		if ( $dry_run ) {
@@ -256,5 +283,44 @@ class Block_Generator extends Generator_Command {
 	}
 			
 METHOD;
+	}
+
+	private function get_block_config_post_loop_middleware_method(): string {
+		return <<<METHOD
+		
+	/**
+	 * @TODO Provide specific Post Loop Config and import to use statements.
+	 *
+	 * @return array<array{post_loop_field_configs: \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config[]}>
+	 */
+	public function get_middleware_params(): array {
+		$config = new \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config();
+		$config->field_name = self::POST_LIST;
+		$config->group      = $this->get_section_key( self::SECTION_CARDS );
+		
+		return [
+			[
+				\Tribe\Project\Blocks\Middleware\Post_Loop\Field_Middleware\Post_Loop_Field_Middleware::MIDDLEWARE_KEY => [
+					$config,
+				],		
+			],
+		];
+	}
+			
+METHOD;
+	}
+
+	private function get_block_model_post_loop_middleware_constructor(): string {
+		return <<<CONSTRUC
+		
+	protected Post_Loop_Repository $post_loop;
+
+	public function __construct( array $block, Post_Loop_Repository $post_loop ) {
+		$this->post_loop = $post_loop;
+
+		parent::__construct( $block );
+	}
+			
+CONSTRUC;
 	}
 }
