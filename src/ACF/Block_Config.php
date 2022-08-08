@@ -3,8 +3,11 @@
 namespace Tribe\Libs\ACF;
 
 use InvalidArgumentException;
+use Tribe\Libs\ACF\Traits\With_Field_Prefix;
 
 abstract class Block_Config {
+
+	use With_Field_Prefix;
 
 	public const NAME = '';
 
