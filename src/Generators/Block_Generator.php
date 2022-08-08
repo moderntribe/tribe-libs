@@ -355,7 +355,7 @@ CONSTRUC;
 		$class = sprintf( '\Tribe\Project\Blocks\Types\%1$s\%1$s::class', $class_name );
 
 		return <<<DEFINITION
-				// TODO: use fully qualified class name
+				// TODO: replace class with an import "use" statement
 				$class    => [
 					Post_Loop_Field_Middleware::class,
 				],				
