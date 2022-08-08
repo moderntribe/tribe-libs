@@ -170,7 +170,7 @@ class Component_Generator extends Generator_Command {
 		$defaults    = '';
 
 		if ( $with_post_loop_middelware ) {
-			$constants   = "public const POSTS = 'posts';\r\n";
+			$constants   = "public const POSTS   = 'posts';\r\n";
 			$properties  = $this->get_block_controller_middleware_properties();
 			$assignments = '$this->posts   = (array) $args[ self::POSTS ];';
 			$defaults    = 'self::POSTS   => [],';
