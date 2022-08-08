@@ -294,7 +294,7 @@ METHOD;
 	 * @return array<array{post_loop_field_configs: \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config[]}>
 	 */
 	public function get_middleware_params(): array {
-		$config = new \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config();
+		$config             = new \Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config();
 		$config->field_name = self::POST_LIST;
 		$config->group      = $this->get_section_key( self::SECTION_CARDS );
 		
