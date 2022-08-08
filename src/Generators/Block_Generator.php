@@ -359,6 +359,7 @@ CONSTRUC;
 				$class    => [
 					Post_Loop_Field_Middleware::class,
 				],
+				
 DEFINITION;
 	}
 }
