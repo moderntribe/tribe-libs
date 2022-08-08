@@ -281,14 +281,12 @@ class Block_Generator extends Generator_Command {
 		}
 
 		$definer_path      = $this->src_path . 'Block_Middleware/Block_Middleware_Definer.php';
-		$type_registration = "\t\t\t\t" . sprintf( 'Types\%1$s\%1$s::class => [
-				Post_Loop_Field_Middleware::class,		
-		],', $class_name ) . "\n";
+		$type_registration = sprintf( '%2$s\Tribe\Project\Blocks\Types\%1$s\%1$s::class => [ %3$s, ], // TODO: use fully qualified class name', $class_name, "\t\t\t\t\t", "\r\n\t\t\t\tPost_Loop_Field_Middleware::class\r\n\t\t\t\t" );
 
 		if ( $dry_run ) {
 			WP_CLI::log( '[Dry Run] Skipping registration of block middleware in Block_Middleware_Definer.php ' );
 		} else {
-			WP_CLI::log( 'Registering block middleware in Block_Middleware_Definer.php ' );
+			WP_CLI::log( 'Registering block in Block_Middleware_Definer.php ' );
 			$this->file_system->insert_into_existing_file( $definer_path, $type_registration, 'self::BLOCK_MIDDLEWARE' );
 		}
 	}
