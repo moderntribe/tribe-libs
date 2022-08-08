@@ -114,8 +114,8 @@ class Block_Generator extends Generator_Command {
 			WP_CLI::warning( 'Sorry, this version of Square One does not support block middleware.' );
 		}
 
-		$middleware_use_statement = ( $with_middleware && $this->supports_middelware ) ? 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params' : '';
-		$middleware_interface     = ( $with_middleware && $this->supports_middelware ) ? ' implements Has_Middleware_Params' : '';
+		$middleware_use_statement = ( $this->supports_middelware && ( $with_middleware || $with_post_loop_middleware ) ) ? 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;' : '';
+		$middleware_interface     = ( $this->supports_middelware && ( $with_middleware || $with_post_loop_middleware ) ) ? ' implements Has_Middleware_Params' : '';
 		$middleware_method        = '';
 		$additional_constants     = '';
 		$additional_section       = '';
