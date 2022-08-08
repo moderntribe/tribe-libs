@@ -83,6 +83,7 @@ class Block_Generator extends Generator_Command {
 		$this->make_block_template( $type_name, $class_name, $component_name, $dry_run );
 		$this->make_component( $component_name, $dry_run, $with_post_loop_middleware );
 		$this->update_definer( $type_name, $class_name, $dry_run );
+		$this->update_block_middleware_definer( $class_name, $dry_run, $with_post_loop_middleware );
 
 		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W{$type_name}%n" ) . ' block has been created' );
 	}
@@ -272,6 +273,24 @@ class Block_Generator extends Generator_Command {
 
 	private function controller_classname( string $name ): string {
 		return $this->class_name( $name ) . '_Controller';
+	}
+
+	private function update_block_middleware_definer( string $class_name, bool $dry_run, bool $with_post_loop_middleware ): void {
+		if ( ! $with_post_loop_middleware || ! $this->supports_middelware ) {
+			return;
+		}
+
+		$definer_path      = $this->src_path . 'Block_Middleware/Block_Middleware_Definer.php';
+		$type_registration = "\t\t\t\t" . sprintf( 'Types\%1$s\%1$s::class => [
+				Post_Loop_Field_Middleware::class,		
+		],', $class_name ) . "\n";
+
+		if ( $dry_run ) {
+			WP_CLI::log( '[Dry Run] Skipping registration of block middleware in Block_Middleware_Definer.php ' );
+		} else {
+			WP_CLI::log( 'Registering block middleware in Block_Middleware_Definer.php ' );
+			$this->file_system->insert_into_existing_file( $definer_path, $type_registration, 'self::BLOCK_MIDDLEWARE' );
+		}
 	}
 
 	private function get_block_config_middleware_method(): string {
