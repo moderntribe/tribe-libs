@@ -260,7 +260,7 @@ class Component_Generator extends Generator_Command {
 	}
 
 	private function get_block_controller_middleware_properties(): string {
-		return <<<PROPS
+		return <<<'PROPS'
 		
 	/**
 	 * @var \Tribe\Libs\Field_Models\Models\Post_Proxy[]

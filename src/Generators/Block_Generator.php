@@ -286,7 +286,7 @@ METHOD;
 	}
 
 	private function get_block_config_post_loop_middleware_method(): string {
-		return <<<METHOD
+		return <<<'METHOD'
 		
 	/**
 	 * @TODO Provide specific Post Loop Config and import to use statements.
@@ -311,7 +311,7 @@ METHOD;
 	}
 
 	private function get_block_model_post_loop_middleware_constructor(): string {
-		return <<<CONSTRUC
+		return <<<'CONSTRUC'
 		
 	protected Post_Loop_Repository $post_loop;
 
