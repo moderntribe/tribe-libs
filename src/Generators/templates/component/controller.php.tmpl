@@ -9,7 +9,7 @@ class %1$s extends Abstract_Controller {
 
 	public const ATTRS   = 'attrs';
 	public const CLASSES = 'classes';
-
+	%3$s
 	/**
 	 * @var string[]
 	 */
@@ -19,12 +19,12 @@ class %1$s extends Abstract_Controller {
 	 * @var string[]
 	 */
 	private array $classes;
-
+	%4$s
 	public function __construct( array $args = [] ) {
 		$args = $this->parse_args( $args );
 
 		$this->attrs   = (array) $args[ self::ATTRS ];
-		$this->classes = (array) $args[ self::CLASSES ];
+		$this->classes = (array) $args[ self::CLASSES ];%5$s
 	}
 
 	public function get_attributes(): string {
@@ -39,6 +39,7 @@ class %1$s extends Abstract_Controller {
 		return [
 			self::ATTRS   => [],
 			self::CLASSES => [],
+			%6$s
 		];
 	}
 
