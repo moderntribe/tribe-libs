@@ -8,8 +8,8 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-cli": "^3.6",
-        "moderntribe/square1-container": "^3.6",
+        "moderntribe/square1-cli": "^3.7",
+        "moderntribe/square1-container": "^3.7",
         "php": "^7.2"
     },
     "autoload": {
@@ -19,7 +19,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.6-dev"
+            "dev-master": "3.7-dev"
         }
     }
 }

@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 3.6.0 - 2022-08-09
 - Added: `wp s1 generate block <name> --with-post-loop-middleware` that gives a base configuration for a block with Post Loop Middleware.
 - Changed: The `Block_Config` class now uses the `With_Field_Prefix` out of the box so those methods are available to all blocks when needed.
