@@ -115,17 +115,30 @@ class Block_Generator extends Generator_Command {
 			WP_CLI::warning( 'Sorry, this version of Square One does not support block middleware.' );
 		}
 
-		$middleware_use_statement = '';
+		$block_category = "'text'";
+		$use_statements = [];
+
+		if ( class_exists( '\Tribe\Project\Blocks\Block_Category' ) ) {
+			$use_statements[] = 'use Tribe\Project\Blocks\Block_Category;';
+			$block_category   = 'Block_Category::CUSTOM_BLOCK_CATEGORY_SLUG';
+		}
 
 		if ( $this->supports_middelware ) {
 			if ( $with_middleware || $with_post_loop_middleware ) {
-				$middleware_use_statement = "\r\n" . 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;';
+				$use_statements[] = 'use Tribe\Project\Block_Middleware\Contracts\Has_Middleware_Params;';
 			}
 
 			if ( $with_post_loop_middleware ) {
-				$middleware_use_statement .= "\r\n" . 'use Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config;';
-				$middleware_use_statement .= "\r\n" . 'use Tribe\Project\Blocks\Middleware\Post_Loop\Field_Middleware\Post_Loop_Field_Middleware;';
+				$use_statements[] = 'use Tribe\Project\Blocks\Middleware\Post_Loop\Config\Post_Loop_Field_Config;';
+				$use_statements[] =  'use Tribe\Project\Blocks\Middleware\Post_Loop\Field_Middleware\Post_Loop_Field_Middleware;';
 			}
+		}
+
+		sort( $use_statements );
+
+		// Prefix use statements with a line break.
+		if ( $use_statements ) {
+			$use_statements = preg_filter( '/^/', "\r\n", $use_statements );
 		}
 
 		$middleware_interface     = ( $this->supports_middelware && ( $with_middleware || $with_post_loop_middleware ) ) ? ' implements Has_Middleware_Params' : '';
@@ -146,11 +159,12 @@ class Block_Generator extends Generator_Command {
 			$class_name,
 			$name,
 			$this->human_name( $class_name ),
-			$middleware_use_statement,
+			$use_statements ? implode( '', $use_statements ) : '',
 			$middleware_interface,
 			$middleware_method,
 			$additional_constants,
-			$additional_section
+			$additional_section,
+			$block_category
 		);
 
 		if ( $dry_run ) {
