@@ -134,10 +134,9 @@ class Block_Generator extends Generator_Command {
 			}
 		}
 
-		sort( $use_statements );
-
 		// Prefix use statements with a line break.
 		if ( $use_statements ) {
+			sort( $use_statements );
 			$use_statements = preg_filter( '/^/', "\r\n", $use_statements );
 		}
 
