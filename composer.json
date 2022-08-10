@@ -10,6 +10,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/bordoni/phpass"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/moderntribe/monolog-wp-cli"
         }
     ],
     "require": {
@@ -17,7 +21,7 @@
         "composer-plugin-api": "^1.0 || ^2.0",
         "enshrined/svg-sanitize": "^0.15.4",
         "filp/whoops": "^2.2@dev",
-        "mhcg/monolog-wp-cli": "^1.0",
+        "mhcg/monolog-wp-cli": "^1.1",
         "monolog/monolog": "^2.0",
         "php-di/php-di": "^6.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",

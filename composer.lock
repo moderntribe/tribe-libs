@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8a19eff60cc1bdffdd1a5274e9e9229",
+    "content-hash": "9277a13351fa6e2a7f1ec92dd14bb7dc",
     "packages": [
         {
             "name": "enshrined/svg-sanitize",
@@ -124,21 +124,21 @@
         },
         {
             "name": "mhcg/monolog-wp-cli",
-            "version": "v1.1.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mhcg/monolog-wp-cli.git",
-                "reference": "33cd515fa7e5eac2ebca8aac995aa97a4ab2b77b"
+                "url": "https://github.com/moderntribe/monolog-wp-cli.git",
+                "reference": "fdf6fafe86bae3e58fbdb77fd1827f6798762c15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mhcg/monolog-wp-cli/zipball/33cd515fa7e5eac2ebca8aac995aa97a4ab2b77b",
-                "reference": "33cd515fa7e5eac2ebca8aac995aa97a4ab2b77b",
+                "url": "https://api.github.com/repos/moderntribe/monolog-wp-cli/zipball/fdf6fafe86bae3e58fbdb77fd1827f6798762c15",
+                "reference": "fdf6fafe86bae3e58fbdb77fd1827f6798762c15",
                 "shasum": ""
             },
             "require": {
                 "monolog/monolog": "^2.0",
-                "php": "^7.2"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "8.5.* || 9.0.*",
@@ -151,7 +151,11 @@
                     "MHCG\\Monolog\\": "src/Monolog"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "MHCGDev\\Monolog\\": "tests/Monolog"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -171,10 +175,10 @@
             ],
             "support": {
                 "issues": "https://github.com/mhcg/monolog-wp-cli/issues",
-                "source": "https://github.com/mhcg/monolog-wp-cli",
-                "wiki": "https://github.com/mhcg/monolog-wp-cli/wiki"
+                "wiki": "https://github.com/mhcg/monolog-wp-cli/wiki",
+                "source": "https://github.com/mhcg/monolog-wp-cli"
             },
-            "time": "2020-03-23T20:17:57+00:00"
+            "time": "2022-08-10T20:06:45+00:00"
         },
         {
             "name": "monolog/monolog",
