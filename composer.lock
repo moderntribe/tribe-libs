@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9277a13351fa6e2a7f1ec92dd14bb7dc",
+    "content-hash": "f2aee5b123733e1a5c8a7b33efd5bfdc",
     "packages": [
         {
             "name": "enshrined/svg-sanitize",
@@ -124,7 +124,7 @@
         },
         {
             "name": "mhcg/monolog-wp-cli",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moderntribe/monolog-wp-cli.git",
@@ -145,6 +145,7 @@
                 "squizlabs/php_codesniffer": "^3.5",
                 "wp-cli/wp-cli": "^2.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -8456,10 +8457,18 @@
             "time": "2021-07-11T04:52:41+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "mhcg/monolog-wp-cli",
+            "version": "9999999-dev",
+            "alias": "1.2.0",
+            "alias_normalized": "1.2.0.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "filp/whoops": 20
+        "filp/whoops": 20,
+        "mhcg/monolog-wp-cli": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
