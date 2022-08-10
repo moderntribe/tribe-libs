@@ -9,9 +9,9 @@
     },
     "minimum-stability": "dev",
     "require": {
+        "php": ">=7.2",
         "moderntribe/square1-cli": "^3.7",
-        "moderntribe/square1-container": "^3.7",
-        "php": "^7.2"
+        "moderntribe/square1-container": "^3.7"
     },
     "autoload": {
         "psr-4": {

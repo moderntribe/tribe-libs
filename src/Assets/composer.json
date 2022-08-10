@@ -8,8 +8,8 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-container": "^3.7",
-        "php": "^7.2"
+        "php": ">=7.2",
+        "moderntribe/square1-container": "^3.7"
     },
     "autoload": {
         "psr-4": {
