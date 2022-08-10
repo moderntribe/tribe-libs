@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Updated: Allow composer installs on any PHP version `>=7.2` to allow installation on PHP 8.x projects.
 
 ## 3.6.0 - 2022-08-09
 - Added: `wp s1 generate block <name> --with-post-loop-middleware` that gives a base configuration for a block with Post Loop Middleware.
