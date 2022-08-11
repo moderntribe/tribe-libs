@@ -5,6 +5,7 @@
 /.gitattributes         export-ignore
 /.github                export-ignore
 /.gitignore             export-ignore
+/.editorconfig          export-ignore
 /monorepo.sh            export-ignore
 /monorepo-builder.php   export-ignore
 /tests                  export-ignore
