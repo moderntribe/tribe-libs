@@ -12,7 +12,7 @@ jobs:
 
     env:
       cache_version: 1 # increment to flush all caches
-      php_version: '7.3'
+      php_version: '7.4'
 
     steps:
 
