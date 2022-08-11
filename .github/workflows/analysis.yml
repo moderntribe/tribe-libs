@@ -1,6 +1,7 @@
 name: PHP Code Sniffer and Static Analysis
 
 on:
+  workflow_run:
   pull_request:
     paths:
       - 'src/**.php'
