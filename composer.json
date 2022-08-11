@@ -26,13 +26,10 @@
     },
     "require-dev": {
         "automattic/phpcs-neutron-standard": "^1.5",
-        "automattic/vipwpcs": "^2.0.0",
-        "composer/composer": "^1.0 || ^2.0",
         "lucatume/wp-browser": "^3.0.9",
         "moderntribe/coding-standards": "^3.0",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^8.0 || ^9.0 <9.5",
-        "sirbrillig/phpcs-variable-analysis": "^2.0.1",
         "symplify/monorepo-builder": "^8.2",
         "szepeviktor/phpstan-wordpress": "^1.0",
         "wp-cli/wp-cli": "^2.5"
@@ -123,6 +120,7 @@
         }
     },
     "extra": {
+        "enable-patching": true,
         "branch-alias": {
             "dev-master": "3.7-dev"
         }
