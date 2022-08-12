@@ -1,9 +1,9 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Utils;
 
 abstract class Path_Utils {
+
 	/**
 	 * Make a best-effort at extracting the file extension from a URL
 	 *
@@ -11,7 +11,7 @@ abstract class Path_Utils {
 	 *
 	 * @return string
 	 */
-	public static function file_extension( $uri ): string {
+	public static function file_extension( string $uri ): string {
 		if ( empty( $uri ) ) {
 			return '';
 		}
@@ -24,4 +24,5 @@ abstract class Path_Utils {
 
 		return pathinfo( $path, PATHINFO_EXTENSION );
 	}
+
 }
