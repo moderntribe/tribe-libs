@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Settings;
 
@@ -9,24 +9,24 @@ namespace Tribe\Libs\Settings;
  */
 abstract class Base_Settings implements Settings_Builder {
 
-	protected $slug = '';
+	protected string $slug = '';
 
 	public function __construct() {
 		$this->set_slug();
 	}
 
 	/**
-	 * Generates a unique-ish slug for this settings screen
+	 * @param int $priority
 	 */
-	protected function set_slug() {
-		$this->slug = sanitize_title( $this->get_parent_slug() . '-' . $this->get_title() );
+	public function hook( int $priority = 10 ): void {
+		add_action( 'init', [ $this, 'register_settings' ], $priority, 0 );
 	}
 
 	/**
-	 * @param int $priority
+	 * Generates a unique-ish slug for this settings screen
 	 */
-	public function hook( $priority = 10 ) {
-		add_action( 'init', [ $this, 'register_settings' ], $priority, 0 );
+	protected function set_slug(): void {
+		$this->slug = sanitize_title( $this->get_parent_slug() . '-' . $this->get_title() );
 	}
 
 }

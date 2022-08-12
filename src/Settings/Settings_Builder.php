@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Tribe\Libs\Settings;
 
 /**
@@ -10,29 +11,23 @@ interface Settings_Builder {
 
 	/**
 	 * Return the title of the settings screen
-	 *
-	 * @return string
 	 */
-	public function get_title();
+	public function get_title(): string;
 
 	/**
 	 * Return the cap the current user needs to have to be able to see this settings screen
-	 *
-	 * @return string
 	 */
-	public function get_capability();
+	public function get_capability(): string;
 
 	/**
 	 * Return slug of the parent menu where you want the settings page
-	 *
-	 * @return string
 	 */
-	public function get_parent_slug();
+	public function get_parent_slug(): string;
 
 	/**
 	 * Register the settings screen in WordPress
 	 */
-	public function register_settings();
+	public function register_settings(): void;
 
 	/**
 	 * Return the setting value for a given Key.
@@ -43,6 +38,6 @@ interface Settings_Builder {
 	 *
 	 * @return mixed
 	 */
-	public function get_setting( $key, $default = null );
+	public function get_setting( string $key, $default = null );
 
 }
