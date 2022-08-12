@@ -9,8 +9,6 @@ class Markup_Utils {
 	 *
 	 * @param array|null $attrs
 	 * @param string     $prefix
-	 *
-	 * @return string
 	 */
 	public static function concat_attrs( ?array $attrs = null, string $prefix = '' ): string {
 		if ( empty( $attrs ) ) {
@@ -35,8 +33,6 @@ class Markup_Utils {
 	 *
 	 * @param array $classes
 	 * @param bool  $attribute
-	 *
-	 * @return string
 	 */
 	public static function class_attribute( array $classes, bool $attribute = true ): string {
 		if ( empty( $classes ) ) {
@@ -61,8 +57,6 @@ class Markup_Utils {
 	 * @param int         $words The number of words to keep
 	 * @param string|null $more  What to append if the text is truncated. Defaults to &hellip; if null
 	 * @param bool        $autop Whether to apply wpautop to the output
-	 *
-	 * @return string
 	 */
 	public static function truncate_html( string $html = '', int $words = 55, ?string $more = null, bool $autop = true ): string {
 		$result = wp_trim_words( strip_shortcodes( $html ), $words, $more );

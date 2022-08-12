@@ -8,8 +8,6 @@ abstract class Path_Utils {
 	 * Make a best-effort at extracting the file extension from a URL
 	 *
 	 * @param string $uri
-	 *
-	 * @return string
 	 */
 	public static function file_extension( string $uri ): string {
 		if ( empty( $uri ) ) {
