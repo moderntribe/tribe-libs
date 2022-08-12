@@ -1,40 +1,50 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Schema;
 
 class Schema_Loader {
-	private $schema_classes;
 
 	/**
-	 * @param array $schema_classes A list of classes extending Schools
+	 * @var class-string<\Tribe\Libs\Schema\Schema>[]
+	 */
+	private array $schema_classes;
+
+	/**
+	 * @param class-string<\Tribe\Libs\Schema\Schema>[] $schema_classes A list of schema classes.
 	 */
 	public function __construct( array $schema_classes = [] ) {
 		$this->schema_classes = $schema_classes;
 	}
 
-	public function add( $schema_class ) {
+	/**
+	 * @param class-string<\Tribe\Libs\Schema\Schema> $schema_class
+	 */
+	public function add( string $schema_class ): void {
 		$this->schema_classes[] = $schema_class;
 	}
 
-	public function hook() {
-		if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX ) {
-			add_action( 'admin_init', [ $this, 'load_schema_updates' ], 10, 0 );
+	public function hook(): void {
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
 		}
+
+		add_action( 'admin_init', [ $this, 'load_schema_updates' ], 10, 0 );
 	}
 
 	/**
 	 * Load any expected updates for the given schemata
-	 *
-	 * @return void
 	 */
-	public function load_schema_updates() {
+	public function load_schema_updates(): void {
 		foreach ( $this->schema_classes as $classname ) {
-			/** @var Schema $schema */
+			/** @var \Tribe\Libs\Schema\Schema $schema */
 			$schema = new $classname;
-			if ( $schema->update_required() ) {
-				$schema->do_updates();
+
+			if ( ! $schema->update_required() ) {
+				continue;
 			}
+
+			$schema->do_updates();
 		}
 	}
+
 }
