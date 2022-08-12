@@ -1,4 +1,5 @@
-<?php declare( strict_types=1 );
+<?php declare(strict_types=1);
+
 /**
  * Route is the base class for Routes. At the least a Route must declare,
  *
@@ -7,7 +8,7 @@
  * 3. Matches
  * 4. Template
  *
- * It can also hook into the route's lifecyle to alter the WP & WP_Query
+ * It can also hook into the route's lifecycle to alter the WP & WP_Query
  * objects by overriding parse and before methods.
  *
  * Usage: To create a new route /things/<thing>/ at ThingRoute,
@@ -37,10 +38,12 @@
 
 namespace Tribe\Libs\Routes;
 
-/**
- * Base class for routes.
- */
+use WP;
+use WP_Query;
+use WP_REST_Server;
+
 abstract class Abstract_Route {
+
 	/**
 	 * Required - The Route's name. This is useful to refer to the route
 	 * by name. Eg:- \MTTrial\is_route( 'foo' );
@@ -62,8 +65,6 @@ abstract class Abstract_Route {
 
 	/**
 	 * Returns the priority of the rewrite rule.
-	 *
-	 * @return string
 	 */
 	public function get_priority(): string {
 		return 'top';
@@ -72,7 +73,7 @@ abstract class Abstract_Route {
 	/**
 	 * Multi-pattern routes can use this to declare their patterns.
 	 *
-	 * @return array Patterns for the route.
+	 * @return string[] Patterns for the route.
 	 */
 	public function get_patterns(): array {
 		return [ $this->get_pattern() ];
@@ -91,7 +92,7 @@ abstract class Abstract_Route {
 	 *
 	 * [ 'static' => 'foo', 'first' => '$matches[1]', 'second' => '$matches[2]' ].
 	 *
-	 * @return array Matches for the route.
+	 * @return array<string, bool> Matches for the route.
 	 */
 	public function get_matches(): array {
 		return [
@@ -120,8 +121,6 @@ abstract class Abstract_Route {
 
 	/**
 	 * Returns a bool based on whether this is a public route.
-	 *
-	 * @return bool
 	 */
 	public function is_public(): bool {
 		return ! $this->is_admin();
@@ -131,8 +130,6 @@ abstract class Abstract_Route {
 	 * Routes that use patterns that shadow the WordPress Core Pattern
 	 * should set this to true. This prevents registration of the Core
 	 * WordPress pattern.
-	 *
-	 * @return bool
 	 */
 	public function is_core(): bool {
 		return false;
@@ -169,7 +166,7 @@ abstract class Abstract_Route {
 	 *
 	 * This vars are added to the WP query vars array.
 	 *
-	 * @return array Query variable names.
+	 * @return string[] Query variable names.
 	 */
 	public function get_query_var_names(): array {
 		return array_keys( $this->get_matches() );
@@ -189,7 +186,7 @@ abstract class Abstract_Route {
 	 *     'first' => 'a', 'second' => 'b',
 	 * ]
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
 	public function get_query_vars(): array {
 		$query_vars = $this->get_query_var_names();
@@ -206,20 +203,18 @@ abstract class Abstract_Route {
 	 * The request methods that are authorized on this route. Only GET
 	 * is authorized by default.
 	 *
-	 * @return array Accepted request methods for the route.
+	 * @return string[] Accepted request methods for the route.
 	 */
 	public function get_request_methods(): array {
 		return [
-			\WP_REST_Server::READABLE,
+			WP_REST_Server::READABLE,
 		];
 	}
 
 	/**
 	 * Authorization hook. Custom authorization can be done here.
 	 *
-	 * By default only checks if request method is authorized.
-	 *
-	 * @return void
+	 * By default, only checks if request method is authorized.
 	 */
 	public function authorize(): void {
 		$this->authorize_request_method();
@@ -229,29 +224,26 @@ abstract class Abstract_Route {
 	 * Override to change the $wp global object.
 	 *
 	 * @param \WP $wp The WP object.
-	 * @return void
 	 */
-	public function parse( \WP $wp ): void {
-		return;
+	public function parse( WP $wp ): void {
 	}
 
 	/**
 	 * Override to change the wp_query. This is equivalent to using 'pre_get_posts'.
 	 *
 	 * @param \WP_Query $wp_query The WP query object.
-	 * @return void
 	 */
-	public function before( \WP_Query $wp_query ): void {
-		return;
+	public function before( WP_Query $wp_query ): void {
 	}
 
 	/**
 	 * Has the template included been fired.
 	 *
 	 * @param string $template The template name.
+	 *
 	 * @return string          The modified template path.
 	 */
-	public function did_template_include( $template ): string {
+	public function did_template_include( string $template ): string {
 		$template_path = $this->get_template();
 
 		// Bail early if no template path.
@@ -265,7 +257,7 @@ abstract class Abstract_Route {
 		if ( false !== strpos( $template_path, '404' ) ) {
 			$wp_query->is_404 = true;
 			$protocol         = $_SERVER['SERVER_PROTOCOL'] ?? '';
-			header( "{$protocol} 404 Not Found", true, 404 );
+			header( "$protocol 404 Not Found", true, 404 );
 		}
 
 		// Use the theme path if the passed in path doesn't exist.
@@ -273,10 +265,11 @@ abstract class Abstract_Route {
 			$template_path = get_template_directory() . '/' . $template_path;
 		}
 
-		// Bail ealy if the template file exists.
+		// Bail early if the template file exists.
 		if ( file_exists( $template_path ) ) {
 			$wp_query->is_home = false;
 			$this->before( $wp_query );
+
 			return $template_path;
 		}
 
@@ -287,9 +280,10 @@ abstract class Abstract_Route {
 	 * Get document title.
 	 *
 	 * @param string $title The current document title.
+	 *
 	 * @return string       The modified document title.
 	 */
-	public function did_pre_get_document_title( $title ): string {
+	public function did_pre_get_document_title( string $title ): string {
 		$route_title = $this->get_title();
 
 		if ( ! empty( $route_title ) ) {
@@ -330,4 +324,5 @@ abstract class Abstract_Route {
 
 		wp_die( 'Not Authorized', 403 );
 	}
+
 }

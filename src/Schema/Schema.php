@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Schema;
+
+use Throwable;
 
 /**
  * Class Schools
@@ -17,44 +19,19 @@ namespace Tribe\Libs\Schema;
  * }
  */
 abstract class Schema {
-	protected $schema_version = 0;
-	protected $version_option = '';
-
-	public function __construct() {
-		$this->version_option = get_class($this).'-schema';
-	}
 
 	/**
-	 * We've had problems with the notoptions and
-	 * alloptions caches getting out of sync with the DB,
-	 * forcing an eternal update cycle
+	 * Bump this in your child class each time you want to
+	 * force your Schema to run.
 	 *
-	 * @return void
+	 * @var int|float|string
 	 */
-	protected function clear_option_caches() {
-		wp_cache_delete( 'notoptions', 'options' );
-		wp_cache_delete( 'alloptions', 'options' );
-	}
+	protected $schema_version = 0;
 
-	public function do_updates() {
-		$this->clear_option_caches();
-		$updates = $this->get_updates();
-		ksort($updates);
-		try {
-			foreach ( $updates as $version => $callback ) {
-				if ( $this->is_version_in_db_less_than($version) ) {
-					call_user_func($callback);
-				}
-			}
-			$this->update_version_option( $this->schema_version );
-		} catch ( \Exception $e ) {
-			// fail silently, but it should try again next time
-		}
-	}
-
-	protected function update_version_option( $new_version ) {
-		update_option( $this->version_option, $new_version );
-	}
+	/**
+	 * Defaults to the child class's with a -schema suffix.
+	 */
+	protected string $version_option = '';
 
 	/**
 	 * Returns an array of callbacks with numeric keys.
@@ -62,20 +39,56 @@ abstract class Schema {
 	 * and lower than $this->schema_version will have its
 	 * callback called.
 	 *
-	 * @return array
+	 * @return callable[]
 	 */
-	abstract protected function get_updates();
+	abstract protected function get_updates(): array;
 
-	protected function is_version_in_db_less_than( $version ) {
-		$version_in_db = get_option($this->version_option, 0 );
+	public function __construct() {
+		$this->version_option = static::class . '-schema';
+	}
 
-		if ( version_compare( $version, $version_in_db ) > 0 ) {
-			return true;
+	public function do_updates(): void {
+		$this->clear_option_caches();
+		$updates = $this->get_updates();
+		ksort( $updates );
+
+		try {
+			foreach ( $updates as $version => $callback ) {
+				if ( ! $this->is_version_in_db_less_than( $version ) ) {
+					continue;
+				}
+
+				call_user_func( $callback );
+			}
+
+			$this->update_version_option( (string) $this->schema_version );
+		} catch ( Throwable $e ) {
+			// fail silently, but it should try again next time
 		}
-		return false;
 	}
 
-	public function update_required() {
-		return $this->is_version_in_db_less_than( $this->schema_version );
+	public function update_required(): bool {
+		return $this->is_version_in_db_less_than( (string) $this->schema_version );
 	}
+
+	/**
+	 * We've had problems with the notoptions and
+	 * alloptions caches getting out of sync with the DB,
+	 * forcing an eternal update cycle
+	 */
+	protected function clear_option_caches(): void {
+		wp_cache_delete( 'notoptions', 'options' );
+		wp_cache_delete( 'alloptions', 'options' );
+	}
+
+	protected function update_version_option( string $new_version ): void {
+		update_option( $this->version_option, $new_version );
+	}
+
+	protected function is_version_in_db_less_than( string $version ): bool {
+		$version_in_db = get_option( $this->version_option, '0' );
+
+		return version_compare( $version, $version_in_db ) > 0;
+	}
+
 }

@@ -1,17 +1,18 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Schema;
 
+use WP_Role;
+
 /**
- * Class Capabilities
- *
- * @package Tribe\Libs\Schools
- *
- * A utililty class for registering capabilities for a post type
+ * A utility class for registering capabilities for a post type
  */
 class Capabilities {
-	private $caps = [
+
+	/**
+	 * @var array<array<string>>
+	 */
+	private array $caps = [
 		'editor'      => [
 			'read',
 			'read_private_posts',
@@ -53,21 +54,23 @@ class Capabilities {
 	 * @param string $role_id   The name of a registered role
 	 * @param string $level     The access level the user should have. One of 'subscriber', 'contributor', 'author', or
 	 *                          'editor'
-	 * @return bool
 	 */
-	public function register_post_type_caps( $post_type, $role_id, $level = 'editor' ) {
+	public function register_post_type_caps( string $post_type, string $role_id, string $level = 'editor' ): bool {
 		if ( ! isset( $this->caps[ $level ] ) ) {
 			return false;
 		}
 
 		$role = get_role( $role_id );
+
 		if ( ! $role ) {
 			return false;
 		}
 
 		$pto = get_post_type_object( $post_type );
+
 		if ( ! $pto ) {
 			_deprecated_argument( __FUNCTION__, '2016-09-02', 'First argument should be a registered post type, rather than the plural capability prefix.' );
+
 			return $this->register_post_type_caps_with_prefix( $post_type, $role, $level );
 		}
 
@@ -89,14 +92,15 @@ class Capabilities {
 	 * @param \WP_Role $role             The role object
 	 * @param string   $level            The access level the user should have. One of 'subscriber', 'contributor',
 	 *                                   'author', or 'editor'
-	 * @return bool
 	 */
-	private function register_post_type_caps_with_prefix( $post_type_suffix, $role, $level = 'editor' ) {
+	private function register_post_type_caps_with_prefix( string $post_type_suffix, WP_Role $role, string $level = 'editor' ): bool {
 		// argument validation handled above in self::register_post_type_caps()
 		foreach ( $this->caps[ $level ] as $cap ) {
 			$prefix = str_replace( '_posts', '', $cap );
 			$role->add_cap( $prefix . '_' . $post_type_suffix );
 		}
+
 		return true;
 	}
-} 
+
+}

@@ -1,43 +1,34 @@
-<?php declare( strict_types=1 );
+<?php declare(strict_types=1);
+
+namespace Tribe\Libs\Routes;
+
 /**
  * Manages rewrite rules.
  *
  * @package Tribe\Project\Routes
  */
-
-namespace Tribe\Libs\Routes;
-
-use Tribe\Libs\Routes\Abstract_Route;
-
-/**
- * Class to manage rewrite rules.
- */
 class Router_Rule_Manager {
-	/**
-	 * Currently matched route.
-	 *
-	 * @var Abstract_Route|string
-	 */
-	public $matched_route;
-
-	/**
-	 * List of Route Instances.
-	 *
-	 * @var array
-	 */
-	public $routes = [];
 
 	/**
 	 * Query parameters for the router.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	public $router_vars = [];
+	protected array $router_vars = [];
+
+	/**
+	 * List of Route Instances, indexed by their regex pattern.
+	 *
+	 * @var array<string, \Tribe\Libs\Routes\Abstract_Route>
+	 */
+	protected array $routes;
 
 	/**
 	 * Register REST API routes.
 	 *
-	 * @return void
+	 * @action rest_api_init
+	 *
+	 * @param \Tribe\Libs\Routes\Abstract_REST_Route[] $rest_routes
 	 */
 	public function init_rest_routes( array $rest_routes = [] ): void {
 		// Register all REST routes defined.
@@ -49,13 +40,14 @@ class Router_Rule_Manager {
 	/**
 	 * Merges the WordPress Rewrite Rules with the CS Rules.
 	 *
-	 * @hook rewrite_rules_array hook
+	 * @filter rewrite_rules_array
 	 *
 	 * @param array $wp_rules          The WP rules array.
 	 * @param array $registered_routes Routes registered.
-	 * @return array                   The modified rewrite rules array.
+	 *
+	 * @return array<string, array{redirect: string, priority: string}> The modified rewrite rules array.
 	 */
-	public function load( $wp_rules = [], array $registered_routes = [] ): array {
+	public function load( array $wp_rules = [], array $registered_routes = [] ): array {
 		$rules = $this->get_rules( $registered_routes );
 
 		// Loop through rules to determine where to add the rule.
@@ -72,8 +64,9 @@ class Router_Rule_Manager {
 	 * Converts Route instances into Rewrite rules for adding to
 	 * the WordPress rewrites
 	 *
-	 * @param array $registered_routes Routes registered.
-	 * @return array Rules for the route instances.
+	 * @param \Tribe\Libs\Routes\Abstract_Route[] $registered_routes Routes registered.
+	 *
+	 * @return array<string, array{redirect: string, priority: string}> Rules for the route instances.
 	 */
 	public function get_rules( array $registered_routes ): array {
 		$rules = [];
@@ -105,6 +98,7 @@ class Router_Rule_Manager {
 	 * values are not URL encoded.
 	 *
 	 * @param array $params The query params.
+	 *
 	 * @return string       Query string.
 	 */
 	public function get_redirect_params( array $params = [] ): string {
@@ -126,8 +120,9 @@ class Router_Rule_Manager {
 	 * regex pattern. Any custom query vars are also scanned and stored
 	 * here.
 	 *
-	 * @param array $registered_routes Routes registered.
-	 * @return array Route instances.
+	 * @param \Tribe\Libs\Routes\Abstract_Route[] $registered_routes Routes registered.
+	 *
+	 * @return array<string, \Tribe\Libs\Routes\Abstract_Route> Route instances.
 	 */
 	public function get_route_objects( array $registered_routes = [] ): array {
 		$this->init_routes( $registered_routes );
@@ -138,8 +133,7 @@ class Router_Rule_Manager {
 	/**
 	 * Lazy init routes and route vars.
 	 *
-	 * @param array $registered_routes Routes registered.
-	 * @return void
+	 * @param \Tribe\Libs\Routes\Abstract_Route[] $registered_routes Routes registered.
 	 */
 	public function init_routes( array $registered_routes = [] ): void {
 		// Bail early if routes are already defined.
@@ -149,8 +143,7 @@ class Router_Rule_Manager {
 
 		// Register any routes defined.
 		foreach ( $registered_routes as $route ) {
-			$patterns   = $route->get_patterns();
-			$route_vars = $route->get_query_var_names();
+			$patterns = $route->get_patterns();
 
 			// Add patterns to routes array.
 			foreach ( $patterns as $pattern ) {
@@ -162,12 +155,13 @@ class Router_Rule_Manager {
 	/**
 	 * Adds the custom query vars.
 	 *
-	 * @hook query_vars
+	 * @filter query_vars
 	 *
-	 * @param array $query_vars WordPress query vars.
-	 * @return array            Modified query vars.
+	 * @param string[] $query_vars WordPress query vars.
+	 *
+	 * @return string[]            Modified query vars.
 	 */
-	public function did_query_vars( $query_vars, array $registered_routes ): array {
+	public function did_query_vars( array $query_vars, array $registered_routes ): array {
 		// Register any route variables defined.
 		foreach ( $registered_routes as $route ) {
 			$this->router_vars = array_merge( $this->router_vars, $route->get_query_var_names() );
@@ -177,4 +171,5 @@ class Router_Rule_Manager {
 
 		return array_merge( $query_vars, $this->router_vars );
 	}
+
 }

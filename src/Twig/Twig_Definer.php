@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Twig;
 
@@ -13,26 +12,25 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
 class Twig_Definer implements Definer_Interface {
+
 	public const OPTIONS = 'libs.twig.options';
 
 	public function define(): array {
 		return [
-			Twig_Cache::class => DI\create()
+			Twig_Cache::class      => DI\create()
 				->constructor(
 					$this->twig_cache_dir(),
 					FilesystemCache::FORCE_BYTECODE_INVALIDATION
 				),
 
-			self::OPTIONS => static function ( ContainerInterface $container ) {
-				return apply_filters( 'tribe/libs/twig/options', [
+			self::OPTIONS          => static fn(ContainerInterface $container) => apply_filters( 'tribe/libs/twig/options', [
 					'debug'       => WP_DEBUG,
 					'cache'       => defined( 'TWIG_CACHE' ) && TWIG_CACHE === false ? false : $container->get( Twig_Cache::class ),
 					'autoescape'  => false,
 					'auto_reload' => true,
-				] );
-			},
+				] ),
 
-			LoaderInterface::class => static function () {
+			LoaderInterface::class => static function (): \Twig\Loader\FilesystemLoader {
 				$stylesheet_path = get_stylesheet_directory();
 				$template_path   = get_template_directory();
 				$loader          = new FilesystemLoader( [ $stylesheet_path ] );
@@ -43,7 +41,7 @@ class Twig_Definer implements Definer_Interface {
 				return $loader;
 			},
 
-			Environment::class => static function ( ContainerInterface $c ) {
+			Environment::class     => static function ( ContainerInterface $c ): \Twig\Environment {
 				$environment = new Environment( $c->get( LoaderInterface::class ), $c->get( self::OPTIONS ) );
 				$environment->addExtension( $c->get( Extension::class ) );
 
@@ -61,9 +59,11 @@ class Twig_Definer implements Definer_Interface {
 		if ( defined( 'TWIG_CACHE_DIR' ) && TWIG_CACHE_DIR ) {
 			return TWIG_CACHE_DIR;
 		}
+
 		if ( defined( 'WP_CONTENT_DIR' ) && WP_CONTENT_DIR ) {
 			return WP_CONTENT_DIR . '/cache/twig/';
 		}
+
 		return sys_get_temp_dir() . '/cache/twig/';
 	}
 

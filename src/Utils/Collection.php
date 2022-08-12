@@ -1,7 +1,9 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Utils;
 
-class Collection extends \ArrayObject {
+use ArrayObject;
+
+class Collection extends ArrayObject {
+
 }

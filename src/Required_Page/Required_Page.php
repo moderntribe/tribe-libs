@@ -1,10 +1,10 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Required_Page;
 
+use LogicException;
 use Tribe\Libs\ACF;
-use Tribe\Project\Post_Types\Page\Page;
+use WP_Post;
 
 /**
  * Class Required_Page
@@ -15,58 +15,47 @@ use Tribe\Project\Post_Types\Page\Page;
  * a setting to reference the page.
  */
 abstract class Required_Page {
+
 	public const NAME = '';
 
-	private $field_group_key;
-
-	public function __construct( $field_group_key = '' ) {
-		if ( ! static::NAME ) {
-			throw new \LogicException( __( 'NAME constant must be set', 'tribe' ) );
-		}
-		$this->field_group_key = $field_group_key;
-	}
-
-	/**
-	 * @return string The post type of the post that will be created
-	 */
-	protected function get_post_type() {
-		return 'page';
-	}
+	private string $field_group_key;
 
 	/**
 	 * @return string The title of the post
 	 */
-	abstract protected function get_title();
+	abstract protected function get_title(): string;
 
 	/**
 	 * @return string The slug of the post
 	 */
-	abstract protected function get_slug();
+	abstract protected function get_slug(): string;
 
-	/**
-	 * @return string The content of the post
-	 */
-	protected function get_content() {
-		return '';
+	public function __construct( string $field_group_key = '' ) {
+		if ( ! static::NAME ) {
+			throw new LogicException( __( 'NAME constant must be set', 'tribe' ) );
+		}
+
+		$this->field_group_key = $field_group_key;
 	}
 
 	/**
 	 * Ensure that there is a page designated as this page
 	 * at all times. Creates one if necessary.
 	 *
-	 * @return void
 	 * @action admin_init
 	 */
-	public function ensure_page_exists() {
+	public function ensure_page_exists(): void {
 		$post_id = $this->get_post_id();
+
 		if ( ! empty( $post_id ) ) {
 			return;
 		}
+
 		$post_id = $this->create_post();
+
 		if ( ! empty( $post_id ) ) {
 			$this->set_post_id( $post_id );
 		}
-
 
 		/**
 		 * Triggered when a required page is created
@@ -78,32 +67,14 @@ abstract class Required_Page {
 	}
 
 	/**
-	 * @return int The ID of the post registered as this page
-	 */
-	private function get_post_id() {
-		return (int) get_field( static::NAME, 'option', false );
-	}
-
-	/**
-	 * Set the ID of the post registered as this page
+	 * @param int|string $post_id
 	 *
-	 * @param int $post_id
-	 *
-	 * @return void
-	 */
-	private function set_post_id( $post_id ) {
-		update_field( static::NAME, (int) $post_id, 'option' );
-	}
-
-	/**
-	 * @param int $post_id
-	 *
-	 * @return void
 	 * @action trashed_post
 	 * @action deleted_post
 	 */
-	public function clear_option_on_delete( $post_id ) {
+	public function clear_option_on_delete( $post_id ): void {
 		$existing = $this->get_post_id();
+
 		if ( $existing === (int) $post_id ) {
 			delete_field( static::NAME, 'option' );
 		}
@@ -117,21 +88,72 @@ abstract class Required_Page {
 	}
 
 	/**
+	 * Adds a field to control the page selection to an existing meta group
+	 *
+	 * @action acf/init 20
+	 */
+	public function register_setting(): void {
+		$config = $this->get_field_config();
+
+		if ( ! $config ) {
+			return;
+		}
+
+		acf_add_local_field( $config );
+	}
+
+	/**
+	 * Add a post state to the list table indicating
+	 * that this is a required page.
+	 *
+	 * @filter display_post_states
+	 *
+	 * @param array<string, string> $post_states
+	 * @param \WP_Post              $post
+	 *
+	 * @return array<string, string>
+	 */
+	public function indicate_post_state( array $post_states, WP_Post $post ): array {
+
+		if ( $this->get_post_id() === $post->ID ) {
+			$label = $this->get_field_label();
+			if ( $label ) {
+				$post_states[ static::NAME ] = $label;
+			}
+		}
+
+		return $post_states;
+	}
+
+	/**
+	 * @return string The post type of the post that will be created
+	 */
+	protected function get_post_type(): string {
+		return 'page';
+	}
+
+	/**
+	 * @return string The content of the post
+	 */
+	protected function get_content(): string {
+		return '';
+	}
+
+	/**
 	 * Create the post for this config
 	 *
 	 * @return int the ID of the created post
 	 */
-	protected function create_post() {
-		$args    = $this->get_post_args();
-		$post_id = wp_insert_post( $args );
+	protected function create_post(): int {
+		$args = $this->get_post_args();
 
-		return $post_id;
+		return wp_insert_post( $args );
 	}
 
 	/**
-	 * @return array The args for creating the post
+	 * @return mixed[] The args for creating the post
 	 */
-	protected function get_post_args() {
+	protected function get_post_args(): array {
 		$args = [
 			'post_type'      => $this->get_post_type(),
 			'post_status'    => 'publish',
@@ -152,22 +174,9 @@ abstract class Required_Page {
 	}
 
 	/**
-	 * Adds a field to control the page selection to an existing meta group
-	 *
-	 * @return void
-	 * @action acf/init 20
+	 * @return mixed[] The field configuration array
 	 */
-	public function register_setting() {
-		$config = $this->get_field_config();
-		if ( $config ) {
-			acf_add_local_field( $config );
-		}
-	}
-
-	/**
-	 * @return array The field configuration array
-	 */
-	protected function get_field_config() {
+	protected function get_field_config(): array {
 		if ( empty( $this->field_group_key ) || ! class_exists( '\Tribe\Libs\ACF\Field' ) ) {
 			return [];
 		}
@@ -186,28 +195,24 @@ abstract class Required_Page {
 		return $field->get_attributes();
 	}
 
-	protected function get_field_label() {
+	protected function get_field_label(): string {
 		return sprintf( __( '%s Page', 'tribe' ), $this->get_title() );
 	}
 
 	/**
-	 * Add a post state to the list table indicating
-	 * that this is a required page.
-	 *
-	 * @param array $post_states
-	 * @param \WP_Post $post
-	 *
-	 * @return array
-	 * @filter display_post_states
+	 * @return int The ID of the post registered as this page
 	 */
-	public function indicate_post_state( $post_states, $post ) {
-		if ( $this->get_post_id() === $post->ID ) {
-			$label = $this->get_field_label();
-			if ( $label ) {
-				$post_states[ static::NAME ] = $label;
-			}
-		}
-		return $post_states;
+	private function get_post_id(): int {
+		return (int) get_field( static::NAME, 'option', false );
+	}
+
+	/**
+	 * Set the ID of the post registered as this page
+	 *
+	 * @param int|string $post_id
+	 */
+	private function set_post_id( $post_id ): void {
+		update_field( static::NAME, (int) $post_id, 'option' );
 	}
 
 }

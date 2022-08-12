@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Settings;
 
@@ -7,6 +6,7 @@ use DI;
 use Tribe\Libs\Container\Definer_Interface;
 
 class Settings_Definer implements Definer_Interface {
+
 	public const PAGES = 'libs.settings.pages';
 
 	public function define(): array {
@@ -18,7 +18,7 @@ class Settings_Definer implements Definer_Interface {
 			 * Pages should extend \Tribe\Libs\Settings\Base_Settings
 			 */
 			self::PAGES => DI\add( [] ),
-
 		];
 	}
+
 }

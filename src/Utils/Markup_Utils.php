@@ -1,13 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Utils;
 
 class Markup_Utils {
 
-	public static function concat_attrs( array $attrs = null, $prefix = '' ) {
+	/**
+	 * Convert an array into HTML attributes.
+	 *
+	 * @param array|null $attrs
+	 * @param string     $prefix
+	 */
+	public static function concat_attrs( ?array $attrs = null, string $prefix = '' ): string {
 		if ( empty( $attrs ) ) {
 			return '';
 		}
+
 		$out    = [];
 		$prefix = empty( $prefix ) ? '' : rtrim( $prefix, '-' ) . '-';
 		foreach ( $attrs as $key => $value ) {
@@ -26,10 +33,8 @@ class Markup_Utils {
 	 *
 	 * @param array $classes
 	 * @param bool  $attribute
-	 *
-	 * @return string
 	 */
-	public static function class_attribute( $classes, $attribute = true ) {
+	public static function class_attribute( array $classes, bool $attribute = true ): string {
 		if ( empty( $classes ) ) {
 			return '';
 		}
@@ -52,10 +57,8 @@ class Markup_Utils {
 	 * @param int         $words The number of words to keep
 	 * @param string|null $more  What to append if the text is truncated. Defaults to &hellip; if null
 	 * @param bool        $autop Whether to apply wpautop to the output
-	 *
-	 * @return string
 	 */
-	public static function truncate_html( string $html = '', int $words = 55, string $more = null, bool $autop = true ): string {
+	public static function truncate_html( string $html = '', int $words = 55, ?string $more = null, bool $autop = true ): string {
 		$result = wp_trim_words( strip_shortcodes( $html ), $words, $more );
 
 		if ( $autop ) {
@@ -64,4 +67,5 @@ class Markup_Utils {
 
 		return $result;
 	}
+
 }

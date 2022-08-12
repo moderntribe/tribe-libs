@@ -10,8 +10,13 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.3', '7.4' ]
-        wordpress-version: [ 'latest', '5.3.2' ]
+        php-versions: [ '7.4', '8.0', '8.1' ]
+        wordpress-version: [ 'latest', '5.3.12', '5.9.3' ]
+        exclude:
+          - php-versions: '8.0'
+            wordpress-version: '5.3.12'
+          - php-versions: '8.1'
+            wordpress-version: '5.3.12'
       fail-fast: false
 
     env:

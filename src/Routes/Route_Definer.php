@@ -1,36 +1,29 @@
-<?php declare( strict_types=1 );
-/**
- * Defines any routes to be registered for the project.
- *
- * @package Tribe\Project\Routes
- */
+<?php declare(strict_types=1);
+
 namespace Tribe\Libs\Routes;
 
 use DI;
 use Tribe\Libs\Container\Definer_Interface;
 
 /**
- * Class to define custom routes used in the project.
+ * Defines any routes to be registered for the project.
+ *
+ * @package Tribe\Project\Routes
  */
 class Route_Definer implements Definer_Interface {
+
 	/**
 	 * The Route DI group to use.
-	 *
-	 * @var string
 	 */
 	public const ROUTES = 'libs.routes';
 
 	/**
 	 * The REST DI group to use.
-	 *
-	 * @var string
 	 */
 	public const REST_ROUTES = 'libs.rest_routes';
 
 	/**
-	 * Defines routes.
-	 *
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function define(): array {
 		return [
@@ -40,7 +33,7 @@ class Route_Definer implements Definer_Interface {
 			 *
 			 * ROUTES should extend \Tribe\Libs\Routes\Abstract_Route
 			 */
-			self::ROUTES => DI\add( [] ),
+			self::ROUTES      => DI\add( [] ),
 
 			/**
 			 * The array of REST routes that will be registered.
@@ -51,4 +44,5 @@ class Route_Definer implements Definer_Interface {
 			self::REST_ROUTES => DI\add( [] ),
 		];
 	}
+
 }
