@@ -104,8 +104,11 @@ jobs:
       - name: Install updated composer dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
+      - name: Install test dependencies
+        run: composer test:setup
+
       - name: Run integration tests
-        run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration
+        run: composer test:integration
 
       - name: Run multisite integration tests
-        run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration --env multisite
+        run: composer -- test:integration --env multisite
