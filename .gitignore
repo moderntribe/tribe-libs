@@ -16,7 +16,6 @@ pimple.json
 .phpstorm.meta.php
 
 /vendor
-/wordpress
-/wp-config-environment.php
+/tests/wordpress
 /.env
 /composer.lock
