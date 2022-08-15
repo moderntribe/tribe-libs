@@ -75,14 +75,11 @@ jobs:
           coverage: none
           tools: codeception, composer
 
-      - name: Download WordPress and plugins
+      - name: Download WordPress
         run: |
-          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
+          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./tests/wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
-          wget "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip" -O ./wordpress/wp-content/plugins/posts-to-posts.zip
-          unzip ./wordpress/wp-content/plugins/posts-to-posts.zip -d ./wordpress/wp-content/plugins
-          rm ./wordpress/wp-content/plugins/posts-to-posts.zip
 
       - name: Get composer cache directory
         id: composer-cache
@@ -100,7 +97,7 @@ jobs:
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Install test dependencies
-        run: composer test:setup
+        run: composer -- test:setup --plugins-only
 
       - name: Run integration tests
         run: composer test:integration
