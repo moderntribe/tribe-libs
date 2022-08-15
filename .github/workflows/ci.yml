@@ -24,7 +24,7 @@ jobs:
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
-      WP_ROOT_FOLDER: ${{ github.workspace }}/wordpress
+      WP_ROOT_FOLDER: ${{ github.workspace }}/tests/wordpress
       WP_DOMAIN: "tribe-libs.tribe"
       WP_ADMIN_PATH: "/wp-admin"
       WP_ADMIN_USERNAME: "admin"
@@ -35,7 +35,7 @@ jobs:
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
       TABLE_PREFIX: "tribe_"
-      TEST_CONFIG_FILE: "wp-config-environment.php"
+      TEST_CONFIG_FILE: ${{ github.workspace }}/tests/wp-config-environment.php
 
     services:
 
@@ -81,6 +81,10 @@ jobs:
           wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
+
+      - name: Create config files
+        run: |
+          touch ./tests/.env          
 
       - name: Get composer cache directory
         id: composer-cache
