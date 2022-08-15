@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Changed: Create the `4.x` branch/major version, which has a minimum version of `PHP7.4` for use with **legacy PHP7.4 Square One projects where their hosts will be force upgrading to PHP8.0**. This is intermediate release to allow an ease of upgrading, however new projects should use the upcoming `5.x` releases which will be optimized for PHP8.0+.
+- Changed: `composer.lock` has been removed to be more in line with other monorepo libraries and to allow more flexible versions of packages to be installed when using Tribe Libs in the Square One framework.
+- Changed: Force `phpcompatibility/php-compatibility` to a development version to prevent PHPCS errors when using PHP8.0+.
 
 ## 3.6.0 - 2022-08-09
 - Added: `wp s1 generate block <name> --with-post-loop-middleware` that gives a base configuration for a block with Post Loop Middleware.
