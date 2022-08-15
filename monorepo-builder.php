@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\MonorepoBuilder\ValueObject\Option;
@@ -19,18 +18,18 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 			],
 		],
 		'require-dev'  => [
-			"symplify/monorepo-builder"                      => "^8.2",
-			"lucatume/wp-browser"                            => "^3.0.9",
-			"phpunit/phpunit"                                => "^8.0",
 			"automattic/phpcs-neutron-standard"              => "^1.5",
-			"automattic/vipwpcs"                             => "^2.0.0",
+			"automattic/vipwpcs"                             => "^2.0",
 			"dealerdirect/phpcodesniffer-composer-installer" => "^0.5.0 || ^0.7.0",
+			"lucatume/wp-browser"                            => "^3.1",
 			"phpcompatibility/php-compatibility"             => "*",
 			"phpcompatibility/phpcompatibility-wp"           => "^2.0",
-			"sirbrillig/phpcs-variable-analysis"             => "^2.0.1",
+			"phpstan/phpstan"                                => "^1.8",
+			"phpunit/phpunit"                                => "^8.0 || ^9.0",
+			"sirbrillig/phpcs-variable-analysis"             => "^2.0",
 			"squizlabs/php_codesniffer"                      => "^3.4.2",
-			"phpstan/phpstan"                                => "^0.12.25",
-			"szepeviktor/phpstan-wordpress"                  => "^0.6.0",
+			"symplify/monorepo-builder"                      => "^8.2",
+			"szepeviktor/phpstan-wordpress"                  => "^1.0",
 			"wp-cli/wp-cli"                                  => "^2.5",
 		],
 	] );
