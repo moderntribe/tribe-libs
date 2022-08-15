@@ -10,30 +10,6 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 		__DIR__ . '/src',
 	] );
 
-	$parameters->set( Option::DATA_TO_APPEND, [
-		'autoload-dev' => [
-			'psr-4' => [
-				'Tribe\Libs\Dev\Monorepo\\' => 'dev/monorepo/src',
-				'Tribe\Libs\\'              => 'tests/integration/Tribe/Libs',
-			],
-		],
-		'require-dev'  => [
-			"automattic/phpcs-neutron-standard"              => "^1.5",
-			"automattic/vipwpcs"                             => "^2.0",
-			"dealerdirect/phpcodesniffer-composer-installer" => "^0.5.0 || ^0.7.0",
-			"lucatume/wp-browser"                            => "^3.1",
-			"phpcompatibility/php-compatibility"             => "*",
-			"phpcompatibility/phpcompatibility-wp"           => "^2.0",
-			"phpstan/phpstan"                                => "^1.8",
-			"phpunit/phpunit"                                => "^8.0 || ^9.0",
-			"sirbrillig/phpcs-variable-analysis"             => "^2.0",
-			"squizlabs/php_codesniffer"                      => "^3.4.2",
-			"symplify/monorepo-builder"                      => "^8.2",
-			"szepeviktor/phpstan-wordpress"                  => "^1.0",
-			"wp-cli/wp-cli"                                  => "^2.5",
-		],
-	] );
-
 	$parameters->set( Option::DIRECTORIES_TO_REPOSITORIES, [
 		'src/ACF'           => "git@github.com:moderntribe/square1-acf.git",
 		'src/Assets'        => "git@github.com:moderntribe/square1-assets.git",
@@ -41,6 +17,7 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 		'src/CLI'           => "git@github.com:moderntribe/square1-cli.git",
 		'src/Cache'         => "git@github.com:moderntribe/square1-cache.git",
 		'src/Container'     => "git@github.com:moderntribe/square1-container.git",
+		'src/Field_Models'  => "git@github.com:moderntribe/square1-field-models.git",
 		'src/Generators'    => "git@github.com:moderntribe/square1-generators.git",
 		'src/Log'           => "git@github.com:moderntribe/square1-log.git",
 		'src/Media'         => "git@github.com:moderntribe/square1-media.git",
