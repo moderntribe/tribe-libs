@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Taxonomy;
 
 use Tribe\Libs\Object_Meta\Meta_Map;
