@@ -199,17 +199,17 @@ class Extensible_Walker_Nav_Menu extends Walker_Nav_Menu {
 	/**
 	 * Ends the element output, if needed.
 	 *
-	 * @param  string  $output       Passed by reference. Used to append additional content.
-	 * @param  object  $data_object  Page data object. Not used.
-	 * @param  int     $depth        Depth of page. Not Used.
-	 * @param  array   $args         An array of wp_nav_menu() arguments.
+	 * @param  string          $output       Passed by reference. Used to append additional content.
+	 * @param  object          $data_object  Page data object. Not used.
+	 * @param  int             $depth        Depth of page. Not Used.
+	 * @param  \stdClass|null  $args         An object of wp_nav_menu() arguments.
 	 *
 	 * @see   Walker::end_el()
 	 *
 	 * @since 3.0.0
 	 *
 	 */
-	public function end_el( &$output, $data_object, $depth = 0, $args = [] ) {
+	public function end_el( &$output, $data_object, $depth = 0, $args = null ) {
 		$item_tag = apply_filters( 'nav_menu_item_tag', 'li', $data_object, $args, $depth );
 		$output   .= "</$item_tag\n";
 	}
