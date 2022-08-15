@@ -12,22 +12,30 @@
             "url": "https://github.com/bordoni/phpass"
         }
     ],
+    "scripts": {
+      "test:setup": "php ./tests/bin/setup-tests.php",
+      "test": "./vendor/bin/codecept --config ./tests",
+      "test:integration": "@test run integration"
+    },
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
         "composer-plugin-api": "^1.0 || ^2.0",
-        "enshrined/svg-sanitize": "^0.15.4",
-        "filp/whoops": "^2.14",
+        "enshrined/svg-sanitize": "^0.15",
+        "filp/whoops": "^2.2@dev",
         "mhcg/monolog-wp-cli": "^2.0",
         "php-di/php-di": "^6.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
+        "spatie/data-transfer-object": "^2.8",
         "twig/twig": "^3.0"
     },
     "require-dev": {
         "automattic/phpcs-neutron-standard": "^1.5",
         "automattic/vipwpcs": "^2.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.7.0",
+        "fakerphp/faker": "^1.20",
         "lucatume/wp-browser": "^3.1",
+        "nelexa/zip": "^4.0",
         "phpcompatibility/php-compatibility": "10.x-dev#c23e20c as 9.3.5",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
         "phpstan/phpstan": "^1.8",
@@ -50,6 +58,7 @@
             "Tribe\\Libs\\CLI\\": "src/CLI/",
             "Tribe\\Libs\\Cache\\": "src/Cache/",
             "Tribe\\Libs\\Container\\": "src/Container/",
+            "Tribe\\Libs\\Field_Models\\": "src/Field_Models/",
             "Tribe\\Libs\\Generators\\": "src/Generators/",
             "Tribe\\Libs\\Log\\": "src/Log/",
             "Tribe\\Libs\\Media\\": "src/Media/",
@@ -78,6 +87,7 @@
         "psr-4": {
             "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
             "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src",
+            "Tribe\\Libs\\Tests\\": "tests/_support/Classes/",
             "Tribe\\Libs\\Tests\\Fixtures\\": "tests/_support/Fixtures/"
         }
     },
@@ -88,6 +98,7 @@
         "moderntribe/square1-cache": "self.version",
         "moderntribe/square1-cli": "self.version",
         "moderntribe/square1-container": "self.version",
+        "moderntribe/square1-field-models": "self.version",
         "moderntribe/square1-generators": "self.version",
         "moderntribe/square1-log": "self.version",
         "moderntribe/square1-media": "self.version",
