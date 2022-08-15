@@ -10,7 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "moderntribe/square1-container": "^3.7",
-        "php": "^7.2"
+        "php": ">=7.4"
     },
     "suggest": {
         "moderntribe/square1-acf": "Supports automatic registration of options to manage the assigned pages"

@@ -9,7 +9,7 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.2",
+        "php": ">=7.4",
         "filp/whoops": "^2.2@dev",
         "moderntribe/square1-container": "^3.7"
     },
