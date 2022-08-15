@@ -2,11 +2,12 @@
 
 namespace Tribe\Libs\Generators;
 
+use WP_CLI;
+
 class CPT_Generator extends Generator_Command {
 	private $cpt_directory;
 	private $slug;
 	private $class_name;
-	private $namespace;
 	private $assoc_args;
 
 	public function description() {
@@ -44,7 +45,6 @@ class CPT_Generator extends Generator_Command {
 		// Validate the slug.
 		$this->slug       = $this->sanitize_slug( $args );
 		$this->class_name = $this->ucwords( $this->slug );
-		$this->namespace  = 'Tribe\Project\Post_Types\\' . $this->class_name;
 		// Set up associate args with some defaults.
 		$this->assoc_args = $this->parse_assoc_args( $assoc_args );
 
@@ -60,7 +60,7 @@ class CPT_Generator extends Generator_Command {
 		// Update Core.
 		$this->update_core();
 
-		\WP_CLI::success( 'Way to go! ' . \WP_CLI::colorize( "%W{$this->slug}%n" ) . ' post type has been created' );
+		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W{$this->slug}%n" ) . ' post type has been created' );
 	}
 
 	private function create_cpt_directory() {
