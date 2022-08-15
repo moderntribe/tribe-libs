@@ -67,4 +67,4 @@ jobs:
         run: php vendor/bin/phpcs --standard=tests/phpcs.xml
 
       - name: Run PHPStan static analysis
-        run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1 --error-format=github
+        run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1
