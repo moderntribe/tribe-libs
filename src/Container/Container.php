@@ -47,8 +47,8 @@ class Container extends \DI\Container implements MutableContainer, ContainerInte
 	 *
 	 * @template T
 	 *
-	 * @param  string|class-string<T>  $name        Entry name or a class name.
-	 * @param  array                   $parameters  Optional parameters to use to build the entry. Use this to force
+	 * @param  class-string<T>  $name               Entry name or a class name.
+	 * @param  array            $parameters         Optional parameters to use to build the entry. Use this to force
 	 *                                              specific parameters to specific values. Parameters not defined in this
 	 *                                              array will be resolved using the container.
 	 *

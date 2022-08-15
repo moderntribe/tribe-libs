@@ -18,14 +18,18 @@ interface MutableContainer {
 	public function wrap( ?ContainerInterface $container = null );
 
 	/**
-	 * Make a completely fresh object, including its dependencies.
+	 * Make a completely fresh object, including all of its dependencies.
 	 *
 	 * @template T
 	 *
-	 * @param  string|class-string<T>  $name        Entry name or a class name.
-	 * @param  array                   $parameters  Optional parameters to use to build the entry. Use this to force
+	 * @param  class-string<T>  $name               Entry name or a class name.
+	 * @param  array            $parameters         Optional parameters to use to build the entry. Use this to force
 	 *                                              specific parameters to specific values. Parameters not defined in this
 	 *                                              array will be resolved using the container.
+	 *
+	 * @throws \DI\DependencyException
+	 * @throws \DI\NotFoundException
+	 * @throws \ReflectionException
 	 *
 	 * @return mixed|T
 	 */
