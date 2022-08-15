@@ -76,8 +76,9 @@ jobs:
           tools: codeception, composer
 
       - name: Download WordPress
+        working-directory: ./tests
         run: |
-          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./tests/wordpress.tar.gz
+          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
 
