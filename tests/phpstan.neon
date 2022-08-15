@@ -18,10 +18,9 @@ parameters:
 		# Undefined functions are expected to be calling WP functions
 		- '#^Function \S+ not found\.$#'
 		- '#Unsafe usage of new static\(\)\.$#'
-		- '#Function apply_filters(_ref_array)? invoked with \d+ parameters, 2 required\.$#'
+		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
 		- '#Extensible_Walker_Nav_Menu.*should be compatible#'
 		- '#JSON_Nav_Walker.*should be compatible#'
-		- '#Object_Nav_Walker.*should return string#'
 	earlyTerminatingMethodCalls:
 		WP_CLI:
 		  - error
