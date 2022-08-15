@@ -8,6 +8,15 @@ namespace Tribe\Libs\Object_Meta;
  * Maps requests for meta keys to the Meta_Group responsible for handling it
  */
 class Meta_Map {
+
+	/**
+	 * Existing Square One projects are passing this in, so removing it would
+	 * be a breaking change.
+	 *
+	 * @var string
+	 *
+	 * @phpstan-ignore-next-line
+	 */
 	private $object_type = '';
 
 	/** @var Meta_Group[] */
