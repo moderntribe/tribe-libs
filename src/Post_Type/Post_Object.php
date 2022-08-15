@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Post_Type;
 
 use Tribe\Libs\Object_Meta\Meta_Map;
@@ -69,16 +68,19 @@ class Post_Object {
 	 * @return static
 	 */
 	public static function factory( $post_id ) {
-		/** @var Meta_Repository $meta_repo */
+		/** @var Meta_Repository|null $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
+
 		if ( empty( $meta_repo ) ) {
 			$meta_repo = new Meta_Repository();
 		}
+
 		$post_type = static::NAME;
+
 		if ( empty( $post_type ) ) {
 			$post_type = get_post_type( $post_id );
 		}
-		$post = new static( $post_id, $meta_repo->get( $post_type ) );
-		return $post;
+
+		return new static( $post_id, $meta_repo->get( $post_type ) );
 	}
 }
