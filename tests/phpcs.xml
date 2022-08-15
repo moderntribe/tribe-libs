@@ -9,6 +9,9 @@
     <!-- Exclude files -->
     <exclude-pattern>*Generators/templates</exclude-pattern>
 
+	<!-- Fix WordPress's terrible typing breaking PHPCS -->
+	<config name="minimum_supported_wp_version" value="5.3.12"/>
+
     <!-- Rules -->
 
     <!-- PSR2 -->
