@@ -1,11 +1,12 @@
 <?php
 
-
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
+use JsonException;
 use Tribe\Libs\Blog_Copier\Copy_Configuration;
 use Tribe\Libs\Blog_Copier\Copy_Manager;
 use Tribe\Libs\Queues\Contracts\Task;
+use WP_Error;
 
 /**
  * Class Replace_Options
@@ -17,14 +18,19 @@ class Replace_Options implements Task {
 	public function handle( array $args ): bool {
 		$post_id = empty( $args[ 'post_id' ] ) ? 0 : absint( $args[ 'post_id' ] );
 
-		$data        = \json_decode( get_post_field( 'post_content', $post_id, 'raw' ), true );
+		try {
+			$data = json_decode( get_post_field( 'post_content', $post_id, 'raw' ), true, 512, JSON_THROW_ON_ERROR );
+		} catch ( JsonException $e ) {
+			$data = [];
+		}
+
 		$config      = new Copy_Configuration( $data );
 		$destination = get_post_meta( $post_id, Copy_Manager::DESTINATION_BLOG, true );
 
 		$src = $config->get_src();
 
 		if ( empty( $src ) || empty( $destination ) ) {
-			$error = new \WP_Error( 'missing_blog', __( 'Source and destination blogs both must exist to replace options.', 'tribe' ) );
+			$error = new WP_Error( 'missing_blog', __( 'Source and destination blogs both must exist to replace options.', 'tribe' ) );
 			do_action( Copy_Manager::TASK_ERROR_ACTION, static::class, $args, $error );
 
 			return true;
