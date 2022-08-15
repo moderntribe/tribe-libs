@@ -19,3 +19,4 @@ pimple.json
 /wordpress
 /wp-config-environment.php
 /.env
+/composer.lock
