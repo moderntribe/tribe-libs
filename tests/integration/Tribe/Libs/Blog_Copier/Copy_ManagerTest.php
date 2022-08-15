@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier;
 
 use Tribe\Libs\Blog_Copier\Tasks\Create_Blog;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
 use Tribe\Libs\Queues\Contracts\Queue;
+use Tribe\Libs\Tests\Test_Case;
 
-class Copy_ManagerTest extends \Codeception\TestCase\WPTestCase {
+final class Copy_ManagerTest extends Test_Case {
 	public function test_creates_state_post() {
 		/** @var \WP_User $user */
 		$user = $this->factory()->user->create_and_get();

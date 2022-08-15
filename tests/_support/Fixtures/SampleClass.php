@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tribe\Libs\Support;
+namespace Tribe\Libs\Tests\Fixtures;
 
 /**
  * A sample class to test the container.

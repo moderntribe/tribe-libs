@@ -2,12 +2,12 @@
 
 namespace Tribe\Libs\Container;
 
-use Codeception\TestCase\WPTestCase;
 use DI;
 use DI\ContainerBuilder;
-use Tribe\Libs\Support\SampleClass;
+use Tribe\Libs\Tests\Fixtures\SampleClass;
+use Tribe\Libs\Tests\Test_Case;
 
-final class MutableContainerTest extends WPTestCase {
+final class MutableContainerTest extends Test_Case {
 
 	public function test_it_makes_fresh_instances_of_the_same_class() {
 		$builder   = new ContainerBuilder();

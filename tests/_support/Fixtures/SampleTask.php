@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tribe\Libs\Support;
+namespace Tribe\Libs\Tests\Fixtures;
 
 use Tribe\Libs\Cache\Cache;
 use Tribe\Libs\Queues\Contracts\Task;

@@ -9,8 +9,9 @@ use Faker\Generator;
 /**
  * Test case with specific actions for Square One projects.
  *
- * @mixin \Codeception\Test\Unit
  * @mixin \PHPUnit\Framework\TestCase
+ * @mixin \Codeception\Test\Unit
+ * @mixin \Codeception\PHPUnit\TestCase
  *
  * @package Tribe\Libs\Tests
  */
@@ -18,8 +19,9 @@ class Test_Case extends WPTestCase {
 
 	protected Generator $faker;
 
-	public function _setUp(): void {
-		parent::_setUp();
+	protected function setUp(): void {
+		// @phpstan-ignore-next-line
+		parent::setUp();
 
 		$this->faker = Factory::create();
 	}

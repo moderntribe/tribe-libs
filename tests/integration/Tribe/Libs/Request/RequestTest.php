@@ -1,13 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Request;
 
-class RequestTest extends \Codeception\TestCase\WPTestCase {
+use Tribe\Libs\Tests\Test_Case;
+use WP_Query;
+
+final class RequestTest extends Test_Case {
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
-	private $backup_SERVER;
+	private array $backup_SERVER;
 
 	protected function _before() {
 		parent::_before();
@@ -22,7 +25,7 @@ class RequestTest extends \Codeception\TestCase\WPTestCase {
 
 	public function testQuery() {
 		$server_mock = $this->makeEmpty( Server::class, [ 'get_query' => function () {
-			return new \WP_Query();
+			return new WP_Query();
 		} ] );
 		$request     = new Request( $server_mock );
 		$this->assertTrue( is_a( $request->query(), '\WP_Query' ) );
