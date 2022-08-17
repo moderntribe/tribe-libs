@@ -34,10 +34,10 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Releasing a new version
 
-1. Ensure that all code for the release is merged to branch/version you're releasing and checkout the proper branch for the version you're releasing, e.g. `git checkout 4.x` for a `4.x.x` version or `git checkout 5.x` for a `5.x.x` version.
+1. Ensure that all code for the release is merged to master
 1. Ensure that all updates for the release are logged in `CHANGELOG.md`.
 1. Run the release script, with the version number for the release (format: `<major>.<minor>.<patch>`):
-    Dry run example:
+   Dry run example:
    ``` bash
    ./monorepo.sh release 5.0.1 --dry-run
    ```
@@ -46,10 +46,10 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    ./monorepo.sh release 5.0.1
    ``` 
 1. The script will handle several steps for you automatically:
-   1. Set any package interdependencies to the new version.
-   1. Update `CHANGELOG.md` with the appropriate version number.
-   1. Create the git tag and push it to GitHub, tagged to the branch you have checked out.
-   1. Bump the branch where you originally made the tag's version to the next minor version number
+    1. Set any package interdependencies to the new version.
+    1. Update `CHANGELOG.md` with the appropriate version number.
+    1. Create the git tag and push it to GitHub, tagged to the branch you have checked out.
+    1. Bump the `master` branch version to the next minor version number
 1. When the tag is pushed to GitHub, an Action there will automatically split the monorepo and deploy the tag
    to all of the package repos. (Note: The GH Action will run as a bot user with appropriate permissions
    to write to all of the package repositories. Those repositories are read-only for normal usage.)
@@ -85,14 +85,9 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Update the development version
 
-You will rarely need to do this, but it is documented here just in case, the example below is for the `5.x` branch, but ensure you're creating an alias for the correct major version that matches the branch.
+You will rarely need to do this, but it is documented here just in case.
 
-1. Set the `5.x` branch alias for all packages in the `5.x` branch:
-
-   ```bash
-   git checkout 5.x; git pull
-   ``` 
-
+1. Set the `master` branch alias for all packages:
    ```bash
    ./monorepo.sh set-alias 5.0
    ```
