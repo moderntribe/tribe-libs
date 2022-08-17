@@ -49,7 +49,7 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    1. Set any package interdependencies to the new version.
    1. Update `CHANGELOG.md` with the appropriate version number.
    1. Create the git tag and push it to GitHub, tagged to the branch you have checked out.
-   1. Bump the `master` branch version to the next minor version number
+   1. Bump the branch where you originally made the tag's version to the next minor version number
 1. When the tag is pushed to GitHub, an Action there will automatically split the monorepo and deploy the tag
    to all of the package repos. (Note: The GH Action will run as a bot user with appropriate permissions
    to write to all of the package repositories. Those repositories are read-only for normal usage.)
