@@ -102,7 +102,7 @@ jobs:
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Install test dependencies
-        run: composer -- test:setup --plugins-only
+        run: composer -- test:install-plugins
 
       - name: Run integration tests
         run: composer test:integration
