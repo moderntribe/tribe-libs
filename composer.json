@@ -13,9 +13,19 @@
         }
     ],
     "scripts": {
-      "test:setup": "php ./tests/bin/setup-tests.php",
-      "test": "./vendor/bin/codecept --config ./tests",
-      "test:integration": "@test run integration"
+        "wpdownloader": "@php src/WP_Downloader/bin/wpdownloader",
+        "test:install-plugins": [
+            "@wpdownloader plugin advanced-custom-fields --path tests/wordpress/wp-content/plugins",
+            "@wpdownloader plugin acf-color-swatches --path tests/wordpress/wp-content/plugins",
+            "@wpdownloader plugin posts-to-posts --path tests/wordpress/wp-content/plugins"
+        ],
+        "test:setup": [
+            "@wpdownloader wp --path tests",
+            "@test:install-plugins",
+            "@wpdownloader copy tests/.env-dist tests/.env"
+        ],
+        "test": "./vendor/bin/codecept --config ./tests",
+        "test:integration": "@test run integration"
     },
     "require": {
         "php": ">=7.4",
@@ -42,6 +52,7 @@
         "phpunit/phpunit": "^8.0 || ^9.0",
         "sirbrillig/phpcs-variable-analysis": "^2.0",
         "squizlabs/php_codesniffer": "^3.4.2",
+        "symfony/console": "^5.0 || ^6.0",
         "symplify/monorepo-builder": "^8.2",
         "szepeviktor/phpstan-wordpress": "^1.0",
         "wp-cli/wp-cli": "^2.5"
@@ -88,7 +99,8 @@
             "Tribe\\Libs\\": "tests/integration/Tribe/Libs",
             "Tribe\\Libs\\Dev\\Monorepo\\": "dev/monorepo/src",
             "Tribe\\Libs\\Tests\\": "tests/_support/Classes/",
-            "Tribe\\Libs\\Tests\\Fixtures\\": "tests/_support/Fixtures/"
+            "Tribe\\Libs\\Tests\\Fixtures\\": "tests/_support/Fixtures/",
+            "Tribe\\Libs\\WP_Downloader\\": "src/WP_Downloader/"
         }
     },
     "replace": {
@@ -120,7 +132,8 @@
         "moderntribe/square1-twig": "self.version",
         "moderntribe/square1-user": "self.version",
         "moderntribe/square1-utils": "self.version",
-        "moderntribe/square1-whoops": "self.version"
+        "moderntribe/square1-whoops": "self.version",
+        "moderntribe/square1-wp-downloader": "self.version"
     },
     "config": {
         "sort-packages": true,

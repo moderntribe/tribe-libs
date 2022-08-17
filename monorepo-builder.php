@@ -38,6 +38,7 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 		'src/Twig'          => "git@github.com:moderntribe/square1-twig.git",
 		'src/User'          => "git@github.com:moderntribe/square1-user.git",
 		'src/Utils'         => "git@github.com:moderntribe/square1-utils.git",
+		'src/WP_Downloader' => "git@github.com:moderntribe/square1-wp-downloader.git",
 		'src/Whoops'        => "git@github.com:moderntribe/square1-whoops.git",
 	] );
 
