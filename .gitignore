@@ -18,4 +18,4 @@ pimple.json
 /vendor
 /tests/wordpress
 /.env
-/composer.lock
+composer.lock
