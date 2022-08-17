@@ -10,7 +10,7 @@
     "require": {
         "php": ">=7.4",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
-        "moderntribe/square1-container": "^4.0",
+        "moderntribe/square1-container": "^4.1",
         "mhcg/monolog-wp-cli": "^2.0"
     },
     "autoload": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.7-dev"
+            "dev-master": "4.1-dev"
         }
     },
     "minimum-stability": "dev",
