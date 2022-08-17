@@ -13,6 +13,7 @@ jobs:
     env:
       cache_version: 1 # increment to flush all caches
       php_version: '8.0'
+      split_branch: '4.x' # Should match the major version you're tagging
 
     steps:
 
@@ -52,4 +53,4 @@ jobs:
       - name: Split the package mini-repos
         env:
           GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
-        run: vendor/bin/monorepo-builder split --tag=${{ steps.git-tag.outputs.tag }} -q
+        run: vendor/bin/monorepo-builder split --tag=${{ steps.git-tag.outputs.tag }} --branch=${{ env.split_branch }} -q
