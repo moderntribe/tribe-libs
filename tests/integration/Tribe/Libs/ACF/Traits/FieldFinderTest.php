@@ -2,13 +2,13 @@
 
 namespace Tribe\Libs\ACF\Traits;
 
-use Codeception\TestCase\WPTestCase;
 use Tribe\Libs\ACF\Field_Group;
 use Tribe\Libs\ACF\Field_Section;
 use Tribe\Libs\ACF\Repeater;
 use Tribe\Libs\Tests\Fixtures\FieldFinder;
+use Tribe\Libs\Tests\Test_Case;
 
-final class FieldFinderTest extends WPTestCase {
+final class FieldFinderTest extends Test_Case {
 
 	public function test_it_finds_top_level_field(): void {
 		$repeater = new Repeater( 'test_repeater' );

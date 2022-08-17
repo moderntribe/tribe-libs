@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Nav;
 
 use Walker;
@@ -10,16 +9,20 @@ abstract class Object_Nav_Walker extends Walker {
 	/**
 	 * What the class handles.
 	 *
-	 * @see Walker::$tree_type
 	 * @var string[]
+	 *
+	 * @see Walker::$tree_type
+	 *
+	 * @phpstan-ignore-next-line
 	 */
 	public $tree_type = [ 'post_type', 'taxonomy', 'custom' ];
 
 	/**
 	 * Database fields to use.
 	 *
+	 * @var string[]
+	 *
 	 * @see Walker::$db_fields
-	 * @var array
 	 */
 	public $db_fields = [ 'parent' => 'menu_item_parent', 'id' => 'db_id' ];
 
@@ -33,23 +36,24 @@ abstract class Object_Nav_Walker extends Walker {
 	 *
 	 * This method should not be called directly, use the walk() method instead.
 	 *
+	 * @param  object        $element            Data object.
+	 * @param  array         $children_elements  List of elements to continue traversing.
+	 * @param  int           $max_depth          Max depth to traverse.
+	 * @param  int           $depth              Depth of current element.
+	 * @param  array         $args               An array of arguments.
+	 * @param  string|array  $output             Passed by reference. Used to append additional content.
+	 *
+	 * @return void Null on failure with no changes to parameters.
 	 * @since 2.5.0
 	 *
-	 * @param object $element           Data object.
-	 * @param array  $children_elements List of elements to continue traversing.
-	 * @param int    $max_depth         Max depth to traverse.
-	 * @param int    $depth             Depth of current element.
-	 * @param array  $args              An array of arguments.
-	 * @param string $output            Passed by reference. Used to append additional content.
-	 * @return void Null on failure with no changes to parameters.
 	 */
 	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 
-		if ( !$element ) {
+		if ( ! $element ) {
 			return;
 		}
 
-		if ( !is_array($output) ) {
+		if ( ! is_array( $output ) ) {
 			$output = [];
 		}
 
@@ -77,8 +81,8 @@ abstract class Object_Nav_Walker extends Walker {
 				$output['menu_id'] = $element->type . '-' . $output['menu_id'];
 			}
 		}
-		$output['classes'] = isset( $output['classes'] ) ? $output['classes'] : [];
-		$output['classes'] = implode( ' ', array_merge( $output['classes'], $classes ) );
+
+		$output['classes'] = implode( ' ', array_merge( $output['classes'] ?? [], $classes ) );
 
 		// descend only when the depth is right and there are children for this element
 		if ( ($max_depth == 0 || $max_depth > $depth+1 ) && isset( $children_elements[$id]) ) {
@@ -94,21 +98,21 @@ abstract class Object_Nav_Walker extends Walker {
 		}
 	}
 
-
-
 	/**
 	 * Start the element output.
 	 *
 	 * The $args parameter holds additional values that may be used with the child
 	 * class methods. Includes the element output also.
 	 *
-	 * @param string|array $output            Passed by reference. Used to append additional content.
-	 * @param object $item            The data object.
-	 * @param int    $depth             Depth of the item.
-	 * @param array  $args              An array of additional arguments.
-	 * @param int    $id ID of the current item.
+	 * @param  string|array          $output             Passed by reference. Used to append additional content.
+	 * @param  object                $data_object        The data object.
+	 * @param  int                   $depth              Depth of the item.
+	 * @param  \stdClass|null|array  $args               An object of additional arguments.
+	 * @param  int                   $current_object_id  ID of the current item.
 	 */
-	public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
+	public function start_el( &$output, $data_object, $depth = 0, $args = null, $current_object_id = 0 ) {
+		$item = $data_object;
+
 		if ( !is_array($output) ) {
 			$output = [];
 		}
@@ -145,31 +149,32 @@ abstract class Object_Nav_Walker extends Walker {
 		/**
 		 * Filter the HTML attributes applied to a menu item's <a>.
 		 *
+		 * @param  array      $atts   {
+		 *                            The HTML attributes applied to the menu item's <a>, empty strings are ignored.
+		 *
+		 * @type string       $title  Title attribute.
+		 * @type string       $target Target attribute.
+		 * @type string       $rel    The rel attribute.
+		 * @type string       $href   The href attribute.
+		 *                            }
+		 *
+		 * @param  object     $item   The current menu item.
+		 * @param  \stdClass  $args   An array of wp_nav_menu() arguments.
+		 * @param  int        $depth  Depth of menu item. Used for padding.
+		 *
+		 * @see   wp_nav_menu()
+		 *
 		 * @since 3.6.0
-		 *
-		 * @see wp_nav_menu()
-		 *
-		 * @param array $atts {
-		 *     The HTML attributes applied to the menu item's <a>, empty strings are ignored.
-		 *
-		 *     @type string $title  Title attribute.
-		 *     @type string $target Target attribute.
-		 *     @type string $rel    The rel attribute.
-		 *     @type string $href   The href attribute.
-		 * }
-		 * @param object $item The current menu item.
-		 * @param array  $args An array of wp_nav_menu() arguments.
 		 */
 		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+
 		foreach ( $atts as $key => $value ) {
 			$output[$key] = $value;
 		}
 
-		$output = array_filter($output);
+		$output = array_filter( $output );
 		$output = apply_filters( 'object_nav_walker_start_el', $output, $item, $depth, $args );
 	}
-
-
 
 	/**
 	 * Display array of elements hierarchically.
@@ -180,13 +185,13 @@ abstract class Object_Nav_Walker extends Walker {
 	 * $max_depth = 0 means display all levels.
 	 * $max_depth > 0 specifies the number of display levels.
 	 *
-	 * @param array $elements  An array of elements.
-	 * @param int   $max_depth The maximum hierarchical depth.
-	 * @param mixed ...$args   Optional additional arguments.
+	 * @param  array  $elements   An array of elements.
+	 * @param  int    $max_depth  The maximum hierarchical depth.
+	 * @param  mixed  ...$args    Optional additional arguments.
 	 *
-	 * @return string The hierarchical item output.
+	 * @return array|array[]|string
 	 */
-	public function walk( $elements, $max_depth, ...$args) {
+	public function walk( $elements, $max_depth, ...$args ) {
 		$menu_items = [];
 
 		if ($max_depth < -1) { //invalid parameter
@@ -197,7 +202,6 @@ abstract class Object_Nav_Walker extends Walker {
 			return $this->format_output($menu_items);
 		}
 
-		$id_field = $this->db_fields['id'];
 		$parent_field = $this->db_fields['parent'];
 
 		// flat display

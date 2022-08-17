@@ -2,6 +2,8 @@
 
 namespace Tribe\Libs\Generators;
 
+use WP_CLI;
+
 class Meta_Importer extends Generator_Command {
 
 	protected $args       = [];
@@ -46,14 +48,14 @@ class Meta_Importer extends Generator_Command {
 		$this->assoc_args = $assoc_args;
 
 		if ( empty( $this->get_dynamic_field_groups() ) ) {
-			\WP_CLI::error( __( 'There are zero field groups available to import', 'tribe' ) );
+			WP_CLI::error( __( 'There are zero field groups available to import', 'tribe' ) );
 		}
 
 		if ( ! count( $args ) ) {
 			foreach ( $this->get_dynamic_field_groups() as $field_group_id => $field_group_name ) {
-				\WP_CLI::line( sprintf( __( 'You can import %s with `wp s1 import meta %s`', 'tribe' ), $field_group_name, $field_group_id ) );
+				WP_CLI::line( sprintf( __( 'You can import %s with `wp s1 import meta %s`', 'tribe' ), $field_group_name, $field_group_id ) );
 			}
-			\WP_CLI::halt( 0 );
+			WP_CLI::halt( 0 );
 		}
 
 		// Setup and import the field groups.
@@ -61,7 +63,7 @@ class Meta_Importer extends Generator_Command {
 
 		// Sanity check.
 		if ( $this->assoc_args['delete-group'] ) {
-			\WP_CLI::confirm( sprintf( __( 'Are you sure you want to delete the database entry %s field group and convert it to php?', 'tribe' ), $this->title ), $assoc_args );
+			WP_CLI::confirm( sprintf( __( 'Are you sure you want to delete the database entry %s field group and convert it to php?', 'tribe' ), $this->title ), $assoc_args );
 		}
 
 		// Write the meta files.
@@ -74,7 +76,7 @@ class Meta_Importer extends Generator_Command {
 		}
 
 		// Success!
-		\WP_CLI::line( __( 'We did it!', 'tribe' ) );
+		WP_CLI::line( __( 'We did it!', 'tribe' ) );
 	}
 
 	protected function get_dynamic_field_groups() {
@@ -225,9 +227,7 @@ class Meta_Importer extends Generator_Command {
 	private function prepare_field( $field ) {
 		unset( $field['key'], $field['wrapper'], $field['prepend'], $field['append'] );
 
-		$field = array_filter( $field, function ( $element ) {
-			return '' !== $element;
-		} );
+		$field = array_filter( $field, fn( $element ) => '' !== $element );
 
 		$zero_fields = [
 			'required',
@@ -247,7 +247,7 @@ class Meta_Importer extends Generator_Command {
 
 		foreach ( $required_fields as $required_field ) {
 			if ( ! isset( $field[ $required_field ] ) ) {
-				\WP_CLI::error( sprintf( __( '%s field must be set.', 'tribe' ), $required_field ) );
+				WP_CLI::error( sprintf( __( '%s field must be set.', 'tribe' ), $required_field ) );
 			}
 		}
 

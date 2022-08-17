@@ -2,12 +2,12 @@
 
 namespace Tribe\Libs\Queues;
 
-use Codeception\TestCase\WPTestCase;
 use Tribe\Libs\Container\Container;
 use Tribe\Libs\Queues\Backends\Mock_Backend;
-use Tribe\Libs\Support\SampleTask;
+use Tribe\Libs\Tests\Fixtures\SampleTask;
+use Tribe\Libs\Tests\Test_Case;
 
-final class CronTest extends WPTestCase {
+final class CronTest extends Test_Case {
 
 	/**
 	 * @var \DI\FactoryInterface|\Psr\Container\ContainerInterface

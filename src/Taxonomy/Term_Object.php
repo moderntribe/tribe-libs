@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Taxonomy;
 
 use Tribe\Libs\Object_Meta\Meta_Map;
@@ -71,18 +70,20 @@ class Term_Object {
 	 * @return static
 	 */
 	public static function factory( $term_id ) {
-		/** @var Meta_Repository $meta_repo */
+		/** @var Meta_Repository|null $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
+
 		if ( empty( $meta_repo ) ) {
 			$meta_repo = new Meta_Repository();
 		}
+
 		$taxonomy = static::NAME;
+
 		if ( empty( $taxonomy ) ) {
 			$term     = get_term( $term_id );
 			$taxonomy = $term->taxonomy;
 		}
-		$term = new static( $term_id, $meta_repo->get( $taxonomy ) );
 
-		return $term;
+		return new static( $term_id, $meta_repo->get( $taxonomy ) );
 	}
 }

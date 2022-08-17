@@ -43,8 +43,12 @@ modules:
       multisite: false
       theme: core
       plugins:
+        - advanced-custom-fields/acf.php
+        - acf-color-swatches/acf-swatch.php
         - posts-to-posts/posts-to-posts.php
       activatePlugins:
+        - advanced-custom-fields/acf.php
+        - acf-color-swatches/acf-swatch.php
         - posts-to-posts/posts-to-posts.php
       bootstrapActions:
         - [\Tribe\Libs\Blog_Copier\Copy_Manager, register_post_type]

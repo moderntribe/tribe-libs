@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Generators;
 
@@ -16,17 +15,11 @@ class Generator_Definer implements Definer_Interface {
 
 	public function define(): array {
 		return [
-			self::SRC_PATH => static function ( ContainerInterface $container ) {
-				return plugin_dir_path( $container->get( 'plugin.file' ) ) . 'src';
-			},
+			self::SRC_PATH => static fn( ContainerInterface $container ) => plugin_dir_path( $container->get( 'plugin.file' ) ) . 'src',
 
-			self::THEME_PATH => static function ( ContainerInterface $container ) {
-				return get_template_directory();
-			},
+			self::THEME_PATH => static fn( ContainerInterface $container ) => get_template_directory(),
 
-			self::TESTS_PATH => static function () {
-				return trailingslashit( realpath( ABSPATH . '/../dev/tests/tests' ) );
-			},
+			self::TESTS_PATH => static fn() => trailingslashit( realpath( ABSPATH . '/../dev/tests/tests' ) ),
 
 			File_System::class => DI\create(),
 

@@ -53,30 +53,30 @@ class Connections {
 	}
 
 	/**
-	 * @param string $direction 'p2p_to' or 'p2p_from'
-	 * @param string $where 'p2p_to' or 'p2p_from'
-	 * @param string $id
-	 * @param array $args
+	 * @param  string  $direction  'p2p_to' or 'p2p_from'
+	 * @param  string  $where      'p2p_to' or 'p2p_from'
+	 * @param  string  $id
+	 * @param  array   $args
 	 *
 	 * @return array
 	 */
 	private function get_ids( $direction, $where, $id, $args = [] ) {
 		global $wpdb;
-		$direction = ( $direction == 'p2p_to' ) ? 'p2p_to' : 'p2p_from';
-		$sql = "SELECT $direction FROM {$wpdb->p2p}";
+		$direction = ($direction == 'p2p_to') ? 'p2p_to' : 'p2p_from';
+		$sql       = "SELECT $direction FROM {$wpdb->p2p}";
 
 		if ( isset( $args['meta']['key'] ) ) {
-			$value = isset( $args['meta']['value'] ) ? $args['meta']['value'] : false;
-			$sql .= ' ' . $this->prepare_meta_join( $direction, $args['meta']['key'], $value );
+			$value = $args['meta']['value'] ?? false;
+			$sql   .= ' ' . $this->prepare_meta_join( $direction, $args['meta']['key'], $value );
 		}
 
-		$where = ( $where == 'p2p_to' ) ? 'p2p_to' : 'p2p_from';
-		$sql .= apply_filters( 'tribe_p2p_where_sql', $wpdb->prepare( " WHERE $where=%d", $id ) );
+		$where = ($where == 'p2p_to') ? 'p2p_to' : 'p2p_from';
+		$sql   .= apply_filters( 'tribe_p2p_where_sql', $wpdb->prepare( " WHERE $where=%d", $id ) );
 
 		/** Set the connection type (relationship) */
 		if ( isset( $args['type'] ) ) {
 			$type = is_array( $args['type'] ) ? ' IN ("' . implode( '","', esc_sql( $args['type'] ) ) . '")' : '="' . esc_sql( $args['type'] ) . '"';
-			$sql .= apply_filters( 'tribe_p2p_type_sql', ' AND p2p_type' . $type );
+			$sql  .= apply_filters( 'tribe_p2p_type_sql', ' AND p2p_type' . $type );
 		}
 
 		/** Set order by */
@@ -86,9 +86,9 @@ class Connections {
 
 		/** Set order */
 		if ( isset( $args['order'] ) ) {
-			$order = ( $args['order'] == 'DESC' ) ? 'DESC' : 'ASC';
+			$order   = ($args['order'] == 'DESC') ? 'DESC' : 'ASC';
 			$orderby = isset( $orderby ) ? sanitize_sql_orderby( $orderby ) : 'p2p_id';
-			$sql .= " ORDER BY $orderby $order";
+			$sql     .= " ORDER BY $orderby $order";
 		}
 
 		/** Allow filtering of entire sql statement before query */
@@ -109,8 +109,8 @@ class Connections {
 
 		$direction = ( $direction == 'p2p_to' ) ? 'p2p_to' : 'p2p_from';
 		$join = $wpdb->prepare( "
-			LEFT JOIN {$wpdb->postmeta} AS pm
-			ON {$wpdb->p2p}.$direction = pm.post_id AND pm.meta_key=%s
+			LEFT JOIN $wpdb->postmeta AS pm
+			ON $wpdb->p2p.$direction = pm.post_id AND pm.meta_key=%s
 		", $meta_key );
 
 		if ( ! empty( $meta_value ) ) {
@@ -119,7 +119,7 @@ class Connections {
 
 		$inject_where = function ( $where ) use ( $direction ) {
 			global $wpdb;
-			return $where . " AND pm.post_id = {$wpdb->p2p}.$direction";
+			return $where . " AND pm.post_id = $wpdb->p2p.$direction";
 		};
 		add_filter( 'tribe_p2p_where_sql', $inject_where );
 
@@ -135,16 +135,16 @@ class Connections {
 	 */
 	public function get_connections_by_p2p_meta( $meta_key, $meta_value = false, $args = [] ) {
 		global $wpdb;
-		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->p2p} LEFT JOIN {$wpdb->p2pmeta} AS p2pm ON p2pm.meta_key=%s", $meta_key );
+		$sql = $wpdb->prepare( "SELECT * FROM $wpdb->p2p LEFT JOIN $wpdb->p2pmeta AS p2pm ON p2pm.meta_key=%s", $meta_key );
 
 		if ( ! empty( $meta_value ) ) {
 			$sql .= $wpdb->prepare( " AND p2pm.meta_value=%s", $meta_value );
 		}
 
-		$sql .= "WHERE {$wpdb->p2p}.p2p_id = p2pm.p2p_id";
+		$sql .= "WHERE $wpdb->p2p.p2p_id = p2pm.p2p_id";
 
 		if ( isset( $args['type'] ) ) {
-			$sql .= $wpdb->prepare( " AND {$wpdb->p2p}.p2p_type=%s", $args['type'] );
+			$sql .= $wpdb->prepare( " AND $wpdb->p2p.p2p_type=%s", $args['type'] );
 		}
 
 		return $wpdb->get_results( $sql );
@@ -159,7 +159,7 @@ class Connections {
 	 */
 	public function get_newest_connection( $p2p_type ) {
 		global $wpdb;
-		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->p2p} WHERE p2p_type=%s ORDER BY p2p_id DESC LIMIT 1", $p2p_type );
+		$sql = $wpdb->prepare( "SELECT * FROM $wpdb->p2p WHERE p2p_type=%s ORDER BY p2p_id DESC LIMIT 1", $p2p_type );
 
 		return $wpdb->get_row( $sql, ARRAY_A );
 	}
@@ -176,7 +176,7 @@ class Connections {
 	 */
 	public function get_shared_connections( $id, $types = [], $direction = '' ) {
 		global $wpdb;
-		$sql = "SELECT * FROM {$wpdb->p2p}";
+		$sql = "SELECT * FROM $wpdb->p2p";
 		$where = [
 			'direction' => $wpdb->prepare( "( p2p_to=%d OR p2p_from=%d )", $id, $id ),
 		];

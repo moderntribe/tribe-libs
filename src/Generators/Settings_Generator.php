@@ -2,11 +2,12 @@
 
 namespace Tribe\Libs\Generators;
 
+use WP_CLI;
+
 class Settings_Generator extends Generator_Command {
 
 	private $slug       = '';
 	private $class_name = '';
-	private $namespace  = '';
 
 	public function description() {
 		return __( 'Generate a settings page.', 'tribe' );
@@ -30,13 +31,12 @@ class Settings_Generator extends Generator_Command {
 	public function run_command( $args, $assoc_args ) {
 		$this->slug       = $this->sanitize_slug( $args );
 		$this->class_name = $this->ucwords( $this->slug );
-		$this->namespace  = 'Tribe\Project\Settings';
 
 		$this->create_settings_file();
 
 		$this->update_subscriber();
 
-		\WP_CLI::success( 'Way to go! ' . \WP_CLI::colorize( "%W{$this->slug}%n" ) . ' settings page has been created' );
+		WP_CLI::success( 'Way to go! ' . WP_CLI::colorize( "%W{$this->slug}%n" ) . ' settings page has been created' );
 	}
 
 	private function create_settings_file() {

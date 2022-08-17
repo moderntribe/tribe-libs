@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * Base environment configuration, loaded for all test environments
  */
@@ -23,13 +24,6 @@ function tribe_getenv( $name, $default = null ) {
 	}
 
 	return $env;
-}
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-if ( file_exists( __DIR__ . '/.env' ) ) {
-	$dotenv = Dotenv\Dotenv::create( __DIR__ );
-	$dotenv->load();
 }
 
 // ==============================================================

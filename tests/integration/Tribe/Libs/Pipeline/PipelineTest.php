@@ -3,15 +3,12 @@
 namespace Tribe\Libs\Pipeline;
 
 use Closure;
-use Codeception\TestCase\WPTestCase;
 use DI\ContainerBuilder;
+use Tribe\Libs\Tests\Test_Case;
 
-final class PipelineTest extends WPTestCase {
+final class PipelineTest extends Test_Case {
 
-	/**
-	 * @var \Tribe\Libs\Pipeline\Pipeline
-	 */
-	private $pipeline;
+	private Pipeline $pipeline;
 
 	protected function setUp(): void {
 		parent::setUp();

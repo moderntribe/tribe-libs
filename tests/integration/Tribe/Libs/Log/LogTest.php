@@ -2,18 +2,16 @@
 
 namespace Tribe\Libs\Log;
 
-use Codeception\TestCase\WPTestCase;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as MonoLogger;
+use Tribe\Libs\Tests\Test_Case;
 
-final class LogTest extends WPTestCase {
+final class LogTest extends Test_Case {
 
 	/**
 	 * The path to log to during tests.
-	 *
-	 * @var string
 	 */
-	protected $log_file;
+	protected string $log_file;
 
 	protected function setUp(): void {
 		parent::setUp();

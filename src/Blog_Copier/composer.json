@@ -9,9 +9,9 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-container": "^3.7",
-        "moderntribe/square1-queues": "^3.7",
-        "php": "^7.2"
+        "moderntribe/square1-container": "^4.1",
+        "moderntribe/square1-queues": "^4.1",
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.7-dev"
+            "dev-master": "4.1-dev"
         }
     }
 }

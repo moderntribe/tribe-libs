@@ -1,0 +1,32 @@
+{
+    "name": "moderntribe/square1-wp-downloader",
+    "type": "library",
+    "description": "Downloads WordPress and plugins to aide in automated testing.",
+    "license": "GPL-2.0-only",
+    "bin": [
+        "bin/wpdownloader"
+    ],
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.20",
+        "moderntribe/square1-container": "^4.1",
+        "nelexa/zip": "^4.0",
+        "symfony/console": "^5.0 || ^6.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tribe\\Libs\\WP_Downloader\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.1-dev"
+        }
+    }
+}

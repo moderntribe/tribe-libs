@@ -1,0 +1,27 @@
+{
+    "name": "moderntribe/square1-field-models",
+    "type": "library",
+    "description": "Data Transfer Objects (models) and Collections for ACF",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "spatie/data-transfer-object": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Field_Models\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.1-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
