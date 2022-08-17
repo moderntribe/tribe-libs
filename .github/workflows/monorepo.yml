@@ -22,7 +22,6 @@ jobs:
       - name: Fetch git history
         run: |
           git fetch --prune --unshallow
-          git checkout master
 
       - name: Get git tag name
         id: git-tag
