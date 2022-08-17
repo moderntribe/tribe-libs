@@ -66,8 +66,8 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    ```bash
    ./dev/monorepo/scripts/create-package-repo.sh square1-my-new-repo
    ```
-1. Add the directory and repo to the `directories_to_repositories` map
-   in `monorepo-builder.yml`.
+1. Add the directory and repo to the `Option::DIRECTORIES_TO_REPOSITORIES` map
+   in `monorepo-builder.php`.
 1. Run the script to merge the package `composer.json` files to the root
    `composer.json` file:
    ```bash
@@ -77,7 +77,7 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Adding Composer Dependencies
 
-1. Add the dependency to `composer.json` in the package(s) that needs it.
+1. Add the dependency to `composer.json` in the sub-package(s) that needs it.
 1. Run the `merge` command to merge dependencies up to the root `composer.json`
    ```bash
    ./monorepo.sh merge
@@ -85,7 +85,7 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Update the development version
 
-You will rarely need to do this, but it is documented here just in case.
+You will rarely need to do this, but it is documented here just in case, the example below is for the `5.x` branch, but ensure you're creating an alias for the correct major version that matches the branch.
 
 1. Set the `5.x` branch alias for all packages in the `5.x` branch:
 
