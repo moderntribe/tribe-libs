@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.0.1 - 2022-08-17
 
 ## 4.0.0 - 2022-08-17
 - Changed: Create the `4.x` branch/major version, which has a minimum version of `PHP7.4` for use with **legacy PHP7.4 Square One projects where their hosts will be force upgrading to PHP8.0**. This is intermediate release to allow an ease of upgrading, however new projects should use the upcoming `5.x` releases which will be optimized for PHP8.0+.
