@@ -24,7 +24,7 @@
             "@test:install-plugins",
             "@wpdownloader copy tests/.env-dist tests/.env"
         ],
-        "test": "./vendor/bin/codecept --config ./tests",
+        "test": "@php vendor/bin/codecept --config ./tests",
         "test:integration": "@test run integration"
     },
     "require": {
