@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 4.0.4 - 2022-08-18
 - Bugfix: Use correct class-string docblock for Taxonomy_Subscriber.
 
