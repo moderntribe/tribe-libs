@@ -1,0 +1,71 @@
+name: Create Sub-Repo Branches
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: The branch name to create in all sub-repos
+        required: true
+
+jobs:
+  list-repos:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    env:
+      temp-list: '["square1-wp-downloader"]' # TODO: remove when working
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        id: set-matrix
+        # Test with a single repo first
+        run: echo "::set-output name=matrix::${{ env.temp-list }}"
+        # TODO: replace the test with the full repo list
+        # run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
+
+  create-sub-repo-branches:
+    needs: list-repos
+    runs-on: ubuntu-latest
+    env:
+        org: moderntribe
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get commits
+        uses: octokit/request-action@v2.x
+        id: commits
+        with:
+          route: GET /repos/{owner}/{repo}/commits
+          owner: ${{ env.org }}
+          repo: ${{ matrix.repo }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get last SHA
+        uses: octokit/request-action@v2.x
+        id: last-commit
+        run: echo "::set-output name=sha::$(${{ fromJson(steps.commits.outputs.data) }} | jq -r .[1].sha)"
+
+      - name: Create branch
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/{owner}/{repo}/git/refs
+          owner: ${{ env.org }}
+          repo: ${{ matrix.repo }}
+          ref: refs/heads/${{ github.event.inputs.branch }}
+          sha: ${{ steps.last-commit.outputs.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
