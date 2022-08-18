@@ -7,7 +7,7 @@ use Tribe\Libs\Container\Abstract_Subscriber;
 abstract class Taxonomy_Subscriber extends Abstract_Subscriber {
 
 	/**
-	 * @var class-string<\Tribe\Libs\Taxonomy\Term_Object> The taxonomy configuration class. Should extend Taxonomy_Config
+	 * @var class-string<\Tribe\Libs\Taxonomy\Taxonomy_Config> The taxonomy configuration class. Should extend Taxonomy_Config
 	 */
 	protected $config_class;
 
