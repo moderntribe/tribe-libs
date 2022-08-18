@@ -24,6 +24,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set repo matrix
         id: set-matrix
         # Test with a single repo first
         run: echo "::set-output name=matrix::${{ env.templist }}"
