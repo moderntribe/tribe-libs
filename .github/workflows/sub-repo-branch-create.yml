@@ -54,7 +54,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get last SHA
-        uses: octokit/request-action@v2.x
         id: last-commit
         run: echo "::set-output name=sha::$(${{ fromJson(steps.commits.outputs.data) }} | jq -r .[1].sha)"
 
