@@ -12,7 +12,8 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     env:
-      temp-list: '["square1-wp-downloader"]' # TODO: remove when working
+      temp-list: '["square1-wp-downloader"]'
+      # TODO: remove when working
 
     steps:
       - name: Setup PHP
@@ -33,7 +34,7 @@ jobs:
     needs: list-repos
     runs-on: ubuntu-latest
     env:
-        org: moderntribe
+      org: moderntribe
     strategy:
       matrix:
         repo: ${{ fromJson(needs.list-repos.outputs.matrix) }}
