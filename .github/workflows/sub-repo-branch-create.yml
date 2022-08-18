@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: The branch name to create in all sub-repos
+        description: 'The branch name to create in all sub-repos'
         required: true
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     needs: list-repos
     runs-on: ubuntu-latest
     env:
-      org: moderntribe
+      org: 'moderntribe'
     strategy:
       matrix:
         repo: ${{ fromJson(needs.list-repos.outputs.matrix) }}
