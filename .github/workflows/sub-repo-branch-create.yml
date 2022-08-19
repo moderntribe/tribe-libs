@@ -30,6 +30,7 @@ jobs:
         # run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
 
   create-sub-repo-branches:
+    permissions: write-all
     needs: list-repos
     runs-on: ubuntu-latest
     env:
@@ -65,6 +66,6 @@ jobs:
           ref: "refs/heads/${{ github.event.inputs.branch }}"
           sha: "${{ steps.last-commit.outputs.sha }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
