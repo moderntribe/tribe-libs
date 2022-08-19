@@ -40,17 +40,19 @@ jobs:
 
     steps:
       - name: Checkout sub-repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ${{ env.org }}/${{ matrix.repo-name }}
           token: ${{ secrets.MONOREPO_TOKEN }}
           fetch-depth: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
 
       - name: Create branch
         run: |
           git config --local user.email "Tr1b0t@users.noreply.github.com"
           git config --local user.name "Tr1b0t"
           git checkout -b ${{ github.event.inputs.branch }}
-          git push -u origin ${{ github.event.inputs.branch }}
+          git push
 
 
