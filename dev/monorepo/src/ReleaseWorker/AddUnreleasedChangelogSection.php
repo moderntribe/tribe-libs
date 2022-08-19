@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Dev\Monorepo\ReleaseWorker;
 
@@ -9,8 +8,10 @@ use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
 class AddUnreleasedChangelogSection implements ReleaseWorkerInterface {
+
 	public function work( Version $version ): void {
 		$changelogFilePath = getcwd() . '/CHANGELOG.md';
+
 		if ( ! file_exists( $changelogFilePath ) ) {
 			return;
 		}
@@ -24,4 +25,5 @@ class AddUnreleasedChangelogSection implements ReleaseWorkerInterface {
 	public function getDescription( Version $version ): string {
 		return 'Add new "Unreleased" section in `CHANGELOG.md`';
 	}
+
 }

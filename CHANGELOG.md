@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- @TODO: Updated: monorepo.yml GitHub workflow to use https://github.com/symplify/monorepo-split-github-action
+- Updated: monorepo-builder library to the 11.1 version
+- Fixed: phpstan no longer detecting monorepo-builder packages
 
 ## 4.0.7 - 2022-08-19
 - Released: `4.x` branch

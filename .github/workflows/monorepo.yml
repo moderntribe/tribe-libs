@@ -56,6 +56,8 @@ jobs:
       - name: Install updated composer dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
+      # TODO: This is no longer valid, as the split command was removed, we'll need to add https://github.com/symplify/monorepo-split-github-action
+      # Example config: https://github.com/symplify/symplify/blob/main/.github/workflows/split_monorepo.yaml
       - name: Split the package mini-repos
         env:
           GITHUB_TOKEN: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
