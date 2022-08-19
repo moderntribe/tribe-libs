@@ -34,22 +34,24 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
 
 ### Releasing a new version
 
-1. Ensure that all code for the release is merged to master
-1. Ensure that all updates for the release are logged in `CHANGELOG.md`.
+> **IMPORTANT:** branches must already exist in the sub-repos, use the [Create Sub-Repo Branch GitHub Workflow](https://github.com/moderntribe/tribe-libs/actions/workflows/sub-repo-branch-create.yml) to create them if they don't already exist.
+
+1. Ensure that all code for the release is merged to the branch that matches the release number, e.g. if you're planning to release an update `4.1.0`, that code should live in the `4.x` branch. A release such as `5.2.6` should live in the `5.x` branch.
+1. Ensure that all updates for the release are logged in `CHANGELOG.md` under `## Unreleased`.
 1. Run the release script, with the version number for the release (format: `<major>.<minor>.<patch>`):
-   Dry run example:
+   Dry run example for a `4.x` release:
    ``` bash
-   ./monorepo.sh release 5.0.1 --dry-run
+   git checkout 4.x && git pull && ./monorepo.sh release 4.1.0 --dry-run
    ```
-   Real release example:
+   Real release example for a `4.x` release:
    ``` bash
-   ./monorepo.sh release 5.0.1
+   git checkout 4.x && git pull && ./monorepo.sh release 4.1.0
    ``` 
 1. The script will handle several steps for you automatically:
     1. Set any package interdependencies to the new version.
     1. Update `CHANGELOG.md` with the appropriate version number.
     1. Create the git tag and push it to GitHub, tagged to the branch you have checked out.
-    1. Bump the `master` branch version to the next minor version number
+    1. Bump the **current branch you have checked out** version's to the next version number
 1. When the tag is pushed to GitHub, an Action there will automatically split the monorepo and deploy the tag
    to all of the package repos. (Note: The GH Action will run as a bot user with appropriate permissions
    to write to all of the package repositories. Those repositories are read-only for normal usage.)
@@ -66,6 +68,8 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    ```bash
    ./dev/monorepo/scripts/create-package-repo.sh square1-my-new-repo
    ```
+1. Add a single commit (a blank readme is fine) and push it up.
+1. Run the [Create Sub-Repo Branch GitHub Workflow](https://github.com/moderntribe/tribe-libs/actions/workflows/sub-repo-branch-create.yml) to create any missing version branches, e.g. `master`,`4.x`, `5.x` etc...
 1. Add the directory and repo to the `Option::DIRECTORIES_TO_REPOSITORIES` map
    in `monorepo-builder.php`.
 1. Run the script to merge the package `composer.json` files to the root
