@@ -50,7 +50,7 @@ jobs:
           owner: ${{ env.org }}
           repo: ${{ matrix.repo-name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
 
       - name: Get last SHA
         id: last-commit
@@ -65,6 +65,6 @@ jobs:
           ref: "refs/heads/${{ github.event.inputs.branch }}"
           sha: "${{ steps.last-commit.outputs.sha }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
 
 
