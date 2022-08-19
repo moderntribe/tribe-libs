@@ -24,10 +24,7 @@ jobs:
 
       - name: Set repo matrix
         id: set-matrix
-        # Test with a single repo first
-        run: echo '::set-output name=matrix::["square1-wp-downloader"]'
-        # TODO: replace the test with the full repo list
-        # run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
+        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
 
   create-sub-repo-branches:
     needs: list-repos
