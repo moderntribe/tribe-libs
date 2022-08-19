@@ -51,6 +51,6 @@ jobs:
           git config --local user.email "Tr1b0t@users.noreply.github.com"
           git config --local user.name "Tr1b0t"
           git checkout -b ${{ github.event.inputs.branch }}
-          git push
+          git push -u origin ${{ github.event.inputs.branch }}
 
 
