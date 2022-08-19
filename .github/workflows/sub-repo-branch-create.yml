@@ -43,10 +43,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ env.org }}/${{ matrix.repo-name }}
-          token: ${{ secrets.MONOREPO_TOKEN }}
+          token: ${{ secrets.MONOREPO_TEST_TOKEN }}
           fetch-depth: 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
 
       - name: Create branch
         run: |
