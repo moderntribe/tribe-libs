@@ -62,8 +62,8 @@ jobs:
           route: POST /repos/{owner}/{repo}/git/refs
           owner: ${{ env.org }}
           repo: ${{ matrix.repo-name }}
-          ref: refs/heads/${{ github.event.inputs.branch }}
-          sha: ${{ steps.last-commit.outputs.sha }}
+          ref: "refs/heads/${{ github.event.inputs.branch }}"
+          sha: "${{ steps.last-commit.outputs.sha }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
