@@ -9,7 +9,7 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-container": "^4.1",
+        "moderntribe/square1-container": "^4.0.5",
         "php": ">=7.4"
     },
     "suggest": {
