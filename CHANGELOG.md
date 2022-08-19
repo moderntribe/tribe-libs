@@ -3,8 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-
-## 4.0.6 - 2022-08-19
+- Released: `4.x` branch
 
 ## 4.0.5 - 2022-08-19
 - Fixed: Added the missing https://github.com/moderntribe/square1-routes sub-repo that was never originally created.
