@@ -59,7 +59,7 @@ jobs:
       - name: Create branch
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/{owner}/{repo}/git/refs
+          route: POST /repos/{owner}/{repo}/git/refs
           owner: ${{ env.org }}
           repo: ${{ matrix.repo-name }}
           ref: refs/heads/${{ github.event.inputs.branch }}
