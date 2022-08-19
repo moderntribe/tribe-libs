@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed: Added the missing https://github.com/moderntribe/square1-routes sub-repo that was never originally created.
+- Added: [Create branches in sub-repos GitHub workflow](.github/workflows/sub-repo-branch-create.yml) - in order for the monorepo to create tags on specific branches, those branches need to first exist. This workflow will create a branch in all the sub-repos.
 
 ## 4.0.4 - 2022-08-18
 - Bugfix: Use correct class-string docblock for Taxonomy_Subscriber.

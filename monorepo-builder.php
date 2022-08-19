@@ -32,6 +32,7 @@ return static function ( ContainerConfigurator $containerConfigurator ): void {
 		'src/Queues_Mysql'  => "git@github.com:moderntribe/square1-queues-mysql.git",
 		'src/Request'       => "git@github.com:moderntribe/square1-request.git",
 		'src/Required_Page' => "git@github.com:moderntribe/square1-required-page.git",
+		'src/Routes'        => "git@github.com:moderntribe/square1-routes.git",
 		'src/Schema'        => "git@github.com:moderntribe/square1-schema.git",
 		'src/Settings'      => "git@github.com:moderntribe/square1-settings.git",
 		'src/Taxonomy'      => "git@github.com:moderntribe/square1-taxonomy.git",
