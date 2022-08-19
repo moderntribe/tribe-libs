@@ -36,7 +36,7 @@ jobs:
       org: 'moderntribe'
     strategy:
       matrix:
-        repo: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+        repo-name: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
       - name: Checkout
@@ -48,20 +48,20 @@ jobs:
         with:
           route: GET /repos/{owner}/{repo}/commits
           owner: ${{ env.org }}
-          repo: ${{ matrix.repo }}
+          repo: ${{ matrix.repo-name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get last SHA
         id: last-commit
-        run: echo "::set-output name=sha::$(${{ fromJson(steps.commits.outputs.data) }} | jq -r .[1].sha)"
+        run: echo "::set-output name=sha::$(${{ steps.commits.outputs.data }} | jq -r .[1].sha)"
 
       - name: Create branch
         uses: octokit/request-action@v2.x
         with:
           route: GET /repos/{owner}/{repo}/git/refs
           owner: ${{ env.org }}
-          repo: ${{ matrix.repo }}
+          repo: ${{ matrix.repo-name }}
           ref: refs/heads/${{ github.event.inputs.branch }}
           sha: ${{ steps.last-commit.outputs.sha }}
         env:
