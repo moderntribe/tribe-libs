@@ -11,7 +11,7 @@
     "require": {
         "php": ">=7.4",
         "enshrined/svg-sanitize": "^0.15",
-        "moderntribe/square1-container": "^4.0.7"
+        "moderntribe/square1-container": "^4.1"
     },
     "autoload": {
         "psr-4": {
