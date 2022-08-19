@@ -30,7 +30,6 @@ jobs:
         # run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
 
   create-sub-repo-branches:
-    permissions: write-all
     needs: list-repos
     runs-on: ubuntu-latest
     env:
@@ -40,32 +39,18 @@ jobs:
         repo-name: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
-      - name: Checkout
+      - name: Checkout sub-repo
         uses: actions/checkout@v2
-
-      - name: Get commits
-        uses: octokit/request-action@v2.x
-        id: commits
         with:
-          route: GET /repos/{owner}/{repo}/commits
-          owner: ${{ env.org }}
-          repo: ${{ matrix.repo-name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get last SHA
-        id: last-commit
-        run: echo "::set-output name=sha::$( echo '${{ steps.commits.outputs.data }}' | jq -r .[0].sha)"
+          repository: ${{ env.org }}/${{ matrix.repo-name }}
+          token: ${{ secrets.MONOREPO_TOKEN }}
+          fetch-depth: 0
 
       - name: Create branch
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/{owner}/{repo}/git/refs
-          owner: ${{ env.org }}
-          repo: ${{ matrix.repo-name }}
-          ref: "refs/heads/${{ github.event.inputs.branch }}"
-          sha: "${{ steps.last-commit.outputs.sha }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --local user.email "Tr1b0t@users.noreply.github.com"
+          git config --local user.name "Tr1b0t"
+          git checkout -b ${{ github.event.inputs.branch }}
+          git push -u origin ${{ github.event.inputs.branch }}
 
 
