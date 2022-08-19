@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-    env:
-      templist: '["square1-wp-downloader"]'
-      # TODO: remove when working
 
     steps:
       - name: Setup PHP
@@ -28,7 +25,7 @@ jobs:
       - name: Set repo matrix
         id: set-matrix
         # Test with a single repo first
-        run: echo "::set-output name=matrix::${{ env.templist }}"
+        run: echo '::set-output name=matrix::["square1-wp-downloader"]'
         # TODO: replace the test with the full repo list
         # run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
 
