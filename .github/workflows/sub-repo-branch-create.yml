@@ -54,7 +54,7 @@ jobs:
 
       - name: Get last SHA
         id: last-commit
-        run: echo "::set-output name=sha::${{ fromJson(steps.commits.outputs.data).[0].sha }}"
+        run: echo "::set-output name=sha::$( echo ${{ steps.commits.outputs.data }} | jq -r .[0].sha)"
 
       - name: Create branch
         uses: octokit/request-action@v2.x
