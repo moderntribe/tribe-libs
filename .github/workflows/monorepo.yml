@@ -52,5 +52,5 @@ jobs:
 
       - name: Split the package mini-repos
         env:
-          GITHUB_TOKEN: ${{ secrets.MONOREPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
         run: vendor/bin/monorepo-builder split --tag=${{ steps.git-tag.outputs.tag }} -q
