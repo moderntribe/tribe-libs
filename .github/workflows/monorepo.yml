@@ -25,7 +25,7 @@ jobs:
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(packages/monorepo-builder/bin/monorepo-builder packages-json --exclude-package easy-coding-standard --exclude-package monorepo-builder --exclude-package config-transformer --exclude-package easy-ci --exclude-package vendor-patches --exclude-package phpstan-rules)"
+        run: echo "::set-output name=matrix::$(./monorepo.sh packages-json --exclude-package easy-coding-standard --exclude-package monorepo-builder --exclude-package config-transformer --exclude-package easy-ci --exclude-package vendor-patches --exclude-package phpstan-rules)"
 
   split:
     needs: list-repos
