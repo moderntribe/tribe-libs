@@ -22,9 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - uses: ramsey/composer-install@v2
+
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
+        run: echo "::set-output name=matrix::$(packages/monorepo-builder/bin/monorepo-builder packages-json --exclude-package easy-coding-standard --exclude-package monorepo-builder --exclude-package config-transformer --exclude-package easy-ci --exclude-package vendor-patches --exclude-package phpstan-rules)"
 
   create-sub-repo-branches:
     needs: list-repos
