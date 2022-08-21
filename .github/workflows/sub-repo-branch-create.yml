@@ -35,13 +35,13 @@ jobs:
       org: 'moderntribe'
     strategy:
       matrix:
-        repo-name: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+        package: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
       - name: Checkout sub-repo
         uses: actions/checkout@v3
         with:
-          repository: ${{ env.org }}/${{ matrix.repo-name }}
+          repository: ${{ env.org }}/${{ matrix.package }}
           token: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
           fetch-depth: 0
 
