@@ -6,7 +6,7 @@ Square One core plugin.
 
 | Tribe Libs Version | PHP Constraints |                                                                                 Notes |
 |--------------------|:---------------:|--------------------------------------------------------------------------------------:|
-| 3.x                |     7.2-7.4     |                                                                 No longer maintained. |
+| 3.x                |     7.2-7.4     |                                                  Master branch. No longer maintained. |
 | 4.x                |      7.4+       | For use in legacy Square One PHP 7.4 projects where the host is upgrading to PHP 8.0. |
 | 5.x+               |      8.0+       |                                                   For use in new Square One projects. |
 
@@ -70,8 +70,6 @@ is managed using the [Monorepo Builder](https://github.com/Symplify/MonorepoBuil
    ```
 1. Add a single commit (a blank readme is fine) and push it up.
 1. Run the [Create Sub-Repo Branch GitHub Workflow](https://github.com/moderntribe/tribe-libs/actions/workflows/sub-repo-branch-create.yml) to create any missing version branches, e.g. `master`,`4.x`, `5.x` etc...
-1. Add the directory and repo to the `Option::DIRECTORIES_TO_REPOSITORIES` map
-   in `monorepo-builder.php`.
 1. Run the script to merge the package `composer.json` files to the root
    `composer.json` file:
    ```bash
