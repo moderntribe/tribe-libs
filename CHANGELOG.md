@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 4.0.16 - 2022-08-21
 - Fixed: splitting packages into existing, specific branches in monorepo.yml using a forked action https://github.com/moderntribe/monorepo-split-github-action
 
