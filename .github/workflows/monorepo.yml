@@ -54,10 +54,10 @@ jobs:
         with:
           tag: ${GITHUB_REF#refs/tags/}
 
-          package-directory: 'src/${{ matrix.package }}'
-          split-repository-organization: 'moderntribe'
-          split-repository-name: '${{ matrix.package }}'
-          user-name: 'Tr1b0t'
-          user-email: 'Tr1b0t@users.noreply.github.com'
+          package_directory: 'src/${{ matrix.package }}'
+          repository_organization: 'moderntribe'
+          repository_name: '${{ matrix.package }}'
+          user_name: 'Tr1b0t'
+          user_email: 'Tr1b0t@users.noreply.github.com'
           branch: '${{ env.split_branch }}'
 
