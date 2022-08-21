@@ -32,7 +32,7 @@ jobs:
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(./monorepo.sh packages-json --exclude-package easy-coding-standard --exclude-package monorepo-builder --exclude-package config-transformer --exclude-package easy-ci --exclude-package vendor-patches --exclude-package phpstan-rules)"
+        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-map.php)"
 
   split:
     needs: list-repos
@@ -54,9 +54,9 @@ jobs:
         with:
           tag: ${GITHUB_REF#refs/tags/}
 
-          package_directory: 'src/${{ matrix.package }}'
+          package_directory: 'src/${{ matrix.package.directory }}'
           repository_organization: 'moderntribe'
-          repository_name: '${{ matrix.package }}'
+          repository_name: '${{ matrix.package.name }}'
           user_name: 'Tr1b0t'
           user_email: 'Tr1b0t@users.noreply.github.com'
           branch: '${{ env.split_branch }}'
