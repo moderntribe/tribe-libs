@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.0.10 - 2022-08-21
 
 ## 4.0.9 - 2022-08-21
 - Updated: monorepo release GitHub workflow to use https://github.com/symplify/monorepo-split-github-action
