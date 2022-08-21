@@ -8,6 +8,13 @@ on:
 jobs:
   list-repos:
     runs-on: ubuntu-latest
+    env:
+      # This should be changed based on the branch where this action lives to match
+      # the versions that will be released, so for a "4.x" branch would be 4.0.0 <= 5.0.0.
+      # Branches MUST EXIST in the sub-repos for this to work, so use the
+      # sub-repo-branch-create.yml GitHub action to create those branches first.
+      # If you branch from this, ensure to change the split_branch to a new major version!
+      split_branch: '4.x'
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
@@ -19,7 +26,7 @@ jobs:
           coverage: none
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - uses: ramsey/composer-install@v2
 
@@ -30,23 +37,18 @@ jobs:
   split:
     needs: list-repos
     runs-on: ubuntu-latest
-    env:
-      # This should be changed based on the branch where this action lives to match
-      # the versions that will be released, so for a "4.x" branch would be 4.0.0 <= 5.0.0.
-      # Branches MUST EXIST in the sub-repos for this to work, so use the
-      # sub-repo-branch-create.yml GitHub action to create those branches first.
-      # If you branch from this, ensure to change the split_branch to a new major version!
-      split_branch: '4.x'
     strategy:
       fail-fast: false
       matrix:
         package: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Monorepo Tagged Split of ${{ matrix.package }}
-        uses: symplify/github-action-monorepo-split@2.0
+        uses: symplify/github-action-monorepo-split@2.1
         env:
           GITHUB_TOKEN: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
         with:
