@@ -57,7 +57,7 @@ jobs:
           package_directory: 'src/${{ matrix.package.directory }}'
           repository_organization: 'moderntribe'
           repository_name: '${{ matrix.package.name }}'
-          user_name: 'Tr1b0t'
-          user_email: 'Tr1b0t@users.noreply.github.com'
+          user_name: '${{ github.actor }}'
+          user_email: '${{ github.actor }}@users.noreply.github.com'
           branch: '${{ env.split_branch }}'
 
