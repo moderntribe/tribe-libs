@@ -3,18 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-
-## 4.0.15 - 2022-08-21
-
-## 4.0.14 - 2022-08-21
-
-## 4.0.13 - 2022-08-21
-
-## 4.0.12 - 2022-08-21
-
-## 4.0.11 - 2022-08-21
-
-## 4.0.10 - 2022-08-21
+- Fixed: splitting packages into existing, specific branches in monorepo.yml using a forked action https://github.com/moderntribe/monorepo-split-github-action
 
 ## 4.0.9 - 2022-08-21
 - Updated: monorepo release GitHub workflow to use https://github.com/symplify/monorepo-split-github-action
