@@ -48,7 +48,7 @@ jobs:
           fetch-depth: 0
 
       - name: Monorepo Tagged Split of ${{ matrix.package }}
-        uses: moderntribe/monorepo-split-github-action@3.0
+        uses: moderntribe/monorepo-split-github-action@3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
         with:
