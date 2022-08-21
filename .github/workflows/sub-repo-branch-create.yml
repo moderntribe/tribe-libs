@@ -22,9 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - uses: ramsey/composer-install@v2
+
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
+        run: echo "::set-output name=matrix::$(./monorepo.sh packages-json --exclude-package easy-coding-standard --exclude-package monorepo-builder --exclude-package config-transformer --exclude-package easy-ci --exclude-package vendor-patches --exclude-package phpstan-rules)"
 
   create-sub-repo-branches:
     needs: list-repos
@@ -33,13 +35,13 @@ jobs:
       org: 'moderntribe'
     strategy:
       matrix:
-        repo-name: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+        package: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
       - name: Checkout sub-repo
         uses: actions/checkout@v3
         with:
-          repository: ${{ env.org }}/${{ matrix.repo-name }}
+          repository: ${{ env.org }}/${{ matrix.package }}
           token: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
           fetch-depth: 0
 

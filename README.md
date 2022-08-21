@@ -99,15 +99,3 @@ You will rarely need to do this, but it is documented here just in case.
    ```
    ./monorepo.sh bump-interdependency "^5.0"
    ```
-
-### Run a release without GitHub Actions
-
-A release should be automatically deployed to all package repos by GitHub Actions whenever a tag
-is pushed to GitHub. That is really just running this command (but with appropriate permissions to push to all repos):
-
-```bash
-./monorepo.sh split --tag="5.0.0"
-```
-
-Your GitHub user must have write access to all of the `square1-*` repositories to complete this successfully (this is
-why we have the GitHub Action).

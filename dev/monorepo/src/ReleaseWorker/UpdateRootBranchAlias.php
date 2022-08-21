@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Dev\Monorepo\ReleaseWorker;
 
@@ -11,20 +10,9 @@ use Symplify\MonorepoBuilder\Utils\VersionUtils;
 
 class UpdateRootBranchAlias implements ReleaseWorkerInterface {
 
-	/**
-	 * @var DevMasterAliasUpdater
-	 */
-	private $devMasterAliasUpdater;
-
-	/**
-	 * @var ComposerJsonProvider
-	 */
-	private $composerJsonProvider;
-
-	/**
-	 * @var VersionUtils
-	 */
-	private $versionUtils;
+	private DevMasterAliasUpdater $devMasterAliasUpdater;
+	private ComposerJsonProvider $composerJsonProvider;
+	private VersionUtils $versionUtils;
 
 	public function __construct(
 		DevMasterAliasUpdater $devMasterAliasUpdater,
@@ -50,4 +38,5 @@ class UpdateRootBranchAlias implements ReleaseWorkerInterface {
 
 		return sprintf( 'Set branch alias "%s" in root composer.json', $nextAlias );
 	}
+
 }

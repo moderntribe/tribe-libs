@@ -4,6 +4,8 @@ parameters:
 	level: 5
 	paths:
 		- ../src
+	scanDirectories:
+		- ../vendor/symplify/monorepo-builder
 	excludePaths:
 		- ../src/Cache/Cache_Prime_Command.php
 		- ../src/Generators/templates/
