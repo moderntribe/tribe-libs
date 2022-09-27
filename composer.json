@@ -5,12 +5,12 @@
     "license": "GPL-2.0-only",
     "require": {
         "jbzoo/pimpledumper": "^1.2",
-        "php": "^7.0",
+        "php": ">=7.0",
         "pimple/pimple": "~3.0@dev"
     },
     "require-dev": {
-        "lucatume/wp-browser": "^2.2",
-        "symplify/monorepo-builder": "^6.0"
+        "lucatume/wp-browser": "^3.1",
+        "symplify/monorepo-builder": "^11.1"
     },
     "autoload": {
         "files": [
