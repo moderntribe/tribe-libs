@@ -109,15 +109,20 @@ class Taxonomy_Registration {
 	/**
 	 * TODO: move this to a taxonomy repository class
 	 *
-	 * @param string     $taxonomy
-	 * @param string     $key_property
-	 * @param string     $value_property
-	 * @param array|null $args
+	 * @param  string  $taxonomy
+	 * @param  string  $key_property
+	 * @param  string  $value_property
+	 * @param  array   $args
+	 *
 	 * @return array
 	 */
-	public static function get_taxonomy_list( $taxonomy, $key_property = 'term_id', $value_property = 'name', array $args = null ) {
-		$terms = get_terms( $taxonomy, $args );
-		$list = [ ];
+	public static function get_taxonomy_list( $taxonomy, $key_property = 'term_id', $value_property = 'name', array $args = [] ) {
+		$args = array_merge( [
+			'taxonomy' => $taxonomy,
+		], $args );
+
+		$terms = get_terms( $args );
+		$list  = [];
 
 		foreach ( $terms as $term ) {
 			$list[ $term->$key_property ] = $term->$value_property;
@@ -125,4 +130,5 @@ class Taxonomy_Registration {
 
 		return $list;
 	}
+
 }
