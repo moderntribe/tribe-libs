@@ -30,6 +30,8 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
+        "ext-simplexml": "*",
+        "ext-zlib": "*",
         "composer-plugin-api": "^1.0 || ^2.0",
         "enshrined/svg-sanitize": "^0.15",
         "filp/whoops": "^2.2@dev",
