@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-- Added: All YouTube oEmbeds will use youtube-nocookie.com, but can be disabled in your project with `define( 'TRIBE_DISABLE_YOUTUBE_NO_COOKIE', false )` in your wp-config.php.
+- Added: All YouTube oEmbeds will use youtube-nocookie.com, but can be disabled in your project with `define( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI', false )` in your wp-config.php.
 
 ## 4.0.16 - 2022-08-21
 - Fixed: splitting packages into existing, specific branches in monorepo.yml using a forked action https://github.com/moderntribe/monorepo-split-github-action

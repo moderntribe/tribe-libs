@@ -69,7 +69,7 @@ class Media_Subscriber extends Abstract_Subscriber {
 	}
 
 	private function oembed(): void {
-		if ( defined( 'TRIBE_DISABLE_YOUTUBE_NO_COOKIE' ) && TRIBE_DISABLE_YOUTUBE_NO_COOKIE === false ) {
+		if ( defined( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI' ) && TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI === false ) {
 			return;
 		}
 
