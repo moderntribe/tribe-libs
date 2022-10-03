@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.1.0 - 2022-10-03
 - Added: All YouTube oEmbeds will use youtube-nocookie.com, but can be disabled in your project with `define( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI', false )` in your wp-config.php.
 
 ## 4.0.16 - 2022-08-21
