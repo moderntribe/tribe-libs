@@ -1,18 +1,20 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Media;
 
 use Tribe\Libs\Container\Abstract_Subscriber;
+use Tribe\Libs\Media\Oembed\YouTube_Oembed_Filter;
 use Tribe\Libs\Media\Svg\Enable_Uploads;
 use Tribe\Libs\Media\Svg\Sanitize_Uploads;
 use Tribe\Libs\Media\Svg\Set_Attachment_Metadata;
 
 class Media_Subscriber extends Abstract_Subscriber {
+
 	public function register(): void {
 		$this->full_size_gif();
 		$this->svg_uploads();
 		$this->disable_responsive_images();
+		$this->oembed();
 	}
 
 	private function full_size_gif(): void {
@@ -65,4 +67,19 @@ class Media_Subscriber extends Abstract_Subscriber {
 			$this->container->get( WP_Responsive_Image_Disabler::class )->disable_wordpress_filters();
 		}, 10, 0 );
 	}
+
+	private function oembed(): void {
+		if ( defined( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI' ) && TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI === false ) {
+			return;
+		}
+
+		add_filter(
+			'oembed_dataparse',
+			fn ( $html ) =>
+			$this->container->get( YouTube_Oembed_Filter::class )->force_youtube_no_cookie_embed( (string) $html ),
+			999,
+			1
+		);
+	}
+
 }
