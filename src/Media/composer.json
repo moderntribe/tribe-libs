@@ -13,7 +13,7 @@
         "ext-zlib": "*",
         "ext-simplexml": "*",
         "enshrined/svg-sanitize": "^0.15",
-        "moderntribe/square1-container": "^4.1"
+        "moderntribe/square1-container": "^4.2"
     },
     "autoload": {
         "psr-4": {
