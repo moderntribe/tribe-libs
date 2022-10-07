@@ -48,9 +48,10 @@ class Svg_Command extends Command {
 				],
 			],
 			[
-				'type'     => self::FLAG,
-				'name'     => self::FLAG_YES,
-				'optional' => true,
+				'type'        => self::FLAG,
+				'name'        => self::FLAG_YES,
+				'description' => __( 'Skip all confirmations.', 'tribe' ),
+				'optional'    => true,
 			],
 		];
 	}
