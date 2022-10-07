@@ -3,6 +3,7 @@
 namespace Tribe\Libs\Media;
 
 use DI;
+use DOMDocument;
 use enshrined\svgSanitize\Sanitizer;
 use Tribe\Libs\Container\Definer_Interface;
 use Tribe\Libs\Media\Svg\Store\Contracts\Svg_Store;
@@ -14,10 +15,9 @@ class Media_Definer implements Definer_Interface {
 
 	public function define(): array {
 		return [
+			DOMDocument::class    => static fn() => new DOMDocument( '1.0' ),
 			Sanitizer::class      => static function () {
 				$sanitizer = new Sanitizer();
-				// This could cause potential issues with non UTF-8/UTF-16 SVGs.
-				$sanitizer->removeXMLTag( true );
 				$sanitizer->minify( true );
 				$sanitizer->setXMLOptions( 0 );
 
