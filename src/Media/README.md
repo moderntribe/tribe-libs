@@ -28,7 +28,9 @@ define( 'DISABLE_WP_RESPONSIVE_IMAGES', false ); // disables the responsive imag
 
 When new SVGs are uploaded/modified, their markup is saved to post meta so future file reads aren't required to get the SVG markup.
 
-Reading file contents is slower than a database record and any projects using cloud based file systems (s3) won't need to make remote connections and will only slow down during the initial upload when the file is parsed.
+Reading file contents is slower than a database record and any projects using Cloud/Remote Based File Systems, such as s3 won't need to make remote connections and will only slow down during the initial upload where parsing and storage will take place.
+
+> **Tip:** SVG markup is only stored when an SVG attachment is uploaded to the media library. To store SVG attachment markup that was uploaded before this feature was active, run the CLI command: `wp s1 svg store --task=add`.
 
 ### Fetching stored SVG markup
 
@@ -67,3 +69,5 @@ With the following define, **newly uploaded SVGs** will no longer have their mar
 ```php
 define( 'TRIBE_ENABLE_SVG_INLINE_STORAGE', false );
 ```
+
+> **Tip:** run the CLI command `wp s1 svg store --task=remove` to delete all existing SVG markup meta keys.
