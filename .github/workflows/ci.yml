@@ -104,6 +104,9 @@ jobs:
       - name: Install test dependencies
         run: composer -- test:install-plugins
 
+      - name: Run unit tests
+        run: composer test:unit
+
       - name: Run integration tests
         run: composer test:integration
 
