@@ -17,10 +17,11 @@ interface Svg_Store {
 	/**
 	 * Fetch the sanitized markup of an SVG.
 	 *
-	 * @param int $attachment_id The attachment/post ID.
+	 * @param  int   $attachment_id  The attachment/post ID.
+	 * @param  bool  $remove_xml_tag Strip XML from SVG markup.
 	 *
 	 * @return string The sanitized markup.
 	 */
-	public function get( int $attachment_id ): string;
+	public function get( int $attachment_id, bool $remove_xml_tag = true ): string;
 
 }

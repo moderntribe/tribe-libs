@@ -41,7 +41,7 @@ final class SvgStoreHandlerTest extends Unit {
 		$file = $this->handler->store( $this->file, $attachment_id );
 
 		$this->assertSame( $file, $this->file );
-		$this->assertSame( $this->store->get( $attachment_id ), file_get_contents( $this->file ) );
+		$this->assertStringEqualsFile( $this->file, $this->store->get( $attachment_id ) );
 	}
 
 	public function test_handler_bypass_non_svg_files(): void {

@@ -31,10 +31,12 @@ class Svg_Memory_Store implements Svg_Store {
 		return true;
 	}
 
-	public function get( int $attachment_id ): string {
+	public function get( int $attachment_id, bool $remove_xml_tag = true ): string {
 		$dirty = $this->items[ $attachment_id ] ?? '';
 
-		return $this->sanitizer->sanitize( $dirty );
+		$this->sanitizer->removeXMLTag( $remove_xml_tag );
+
+		return trim( $this->sanitizer->sanitize( $dirty ) );
 	}
 
 }

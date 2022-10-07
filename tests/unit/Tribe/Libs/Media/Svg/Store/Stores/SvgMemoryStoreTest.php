@@ -32,7 +32,14 @@ final class SvgMemoryStoreTest extends Unit {
 		$id = 55;
 
 		$this->assertTrue( $this->store->save( $this->file, $id ) );
-		$this->assertEquals( file_get_contents( $this->file ), $this->store->get( $id ) );
+		$this->assertStringEqualsFile( $this->file, $this->store->get( $id ) );
+	}
+
+	public function test_it_saves_and_retrieves_an_svg_while_keeping_xml_tag(): void {
+		$id = 55;
+
+		$this->assertTrue( $this->store->save( $this->file, $id ) );
+		$this->assertEquals( '<?xml version="1.0" encoding="UTF-8"?> ' . file_get_contents( $this->file ), $this->store->get( $id, false ) );
 	}
 
 }

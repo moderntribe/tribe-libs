@@ -33,10 +33,12 @@ class Svg_Meta_Store implements Svg_Store {
 		return (bool) update_post_meta( $attachment_id, $this->meta_key, $svg );
 	}
 
-	public function get( int $attachment_id ): string {
+	public function get( int $attachment_id, bool $remove_xml_tag = true ): string {
 		$dirty = (string) get_post_meta( $attachment_id, $this->meta_key, true );
 
-		return $this->sanitizer->sanitize( $dirty );
+		$this->sanitizer->removeXMLTag( $remove_xml_tag );
+
+		return trim( $this->sanitizer->sanitize( $dirty ) );
 	}
 
 }

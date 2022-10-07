@@ -22,7 +22,7 @@ final class SvgParserFactoryTest extends Unit {
 
 		$parser = $this->factory->make( $file );
 
-		$this->assertEquals( file_get_contents( $file ), (string) $parser );
+		$this->assertStringEqualsFile( $file, (string) $parser );
 	}
 
 	public function test_it_makes_a_parser_from_string(): void {

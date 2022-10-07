@@ -20,7 +20,7 @@ final class SvgParserTest extends Unit {
 	public function test_it_loads_svg_file(): void {
 		$this->parser->load_file( $this->file );
 
-		$this->assertEquals( file_get_contents( $this->file ), (string) $this->parser );
+		$this->assertStringEqualsFile( $this->file, (string) $this->parser );
 	}
 
 	public function test_it_loads_svg_strings(): void {
@@ -28,7 +28,7 @@ final class SvgParserTest extends Unit {
 
 		$this->parser->load_string( $svg );
 
-		$this->assertEquals( file_get_contents( $this->file ), (string) $this->parser );
+		$this->assertStringEqualsFile( $this->file, (string) $this->parser );
 	}
 
 	public function test_gzipped_svg(): void {
