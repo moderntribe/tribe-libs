@@ -2,11 +2,12 @@
 
 namespace Tribe\Libs\Media\CLI;
 
+use Throwable;
 use Tribe\Libs\CLI\Command;
-
 use Tribe\Libs\Media\Svg\Store\Contracts\Svg_Store;
 use WP_CLI;
 use WP_Query;
+
 use function WP_CLI\Utils\get_flag_value;
 
 class Svg_Command extends Command {
@@ -94,8 +95,13 @@ class Svg_Command extends Command {
 				continue;
 			}
 
-			if ( ! $this->svg_store->save( $file, $id ) ) {
-				WP_CLI::warning( sprintf( __( 'Error storing SVG markup for attachment ID: %d', 'tribe' ), $id ) );
+			try {
+				if ( ! $this->svg_store->save( $file, $id ) ) {
+					WP_CLI::warning( sprintf( __( 'Error storing SVG markup for attachment ID: %d', 'tribe' ), $id ) );
+				}
+			} catch ( Throwable $e ) {
+				WP_CLI::debug( $e->getMessage() . ': ' . $e->getTraceAsString() );
+				WP_CLI::warning( sprintf( __( 'An error occurred processing attachment ID "%d. Rerun the command with the --debug option', 'tribe' ), $id ) );
 			}
 		}
 
