@@ -26,7 +26,11 @@
         ],
         "test": "@php vendor/bin/codecept --config ./tests",
         "test:integration": "@test run integration",
-        "test:unit": "@test run unit"
+        "test:unit": "@test run unit",
+        "test:all": [
+          "@test:unit",
+          "@test:integration"
+        ]
     },
     "require": {
         "php": ">=7.4",
