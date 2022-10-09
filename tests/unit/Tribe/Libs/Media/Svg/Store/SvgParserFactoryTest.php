@@ -2,7 +2,7 @@
 
 namespace Tribe\Libs\Media\Svg\Store;
 
-use DI\ContainerBuilder;
+use DOMDocument;
 use Tribe\Libs\Tests\Unit;
 
 final class SvgParserFactoryTest extends Unit {
@@ -12,9 +12,11 @@ final class SvgParserFactoryTest extends Unit {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->factory = new Svg_Parser_Factory(
-			( new ContainerBuilder() )->build()
-		);
+		$this->builder->addDefinitions( [
+			DOMDocument::class => new DOMDocument(),
+		] );
+
+		$this->factory = new Svg_Parser_Factory( $this->builder->build() );
 	}
 
 	public function test_it_makes_a_parser_from_file(): void {

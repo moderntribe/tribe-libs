@@ -17,7 +17,10 @@ class Media_Definer implements Definer_Interface {
 
 	public function define(): array {
 		return [
-			DOMDocument::class        => static fn() => new DOMDocument( '1.0' ),
+			// The post meta key for storing SVG markup.
+			self::SVG_INLINE_META_KEY => '_tribe_svg_markup',
+
+			DOMDocument::class        => static fn() => new DOMDocument(),
 			Sanitizer::class          => static function () {
 				$sanitizer = new Sanitizer();
 				$sanitizer->minify( true );
@@ -26,8 +29,6 @@ class Media_Definer implements Definer_Interface {
 				return $sanitizer;
 			},
 
-			// The post meta key for storing SVG markup.
-			self::SVG_INLINE_META_KEY => '_tribe_svg_markup',
 			Svg_Meta_Store::class     => DI\autowire()
 				->constructorParameter( 'meta_key', DI\get( self::SVG_INLINE_META_KEY ) ),
 			Svg_Store::class          => DI\get( Svg_Meta_Store::class ),

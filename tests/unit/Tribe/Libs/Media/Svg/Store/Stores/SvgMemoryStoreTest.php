@@ -2,7 +2,7 @@
 
 namespace Tribe\Libs\Media\Svg\Store\Stores;
 
-use DI\ContainerBuilder;
+use DOMDocument;
 use enshrined\svgSanitize\Sanitizer;
 use Tribe\Libs\Media\Svg\Store\Svg_Parser_Factory;
 use Tribe\Libs\Tests\Unit;
@@ -16,12 +16,15 @@ final class SvgMemoryStoreTest extends Unit {
 		parent::setUp();
 
 		$sanitizer = new Sanitizer();
-		$sanitizer->removeXMLTag( true );
 		$sanitizer->minify( true );
 		$sanitizer->setXMLOptions( 0 );
 
+		$this->builder->addDefinitions( [
+			DOMDocument::class => new DOMDocument(),
+		] );
+
 		$this->store = new Svg_Memory_Store(
-			new Svg_Parser_Factory( ( new ContainerBuilder() )->build() ),
+			new Svg_Parser_Factory( $this->builder->build() ),
 			$sanitizer
 		);
 

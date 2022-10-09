@@ -11,7 +11,7 @@ final class SvgMetaStoreTest extends Test_Case {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->make_di_container( [
+		$this->init_container( [
 			Media_Definer::class,
 		], [
 			Media_Subscriber::class,

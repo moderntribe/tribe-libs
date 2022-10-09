@@ -12,14 +12,20 @@ use Brain\Monkey;
  */
 class Unit extends \Codeception\Test\Unit {
 
+	use With_DI_Container;
+
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
+
+		$this->init_builder();
 	}
 
 	protected function tearDown(): void {
 		Monkey\tearDown();
 		parent::tearDown();
+
+		$this->c = null;
 	}
 
 }
