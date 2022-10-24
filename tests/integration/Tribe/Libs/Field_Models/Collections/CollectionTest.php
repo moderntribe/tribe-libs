@@ -45,7 +45,6 @@ final class CollectionTest extends Test_Case {
 			$this->assertSame( $wp_user->display_name, $user->display_name );
 			$this->assertSame( $wp_user->user_email, $user->user_email );
 		}
-
 	}
 
 	public function test_swatch_collection(): void {
@@ -130,7 +129,78 @@ final class CollectionTest extends Test_Case {
 		$this->assertSame( 'white', $subset_collection->get_by_value( '#ffffff' )->slug );
 		$this->assertSame( 'grey', $subset_collection->get_by_value( '#696969' )->slug );
 		$this->assertNull( $subset_collection->get_by_value( '#000000' ) );
+	}
 
+	public function test_gallery_collection(): void {
+		$attachment_ids = [
+			$this->factory()->attachment->create(),
+			$this->factory()->attachment->create(),
+			$this->factory()->attachment->create(),
+			$this->factory()->attachment->create(),
+			$this->factory()->attachment->create(),
+		];
+
+		$post_id = $this->factory()->post->create( [
+			'post_status' => 'publish',
+		] );
+
+		$field_key = 'field_test_gallery';
+
+		acf_add_local_field( [
+			'key'           => $field_key,
+			'name'          => 'test_gallery',
+			'type'          => 'gallery',
+			'return_format' => 'array',
+		] );
+
+		$this->assertNotEmpty( update_field( $field_key, $attachment_ids, $post_id ) );
+
+		// We don't have ACF pro installed for tests, mimic what the gallery field would return.
+		$ids   = get_field( $field_key, $post_id );
+		$posts = acf_get_posts(
+			[
+				'post_type'              => 'attachment',
+				'post__in'               => $ids,
+				'update_post_meta_cache' => true,
+				'update_post_term_cache' => false,
+			]
+		);
+
+		// @phpstan-ignore-next-line
+		$attachments = array_map( 'acf_get_attachment', $posts );
+		$collection  = Gallery_Collection::create( $attachments );
+
+		$this->assertSame( count( $attachments ), $collection->count() );
+
+		foreach ( $collection as $image ) {
+			// Ensure we're not comparing empty to empty items.
+			$this->assertNotEmpty( $image->caption );
+			$this->assertNotEmpty( $image->date );
+			$this->assertNotEmpty( $image->description );
+			$this->assertNotEmpty( $image->id );
+			$this->assertNotEmpty( $image->link );
+			$this->assertNotEmpty( $image->modified );
+			$this->assertNotEmpty( $image->name );
+			$this->assertNotEmpty( $image->status );
+			$this->assertNotEmpty( $image->title );
+			$this->assertNotEmpty( $image->url );
+
+			// Test a few of the mapped model items.
+			$attachment = acf_get_attachment( $image->id );
+
+			$this->assertEquals( $attachment['author'], $image->author );
+			$this->assertEquals( $attachment['caption'], $image->caption );
+			$this->assertEquals( $attachment['date'], $image->date );
+			$this->assertEquals( $attachment['description'], $image->description );
+			$this->assertEquals( $attachment['id'], $image->id );
+			$this->assertEquals( $attachment['link'], $image->link );
+			$this->assertEquals( $attachment['modified'], $image->modified );
+			$this->assertEquals( $attachment['name'], $image->name );
+			$this->assertEquals( $attachment['status'], $image->status );
+			$this->assertEquals( $attachment['subtype'], $image->subtype );
+			$this->assertEquals( $attachment['title'], $image->title );
+			$this->assertEquals( $attachment['url'], $image->url );
+		}
 	}
 
 }
