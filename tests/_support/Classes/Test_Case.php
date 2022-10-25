@@ -25,7 +25,7 @@ class Test_Case extends WPTestCase {
 		// @phpstan-ignore-next-line
 		parent::setUp();
 
-		$this->faker   = Factory::create();
+		$this->faker = Factory::create();
 
 		$this->init_builder();
 	}
