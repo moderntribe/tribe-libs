@@ -11,7 +11,7 @@ class Gallery_Collection extends DataTransferObjectCollection {
 		return new static( Image::arrayOf( $attachments ) );
 	}
 
-	public function current(): Image {
+	public function current(): ?Image {
 		return parent::current();
 	}
 

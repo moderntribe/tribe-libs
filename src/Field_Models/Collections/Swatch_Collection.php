@@ -14,7 +14,7 @@ class Swatch_Collection extends DataTransferObjectCollection {
 		return new static( Swatch::arrayOf( $swatches ) );
 	}
 
-	public function current(): Swatch {
+	public function current(): ?Swatch {
 		return parent::current();
 	}
 

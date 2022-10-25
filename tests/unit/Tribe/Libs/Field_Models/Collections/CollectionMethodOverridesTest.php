@@ -13,6 +13,7 @@ class CollectionMethodOverridesTest extends Unit {
 
 		$this->assertInstanceOf( User_Collection::class, $empty_collection );
 		$this->assertNull( $empty_collection->offsetGet( 0 ) );
+		$this->assertNull( $empty_collection->current() );
 
 		$collection = User_Collection::create( [
 			[
@@ -30,6 +31,7 @@ class CollectionMethodOverridesTest extends Unit {
 
 		$this->assertInstanceOf( Swatch_Collection::class, $empty_collection );
 		$this->assertNull( $empty_collection->offsetGet( 0 ) );
+		$this->assertNull( $empty_collection->current() );
 
 		$collection = Swatch_Collection::create( [
 			[
@@ -47,6 +49,7 @@ class CollectionMethodOverridesTest extends Unit {
 
 		$this->assertInstanceOf( Gallery_Collection::class, $empty_collection );
 		$this->assertNull( $empty_collection->offsetGet( 0 ) );
+		$this->assertNull( $empty_collection->current() );
 
 		$collection = Gallery_Collection::create( [
 			[
