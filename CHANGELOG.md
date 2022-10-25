@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - Added: Gallery_Collection field model for automatic mapping of the ACF Gallery Field.
+- Added: SVG storage system that parses SVGs on upload to capture their markup for quick access to display inline in components.
+- Added: The SVG store command to add or remove SVG markup to the database. Run `wp s1 help svg store` for details.
+- Added: Codeception unit testing suite utilizing Brain Monkey for mocking.
+- Changed: Base `Test_Case` class to allow developers to build a container with specific definers/subscribers for their specific test cases.
+- Added: More composer commands to run automated tests:
+  - `composer test:all` - run all test suites.
+  - `composer test:unit` - run unit tests.
+  - `compser test:integration` - run integration tests.
 
 ## 4.1.0 - 2022-10-03
 - Added: All YouTube oEmbeds will use youtube-nocookie.com, but can be disabled in your project with `define( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI', false )` in your wp-config.php.

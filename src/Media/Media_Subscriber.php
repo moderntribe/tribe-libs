@@ -7,6 +7,7 @@ use Tribe\Libs\Media\Oembed\YouTube_Oembed_Filter;
 use Tribe\Libs\Media\Svg\Enable_Uploads;
 use Tribe\Libs\Media\Svg\Sanitize_Uploads;
 use Tribe\Libs\Media\Svg\Set_Attachment_Metadata;
+use Tribe\Libs\Media\Svg\Store\Svg_Store_Handler;
 
 class Media_Subscriber extends Abstract_Subscriber {
 
@@ -54,6 +55,24 @@ class Media_Subscriber extends Abstract_Subscriber {
 		add_filter( 'wp_generate_attachment_metadata', function ( $metadata, $attachment_id ) {
 			return $this->container->get( Set_Attachment_Metadata::class )->generate_metadata( $metadata, (int) $attachment_id );
 		}, 10, 2 );
+
+		$this->svg_inline_storage();
+	}
+
+	/**
+	 * Store SVG inline markup in post meta when an SVG is uploaded to the media library.
+	 *
+	 * @throws \Psr\Container\ContainerExceptionInterface
+	 * @throws \Psr\Container\NotFoundExceptionInterface
+	 */
+	private function svg_inline_storage(): void {
+		if ( defined( 'TRIBE_ENABLE_SVG_INLINE_STORAGE' ) && TRIBE_ENABLE_SVG_INLINE_STORAGE === false ) {
+			return;
+		}
+
+		add_filter( 'update_attached_file', function ( $file, $attachment_id ): string {
+			return $this->container->get( Svg_Store_Handler::class )->store( (string) $file, (int) $attachment_id );
+		}, 90, 2 );
 	}
 
 	private function disable_responsive_images(): void {

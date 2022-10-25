@@ -10,10 +10,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.4",
+        "ext-dom": "*",
+        "ext-libxml": "*",
         "ext-zlib": "*",
         "ext-simplexml": "*",
         "enshrined/svg-sanitize": "^0.15",
-        "moderntribe/square1-container": "^4.2"
+        "moderntribe/square1-container": "^4.2",
+        "moderntribe/square1-cli": "^4.2"
     },
     "autoload": {
         "psr-4": {
