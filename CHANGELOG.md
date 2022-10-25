@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.2.0 - 2022-10-25
 - Added: Gallery_Collection field model for automatic mapping of the ACF Gallery Field.
 - Added: SVG storage system that parses SVGs on upload to capture their markup for quick access to display inline in components.
 - Added: The SVG store command to add or remove SVG markup to the database. Run `wp s1 help svg store` for details.
