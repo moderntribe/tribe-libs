@@ -8,8 +8,8 @@
         "preferred-install": "dist"
     },
     "require": {
-        "moderntribe/square1-cli": "^4.3",
-        "moderntribe/square1-container": "^4.3",
+        "moderntribe/square1-cli": "^4.2.1",
+        "moderntribe/square1-container": "^4.2.1",
         "php": ">=7.4"
     },
     "autoload": {
