@@ -19,9 +19,9 @@ class Route_Subscriber extends Abstract_Subscriber {
 	 *
 	 * @return void
 	 */
-	public function register() : void {      
+	public function register() : void {
 		add_action(
-			'wp_loaded', 
+			'wp_loaded',
 			function () {
 				$this->container->get( Cache_Manager::class )->flush_if_changed();
 			},
@@ -29,7 +29,7 @@ class Route_Subscriber extends Abstract_Subscriber {
 		);
 
 		add_filter(
-			'rewrite_rules_array', 
+			'rewrite_rules_array',
 			function ( array $rules ): array {
 				return $this->container->get( Router_Rule_Manager::class )->load( $rules, $this->container->get( Route_Definer::ROUTES ) );
 			},
@@ -37,23 +37,21 @@ class Route_Subscriber extends Abstract_Subscriber {
 		);
 
 		add_action(
-			'rest_api_init', 
+			'rest_api_init',
 			function () {
 				$this->container->get( Router_Rule_Manager::class )->init_rest_routes( $this->container->get( Route_Definer::REST_ROUTES ) );
 			}
 		);
 
 		add_filter(
-			'query_vars', 
+			'query_vars',
 			function ( $vars ) {
 				return $this->container->get( Router_Rule_Manager::class )->did_query_vars( $vars, $this->container->get( Route_Definer::ROUTES ) );
-			},
-			10,
-			2
+			}
 		);
 
 		add_action(
-			'parse_request', 
+			'parse_request',
 			function ( \WP $wp ) {
 				$matched_route = $this->container->get( Router_Factory::class )->did_parse_request( $wp, $this->container->get( Route_Definer::ROUTES ) );
 
@@ -67,7 +65,7 @@ class Route_Subscriber extends Abstract_Subscriber {
 
 				add_filter( 'template_include', [ $matched_route, 'did_template_include' ] );
 				add_filter( 'pre_get_document_title', [ $matched_route, 'did_pre_get_document_title' ] );
-		
+
 				$matched_route->authorize();
 				$matched_route->parse( $wp );
 			}
