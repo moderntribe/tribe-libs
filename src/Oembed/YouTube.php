@@ -240,7 +240,7 @@ class YouTube implements \JsonSerializable {
 		return $object;
 	}
 
-
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return [
 			'id'            => $this->get_id(),

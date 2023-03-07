@@ -109,6 +109,7 @@ class Copy_Configuration implements \JsonSerializable {
 		$this->user = $user;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return [
 			'src'     => $this->get_src(),
