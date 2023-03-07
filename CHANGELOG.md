@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 4.2.1 - 2023-03-07
 
 - Fixed: Incorrect docblock types in ACF_Settings. (thanks @szepeviktor).
