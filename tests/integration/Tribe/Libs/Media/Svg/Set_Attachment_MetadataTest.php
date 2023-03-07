@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Media\Svg;
 
-class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
+use Tribe\Libs\Tests\Test_Case;
+
+final class Set_Attachment_MetadataTest extends Test_Case {
 	/**
 	 * @var \IntegrationTester
 	 */
@@ -31,8 +33,9 @@ class Set_Attachment_MetadataTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	/**
-	 * @return void
 	 * @dataProvider sample_logos
+	 *
+	 * @param  string  $filename
 	 */
 	public function test_sets_size_metadata( string $filename ): void {
 		$image_sizes = [

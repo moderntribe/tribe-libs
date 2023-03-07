@@ -26,11 +26,11 @@ class P2P_Subscriber extends Abstract_Subscriber {
 	}
 
 	protected function title_filters(): void {
-		add_action( 'p2p_connected_title', function ( $title, $object, $connection_type ) {
-			$this->container->get( Titles_Filter::class )->filter_connection_name( $title, $object, $connection_type );
+		add_filter( 'p2p_connected_title', function ( $title, $object, $connection_type ) {
+			return $this->container->get( Titles_Filter::class )->filter_connection_name( $title, $object, $connection_type );
 		}, 10, 3 );
-		add_action( 'p2p_candidate_title', function ( $title, $object ) {
-			$this->container->get( Titles_Filter::class )->filter_candidate_name( $title, $object );
+		add_filter( 'p2p_candidate_title', function ( $title, $object ) {
+			return $this->container->get( Titles_Filter::class )->filter_candidate_name( $title, $object );
 		}, 10, 3 );
 	}
 

@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
 use Tribe\Libs\Blog_Copier\Copy_Configuration;
 use Tribe\Libs\Blog_Copier\Copy_Manager;
+use Tribe\Libs\Tests\Test_Case;
 
-class Replace_UrlsTest extends \Codeception\TestCase\WPTestCase {
+final class Replace_UrlsTest extends Test_Case {
 
 	/**
 	 * @env multisite

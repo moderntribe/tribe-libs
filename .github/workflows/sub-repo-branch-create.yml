@@ -1,0 +1,53 @@
+name: Create Sub-Repo Branches
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch name to create in all sub-repos'
+        required: true
+
+jobs:
+  list-repos:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set repo matrix
+        id: set-matrix
+        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-list.php)"
+
+  create-sub-repo-branches:
+    needs: list-repos
+    runs-on: ubuntu-latest
+    env:
+      org: 'moderntribe'
+    strategy:
+      matrix:
+        repo-name: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+
+    steps:
+      - name: Checkout sub-repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.org }}/${{ matrix.repo-name }}
+          token: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Create branch
+        run: |
+          git config --local user.email "Tr1b0t@users.noreply.github.com"
+          git config --local user.name "Tr1b0t"
+          git checkout -b ${{ github.event.inputs.branch }}
+          git push -u origin ${{ github.event.inputs.branch }}
+
+

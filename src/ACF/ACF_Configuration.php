@@ -49,7 +49,7 @@ abstract class ACF_Configuration {
 	 * Get all the attributes, formatted as
 	 * an ACF-ready array
 	 *
-	 * @return array
+	 * @return array[]
 	 */
 	public function get_attributes() {
 		return [ $this->attributes ];
@@ -69,4 +69,5 @@ abstract class ACF_Configuration {
 
 		return null;
 	}
+
 }

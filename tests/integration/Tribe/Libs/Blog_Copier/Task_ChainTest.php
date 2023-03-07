@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier;
 
@@ -6,8 +6,9 @@ use Tribe\Libs\Blog_Copier\Tasks\Send_Notifications;
 use Tribe\Libs\Blog_Copier\Tasks\Create_Blog;
 use Tribe\Libs\Blog_Copier\Tasks\Replace_Options;
 use Tribe\Libs\Blog_Copier\Tasks\Replace_Tables;
+use Tribe\Libs\Tests\Test_Case;
 
-class Task_ChainTest extends \Codeception\TestCase\WPTestCase {
+class Task_ChainTest extends Test_Case {
 
 	public function test_get_next() {
 		$chain = new Task_Chain( [

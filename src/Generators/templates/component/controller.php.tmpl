@@ -1,5 +1,4 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace %2$s;
 
@@ -8,29 +7,39 @@ use Tribe\Project\Templates\Components\Abstract_Controller;
 
 class %1$s extends Abstract_Controller {
 
-	public const CLASSES = 'classes';
 	public const ATTRS   = 'attrs';
-
-	/**
-	 * @var string[]
-	 */
-	private array $classes;
+	public const CLASSES = 'classes';
+	%3$s
 	/**
 	 * @var string[]
 	 */
 	private array $attrs;
 
+	/**
+	 * @var string[]
+	 */
+	private array $classes;
+	%4$s
 	public function __construct( array $args = [] ) {
 		$args = $this->parse_args( $args );
 
-		$this->classes = (array) $args[ self::CLASSES ];
 		$this->attrs   = (array) $args[ self::ATTRS ];
+		$this->classes = (array) $args[ self::CLASSES ];%5$s
+	}
+
+	public function get_attributes(): string {
+		return Markup_Utils::concat_attrs( $this->attrs );
+	}
+
+	public function get_classes(): string {
+		return Markup_Utils::class_attribute( $this->classes );
 	}
 
 	protected function defaults(): array {
 		return [
-			self::CLASSES => [],
 			self::ATTRS   => [],
+			self::CLASSES => [],
+			%6$s
 		];
 	}
 
@@ -38,11 +47,4 @@ class %1$s extends Abstract_Controller {
 		return [];
 	}
 
-	public function get_classes(): string {
-		return Markup_Utils::class_attribute( $this->classes );
-	}
-
-	public function get_attributes(): string {
-		return Markup_Utils::concat_attrs( $this->attrs );
-	}
 }

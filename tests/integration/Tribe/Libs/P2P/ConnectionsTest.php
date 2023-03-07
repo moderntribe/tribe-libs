@@ -1,12 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\P2P;
 
+use Tribe\Libs\Tests\Test_Case;
+
 /**
  * Class ConnectionsTest
+ *
  * @package Tribe\Project\P2P
  */
-class ConnectionsTest extends \Codeception\TestCase\WPTestCase {
+final class ConnectionsTest extends Test_Case {
 
 	private const META_KEY = 'test_meta_key';
 	private const META_VALUE = 'test meta value';

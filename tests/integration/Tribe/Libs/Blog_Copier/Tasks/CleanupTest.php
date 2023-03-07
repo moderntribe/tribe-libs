@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
 use Tribe\Libs\Blog_Copier\Copy_Manager;
+use Tribe\Libs\Tests\Test_Case;
 
-class CleanupTest extends \Codeception\TestCase\WPTestCase {
+final class CleanupTest extends Test_Case {
 
 	public function test_deletes_post() {
 		$post_id = $this->factory()->post->create( [

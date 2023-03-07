@@ -10,27 +10,32 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.3', '7.4' ]
-        wordpress-version: [ 'latest', '5.3.2' ]
+        php-versions: [ '7.4', '8.0', '8.1' ]
+        wordpress-version: [ 'latest', '5.3.12', '5.9.3' ]
+        exclude:
+          - php-versions: '8.0'
+            wordpress-version: '5.3.12'
+          - php-versions: '8.1'
+            wordpress-version: '5.3.12'
       fail-fast: false
 
     env:
-      cache_version: 0 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
-      WP_ROOT_FOLDER: ${{ github.workspace }}/wordpress
-      WP_DOMAIN: "localhost"
+      WP_ROOT_FOLDER: ${{ github.workspace }}/tests/wordpress
+      WP_DOMAIN: "tribe-libs.tribe"
       WP_ADMIN_PATH: "/wp-admin"
       WP_ADMIN_USERNAME: "admin"
       WP_ADMIN_PASSWORD: "password"
-      WP_URL: "http://localhost"
+      WP_URL: "http://tribe-libs.tribe"
       TEST_DB_HOST: 127.0.0.1
       TEST_DB_NAME: wordpress
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
       TABLE_PREFIX: "tribe_"
-      TEST_CONFIG_FILE: "wp-config-environment.php"
+      TEST_CONFIG_FILE: ${{ github.workspace }}/tests/wp-config-environment.php
 
     services:
 
@@ -53,10 +58,10 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
-          key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}
+          key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-${{ matrix.wordpress-version }}
 
       - name: Cache PHP extensions
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.cache-php-extensions.outputs.dir }}
           key: ${{ steps.cache-php-extensions.outputs.key }}
@@ -68,21 +73,18 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
           coverage: none
-          tools: codeception, composer:v1
+          tools: codeception, composer
 
-      - name: Download WordPress and plugins
+      - name: Download WordPress
+        working-directory: ./tests
         run: |
           wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
-          wget "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip" -O ./wordpress/wp-content/plugins/posts-to-posts.zip
-          unzip ./wordpress/wp-content/plugins/posts-to-posts.zip -d ./wordpress/wp-content/plugins
-          rm ./wordpress/wp-content/plugins/posts-to-posts.zip
 
       - name: Create config files
         run: |
-          cp ./.github/config/wp-config-environment.php ./wp-config-environment.php
-          touch ./tests/.env
+          touch ./tests/.env          
 
       - name: Get composer cache directory
         id: composer-cache
@@ -90,17 +92,20 @@ jobs:
 
       - name: Check for Cached Composer Dependencies
         id: cache-composer-dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
+          key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-
 
-      - name: Install composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+      - name: Install updated composer dependencies
+        run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
+
+      - name: Install test dependencies
+        run: composer -- test:install-plugins
 
       - name: Run integration tests
-        run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration
+        run: composer test:integration
 
       - name: Run multisite integration tests
-        run: vendor/bin/codecept --config "${{ github.workspace }}/tests" run integration --env multisite
+        run: composer -- test:integration --env multisite

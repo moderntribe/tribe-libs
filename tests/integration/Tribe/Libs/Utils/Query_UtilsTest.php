@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Utils;
 
-class Query_UtilsTest extends \Codeception\TestCase\WPTestCase {
+use Tribe\Libs\Tests\Test_Case;
+
+final class Query_UtilsTest extends Test_Case {
 	/**
 	 * @var \IntegrationTester
 	 */

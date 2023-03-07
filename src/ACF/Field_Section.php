@@ -1,11 +1,12 @@
-<?php
-declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\ACF;
 
+use Tribe\Libs\ACF\Contracts\Has_Sub_Fields;
 use Tribe\Libs\ACF\Traits\With_Sub_Fields;
 
-class Field_Section extends Field implements ACF_Aggregate {
+class Field_Section extends Field implements ACF_Aggregate, Has_Sub_Fields {
+
 	use With_Sub_Fields;
 
 	/**
@@ -29,14 +30,7 @@ class Field_Section extends Field implements ACF_Aggregate {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function get_fields(): array {
-		return $this->fields;
-	}
-
-	/**
-	 * @return array
+	 * @return array[]
 	 */
 	public function get_attributes() {
 		return array_merge( [ $this->attributes ], $this->get_sub_field_attributes() );

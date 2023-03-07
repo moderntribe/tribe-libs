@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Media\Svg;
 
-class Size_CalculatorTest extends \Codeception\TestCase\WPTestCase {
+use Tribe\Libs\Tests\Test_Case;
+
+final class Size_CalculatorTest extends Test_Case {
 	/**
 	 * @var \IntegrationTester
 	 */

@@ -13,10 +13,10 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.3' ]
+        php-versions: [ '8.0' ]
 
     env:
-      cache_version: 0 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_extensions: tokenizer, xmlwriter, simplexml
 
     steps:
@@ -31,7 +31,7 @@ jobs:
           key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}
 
       - name: Cache PHP extensions
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.cache-php-extensions.outputs.dir }}
           key: ${{ steps.cache-php-extensions.outputs.key }}
@@ -43,7 +43,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
           coverage: none
-          tools: composer:v1
+          tools: composer
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -54,17 +54,17 @@ jobs:
 
       - name: Check for Cached Composer Dependencies
         id: cache-composer-dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-composer-
+          key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-
 
-      - name: Install composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+      - name: Install updated composer dependencies
+        run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Run PHPCS code sniffer
         run: php vendor/bin/phpcs --standard=tests/phpcs.xml
 
       - name: Run PHPStan static analysis
-        run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=1G
+        run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1

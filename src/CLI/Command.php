@@ -1,10 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\CLI;
 
 use WP_CLI;
 
 abstract class Command extends \WP_CLI_Command implements Command_Interface {
+
+	public const ARGUMENT = 'positional';
+	public const FLAG     = 'flag';
+	public const OPTION   = 'assoc';
 
 	public function register() {
 		WP_CLI::add_command( 's1 ' . $this->command(), [ $this, 'run_command' ], [

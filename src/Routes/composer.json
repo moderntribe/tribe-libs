@@ -1,0 +1,24 @@
+{
+    "name": "moderntribe/square1-routes",
+    "type": "library",
+    "description": "Provides route wrappers for square one.",
+    "license": "GPL-2.0-only",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=7.4",
+        "moderntribe/square1-container": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tribe\\Libs\\Routes\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.1-dev"
+        }
+    }
+}
