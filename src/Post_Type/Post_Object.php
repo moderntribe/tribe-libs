@@ -26,7 +26,8 @@ class Post_Object {
 	/** @var Meta_Map */
 	protected $meta;
 
-	protected $post_id = 0;
+	/** @var int */
+	protected $post_id;
 
 	/**
 	 * Post_Object constructor.
@@ -38,11 +39,12 @@ class Post_Object {
 	 */
 	public function __construct( $post_id = 0, Meta_Map $meta = null ) {
 		$this->post_id = $post_id;
-		if ( isset( $meta ) ) {
-			$this->meta = $meta;
-		} else {
+		if ( ! $meta instanceof Meta_Map ) {
 			$this->meta = new Meta_Map( static::NAME );
+			return;
 		}
+
+		$this->meta = $meta;
 	}
 
 	public function __get( $key ) {
@@ -71,13 +73,13 @@ class Post_Object {
 		/** @var Meta_Repository|null $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
 
-		if ( empty( $meta_repo ) ) {
+		if ( ! $meta_repo instanceof Meta_Repository ) {
 			$meta_repo = new Meta_Repository();
 		}
 
 		$post_type = static::NAME;
 
-		if ( empty( $post_type ) ) {
+		if ( '' === $post_type ) {
 			$post_type = get_post_type( $post_id );
 		}
 
