@@ -1,6 +1,10 @@
 name: Codeception Tests
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - 4.x
+  pull_request:
 
 jobs:
 
@@ -84,7 +88,7 @@ jobs:
 
       - name: Create config files
         run: |
-          touch ./tests/.env          
+          touch ./tests/.env
 
       - name: Get composer cache directory
         id: composer-cache
