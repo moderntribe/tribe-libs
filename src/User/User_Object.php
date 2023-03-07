@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\User;
 
 use Tribe\Libs\Object_Meta\Meta_Map;
@@ -66,14 +65,13 @@ class User_Object {
 	 * @return static
 	 */
 	public static function factory( $user_id ) {
-		/** @var Meta_Repository $meta_repo */
+		/** @var Meta_Repository|null $meta_repo */
 		$meta_repo = apply_filters( Meta_Repository::GET_REPO_FILTER, null );
+
 		if ( empty( $meta_repo ) ) {
 			$meta_repo = new Meta_Repository();
 		}
 
-		$user = new static( $user_id, $meta_repo->get( self::NAME ) );
-
-		return $user;
+		return new static( $user_id, $meta_repo->get( self::NAME ) );
 	}
 }

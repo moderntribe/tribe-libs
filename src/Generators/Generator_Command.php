@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Tribe\Libs\Generators;
 
-abstract class Generator_Command extends \Tribe\Libs\CLI\Command {
+use Tribe\Libs\CLI\Command;
+
+abstract class Generator_Command extends Command {
 
 	protected $file_system    = null;
 	protected $templates_path = '';
@@ -33,16 +34,15 @@ abstract class Generator_Command extends \Tribe\Libs\CLI\Command {
 	 * @return string
 	 */
 	public function ucwords( $slug ) {
-		$uc_words = array_map( function ( $word ) {
-			return ucfirst( $word );
-		}, explode( '_', $slug ) );
+		$uc_words = array_map( fn( $word ) => ucfirst( $word ), explode( '_', $slug ) );
 
 		return implode( '_', $uc_words );
 	}
 
 	protected function sanitize_slug( $args ) {
-		list( $slug ) = $args;
+		[ $slug ] = $args;
 
 		return str_replace( '-', '_', sanitize_title( $slug ) );
 	}
+
 }

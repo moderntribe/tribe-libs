@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Media;
 
+use Tribe\Libs\Tests\Test_Case;
 
 /**
  * Class Full_Size_GifsTest
  */
-class Full_Size_GifsTest extends \Codeception\TestCase\WPTestCase {
+final class Full_Size_GifsTest extends Test_Case {
 
 	public function test_full_size_only_gif_src() {
 		// set up our filter

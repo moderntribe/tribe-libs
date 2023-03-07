@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
 use Tribe\Libs\Blog_Copier\Copy_Configuration;
 use Tribe\Libs\Blog_Copier\Copy_Manager;
+use Tribe\Libs\Tests\Test_Case;
 
-class Send_NotificationsTest extends \Codeception\TestCase\WPTestCase {
+final class Send_NotificationsTest extends Test_Case {
 
 	public function test_sends_emails() {
 		/** @var \WP_User $user */
@@ -26,10 +27,12 @@ class Send_NotificationsTest extends \Codeception\TestCase\WPTestCase {
 
 		update_post_meta( $post_id, Copy_Manager::DESTINATION_BLOG, 3 );
 
-		$task = new Send_Notifications();
-		$task->handle( [
+		$task   = new Send_Notifications();
+		$result = $task->handle( [
 			'post_id' => $post_id,
 		] );
+
+		$this->assertTrue( $result );
 
 		/** @var \MockPHPMailer $mailer */
 		$mailer = tests_retrieve_phpmailer_instance();

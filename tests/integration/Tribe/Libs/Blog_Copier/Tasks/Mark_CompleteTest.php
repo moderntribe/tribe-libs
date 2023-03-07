@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Blog_Copier\Tasks;
 
 use Tribe\Libs\Blog_Copier\Copy_Manager;
+use Tribe\Libs\Tests\Test_Case;
 
-class Mark_CompleteTest extends \Codeception\TestCase\WPTestCase {
+final class Mark_CompleteTest extends Test_Case {
 
 	public function test_publishes_post() {
 		$post_id = $this->factory()->post->create( [

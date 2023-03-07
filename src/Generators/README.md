@@ -115,6 +115,12 @@ the `image_gallery` component.
 
 The `--dry-run` flag will show you the files the command would create, without writing to the file system.
 
+Example with Post Loop Field Middleware:
+
+```
+wp s1 generate block image-gallery --with-post-loop-field-middleware
+```
+
 # Settings Page Generator
 
 TODO: write documentation for the settings page generator

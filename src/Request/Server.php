@@ -44,8 +44,6 @@ class Server {
 		}
 
 		switch ( $this->get_method() ) {
-			case 'GET':
-				return $_GET;
 			case 'POST':
 				return $_POST;
 			default:
@@ -115,6 +113,7 @@ class Server {
 	 * @return array
 	 */
 	public function get_query_params() {
+		// @phpstan-ignore-next-line
 		return $_GET ?? [];
 	}
 

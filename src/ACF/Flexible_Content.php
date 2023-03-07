@@ -1,9 +1,9 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\ACF;
 
 class Flexible_Content extends Field {
+
 	/** @var Layout[] */
 	protected $layouts = [ ];
 
@@ -19,7 +19,7 @@ class Flexible_Content extends Field {
 	}
 
 	public function get_attributes() {
-		$attributes = parent::get_attributes();
+		$attributes = $this->attributes;
 		$attributes[ 'layouts' ] = [ ];
 		foreach ( $this->layouts as $layout ) {
 			$attributes[ 'layouts' ][] = $layout->get_attributes();
@@ -27,4 +27,5 @@ class Flexible_Content extends Field {
 
 		return [ $attributes ];
 	}
+
 }

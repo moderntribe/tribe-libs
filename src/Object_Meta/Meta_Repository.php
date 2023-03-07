@@ -8,13 +8,11 @@ namespace Tribe\Libs\Object_Meta;
  * A global repository of Meta_Map and Meta_Group objects
  */
 class Meta_Repository {
+
 	/**
 	 * The filter that will run to get the global Meta_Repository
 	 */
 	const GET_REPO_FILTER = 'tribe_get_meta_repo';
-
-	/** @var Meta_Group[] */
-	private $groups = [ ];
 
 	/** @var Meta_Map[] */
 	private $collections = [ ];
@@ -24,7 +22,7 @@ class Meta_Repository {
 	 *
 	 * @param Meta_Group[] $meta Initial meta groups for this collection
 	 */
-	public function __construct( $meta = [ ] ) {
+	public function __construct( $meta = [] ) {
 		foreach ( $meta as $group ) {
 			$this->add_group( $group );
 		}
@@ -53,8 +51,6 @@ class Meta_Repository {
 	 * @return void
 	 */
 	public function add_group( Meta_Group $group ) {
-		$this->groups[ $group::NAME ] = $group;
-
 		$types = $group->get_object_types();
 
 		foreach ( $types as $type => $values ) {
@@ -81,13 +77,15 @@ class Meta_Repository {
 	}
 
 	/**
-	 * @param string $object_type
+	 * @param  string  $object_type
+	 *
 	 * @return Meta_Map The meta collection relevant to the given post type
 	 */
 	public function get( $object_type ) {
-		if ( !isset( $this->collections[ $object_type ] ) ) {
+		if ( ! isset( $this->collections[ $object_type ] ) ) {
 			$this->set( new Meta_Map( $object_type ), $object_type );
 		}
+
 		return $this->collections[ $object_type ];
 	}
 }

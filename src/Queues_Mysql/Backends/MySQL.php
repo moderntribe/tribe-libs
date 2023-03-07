@@ -1,14 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tribe\Libs\Queues_Mysql\Backends;
 
+use DateTime;
+use DateTimeZone;
+use RuntimeException;
 use Tribe\Libs\Queues\Contracts\Backend;
 use Tribe\Libs\Queues\Message;
 
 class MySQL implements Backend {
 
-	const DB_TABLE = 'queue';
+	public const DB_TABLE = 'queue';
 
+	/**
+	 * @var string
+	 */
 	private $table_name;
 
 	/**
@@ -26,7 +32,7 @@ class MySQL implements Backend {
 		 *
 		 * @param string $table_name Table name with $wpdb->prefix added
 		 */
-		$table_name = apply_filters( 'tribe/queues/mysql/table_name', $table_name );
+		$table_name = (string) apply_filters( 'tribe/queues/mysql/table_name', $table_name );
 
 		$this->table_name = $table_name;
 	}
@@ -77,7 +83,7 @@ class MySQL implements Backend {
 				WHERE queue = %s
 				AND taken = 0
 				AND done = 0
-				AND run_after <= CURRENT_TIME()
+				AND run_after <= UTC_TIME()
 				ORDER BY priority ASC
 				LIMIT 0,1
 				",
@@ -87,12 +93,12 @@ class MySQL implements Backend {
 		);
 
 		if ( empty( $queue ) ) {
-			throw new \RuntimeException( 'No messages available to reserve.' );
+			throw new RuntimeException( 'No messages available to reserve.' );
 		}
 
 		$queue['args'] = json_decode( $queue['args'], true );
 
-		if ( ! is_array( $queue[ 'args' ] ) ) {
+		if ( ! is_array( $queue['args'] ) ) {
 			// No args, or error decoding args, leaving us
 			// with an unprocessable record. Mark it complete
 			// so we don't come back to it on the next run.
@@ -100,14 +106,15 @@ class MySQL implements Backend {
 				$this->table_name,
 				[
 					'taken' => time(),
-					'done' => time(),
+					'done'  => time(),
 				],
 				[
-					'id' => $queue[ 'id' ],
+					'id'    => $queue['id'],
 					'taken' => 0,
 				]
 			);
-			throw new \RuntimeException( 'Unprocessable record' );
+
+			throw new RuntimeException( 'Unprocessable record' );
 		}
 
 		$wpdb->update(
@@ -120,10 +127,10 @@ class MySQL implements Backend {
 		);
 
 		if ( 0 === $wpdb->rows_affected ) {
-			throw new \RuntimeException( 'All messages have been reserved.' );
+			throw new RuntimeException( 'All messages have been reserved.' );
 		}
 
-		return new Message( $queue['task_handler'], $queue['args'], $queue['priority'], $queue['id'] );
+		return new Message( $queue['task_handler'], $queue['args'], (int) $queue['priority'], $queue['id'] );
 	}
 
 	public function ack( string $job_id, string $queue_name ) {
@@ -146,7 +153,12 @@ class MySQL implements Backend {
 			[
 				'taken'     => 0,
 				'priority'  => $priority + 1,
-				'run_after' => ( new \DateTime( sprintf('+%d seconds', absint( $priority ) ) ) )->format( 'Y-m-d H:i:s' ),
+				'run_after' => ( new
+					DateTime(
+						sprintf( '+%d seconds', absint( $priority ) ),
+						new DateTimeZone( 'UTC' )
+					)
+				)->format( 'Y-m-d H:i:s' ),
 			],
 			[ 'id' => $job_id ]
 		);
@@ -155,7 +167,7 @@ class MySQL implements Backend {
 	public function cleanup() {
 		global $wpdb;
 
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$this->table_name} WHERE done != 0 AND done < %d", time() - $this->ttl ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE done != 0 AND done < %d", time() - $this->ttl ) );
 
 		$stale = $wpdb->get_col(
 			$wpdb->prepare(
@@ -177,7 +189,7 @@ class MySQL implements Backend {
 	public function count( string $queue_name ): int {
 		global $wpdb;
 
-		return $wpdb->get_var( $wpdb->prepare(
+		return (int) $wpdb->get_var( $wpdb->prepare(
 			"SELECT COUNT(*) FROM $this->table_name WHERE queue = %s AND done = 0",
 			$queue_name
 		) );
@@ -216,23 +228,26 @@ class MySQL implements Backend {
 		return dbDelta( $query );
 	}
 
-	private function get_priority( $task_id ) {
+	private function get_priority( $task_id ): int {
 		global $wpdb;
 
-		return $wpdb->get_var( $wpdb->prepare(
+		return (int) $wpdb->get_var( $wpdb->prepare(
 			"SELECT priority FROM $this->table_name WHERE id = %s",
 			$task_id
 		) );
 	}
 
 	/**
-	 * @return array|bool
 	 * @action tribe/project/queues/mysql/init_table
+	 *
+	 * @return array|bool
 	 */
 	public function initialize_table() {
 		if ( $this->table_exists() ) {
 			return false;
 		}
+
 		return $this->create_table();
 	}
+
 }

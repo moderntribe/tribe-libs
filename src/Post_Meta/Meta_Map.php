@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tribe\Libs\Post_Meta;
 
 use Tribe\Libs\Object_Meta\Meta_Group;
@@ -11,7 +10,15 @@ use Tribe\Libs\Object_Meta\Meta_Group;
  * Maps requests for meta keys to the Meta_Group responsible for handling it
  */
 class Meta_Map {
-	/** @var string */
+
+	/**
+	 * Existing Square One projects are passing this in, so removing it would
+	 * be a breaking change.
+	 *
+	 * @var string
+	 *
+	 * @phpstan-ignore-next-line
+	 */
 	private $post_type;
 
 	/** @var Meta_Group[] */
@@ -26,7 +33,7 @@ class Meta_Map {
 	 * Add the Meta_Group as the handler for its declared keys.
 	 * Any keys that are already handled will be taken over by
 	 * this group.
-	 * 
+	 *
 	 * @param Meta_Group $group
 	 * @return void
 	 */
