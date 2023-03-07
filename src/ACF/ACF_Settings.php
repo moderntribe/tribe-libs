@@ -31,7 +31,7 @@ abstract class ACF_Settings extends Base_Settings {
 	 * Get setting value
 	 *
 	 * @param string $key
-	 * @param null   $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed
 	 */
