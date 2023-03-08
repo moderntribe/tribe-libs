@@ -11,7 +11,7 @@ class User_Collection extends DataTransferObjectCollection {
 		return new static( User::arrayOf( $users ) );
 	}
 
-	public function current(): User {
+	public function current(): ?User {
 		return parent::current();
 	}
 

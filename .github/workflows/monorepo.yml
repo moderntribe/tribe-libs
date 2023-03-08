@@ -6,51 +6,58 @@ on:
       - '*'
 
 jobs:
-
-  split:
+  list-repos:
     runs-on: ubuntu-latest
-
-    env:
-      cache_version: 1 # increment to flush all caches
-      php_version: '8.0'
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Fetch git history
-        run: |
-          git fetch --prune --unshallow
-          git checkout master
-
-      - name: Get git tag name
-        id: git-tag
-        run: echo "::set-output name=tag::$(echo ${GITHUB_REF:10})"
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ env.php_version }}
+          php-version: '8.0'
           coverage: none
-          tools: composer
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Check for Cached Composer Dependencies
-        id: cache-composer-dependencies
-        uses: actions/cache@v2
+      - uses: ramsey/composer-install@v2
+
+      - name: Set repo matrix
+        id: set-matrix
+        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-map.php)"
+
+  split:
+    needs: list-repos
+    runs-on: ubuntu-latest
+    env:
+      # This should be changed based on the branch where this action lives to match
+      # the versions that will be released, so for a "4.x" branch would be 4.0.0 <= 5.0.0.
+      # Branches MUST EXIST in the sub-repos for this to work, so use the
+      # sub-repo-branch-create.yml GitHub action to create those branches first.
+      # If you branch from this, ensure to change the split_branch to a new major version!
+      split_branch: '4.x'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.list-repos.outputs.matrix) }}
+
+    steps:
+      - uses: actions/checkout@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-
+          fetch-depth: 0
 
-      - name: Install updated composer dependencies
-        run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
-
-      - name: Split the package mini-repos
+      - name: Monorepo Tagged Split of ${{ matrix.package }}
+        uses: moderntribe/monorepo-split-github-action@3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
-        run: vendor/bin/monorepo-builder split --tag=${{ steps.git-tag.outputs.tag }} -q
+        with:
+          tag: ${GITHUB_REF#refs/tags/}
+
+          package_directory: 'src/${{ matrix.package.directory }}'
+          repository_organization: 'moderntribe'
+          repository_name: '${{ matrix.package.name }}'
+          user_name: '${{ github.actor }}'
+          user_email: '${{ github.actor }}@users.noreply.github.com'
+          branch: '${{ env.split_branch }}'
+

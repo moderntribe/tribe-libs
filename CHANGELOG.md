@@ -4,7 +4,34 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-## 4.0.8 - 2022-08-19
+## 4.2.1 - 2023-03-07
+
+- Fixed: Incorrect docblock types in ACF_Settings. (thanks @szepeviktor).
+
+## 4.2.0 - 2022-10-25
+- Added: Gallery_Collection field model for automatic mapping of the ACF Gallery Field.
+- Added: SVG storage system that parses SVGs on upload to capture their markup for quick access to display inline in components.
+- Added: The SVG store command to add or remove SVG markup to the database. Run `wp s1 help svg store` for details.
+- Added: Codeception unit testing suite utilizing Brain Monkey for mocking.
+- Changed: Base `Test_Case` class to allow developers to build a container with specific definers/subscribers for their specific test cases.
+- Added: More composer commands to run automated tests:
+  - `composer test:all` - run all test suites.
+  - `composer test:unit` - run unit tests.
+  - `compser test:integration` - run integration tests.
+
+## 4.1.0 - 2022-10-03
+- Added: All YouTube oEmbeds will use youtube-nocookie.com, but can be disabled in your project with `define( 'TRIBE_ENABLE_YOUTUBE_NOCOOKIE_URI', false )` in your wp-config.php.
+
+## 4.0.16 - 2022-08-21
+- Fixed: splitting packages into existing, specific branches in monorepo.yml using a forked action https://github.com/moderntribe/monorepo-split-github-action
+
+## 4.0.9 - 2022-08-21
+- Updated: monorepo release GitHub workflow to use https://github.com/symplify/monorepo-split-github-action
+- Updated: monorepo-builder library to the 11.1 version
+- Fixed: phpstan no longer detecting monorepo-builder packages
+
+## 4.0.7 - 2022-08-19
+- Released: `4.x` branch
 
 ## 4.0.5 - 2022-08-19
 - Fixed: Added the missing https://github.com/moderntribe/square1-routes sub-repo that was never originally created.

@@ -16,6 +16,9 @@ use Symplify\MonorepoBuilder\FileSystem\ComposerJsonProvider;
 use Symplify\PackageBuilder\Console\Command\CommandNaming;
 use Symplify\PackageBuilder\Console\ShellCode;
 
+/**
+ * @TODO this needs to be updated for monorepo-builder 11.x
+ */
 class SetAliasCommand extends Command {
 
 	/**

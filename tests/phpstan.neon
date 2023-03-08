@@ -1,25 +1,22 @@
-includes:
-	- ../vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
 	level: 5
 	paths:
 		- ../src
+	scanDirectories:
+		- ../vendor/symplify/monorepo-builder
 	excludePaths:
 		- ../src/Cache/Cache_Prime_Command.php
 		- ../src/Generators/templates/
 		- ../src/P2P/
 	treatPhpDocTypesAsCertain: false
 	ignoreErrors:
-		# errors from specific files
-		-
-			message: '#Else branch is unreachable because ternary operator condition is always true\.$#'
-			path: ../src/Queues/Tasks/Email.php
 		# Other errors to ignore everywhere
 		# Undefined functions are expected to be calling WP functions
 		- '#^Function \S+ not found\.$#'
 		- '#Unsafe usage of new static\(\)\.$#'
 		- '#Extensible_Walker_Nav_Menu.*should be compatible#'
 		- '#JSON_Nav_Walker.*should be compatible#'
+		- '#^Method Tribe\\Libs\\Blog_Copier\\Copy_Configuration\:\:.*\(\) is unused\.$#'
 	earlyTerminatingMethodCalls:
 		WP_CLI:
 		  - error

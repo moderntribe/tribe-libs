@@ -6,6 +6,7 @@ Examples can be found in: `wp-content/plugins/core/src/Routes/`
 #### REST Route
 Create a new class in `wp-content/plugins/core/src/Routes/` that extends `Tribe\Libs\Routes\Abstract_REST_Route`
 
+```php
     <?php declare( strict_types=1 );
 	/**
 	 * Sample REST route.
@@ -74,11 +75,12 @@ Create a new class in `wp-content/plugins/core/src/Routes/` that extends `Tribe\
 			);
 		}
 	}
-
+```
 Inside `wp-content/plugins/core/src/Routes/Routes_Definer.php` add the class to the `Route_Definer::REST_ROUTES` array.
 
 #### Rewrite Rule
 
+```php
     <?php declare( strict_types=1 );
 	/**
 	 * Sample route.
@@ -184,6 +186,7 @@ Inside `wp-content/plugins/core/src/Routes/Routes_Definer.php` add the class to 
 			return esc_html__( 'Sample | Project', 'project' );
 		}
 	}
+```
 
 The `get_priority` method returns either "top" or "bottom" to determine where the route should be added in the rewrites array. The order is important since WordPress looks for the first available route that matches.
 
@@ -192,6 +195,7 @@ The `get_pattern` and `get_matches` methods are used to set query variables base
 #### Rewrite Rule Template
 Rewrite rule templates are stored in `wp-content/themes/core/routes` by default, but can be overridden in the `get_template` method. An example template from the sample route above would be:
 
+```php
     <?php declare( strict_types=1 );
 	/**
 	* Sample Route template.
@@ -204,3 +208,4 @@ Rewrite rule templates are stored in `wp-content/themes/core/routes` by default,
         <p><?php  esc_html_e( 'Sample Route', 'tribe' ); ?></p>
 	<?php
 	get_footer();
+```

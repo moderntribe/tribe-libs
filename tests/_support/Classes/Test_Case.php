@@ -17,6 +17,8 @@ use Faker\Generator;
  */
 class Test_Case extends WPTestCase {
 
+	use With_DI_Container;
+
 	protected Generator $faker;
 
 	protected function setUp(): void {
@@ -24,6 +26,15 @@ class Test_Case extends WPTestCase {
 		parent::setUp();
 
 		$this->faker = Factory::create();
+
+		$this->init_builder();
+	}
+
+	protected function tearDown(): void {
+		// @phpstan-ignore-next-line
+		parent::tearDown();
+
+		$this->c = null;
 	}
 
 }

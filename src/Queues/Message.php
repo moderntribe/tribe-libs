@@ -32,6 +32,7 @@ class Message implements \JsonSerializable {
 		return $this->args;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 
 		return [
