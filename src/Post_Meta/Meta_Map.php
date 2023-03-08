@@ -53,7 +53,7 @@ class Meta_Map {
 	/**
 	 * @param int $post_id
 	 * @param string $key
-	 * @return mixed The value for the given key or null
+	 * @return mixed The value for the given key
 	 */
 	public function get_value( $post_id, $key ) {
 		if ( ! array_key_exists( $key, $this->keys ) ) {
