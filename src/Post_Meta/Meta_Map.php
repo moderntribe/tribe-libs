@@ -22,11 +22,10 @@ class Meta_Map {
 	private $post_type;
 
 	/** @var Meta_Group[] */
-	private $keys;
+	private $keys = [];
 
 	public function __construct( $post_type ) {
 		$this->post_type = $post_type;
-		$this->keys = [];
 	}
 
 	/**
