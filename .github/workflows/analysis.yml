@@ -23,7 +23,7 @@ jobs:
       php_extensions: tokenizer, xmlwriter, simplexml
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
 
       - name: Setup PHP extension cache
         id: cache-php-extensions
@@ -34,7 +34,7 @@ jobs:
           key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}
 
       - name: Cache PHP extensions
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.cache-php-extensions.outputs.dir }}
           key: ${{ steps.cache-php-extensions.outputs.key }}
@@ -57,7 +57,7 @@ jobs:
 
       - name: Check for Cached Composer Dependencies
         id: cache-composer-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
