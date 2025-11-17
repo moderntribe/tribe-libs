@@ -25,7 +25,7 @@ jobs:
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-map.php)"
+        run: echo "matrix=$(php ./dev/monorepo/scripts/repo-map.php)" >> $GITHUB_OUTPUT
 
   split:
     needs: list-repos
