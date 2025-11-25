@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
 
     env:
-      cache_version: 1 # increment to flush all caches
+      cache_version: 2 # increment to flush all caches
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
@@ -34,7 +34,7 @@ jobs:
       WP_ADMIN_USERNAME: "admin"
       WP_ADMIN_PASSWORD: "password"
       WP_URL: "http://tribe-libs.tribe"
-      TEST_DB_HOST: 127.0.0.1
+      TEST_DB_HOST: localhost
       TEST_DB_NAME: wordpress
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
@@ -44,7 +44,7 @@ jobs:
     services:
 
       mysql:
-        image: mariadb:10
+        image: mariadb:11.4
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: wordpress
