@@ -28,8 +28,8 @@
         "test:integration": "@test run integration",
         "test:unit": "@test run unit",
         "test:all": [
-          "@test:unit",
-          "@test:integration"
+            "@test:unit",
+            "@test:integration"
         ]
     },
     "require": {

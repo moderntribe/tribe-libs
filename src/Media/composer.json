@@ -14,7 +14,7 @@
         "ext-libxml": "*",
         "ext-zlib": "*",
         "ext-simplexml": "*",
-        "enshrined/svg-sanitize": "^0.15",
+        "enshrined/svg-sanitize": "^0.22",
         "moderntribe/square1-container": "^4.3",
         "moderntribe/square1-cli": "^4.3"
     },
