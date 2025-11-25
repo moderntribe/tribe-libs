@@ -1,0 +1,42 @@
+name: tribe-libs
+recipe: wordpress
+
+config:
+  php: '8.4'
+  database: mariadb:11.4
+  composer_version: 2-latest
+  xdebug: false
+  memcached: true
+  config:
+    # Uncomment the line below to enable the correct Nginx conf for a WordPress subDIRECTORY multisite install.
+    #vhosts: dev/lando/ms-subdirectory.conf
+
+# Uncomment the following lines and update the URLs to enable a WordPress subDOMAIN multisite install.
+#proxy:
+#  appserver_nginx:
+#    - 'moose.lndo.site'
+#    - '*.moose.lndo.site'
+
+services:
+  appserver:
+    overrides:
+      environment:
+        - XDEBUG_TRIGGER=1
+  database:
+    run_as_root:
+      # Create separate DB for tests
+      - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS tribe_libs_test; GRANT ALL PRIVILEGES ON tribe_libs_test.* TO 'wordpress'@'%' IDENTIFIED by 'wordpress';"
+
+tooling:
+  npm:
+    service: node
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for nginx.
+    cmd: docker-php-ext-enable xdebug && pkill -o -USR2 php-fpm && echo "Xdebug enabled"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for nginx.
+    cmd: rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && pkill -o -USR2 php-fpm && echo "Xdebug disabled"
+    user: root
