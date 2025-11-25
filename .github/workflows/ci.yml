@@ -34,7 +34,7 @@ jobs:
       WP_ADMIN_USERNAME: "admin"
       WP_ADMIN_PASSWORD: "password"
       WP_URL: "http://tribe-libs.tribe"
-      TEST_DB_HOST: localhost
+      TEST_DB_HOST: mysql
       TEST_DB_NAME: wordpress
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
