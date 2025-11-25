@@ -28,7 +28,7 @@ extensions:
     - "lucatume\\WPBrowser\\Command\\MonkeyCachePath"
     - "lucatume\\WPBrowser\\Command\\MonkeyCacheClear"
 params:
-  - .env
+  - env
 
 ##
 # Module configurations that apply to all suites,
