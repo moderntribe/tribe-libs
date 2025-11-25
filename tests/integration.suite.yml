@@ -7,4 +7,4 @@
 class_name: IntegrationTester
 modules:
     enabled:
-        - WPLoader
+        - lucatume\WPBrowser\Module\WPLoader

@@ -36,7 +36,7 @@ params:
 ##
 modules:
   config:
-    WPLoader:
+    lucatume\WPBrowser\Module\WPLoader:
       # loadOnly: false (We recommend each suite define this parameter explicitly)
       wpRootFolder: '%WP_ROOT_FOLDER%'
       dbName: '%TEST_DB_NAME%'

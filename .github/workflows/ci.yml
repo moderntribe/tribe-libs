@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
 
     env:
-      cache_version: 2 # increment to flush all caches
+      cache_version: 1 # increment to flush all caches
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
