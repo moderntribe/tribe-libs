@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
 
     env:
-      cache_version: 1 # increment to flush all caches
+      cache_version: 3 # increment to flush all caches
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
@@ -88,7 +88,7 @@ jobs:
 
       - name: Create config files
         run: |
-          touch ./tests/.env
+          cp ./tests/.env-dist ./tests/.env
 
       - name: Get composer cache directory
         id: composer-cache
