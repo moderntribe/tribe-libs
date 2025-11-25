@@ -19,13 +19,13 @@ jobs:
           coverage: none
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - uses: ramsey/composer-install@v2
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(php ./dev/monorepo/scripts/repo-map.php)"
+        run: echo "matrix=$(php ./dev/monorepo/scripts/repo-map.php)" >> $GITHUB_OUTPUT
 
   split:
     needs: list-repos
@@ -43,7 +43,7 @@ jobs:
         package: ${{ fromJson(needs.list-repos.outputs.matrix) }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 

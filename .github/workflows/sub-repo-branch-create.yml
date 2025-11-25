@@ -20,13 +20,13 @@ jobs:
           coverage: none
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - uses: ramsey/composer-install@v2
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(./monorepo.sh packages-json)"
+        run: echo "matrix=$(./monorepo.sh packages-json)" >> $GITHUB_OUTPUT
 
   create-sub-repo-branches:
     needs: list-repos
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Checkout sub-repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           repository: ${{ env.org }}/${{ matrix.package }}
           token: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
