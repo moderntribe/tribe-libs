@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.2.2 - 2025-11-25
 
 - Updated: `enshrined/svg-sanitize` to 0.22 for security patch.
 
