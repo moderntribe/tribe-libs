@@ -1,0 +1,8 @@
+name: tribe-libs
+recipe: wordpress
+
+config:
+  php: '8.0'
+  composer_version: 2-latest
+  via: nginx
+  xdebug: false
