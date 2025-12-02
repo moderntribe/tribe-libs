@@ -14,11 +14,11 @@ $packages = [];
 
 foreach ( $finder as $file ) {
 	$composer = json_decode( $file->getContents() );
-	$paths    = explode( DIRECTORY_SEPARATOR, (string) $file->getPathInfo() );;
+	$paths    = explode( DIRECTORY_SEPARATOR, (string) $file->getPathInfo() );
 
 	$packages[] = [
 		'name'      => str_replace( 'moderntribe/', '', $composer->name ),
-		'directory' => last( $paths ),
+		'directory' => end( $paths ),
 	];
 }
 
