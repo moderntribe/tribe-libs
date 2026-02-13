@@ -36,7 +36,7 @@ class Post_Object {
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $post_id = 0, Meta_Map $meta = null ) {
+	public function __construct( $post_id = 0, ?Meta_Map $meta = null ) {
 		$this->post_id = $post_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;
