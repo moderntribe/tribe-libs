@@ -43,7 +43,7 @@
         "enshrined/svg-sanitize": "^0.22",
         "filp/whoops": "^2.2@dev",
         "mhcg/monolog-wp-cli": "^2.0",
-        "php-di/php-di": "^6.0",
+        "php-di/php-di": "7.1.1",
         "psr/log": "^1.1 || ^2.0",
         "spatie/data-transfer-object": "^2.8",
         "twig/twig": "^3.0"
