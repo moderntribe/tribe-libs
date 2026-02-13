@@ -12,7 +12,7 @@ class Post_Type_Registration {
 	 * @param Post_Type_Config           $config
 	 * @param Meta_Box_Handler_Interface $meta_box_handler
 	 */
-	public static function register( Post_Type_Config $config, Meta_Box_Handler_Interface $meta_box_handler = null ) {
+	public static function register( Post_Type_Config $config, ?Meta_Box_Handler_Interface $meta_box_handler = null ) {
 		$callback         = self::build_registration_callback( $config, $meta_box_handler );
 
 		// do not register until init
