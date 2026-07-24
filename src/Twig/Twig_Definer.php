@@ -61,7 +61,7 @@ class Twig_Definer implements Definer_Interface {
 		if ( defined( 'TWIG_CACHE_DIR' ) && TWIG_CACHE_DIR ) {
 			return TWIG_CACHE_DIR;
 		}
-		if ( defined( 'WP_CONTENT_DIR' ) && WP_CONTENT_DIR ) {
+		if ( defined( 'WP_CONTENT_DIR' ) ) {
 			return WP_CONTENT_DIR . '/cache/twig/';
 		}
 		return sys_get_temp_dir() . '/cache/twig/';

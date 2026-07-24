@@ -8,6 +8,7 @@ on:
   pull_request:
     paths:
       - 'src/**/*.php'
+      - 'phpcs.xml'
       - 'tests/phpcs.xml'
       - 'tests/phpstan.neon'
       - 'composer.json'
@@ -73,7 +74,7 @@ jobs:
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Run PHPCS code sniffer
-        run: php vendor/bin/phpcs --standard=tests/phpcs.xml
+        run: php vendor/bin/phpcs
 
       - name: Run PHPStan static analysis
         run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1
