@@ -9,7 +9,7 @@ class Message implements \JsonSerializable {
 	private $priority;
 	private $job_id;
 
-	public function __construct( string $task_handler, array $args = [], int $priority = 10, string $job_id = null ) {
+	public function __construct( string $task_handler, array $args = [], int $priority = 10, ?string $job_id = null ) {
 		$this->task_handler = $task_handler;
 		$this->args         = $args;
 		$this->priority     = $priority;

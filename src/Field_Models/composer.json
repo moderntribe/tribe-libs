@@ -8,18 +8,20 @@
         "preferred-install": "dist"
     },
     "require": {
-        "php": ">=7.4",
-        "ext-json": "*",
-        "spatie/data-transfer-object": "^2.8"
+        "php": "^8.1",
+        "ext-json": "*"
     },
     "autoload": {
+        "files": [
+            "spatie-aliases.php"
+        ],
         "psr-4": {
             "Tribe\\Libs\\Field_Models\\": ""
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "5.0-dev"
         }
     },
     "minimum-stability": "dev",

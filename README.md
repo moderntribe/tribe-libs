@@ -8,17 +8,63 @@ Square One core plugin.
 |--------------------|:---------------:|--------------------------------------------------------------------------------------:|
 | 3.x                |     7.2-7.4     |                                                  Master branch. No longer maintained. |
 | 4.x                |      7.4+       | For use in legacy Square One PHP 7.4 projects where the host is upgrading to PHP 8.0. |
-| 5.x+               |      8.0+       |                                                   For use in new Square One projects. |
+| 5.x+               |     ^8.1        |                                      PHP 8.1+ with PHP-DI 7 and first-party Field Models DTOs. |
 
 ## Installation
 
 ```
-composer require moderntribe/tribe-libs
+composer require moderntribe/tribe-libs:^5.0
 ```
+
+### Upgrading from 4.x to 5.x
+
+1. Require PHP **8.1+** in the consuming project.
+2. Bump `moderntribe/tribe-libs` (or individual `moderntribe/square1-*` packages) to `^5.0`.
+3. Remove any project patches for `php-di/php-di` PHP 8.4 nullable issues — 5.x uses **PHP-DI 7**.
+4. Field Models: keep using `Field_Model` / `castValue` / `castType` as before. Spatie DTO is removed; first-party DTOs ship with `Spatie\DataTransferObject\*` class aliases when Spatie is not installed.
+5. Do **not** require unpublished `moderntribe/square1-*:^5.0` packages from Packagist until they are released — consume `moderntribe/tribe-libs` (monorepo `replace`) or path/VCS of this repo.
 
 ## Usage
 
-All usage documentation lives in the [Square One repository](https://github.com/moderntribe/square-one/tree/master/docs).
+All Square One project docs live in the [Square One repository](https://github.com/moderntribe/square-one/tree/master/docs). Package-level READMEs under `src/*/README.md` cover individual libraries.
+
+### Field Models (5.x)
+
+Hydrate typed models from ACF arrays. The public API matches 4.x (`Field_Model`, `castValue`, `castType`); Spatie DTO is no longer a dependency.
+
+```php
+use Tribe\Libs\Field_Models\Field_Model;
+use Tribe\Libs\Field_Models\Models\Link;
+
+class Card_Fields extends Field_Model {
+	public string $heading = '';
+	public Link $link;
+}
+
+$card = new Card_Fields( (array) get_fields() );
+
+echo $card->heading;
+echo $card->link->url;
+```
+
+More examples (collections, nested models, Spatie aliases): [src/Field_Models/README.md](src/Field_Models/README.md).
+
+### Mutable Container (PHP-DI 7)
+
+Wrap the app container when you need a fully fresh object graph (queues, long-running jobs):
+
+```php
+use Tribe\Libs\Container\Container;
+use Tribe\Libs\Container\MutableContainer;
+
+// In a Definer:
+MutableContainer::class => static fn ( $c ) => ( new Container() )->wrap( $c ),
+
+// Later:
+$fresh = $container->get( MutableContainer::class )->makeFresh( My_Job::class );
+```
+
+See [src/Container/README.md](src/Container/README.md).
 
 ## Support
 

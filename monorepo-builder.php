@@ -11,7 +11,7 @@ return static function ( MBConfig $config ): void {
 	] );
 
 	// This should be updated if you're making a new major branch, e.g. `5.x`
-	$config->defaultBranch( '4.x' );
+	$config->defaultBranch( '5.x' );
 
 	// Release workers, execute in the order they appear here.
 	$config->workers( [

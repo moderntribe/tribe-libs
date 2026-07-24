@@ -43,7 +43,7 @@ trait With_DI_Container {
 	private function init_builder(): void {
 		$builder = new ContainerBuilder();
 		$builder->useAutowiring( true );
-		$builder->useAnnotations( false );
+		$builder->useAttributes( false );
 
 		$this->builder = $builder;
 	}

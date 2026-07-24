@@ -9,7 +9,7 @@ class Listener {
 	/** @var Cache */
 	protected $cache;
 
-	public function __construct( Cache $cache = null ) {
+	public function __construct( ?Cache $cache = null ) {
 		$this->cache = $cache ?: new Cache();
 	}
 }

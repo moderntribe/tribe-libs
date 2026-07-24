@@ -9,9 +9,9 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-cli": "^4.3",
-        "moderntribe/square1-container": "^4.3",
-        "php": ">=7.4"
+        "moderntribe/square1-cli": "self.version",
+        "moderntribe/square1-container": "self.version",
+        "php": "^8.1"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }

@@ -37,7 +37,7 @@ class Term_Object {
 	 *                                      If you're not sure what to do here, chances
 	 *                                      are you should be calling self::get_post().
 	 */
-	public function __construct( $term_id = 0, Meta_Map $meta = null ) {
+	public function __construct( $term_id = 0, ?Meta_Map $meta = null ) {
 		$this->term_id = $term_id;
 		if ( isset( $meta ) ) {
 			$this->meta = $meta;

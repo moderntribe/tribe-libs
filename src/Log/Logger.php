@@ -5,6 +5,7 @@ namespace Tribe\Libs\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as MonoLogger;
 use Psr\Log\LoggerInterface;
+use Stringable;
 
 /**
  * PSR Logger using MonoLogger.
@@ -21,7 +22,7 @@ class Logger implements LoggerInterface {
 	/**
 	 * Logger constructor.
 	 *
-	 * @param  \Monolog\Logger  $log
+	 * @param \Monolog\Logger $log
 	 */
 	public function __construct( MonoLogger $log ) {
 		$this->log = $log;
@@ -30,7 +31,7 @@ class Logger implements LoggerInterface {
 	/**
 	 * Adds additional push handlers
 	 *
-	 * @param   AbstractProcessingHandler  $handler
+	 * @param AbstractProcessingHandler $handler
 	 *
 	 * @return LoggerInterface
 	 */
@@ -41,41 +42,30 @@ class Logger implements LoggerInterface {
 	/**
 	 * System is unusable.
 	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function emergency( $message, array $context = [] ) {
+	public function emergency( string|Stringable $message, array $context = [] ): void {
 		$this->log->emergency( $message, $context );
 	}
 
 	/**
 	 * Action must be taken immediately.
 	 *
-	 * Example: Entire website down, database unavailable, etc. This should
-	 * trigger the SMS alerts and wake you up.
-	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function alert( $message, array $context = [] ) {
+	public function alert( string|Stringable $message, array $context = [] ): void {
 		$this->log->alert( $message, $context );
 	}
 
 	/**
 	 * Critical conditions.
 	 *
-	 * Example: Application component unavailable, unexpected exception.
-	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function critical( $message, array $context = [] ) {
+	public function critical( string|Stringable $message, array $context = [] ): void {
 		$this->log->critical( $message, $context );
 	}
 
@@ -83,80 +73,63 @@ class Logger implements LoggerInterface {
 	 * Runtime errors that do not require immediate action but should typically
 	 * be logged and monitored.
 	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function error( $message, array $context = [] ) {
+	public function error( string|Stringable $message, array $context = [] ): void {
 		$this->log->error( $message, $context );
 	}
 
 	/**
 	 * Exceptional occurrences that are not errors.
 	 *
-	 * Example: Use of deprecated APIs, poor use of an API, undesirable things
-	 * that are not necessarily wrong.
-	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function warning( $message, array $context = [] ) {
+	public function warning( string|Stringable $message, array $context = [] ): void {
 		$this->log->warning( $message, $context );
 	}
 
 	/**
 	 * Normal but significant events.
 	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function notice( $message, array $context = [] ) {
+	public function notice( string|Stringable $message, array $context = [] ): void {
 		$this->log->notice( $message, $context );
 	}
 
 	/**
 	 * Interesting events.
 	 *
-	 * Example: User logs in, SQL logs.
-	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function info( $message, array $context = [] ) {
+	public function info( string|Stringable $message, array $context = [] ): void {
 		$this->log->info( $message, $context );
 	}
 
 	/**
 	 * Detailed debug information.
 	 *
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 */
-	public function debug( $message, array $context = [] ) {
+	public function debug( string|Stringable $message, array $context = [] ): void {
 		$this->log->debug( $message, $context );
 	}
 
 	/**
 	 * Logs with an arbitrary level.
 	 *
-	 * @param   mixed   $level
-	 * @param   string  $message
-	 * @param   array   $context
-	 *
-	 * @return void
+	 * @param mixed             $level
+	 * @param string|Stringable $message
+	 * @param array             $context
 	 *
 	 * @throws \Psr\Log\InvalidArgumentException
 	 */
-	public function log( $level, $message, array $context = [] ) {
+	public function log( $level, string|Stringable $message, array $context = [] ): void {
 		$this->log->log( $level, $message, $context );
 	}
 

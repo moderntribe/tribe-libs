@@ -3,7 +3,8 @@ name: Codeception Tests
 on:
   push:
     branches:
-      - 4.x
+      - 5.x
+      - '5.0.0'
   pull_request:
 
 jobs:
@@ -14,47 +15,47 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.4', '8.0', '8.1' ]
-        wordpress-version: [ 'latest', '5.3.12', '5.9.3' ]
-        exclude:
-          - php-versions: '8.0'
-            wordpress-version: '5.3.12'
-          - php-versions: '8.1'
-            wordpress-version: '5.3.12'
+        php-versions: [ '8.1', '8.2', '8.3' ]
+        wordpress-version: [ 'latest', '6.4.5', '6.7.2' ]
       fail-fast: false
 
     env:
-      cache_version: 1 # increment to flush all caches
+      cache_version: 2
       php_extensions: memcached, mysql, bz2, gd, igbinary, imagick, imap, mbstring, bcmath, zip, intl
       PROJECT_ID: square1
       COMPOSE_INTERACTIVE_NO_CLI: 1
       WP_ROOT_FOLDER: ${{ github.workspace }}/tests/wordpress
-      WP_DOMAIN: "tribe-libs.tribe"
-      WP_ADMIN_PATH: "/wp-admin"
-      WP_ADMIN_USERNAME: "admin"
-      WP_ADMIN_PASSWORD: "password"
-      WP_URL: "http://tribe-libs.tribe"
+      WP_DOMAIN: tribe-libs.tribe
+      WP_ADMIN_PATH: /wp-admin
+      WP_ADMIN_USERNAME: admin
+      WP_ADMIN_PASSWORD: password
+      WP_URL: http://tribe-libs.tribe
       TEST_DB_HOST: 127.0.0.1
-      TEST_DB_NAME: wordpress
+      TEST_DB_NAME: tribe_libs_test
       TEST_DB_USER: root
       TEST_DB_PASSWORD: password
-      TABLE_PREFIX: "tribe_"
+      TABLE_PREFIX: tribe_
       TEST_CONFIG_FILE: ${{ github.workspace }}/tests/wp-config-environment.php
 
     services:
 
       mysql:
-        image: mariadb:10
+        image: mariadb:10.11
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: wordpress
+          MYSQL_DATABASE: tribe_libs_test
         ports:
           - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP extension cache
         id: cache-php-extensions
@@ -65,7 +66,7 @@ jobs:
           key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-${{ matrix.wordpress-version }}
 
       - name: Cache PHP extensions
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.cache-php-extensions.outputs.dir }}
           key: ${{ steps.cache-php-extensions.outputs.key }}
@@ -77,36 +78,49 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
           coverage: none
-          tools: codeception, composer
+          tools: composer:v2
 
       - name: Download WordPress
         working-directory: ./tests
         run: |
-          wget "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
+          wget -q "https://wordpress.org/wordpress-${{ matrix.wordpress-version }}.tar.gz" -O ./wordpress.tar.gz
           tar xzf wordpress.tar.gz
           rm wordpress.tar.gz
 
-      - name: Create config files
+      - name: Create test environment file
         run: |
-          touch ./tests/.env
+          {
+            echo "WP_ROOT_FOLDER=${{ env.WP_ROOT_FOLDER }}"
+            echo "WP_DOMAIN=${{ env.WP_DOMAIN }}"
+            echo "WP_URL=${{ env.WP_URL }}"
+            echo "WP_ADMIN_PATH=${{ env.WP_ADMIN_PATH }}"
+            echo "WP_ADMIN_USERNAME=${{ env.WP_ADMIN_USERNAME }}"
+            echo "WP_ADMIN_PASSWORD=${{ env.WP_ADMIN_PASSWORD }}"
+            echo "TEST_DB_HOST=${{ env.TEST_DB_HOST }}"
+            echo "TEST_DB_NAME=${{ env.TEST_DB_NAME }}"
+            echo "TEST_DB_USER=${{ env.TEST_DB_USER }}"
+            echo "TEST_DB_PASSWORD=${{ env.TEST_DB_PASSWORD }}"
+            echo "TABLE_PREFIX=${{ env.TABLE_PREFIX }}"
+            echo "TEST_CONFIG_FILE=${{ env.TEST_CONFIG_FILE }}"
+          } > ./tests/.env
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
-      - name: Check for Cached Composer Dependencies
-        id: cache-composer-dependencies
-        uses: actions/cache@v2
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-
+          key: ${{ runner.os }}-${{ env.cache_version }}-php${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json', 'composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache_version }}-php${{ matrix.php-versions }}-composer-
 
-      - name: Install updated composer dependencies
+      - name: Install Composer dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
-      - name: Install test dependencies
-        run: composer -- test:install-plugins
+      - name: Install test plugins
+        run: composer test:install-plugins
 
       - name: Run unit tests
         run: composer test:unit
