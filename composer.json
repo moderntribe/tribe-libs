@@ -32,7 +32,10 @@
             "@test:integration"
         ],
         "test:functional": "@test run integration",
-        "test:acceptance": "@php -r 'fwrite(STDERR, \"No acceptance suite in tribe-libs; use unit + integration/functional.\\n\"); exit(0);'"
+        "test:acceptance": "@php -r 'fwrite(STDERR, \"No acceptance suite in tribe-libs; use unit + integration/functional.\\n\"); exit(0);'",
+        "phpcs": "@php vendor/bin/phpcs",
+        "phpcbf": "@php vendor/bin/phpcbf",
+        "phpstan": "@php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1"
     },
     "require": {
         "php": "^8.1",
