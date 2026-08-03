@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fixed: Implicit nullable parameter declarations for PHP 8.4+ (`Type $x = null` → `?Type $x = null`).
 - Changed: Dev tooling constraints (PHPUnit, PHPStan, Symfony Console) for PHP 8.1+.
 - Added: `composer test:functional` alias for the integration suite.
-- Changed: GitHub Actions for PHP 8.1–8.3, WordPress latest/6.4/6.7, modern action versions, `5.x` monorepo split branch.
+- Changed: GitHub Actions for PHP 8.1–8.4, WordPress latest/6.9.5, modern action versions, `5.x` monorepo split branch.
 
 ## 4.2.2 - 2025-11-25
 
