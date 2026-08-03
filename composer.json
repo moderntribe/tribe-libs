@@ -54,7 +54,7 @@
     },
     "require-dev": {
         "automattic/phpcs-neutron-standard": "^1.5",
-        "automattic/vipwpcs": "^2.0",
+        "automattic/vipwpcs": "^3.1",
         "brain/monkey": "2.*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.7.0",
         "fakerphp/faker": "^1.20",
