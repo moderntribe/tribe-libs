@@ -3,10 +3,17 @@ name: PHP Code Sniffer and Static Analysis
 on:
   push:
     branches:
-      - 4.x
+      - 5.x
+      - '5.0.0'
   pull_request:
     paths:
-      - 'src/**.php'
+      - 'src/**/*.php'
+      - 'phpcs.xml'
+      - 'tests/phpcs.xml'
+      - 'tests/phpstan.neon'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/analysis.yml'
 
 jobs:
   analyze:
@@ -16,14 +23,14 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest ]
-        php-versions: [ '8.0' ]
+        php-versions: [ '8.4' ]
 
     env:
-      cache_version: 1 # increment to flush all caches
-      php_extensions: tokenizer, xmlwriter, simplexml
+      cache_version: 2
+      php_extensions: tokenizer, xmlwriter, simplexml, mbstring
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
 
       - name: Setup PHP extension cache
         id: cache-php-extensions
@@ -34,7 +41,7 @@ jobs:
           key: ${{ matrix.operating-system }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}
 
       - name: Cache PHP extensions
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.cache-php-extensions.outputs.dir }}
           key: ${{ steps.cache-php-extensions.outputs.key }}
@@ -46,28 +53,28 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.php_extensions }}
           coverage: none
-          tools: composer
+          tools: composer:v2
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Validate composer.json
+        run: composer validate --no-check-publish --no-check-lock
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
-      - name: Check for Cached Composer Dependencies
-        id: cache-composer-dependencies
-        uses: actions/cache@v2
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ env.cache_version }}-phpextensions-${{ matrix.php-versions }}-composer-
+          key: ${{ runner.os }}-${{ env.cache_version }}-php${{ matrix.php-versions }}-composer-${{ hashFiles('composer.json', 'composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache_version }}-php${{ matrix.php-versions }}-composer-
 
-      - name: Install updated composer dependencies
+      - name: Install Composer dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Run PHPCS code sniffer
-        run: php vendor/bin/phpcs --standard=tests/phpcs.xml
+        run: php vendor/bin/phpcs
 
       - name: Run PHPStan static analysis
         run: php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1

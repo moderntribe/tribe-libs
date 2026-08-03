@@ -8,9 +8,9 @@
         "preferred-install": "dist"
     },
     "require": {
-        "php": ">=7.4",
-        "psr/log": "^1.1 || ^2.0",
-        "moderntribe/square1-container": "^4.3",
+        "php": "^8.1",
+        "psr/log": "^2.0 || ^3.0",
+        "moderntribe/square1-container": "self.version",
         "mhcg/monolog-wp-cli": "^2.0"
     },
     "autoload": {
@@ -20,7 +20,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "5.0-dev"
         }
     },
     "minimum-stability": "dev",

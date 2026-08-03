@@ -1,8 +1,8 @@
 # Tribe Libs Container
 
-The Tribe Libs Container uses [PHP-DI](https://php-di.org/doc/) to help you build
+The Tribe Libs Container uses [PHP-DI](https://php-di.org/doc/) **7.x** (tribe-libs 5.0+) to help you build
 [object graphs](https://en.wikipedia.org/wiki/Object_graph), allowing for autowiring
-dependency injection.
+dependency injection. The mutable `wrap()` / `makeFresh()` API is unchanged from 4.x.
 
 ## Mutable Container
 

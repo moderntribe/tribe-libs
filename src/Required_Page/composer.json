@@ -9,8 +9,8 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "moderntribe/square1-container": "^4.3",
-        "php": ">=7.4"
+        "moderntribe/square1-container": "self.version",
+        "php": "^8.1"
     },
     "suggest": {
         "moderntribe/square1-acf": "Supports automatic registration of options to manage the assigned pages"
@@ -22,7 +22,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }

@@ -4,15 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-## 4.2.3 - 2025-12-02
+## 5.0.0 - TBD
 
-## 4.2.3 - 2025-12-02
-
-## 4.2.3 - 2025-12-02
-
-## 4.2.3 - 2025-12-02
-
-## 4.2.3 - 2025-12-02
+- Changed: Minimum PHP version to **8.1** (`^8.1`).
+- Changed: Upgraded `php-di/php-di` from `^6.0` to **`^7.0`** for PHP 8 compatibility.
+- Changed: Removed abandoned `spatie/data-transfer-object`. Field Models use a first-party DTO layer under `Tribe\Libs\Field_Models\DTO` while keeping Spatie-compatible extension points (`castValue`, `castType`, validator property names) and class aliases under `Spatie\DataTransferObject\*` when Spatie is not installed.
+- Changed: Subpackage interdependencies use `self.version` (monorepo) until a 5.0 release sets mutual versions; branch alias `5.0-dev`.
+- Fixed: Implicit nullable parameter declarations for PHP 8.4+ (`Type $x = null` → `?Type $x = null`).
+- Changed: Dev tooling constraints (PHPUnit, PHPStan, Symfony Console) for PHP 8.1+.
+- Added: `composer test:functional` alias for the integration suite.
+- Changed: GitHub Actions for PHP 8.1–8.3, WordPress latest/6.4/6.7, modern action versions, `5.x` monorepo split branch.
 
 ## 4.2.2 - 2025-11-25
 

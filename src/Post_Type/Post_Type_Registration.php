@@ -12,7 +12,7 @@ class Post_Type_Registration {
 	 * @param Post_Type_Config           $config
 	 * @param Meta_Box_Handler_Interface $meta_box_handler
 	 */
-	public static function register( Post_Type_Config $config, Meta_Box_Handler_Interface $meta_box_handler = null ) {
+	public static function register( Post_Type_Config $config, ?Meta_Box_Handler_Interface $meta_box_handler = null ) {
 		$callback         = self::build_registration_callback( $config, $meta_box_handler );
 
 		// do not register until init
@@ -31,7 +31,7 @@ class Post_Type_Registration {
 	 *
 	 * @return \Closure
 	 */
-	private static function build_registration_callback( Post_Type_Config $config, Meta_Box_Handler_Interface $meta_box_handler = null ) {
+	private static function build_registration_callback( Post_Type_Config $config, ?Meta_Box_Handler_Interface $meta_box_handler = null ) {
 		return function () use ( $config, $meta_box_handler ) {
 			if ( empty( $config->post_type() ) ) {
 				throw new \RuntimeException( 'Invalid configuration. Specify a post type.' );

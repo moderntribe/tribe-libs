@@ -2,6 +2,7 @@
 
 namespace Tribe\Libs\WP_Downloader\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,23 +11,24 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Tribe\Libs\WP_Downloader\Installer;
 use Tribe\Libs\WP_Downloader\Plugin;
 
+#[AsCommand(
+	name: 'plugin',
+	description: 'Downloads a WordPress plugin to a specified path in the project',
+)]
 class Plugin_Downloader extends Command {
 
 	public const ARG_SLUG    = 'slug';
 	public const ARG_VERSION = 'version';
 	public const OPTION_PATH = 'path';
 
-	protected static $defaultName = 'plugin';
-	protected static $defaultDescription = 'Downloads a WordPress plugin to a specified path in the project';
-
 	protected Plugin $plugin;
 	protected Installer $installer;
 
-	public function __construct( Plugin $plugin, Installer $installer, string $name = null ) {
+	public function __construct( Plugin $plugin, Installer $installer ) {
 		$this->plugin    = $plugin;
 		$this->installer = $installer;
 
-		parent::__construct( $name );
+		parent::__construct();
 	}
 
 	protected function configure() {

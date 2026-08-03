@@ -86,7 +86,7 @@ $config_defaults = [
 
 	// Miscellaneous
 	'WP_POST_REVISIONS'              => tribe_getenv( 'WP_POST_REVISIONS', true ),
-	'WP_DEFAULT_THEME'               => tribe_getenv( 'WP_DEFAULT_THEME', 'core' ),
+	'WP_DEFAULT_THEME'               => tribe_getenv( 'WP_DEFAULT_THEME', 'twentytwentyfour' ),
 ];
 
 // ==============================================================

@@ -2,82 +2,87 @@
 
 namespace Tribe\Libs\Field_Models;
 
-use Spatie\DataTransferObject\DataTransferObject;
-use Spatie\DataTransferObject\FieldValidator;
-use Spatie\DataTransferObject\FlexibleDataTransferObject;
-use Spatie\DataTransferObject\ValueCaster;
 use Throwable;
+use Tribe\Libs\Field_Models\DTO\Data_Transfer_Object;
+use Tribe\Libs\Field_Models\DTO\Data_Transfer_Object_Collection;
+use Tribe\Libs\Field_Models\DTO\Field_Validator;
+use Tribe\Libs\Field_Models\DTO\Value_Caster;
 
-class Field_Model extends FlexibleDataTransferObject {
+/**
+ * Base ACF field model.
+ *
+ * Public/protected API matches tribe-libs 4.x + Spatie DTO v2 extension points
+ * (`castValue`, `castType`, validator property names) for back compatibility.
+ */
+class Field_Model extends Data_Transfer_Object {
 
 	/**
-	 * Override the castValue method and automatically cast values to their type.
+	 * Automatically cast values to their declared types before validation.
 	 *
-	 * @param  \Spatie\DataTransferObject\ValueCaster     $valueCaster
-	 * @param  \Spatie\DataTransferObject\FieldValidator  $fieldValidator
-	 * @param  mixed                                      $value
+	 * @param mixed $value
 	 *
 	 * @return mixed
 	 */
-	protected function castValue( ValueCaster $valueCaster, FieldValidator $fieldValidator, $value ) {
+	protected function castValue( Value_Caster $valueCaster, Field_Validator $fieldValidator, $value ) {
 		$value = $this->castType( $valueCaster, $fieldValidator, $value );
 
 		return parent::castValue( $valueCaster, $fieldValidator, $value );
 	}
 
 	/**
-	 * Attempt to automatically cast values before the DTO is validated upstream which
-	 * would normally fail. If the type isn't valid, we'll attempt to cast it to the correct type.
-	 * If we expect an array and the type doesn't match, we'll just reset the value, so we don't
-	 * pass unexpected values to nested DTO's.
+	 * Attempt to cast invalid ACF values into the declared property types.
 	 *
-	 * @param  \Spatie\DataTransferObject\ValueCaster     $valueCaster
-	 * @param  \Spatie\DataTransferObject\FieldValidator  $fieldValidator
-	 * @param  mixed                                      $value
+	 * @param mixed $value
 	 *
 	 * @return mixed
 	 */
-	protected function castType( ValueCaster $valueCaster, FieldValidator $fieldValidator, $value ) {
+	protected function castType( Value_Caster $valueCaster, Field_Validator $fieldValidator, $value ) {
 		if ( $fieldValidator->isValidType( $value ) ) {
 			return $value;
 		}
 
-		foreach ( $fieldValidator->allowedTypes as $key => $type ) {
-			if ( is_subclass_of( $type, DataTransferObject::class ) ) {
+		foreach ( $fieldValidator->allowedTypes as $type ) {
+			if ( is_subclass_of( $type, Data_Transfer_Object_Collection::class ) ) {
+				if ( empty( $value ) || ! is_array( $value ) ) {
+					$value = new $type( [] );
+					break;
+				}
+
+				$values = $valueCaster->castCollection( $value, $fieldValidator->allowedArrayTypes );
+				$value  = new $type( is_array( $values ) ? $values : [] );
+				break;
+			}
+
+			if ( is_subclass_of( $type, Data_Transfer_Object::class ) ) {
 				try {
 					$value = new $type( (array) $value );
 					break;
 				} catch ( Throwable $e ) {
 					continue;
 				}
-			} else {
-				// This is supposed to be an array of models, e.g. \Some_Model[].
-				if ( ! empty( $fieldValidator->allowedArrayTypes[ $key ] ) ) {
-					// Ensure all empty values are an array.
-					if ( empty( $value ) ) {
-						$value = [];
-					}
+			}
 
-					// Try to cast to a collection first
-					$values     = $valueCaster->castCollection( $value, $fieldValidator->allowedArrayTypes );
-					$collection = $valueCaster->collectionType( $fieldValidator->allowedTypes );
-					$value      = $collection ? new $collection( $values ) : $values;
-
-					// Pass arrays back up to the parent class which handles casting arrays to other DTO's.
-					$value = parent::castValue( $valueCaster, $fieldValidator, $value );
-
-					break;
-				}
-
-				// ACF passed some random type, reset the value to an empty array, so we don't
-				// get unexpected values.
-				if ( $type === 'array' && ! is_array( $value ) ) {
+			if ( $fieldValidator->allowedArrayTypes !== [] && ( $type === 'array' || str_ends_with( $type, '[]' ) ) ) {
+				if ( empty( $value ) ) {
 					$value = [];
 				}
 
-				settype( $value, $type );
+				$values     = $valueCaster->castCollection( $value, $fieldValidator->allowedArrayTypes );
+				$collection = $valueCaster->collectionType( $fieldValidator->allowedTypes );
+				$value      = $collection ? new $collection( $values ) : $values;
+				$value      = parent::castValue( $valueCaster, $fieldValidator, $value );
 				break;
 			}
+
+			if ( $type === 'array' && ! is_array( $value ) ) {
+				$value = [];
+			}
+
+			if ( in_array( $type, [ 'string', 'integer', 'boolean', 'double', 'array' ], true ) ) {
+				settype( $value, $type );
+			}
+
+			break;
 		}
 
 		return $value;

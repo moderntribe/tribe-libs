@@ -30,10 +30,15 @@
         "test:all": [
             "@test:unit",
             "@test:integration"
-        ]
+        ],
+        "test:functional": "@test run integration",
+        "test:acceptance": "@php -r 'fwrite(STDERR, \"No acceptance suite in tribe-libs; use unit + integration/functional.\\n\"); exit(0);'",
+        "phpcs": "@php vendor/bin/phpcs",
+        "phpcbf": "@php vendor/bin/phpcbf",
+        "phpstan": "@php vendor/bin/phpstan analyse -c tests/phpstan.neon --memory-limit=-1"
     },
     "require": {
-        "php": ">=7.4",
+        "php": "^8.1",
         "ext-dom": "*",
         "ext-json": "*",
         "ext-libxml": "*",
@@ -41,11 +46,10 @@
         "ext-zlib": "*",
         "composer-plugin-api": "^1.0 || ^2.0",
         "enshrined/svg-sanitize": "^0.22",
-        "filp/whoops": "^2.2@dev",
+        "filp/whoops": "^2.15",
         "mhcg/monolog-wp-cli": "^2.0",
-        "php-di/php-di": "^6.0",
-        "psr/log": "^1.1 || ^2.0",
-        "spatie/data-transfer-object": "^2.8",
+        "php-di/php-di": "^7.0",
+        "psr/log": "^2.0 || ^3.0",
         "twig/twig": "^3.0"
     },
     "require-dev": {
@@ -54,18 +58,18 @@
         "brain/monkey": "2.*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0 || ^0.7.0",
         "fakerphp/faker": "^1.20",
-        "lucatume/wp-browser": "^3.1",
+        "lucatume/wp-browser": "^4.7",
         "nelexa/zip": "^4.0",
         "nette/utils": "^3.2 || ^4.0",
-        "phpcompatibility/php-compatibility": "9.3.5",
+        "phpcompatibility/php-compatibility": "^9.3.5",
         "phpcompatibility/phpcompatibility-wp": "^2.0",
         "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan": "^1.8",
+        "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-mockery": "^1.1",
-        "phpunit/phpunit": "^8.0 || ^9.0",
+        "phpunit/phpunit": "^9.6 || ^10.5",
         "sirbrillig/phpcs-variable-analysis": "^2.0",
         "squizlabs/php_codesniffer": "^3.4.2",
-        "symfony/console": "^5.0 || ^6.0",
+        "symfony/console": "^5.4 || ^6.4 || ^7.0",
         "symplify/monorepo-builder": "11.1.30.72",
         "szepeviktor/phpstan-wordpress": "^1.0",
         "wp-cli/wp-cli": "^2.5"
@@ -73,7 +77,8 @@
     "autoload": {
         "files": [
             "src/Assets/version.php",
-            "src/Cache/functions.php"
+            "src/Cache/functions.php",
+            "src/Field_Models/spatie-aliases.php"
         ],
         "psr-4": {
             "Tribe\\Libs\\ACF\\": "src/ACF/",
@@ -163,7 +168,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "5.0-dev",
+            "dev-5.0.0": "5.0-dev"
         }
     },
     "minimum-stability": "dev",

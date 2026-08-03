@@ -4,7 +4,7 @@ namespace Tribe\Libs\Utils;
 
 class Markup_Utils {
 
-	public static function concat_attrs( array $attrs = null, $prefix = '' ) {
+	public static function concat_attrs( ?array $attrs = null, $prefix = '' ) {
 		if ( empty( $attrs ) ) {
 			return '';
 		}
@@ -55,7 +55,7 @@ class Markup_Utils {
 	 *
 	 * @return string
 	 */
-	public static function truncate_html( string $html = '', int $words = 55, string $more = null, bool $autop = true ): string {
+	public static function truncate_html( string $html = '', int $words = 55, ?string $more = null, bool $autop = true ): string {
 		$result = wp_trim_words( strip_shortcodes( $html ), $words, $more );
 
 		if ( $autop ) {

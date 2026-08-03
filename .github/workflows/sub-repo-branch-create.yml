@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'The branch name to create in all sub-repos'
+        description: 'The branch name to create in all sub-repos (e.g. 5.x)'
         required: true
 
 jobs:
@@ -16,17 +16,18 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.4'
           coverage: none
+          tools: composer:v2
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@v3
 
       - name: Set repo matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(./monorepo.sh packages-json)"
+        run: echo "matrix=$(./monorepo.sh packages-json)" >> "$GITHUB_OUTPUT"
 
   create-sub-repo-branches:
     needs: list-repos
@@ -39,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout sub-repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ env.org }}/${{ matrix.package }}
           token: ${{ secrets.TR1B0T_TRIBE_LIBS_MONOREPO_TOKEN }}
@@ -51,5 +52,3 @@ jobs:
           git config --local user.name "Tr1b0t"
           git checkout -b ${{ github.event.inputs.branch }}
           git push -u origin ${{ github.event.inputs.branch }}
-
-

@@ -2,10 +2,10 @@
 
 namespace Tribe\Libs\Field_Models\Collections;
 
-use Spatie\DataTransferObject\DataTransferObjectCollection;
+use Tribe\Libs\Field_Models\DTO\Data_Transfer_Object_Collection;
 use Tribe\Libs\Field_Models\Models\Image;
 
-class Gallery_Collection extends DataTransferObjectCollection {
+class Gallery_Collection extends Data_Transfer_Object_Collection {
 
 	public static function create( array $attachments ): Gallery_Collection {
 		return new static( Image::arrayOf( $attachments ) );
