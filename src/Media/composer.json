@@ -15,8 +15,8 @@
         "ext-zlib": "*",
         "ext-simplexml": "*",
         "enshrined/svg-sanitize": "^0.22",
-        "moderntribe/square1-container": "self.version",
-        "moderntribe/square1-cli": "self.version"
+        "moderntribe/square1-container": "^5.0",
+        "moderntribe/square1-cli": "^5.0"
     },
     "autoload": {
         "psr-4": {

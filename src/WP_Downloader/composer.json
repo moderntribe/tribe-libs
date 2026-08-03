@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.20",
-        "moderntribe/square1-container": "^4.3",
+        "moderntribe/square1-container": "^5.0",
         "nelexa/zip": "^4.0",
         "symfony/console": "^5.4 || ^6.4 || ^7.0"
     },
