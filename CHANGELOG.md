@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-## 5.0.0 - TBD
+## 5.0.0 - 2026-08-03
 
 - Changed: Minimum PHP version to **8.1** (`^8.1`).
 - Changed: Upgraded `php-di/php-di` from `^6.0` to **`^7.0`** for PHP 8 compatibility.
