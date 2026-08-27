@@ -19,7 +19,7 @@ class Meta_Map {
 	 *
 	 * @phpstan-ignore-next-line
 	 */
-	private $post_type = '';
+	private $post_type;
 
 	/** @var Meta_Group[] */
 	private $keys = [];
@@ -55,9 +55,10 @@ class Meta_Map {
 	 * @return mixed The value for the given key
 	 */
 	public function get_value( $post_id, $key ) {
-		if ( isset( $this->keys[ $key ] ) ) {
-			return $this->keys[ $key ]->get_value( $post_id, $key );
+		if ( ! array_key_exists( $key, $this->keys ) ) {
+			return null;
 		}
-		return null;
+
+		return $this->keys[ $key ]->get_value( $post_id, $key );
 	}
 }
