@@ -36,7 +36,7 @@ class Svg_Memory_Store implements Svg_Store {
 
 		$this->sanitizer->removeXMLTag( $remove_xml_tag );
 
-		return trim( $this->sanitizer->sanitize( $dirty ) );
+		return trim( (string) $this->sanitizer->sanitize( $dirty ) );
 	}
 
 }

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Updated: `enshrined/svg-sanitize` to `^1.1.1` (root and `moderntribe/square1-media`) for security fixes (GHSA-9rjx-3jch-6vjf, GHSA-m9xh-6747-9r6f, GHSA-v383-3rw5-q8rf).
+- Fixed: SVG stores return an empty string when the sanitizer returns `false`.
+- Updated: dev dependencies `guzzlehttp/guzzle` 7.15.2, `squizlabs/php_codesniffer` 3.13.6 and `symfony/yaml` 7.4.21 for security patches (dev tooling, lockfile only).
+
 ## 5.0.0 - 2026-08-03
 
 ## 5.0.0 - 2026-08-03
