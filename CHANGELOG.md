@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
 ## 5.0.1 - 2026-10-23
 
 - Updated: `enshrined/svg-sanitize` to `^1.1.1` (root and `moderntribe/square1-media`) for security fixes (GHSA-9rjx-3jch-6vjf, GHSA-m9xh-6747-9r6f, GHSA-v383-3rw5-q8rf).
