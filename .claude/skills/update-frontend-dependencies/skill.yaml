@@ -1,0 +1,13 @@
+id: update-frontend-dependencies
+name: Update Frontend Dependencies
+description: Review and methodically upgrade frontend dependencies managed in package.json across projects.
+version: 1.0.1
+labels:
+  - dependencies
+  - frontend
+  - node
+  - npm
+  - maintenance
+targets:
+  - cursor
+  - claude

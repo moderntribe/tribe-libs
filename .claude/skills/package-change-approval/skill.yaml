@@ -1,0 +1,13 @@
+id: package-change-approval
+name: Package Change Approval
+description: Require explicit user approval before installing unrequested packages or updating dependencies with any package manager. Use when considering Composer, npm, Yarn, pnpm, Bun, pip, Poetry, Cargo, Go modules, Bundler, Maven/Gradle, or similar dependency changes.
+version: 1.0.0
+labels:
+  - dependencies
+  - package-management
+  - approval
+  - security
+  - workflow
+targets:
+  - cursor
+  - claude

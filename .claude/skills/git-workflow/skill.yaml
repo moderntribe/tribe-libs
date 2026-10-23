@@ -1,0 +1,13 @@
+id: git-workflow
+name: Git Workflow Standards
+description: Git branch naming conventions and pull request standards. Use when creating branches, making commits, opening pull requests, or when the user asks about git workflow conventions.
+version: 1.0.0
+labels:
+  - git
+  - workflow
+  - conventions
+  - pull-request
+  - branch-naming
+targets:
+  - cursor
+  - claude

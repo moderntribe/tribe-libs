@@ -1,0 +1,11 @@
+id: example-skill
+name: Example Skill
+description: A template showing how to structure a tribe skill with metadata, labels, and clear documentation.
+version: 1.0.0
+labels:
+  - example
+  - template
+  - documentation
+targets:
+  - cursor
+  - claude

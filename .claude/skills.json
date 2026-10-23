@@ -1,0 +1,244 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "id": "example-skill",
+      "name": "Example Skill",
+      "description": "A template showing how to structure a tribe skill with metadata, labels, and clear documentation.",
+      "version": "1.0.0",
+      "labels": [
+        "example",
+        "template",
+        "documentation"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "figma-design-sync",
+      "name": "Figma Design System Sync",
+      "description": "Sync design tokens and component properties from a Figma file to a Moose WordPress theme codebase. Extracts colors, typography, spacing, layout, buttons, and border radius with full variable mode support.",
+      "version": "1.0.0",
+      "labels": [
+        "figma",
+        "design-system",
+        "wordpress",
+        "moose",
+        "design-tokens"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "Figma MCP server",
+        "Moose WordPress theme"
+      ]
+    },
+    {
+      "id": "git-workflow",
+      "name": "Git Workflow Standards",
+      "description": "Git branch naming conventions and pull request standards. Use when creating branches, making commits, opening pull requests, or when the user asks about git workflow conventions.",
+      "version": "1.0.0",
+      "labels": [
+        "git",
+        "workflow",
+        "conventions",
+        "pull-request",
+        "branch-naming"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "jira-testing-instructions",
+      "name": "Jira Testing Instructions",
+      "description": "Adds precise QA and UAT testing instructions to Jira tickets using implementation-aware context. Use when the user specifically asks to add testing instructions while working a Jira ticket.",
+      "version": "1.0.2",
+      "labels": [
+        "jira",
+        "testing",
+        "qa",
+        "uat",
+        "documentation"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "Jira MCP server"
+      ]
+    },
+    {
+      "id": "jira-ticket-standard",
+      "name": "Jira Ticket Standard",
+      "description": "Creates and updates Jira tickets using the team's standard structure and language. Use when the user asks to create a Jira ticket, rewrite ticket descriptions, or standardize Goals/Outcomes/Assets formatting.",
+      "version": "1.0.0",
+      "labels": [
+        "jira",
+        "workflow",
+        "documentation",
+        "ticket-management"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "Jira MCP server"
+      ]
+    },
+    {
+      "id": "modernpress-coding-standards",
+      "name": "ModernPress Coding Standards",
+      "description": "Apply ModernPress WordPress PHP coding standards for core plugin and theme work, including Modern Tribe PHPCS, blocks, CPTs, query hooks, and integrations.",
+      "version": "1.0.0",
+      "labels": [
+        "modernpress",
+        "wordpress",
+        "php",
+        "coding-standards",
+        "blocks",
+        "custom-post-types"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "moderntribe/coding-standards"
+      ]
+    },
+    {
+      "id": "modernpress-figma-sync",
+      "name": "ModernPress Figma Sync",
+      "description": "Syncs the codebase (CSS variables, theme.json, and PostCSS files) to match Figma design tokens and styles. Use whenever a user asks about syncing, updating, or pulling from a Figma design.",
+      "version": "1.0.0",
+      "labels": [
+        "figma",
+        "design-system",
+        "wordpress",
+        "modernpress",
+        "design-tokens"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "Figma MCP server",
+        "ModernPress WordPress theme"
+      ]
+    },
+    {
+      "id": "package-change-approval",
+      "name": "Package Change Approval",
+      "description": "Require explicit user approval before installing unrequested packages or updating dependencies with any package manager. Use when considering Composer, npm, Yarn, pnpm, Bun, pip, Poetry, Cargo, Go modules, Bundler, Maven/Gradle, or similar dependency changes.",
+      "version": "1.0.0",
+      "labels": [
+        "dependencies",
+        "package-management",
+        "approval",
+        "security",
+        "workflow"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "port-to-modernpress",
+      "name": "Port to ModernPress",
+      "description": "Backports code improvements, features, or bug fixes discovered during a client project back to the ModernPress WordPress starter framework. Handles repo discovery, branching, applying changes, build verification, committing, and PR creation.",
+      "version": "1.0.0",
+      "labels": [
+        "git",
+        "workflow",
+        "modernpress",
+        "moose",
+        "wordpress",
+        "pull-request",
+        "backport"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "promote-skill",
+      "name": "Promote Skill",
+      "description": "Promotes a new skill or updates an existing skill in the tribe-skills repo from another local project, including branching, diff review, version bumping, validation, commit, PR creation, and reinstall reminder.",
+      "version": "1.1.0",
+      "labels": [
+        "skills",
+        "workflow",
+        "git",
+        "pull-request",
+        "release"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "review-release",
+      "name": "Review Release",
+      "description": "Review a software release by cross-referencing a Jira release with a GitHub pull request to verify scope alignment. Use when the user asks to review a release, audit a release PR, check if a PR matches a Jira release, verify release scope, or compare Jira tickets against PR commits.",
+      "version": "1.0.0",
+      "labels": [
+        "release",
+        "jira",
+        "github",
+        "pull-request",
+        "review",
+        "workflow"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ],
+      "dependencies": [
+        "Jira MCP server",
+        "GitHub CLI (gh)"
+      ]
+    },
+    {
+      "id": "ticket-autopilot",
+      "name": "Ticket Autopilot",
+      "description": "Executes one or more Jira tickets end-to-end with minimal supervision.",
+      "version": "1.0.1",
+      "labels": [
+        "automation"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    },
+    {
+      "id": "update-frontend-dependencies",
+      "name": "Update Frontend Dependencies",
+      "description": "Review and methodically upgrade frontend dependencies managed in package.json across projects.",
+      "version": "1.0.1",
+      "labels": [
+        "dependencies",
+        "frontend",
+        "node",
+        "npm",
+        "maintenance"
+      ],
+      "targets": [
+        "cursor",
+        "claude"
+      ]
+    }
+  ]
+}

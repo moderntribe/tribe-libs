@@ -1,0 +1,627 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# tribe-skills CLI
+# Manage AI agent skills for Cursor and Claude Code
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DEFAULT_REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="${TRIBE_SKILLS_REPO_ROOT:-$DEFAULT_REPO_ROOT}"
+SKILLS_JSON="$REPO_ROOT/skills.json"
+
+CURSOR_INSTALL_DIR="${TRIBE_SKILLS_HOME:-$HOME/.cursor/skills}"
+CLAUDE_INSTALL_DIR="${TRIBE_SKILLS_CLAUDE_HOME:-$HOME/.claude/commands}"
+STATE_FILE="${TRIBE_SKILLS_STATE_FILE:-$HOME/.tribe-skills-state.json}"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+error() {
+    echo -e "${RED}Error: $1${NC}" >&2
+    exit 1
+}
+
+success() {
+    echo -e "${GREEN}$1${NC}"
+}
+
+warn() {
+    echo -e "${YELLOW}$1${NC}"
+}
+
+info() {
+    echo -e "${BLUE}$1${NC}"
+}
+
+require_node() {
+    if ! command -v node >/dev/null 2>&1; then
+        error "Node.js is required but was not found. Install Node 18+ and retry."
+    fi
+}
+
+# ---- State management ----
+
+ensure_state_file() {
+    if [[ ! -f "$STATE_FILE" ]]; then
+        # Migrate from old per-target state file if present
+        local old_state="$CURSOR_INSTALL_DIR/.tribe-skills-state.json"
+        if [[ -f "$old_state" ]]; then
+            node -e '
+const fs = require("fs");
+const oldPath = process.argv[1];
+const newPath = process.argv[2];
+let newState = { cursor: {}, claude: {} };
+try {
+  const raw = fs.readFileSync(oldPath, "utf8");
+  const old = JSON.parse(raw);
+  if (old && typeof old === "object" && old.installed && typeof old.installed === "object") {
+    newState.cursor = old.installed;
+  }
+} catch (e) {
+  // If the old state file is malformed or unreadable, fall back to a fresh state.
+}
+fs.writeFileSync(newPath, JSON.stringify(newState, null, 2) + "\n");
+' "$old_state" "$STATE_FILE"
+            info "Migrated state from $old_state to $STATE_FILE"
+        else
+            echo '{"cursor": {}, "claude": {}}' > "$STATE_FILE"
+        fi
+    fi
+}
+
+get_installed_skills() {
+    local target="$1"
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const state = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+process.stdout.write(JSON.stringify(state[process.argv[2]] || {}));
+' "$STATE_FILE" "$target"
+}
+
+set_installed_version() {
+    local target="$1"
+    local skill_id="$2"
+    local version="$3"
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const [, statePath, target, skillId, version] = process.argv;
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+state[target] = state[target] || {};
+state[target][skillId] = version;
+fs.writeFileSync(statePath, JSON.stringify(state, null, 2) + "\n");
+' "$STATE_FILE" "$target" "$skill_id" "$version"
+}
+
+remove_installed_skill() {
+    local target="$1"
+    local skill_id="$2"
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const [, statePath, target, skillId] = process.argv;
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+if (state[target]) delete state[target][skillId];
+fs.writeFileSync(statePath, JSON.stringify(state, null, 2) + "\n");
+' "$STATE_FILE" "$target" "$skill_id"
+}
+
+is_skill_installed() {
+    local target="$1"
+    local skill_id="$2"
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const [, statePath, target, skillId] = process.argv;
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const installed = state[target] || {};
+process.stdout.write(Object.prototype.hasOwnProperty.call(installed, skillId) ? "yes" : "no");
+' "$STATE_FILE" "$target" "$skill_id"
+}
+
+list_installed_skill_ids() {
+    local target="$1"
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const [, statePath, target] = process.argv;
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+for (const skillId of Object.keys(state[target] || {})) console.log(skillId);
+' "$STATE_FILE" "$target"
+}
+
+# ---- Skill info ----
+
+get_skill_info() {
+    local skill_id="$1"
+    node -e '
+const fs = require("fs");
+const index = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+const skill = (index.skills || []).find((s) => s.id === process.argv[2]);
+if (!skill) process.exit(1);
+process.stdout.write(JSON.stringify(skill));
+' "$SKILLS_JSON" "$skill_id"
+}
+
+skill_supports_target() {
+    local skill_info="$1"
+    local target="$2"
+    echo "$skill_info" | node -e '
+const fs = require("fs");
+const skill = JSON.parse(fs.readFileSync(0, "utf8"));
+const targets = Array.isArray(skill.targets) ? skill.targets : ["cursor"];
+process.stdout.write(targets.includes(process.argv[1]) ? "yes" : "no");
+' "$target"
+}
+
+# ---- Commands ----
+
+list_skills() {
+    local filter_label="${1:-}"
+    local target="${2:-cursor}"
+
+    if [[ ! -f "$SKILLS_JSON" ]]; then
+        error "skills.json not found. Run 'node scripts/build-index.js' first."
+    fi
+
+    ensure_state_file
+    node -e '
+const fs = require("fs");
+const [, skillsPath, statePath, filterLabel, target] = process.argv;
+const index = JSON.parse(fs.readFileSync(skillsPath, "utf8"));
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const installed = state[target] || {};
+let skills = index.skills || [];
+
+if (filterLabel) {
+  skills = skills.filter((s) => (s.labels || []).includes(filterLabel));
+}
+
+if (skills.length === 0) {
+  console.log(filterLabel ? `No skills found with label: ${filterLabel}` : "No skills available");
+  process.exit(0);
+}
+
+console.log(`Available skills: ${skills.length}  (target: ${target})\n`);
+for (const skill of skills) {
+  const targets = Array.isArray(skill.targets) ? skill.targets : ["cursor"];
+  const supportsTarget = targets.includes(target);
+  const labels = (skill.labels || []).join(", ");
+  let installStatus = "";
+  if (Object.prototype.hasOwnProperty.call(installed, skill.id)) {
+    const iv = installed[skill.id];
+    installStatus = iv === skill.version ? " [installed]" : ` [installed: ${iv}]`;
+  }
+  const unavailable = supportsTarget ? "" : `  [not available for ${target}]`;
+  console.log(`${skill.id} (${skill.version})${installStatus}${unavailable}`);
+  console.log(`  ${skill.description}`);
+  console.log(`  Labels: ${labels}`);
+  console.log(`  Targets: ${targets.join(", ")}`);
+  console.log("");
+}
+' "$SKILLS_JSON" "$STATE_FILE" "$filter_label" "$target"
+}
+
+install_skill() {
+    local skill_id="$1"
+    local target="$2"
+
+    if [[ ! -f "$SKILLS_JSON" ]]; then
+        error "skills.json not found"
+    fi
+
+    local skill_info
+    skill_info=$(get_skill_info "$skill_id") || error "Skill '$skill_id' not found"
+
+    local supported
+    supported=$(skill_supports_target "$skill_info" "$target")
+    if [[ "$supported" == "no" ]]; then
+        error "Skill '$skill_id' does not support target '$target'"
+    fi
+
+    local version
+    version=$(echo "$skill_info" | node -e '
+const fs = require("fs");
+process.stdout.write(JSON.parse(fs.readFileSync(0, "utf8")).version);
+')
+
+    local src_dir="$REPO_ROOT/skills/$skill_id"
+
+    if [[ ! -d "$src_dir" ]]; then
+        error "Skill source directory not found: $src_dir"
+    fi
+
+    if [[ ! -f "$src_dir/SKILL.md" ]]; then
+        error "SKILL.md not found in $src_dir"
+    fi
+
+    info "Installing $skill_id ($version) for $target..."
+
+    if [[ "$target" == "cursor" ]]; then
+        local dest_dir="$CURSOR_INSTALL_DIR/$skill_id"
+        mkdir -p "$dest_dir"
+        cp -r "$src_dir"/* "$dest_dir/"
+        set_installed_version "$target" "$skill_id" "$version"
+        success "Installed $skill_id ($version) → $dest_dir"
+    elif [[ "$target" == "claude" ]]; then
+        mkdir -p "$CLAUDE_INSTALL_DIR"
+        cp "$src_dir/SKILL.md" "$CLAUDE_INSTALL_DIR/$skill_id.md"
+        set_installed_version "$target" "$skill_id" "$version"
+        success "Installed $skill_id ($version) → $CLAUDE_INSTALL_DIR/$skill_id.md"
+    fi
+}
+
+uninstall_skill() {
+    local skill_id="$1"
+    local target="$2"
+
+    local installed_status
+    installed_status=$(is_skill_installed "$target" "$skill_id")
+
+    local files_exist=false
+    if [[ "$target" == "cursor" ]]; then
+        local dest_dir="$CURSOR_INSTALL_DIR/$skill_id"
+        if [[ -d "$dest_dir" ]]; then
+            files_exist=true
+        fi
+    elif [[ "$target" == "claude" ]]; then
+        local dest_file="$CLAUDE_INSTALL_DIR/$skill_id.md"
+        if [[ -f "$dest_file" ]]; then
+            files_exist=true
+        fi
+    fi
+
+    if [[ "$installed_status" == "no" && "$files_exist" == "false" ]]; then
+        error "Skill '$skill_id' is not installed for target '$target'"
+    fi
+
+    if [[ "$target" == "cursor" ]]; then
+        local dest_dir="$CURSOR_INSTALL_DIR/$skill_id"
+        if [[ -d "$dest_dir" ]]; then
+            rm -rf "$dest_dir"
+        fi
+    elif [[ "$target" == "claude" ]]; then
+        local dest_file="$CLAUDE_INSTALL_DIR/$skill_id.md"
+        if [[ -f "$dest_file" ]]; then
+            rm -f "$dest_file"
+        fi
+    fi
+
+    remove_installed_skill "$target" "$skill_id"
+    success "Uninstalled $skill_id (target: $target)"
+}
+
+update_skill() {
+    local skill_id="$1"
+    local target="$2"
+
+    local installed_status
+    installed_status=$(is_skill_installed "$target" "$skill_id")
+
+    if [[ "$installed_status" == "no" ]]; then
+        error "Skill '$skill_id' is not installed for target '$target'"
+    fi
+
+    info "Updating $skill_id (target: $target)..."
+    install_skill "$skill_id" "$target"
+}
+
+update_all_skills() {
+    local target="$1"
+    local skill_ids
+    skill_ids=$(list_installed_skill_ids "$target")
+
+    if [[ -z "$skill_ids" ]]; then
+        info "No skills installed for target '$target'"
+        return 0
+    fi
+
+    while IFS= read -r skill_id; do
+        if [[ -n "$skill_id" ]]; then
+            update_skill "$skill_id" "$target"
+        fi
+    done <<< "$skill_ids"
+
+    success "All $target skills updated"
+}
+
+show_outdated() {
+    local target="$1"
+
+    if [[ ! -f "$SKILLS_JSON" ]]; then
+        error "skills.json not found"
+    fi
+
+    ensure_state_file
+
+    node -e '
+const fs = require("fs");
+const [, skillsPath, statePath, target] = process.argv;
+const index = JSON.parse(fs.readFileSync(skillsPath, "utf8"));
+const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const installed = state[target] || {};
+const available = new Map((index.skills || []).map((s) => [s.id, s.version]));
+const outdated = [];
+
+for (const [skillId, installedVersion] of Object.entries(installed)) {
+  if (!available.has(skillId)) {
+    outdated.push([skillId, installedVersion, "REMOVED"]);
+    continue;
+  }
+  const availableVersion = available.get(skillId);
+  if (installedVersion !== availableVersion) {
+    outdated.push([skillId, installedVersion, availableVersion]);
+  }
+}
+
+if (outdated.length === 0) {
+  console.log(`All installed ${target} skills are up to date`);
+} else {
+  console.log(`Outdated ${target} skills:\n`);
+  for (const [skillId, installedVersion, availableVersion] of outdated) {
+    console.log(`${skillId}: ${installedVersion} -> ${availableVersion}`);
+  }
+}
+' "$SKILLS_JSON" "$STATE_FILE" "$target"
+}
+
+run_doctor() {
+    local target="$1"
+    info "Running diagnostics (target: $target)...\n"
+
+    local issues=0
+
+    # Check state file
+    if [[ ! -f "$STATE_FILE" ]]; then
+        warn "State file does not exist: $STATE_FILE"
+        issues=$((issues + 1))
+    else
+        success "State file exists: $STATE_FILE"
+        if node -e 'const fs=require("fs"); JSON.parse(fs.readFileSync(process.argv[1],"utf8"));' "$STATE_FILE" 2>/dev/null; then
+            success "State file is valid JSON"
+        else
+            warn "State file is invalid JSON"
+            issues=$((issues + 1))
+        fi
+    fi
+
+    # Check skills.json
+    if [[ ! -f "$SKILLS_JSON" ]]; then
+        warn "skills.json not found in repository"
+        issues=$((issues + 1))
+    else
+        success "skills.json found"
+    fi
+
+    # Target-specific checks
+    if [[ "$target" == "cursor" ]]; then
+        if [[ ! -d "$CURSOR_INSTALL_DIR" ]]; then
+            warn "Cursor install directory does not exist: $CURSOR_INSTALL_DIR"
+            issues=$((issues + 1))
+        else
+            success "Cursor install directory exists: $CURSOR_INSTALL_DIR"
+        fi
+
+        if [[ -f "$STATE_FILE" ]]; then
+            local skill_ids
+            skill_ids=$(list_installed_skill_ids "$target" 2>/dev/null || echo "")
+            while IFS= read -r skill_id; do
+                if [[ -n "$skill_id" ]]; then
+                    local skill_dir="$CURSOR_INSTALL_DIR/$skill_id"
+                    if [[ ! -d "$skill_dir" ]]; then
+                        warn "Installed skill directory missing: $skill_dir"
+                        issues=$((issues + 1))
+                    elif [[ ! -f "$skill_dir/SKILL.md" ]]; then
+                        warn "SKILL.md missing for $skill_id"
+                        issues=$((issues + 1))
+                    fi
+                fi
+            done <<< "$skill_ids"
+        fi
+
+    elif [[ "$target" == "claude" ]]; then
+        if [[ ! -d "$CLAUDE_INSTALL_DIR" ]]; then
+            warn "Claude commands directory does not exist: $CLAUDE_INSTALL_DIR"
+            issues=$((issues + 1))
+        else
+            success "Claude commands directory exists: $CLAUDE_INSTALL_DIR"
+        fi
+
+        if [[ -f "$STATE_FILE" ]]; then
+            local skill_ids
+            skill_ids=$(list_installed_skill_ids "$target" 2>/dev/null || echo "")
+            while IFS= read -r skill_id; do
+                if [[ -n "$skill_id" ]]; then
+                    local dest_file="$CLAUDE_INSTALL_DIR/$skill_id.md"
+                    if [[ ! -f "$dest_file" ]]; then
+                        warn "Installed command file missing: $dest_file"
+                        issues=$((issues + 1))
+                    fi
+                fi
+            done <<< "$skill_ids"
+        fi
+    fi
+
+    echo ""
+    if [[ $issues -eq 0 ]]; then
+        success "All checks passed"
+    else
+        warn "Found $issues issue(s)"
+        return 1
+    fi
+}
+
+show_usage() {
+    cat << EOF
+Usage: tribe-skills <command> [options]
+
+Commands:
+  list [--label <label>] [--target <target>]     List available skills
+  install <skill-id> [--target <target>]         Install a skill
+  uninstall <skill-id> [--target <target>]       Uninstall a skill
+  update <skill-id> [--target <target>]          Update an installed skill
+  update --all [--target <target>]               Update all installed skills
+  outdated [--target <target>]                   Show outdated installed skills
+  doctor [--target <target>]                     Run diagnostic checks
+
+Targets:
+  cursor    Cursor IDE skills directory (~/.cursor/skills/)  [default]
+  claude    Claude Code global commands (~/.claude/commands/)
+
+Environment:
+  TRIBE_SKILLS_HOME          Override Cursor install directory (default: ~/.cursor/skills)
+  TRIBE_SKILLS_CLAUDE_HOME   Override Claude install directory (default: ~/.claude/commands)
+  TRIBE_SKILLS_STATE_FILE    Override state file path (default: ~/.tribe-skills-state.json)
+
+Examples:
+  tribe-skills list
+  tribe-skills list --label jira
+  tribe-skills install figma-design-sync
+  tribe-skills install jira-ticket-standard --target claude
+  tribe-skills uninstall figma-design-sync
+  tribe-skills update --all
+  tribe-skills update --all --target claude
+  tribe-skills outdated --target claude
+  tribe-skills doctor --target claude
+EOF
+}
+
+main() {
+    require_node
+
+    if [[ $# -eq 0 ]]; then
+        show_usage
+        exit 0
+    fi
+
+    local cmd="$1"
+    shift
+
+    case "$cmd" in
+        list)
+            local label=""
+            local target="cursor"
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --label)
+                        [[ -n "${2:-}" ]] || error "Option --label requires a value"
+                        label="$2"
+                        shift 2
+                        ;;
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            list_skills "$label" "$target"
+            ;;
+        install)
+            [[ $# -ge 1 && "$1" != --* ]] || error "Usage: tribe-skills install <skill-id> [--target cursor|claude]"
+            local skill_id="$1"; shift
+            local target="cursor"
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            install_skill "$skill_id" "$target"
+            ;;
+        uninstall)
+            [[ $# -ge 1 && "$1" != --* ]] || error "Usage: tribe-skills uninstall <skill-id> [--target cursor|claude]"
+            local skill_id="$1"; shift
+            local target="cursor"
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            uninstall_skill "$skill_id" "$target"
+            ;;
+        update)
+            [[ $# -ge 1 ]] || error "Usage: tribe-skills update <skill-id> | --all [--target cursor|claude]"
+            local target="cursor"
+            local update_all=false
+            local skill_id=""
+            if [[ "$1" == "--all" ]]; then
+                update_all=true; shift
+            else
+                skill_id="$1"; shift
+            fi
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            if [[ "$update_all" == true ]]; then
+                update_all_skills "$target"
+            else
+                update_skill "$skill_id" "$target"
+            fi
+            ;;
+        outdated)
+            local target="cursor"
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            show_outdated "$target"
+            ;;
+        doctor)
+            local target="cursor"
+            while [[ $# -gt 0 ]]; do
+                case "$1" in
+                    --target)
+                        [[ -n "${2:-}" ]] || error "Option --target requires a value"
+                        target="$2"
+                        shift 2
+                        ;;
+                    *) shift ;;
+                esac
+            done
+            [[ "$target" == "cursor" || "$target" == "claude" ]] || error "Unknown target: $target. Use 'cursor' or 'claude'."
+            run_doctor "$target"
+            ;;
+        help|--help|-h)
+            show_usage
+            ;;
+        *)
+            error "Unknown command: $cmd"
+            ;;
+    esac
+}
+
+main "$@"

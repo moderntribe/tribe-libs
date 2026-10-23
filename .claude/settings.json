@@ -1,0 +1,21 @@
+{
+	"permissions": {
+		"deny": [
+			"Agent"
+		],
+		"blockReadsOutsideWorkingDirectories": true,
+		"disableBypassPermissionsMode": "disable",
+		"ask": [
+			"Bash(lando info *)",
+			"Bash(lando logs *)",
+			"Bash(lando ssh *)",
+			"Bash(lando wp *)",
+			"Bash(lando composer *)"
+		]
+	},
+	"sandbox": {
+		"enabled": true,
+		"failIfUnavailable": true,
+		"allowUnsandboxedCommands": false
+	}
+}

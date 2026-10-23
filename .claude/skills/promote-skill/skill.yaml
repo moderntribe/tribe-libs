@@ -1,0 +1,13 @@
+id: promote-skill
+name: Promote Skill
+description: Promotes a new skill or updates an existing skill in the tribe-skills repo from another local project, including branching, diff review, version bumping, validation, commit, PR creation, and reinstall reminder.
+version: 1.1.0
+labels:
+  - skills
+  - workflow
+  - git
+  - pull-request
+  - release
+targets:
+  - cursor
+  - claude

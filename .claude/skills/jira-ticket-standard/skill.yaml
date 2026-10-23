@@ -1,0 +1,14 @@
+id: jira-ticket-standard
+name: Jira Ticket Standard
+description: Creates and updates Jira tickets using the team's standard structure and language. Use when the user asks to create a Jira ticket, rewrite ticket descriptions, or standardize Goals/Outcomes/Assets formatting.
+version: 1.0.0
+labels:
+  - jira
+  - workflow
+  - documentation
+  - ticket-management
+targets:
+  - cursor
+  - claude
+dependencies:
+  - Jira MCP server

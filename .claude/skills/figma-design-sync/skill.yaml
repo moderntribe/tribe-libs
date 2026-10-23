@@ -1,0 +1,16 @@
+id: figma-design-sync
+name: Figma Design System Sync
+description: Sync design tokens and component properties from a Figma file to a Moose WordPress theme codebase. Extracts colors, typography, spacing, layout, buttons, and border radius with full variable mode support.
+version: 1.0.0
+labels:
+  - figma
+  - design-system
+  - wordpress
+  - moose
+  - design-tokens
+targets:
+  - cursor
+  - claude
+dependencies:
+  - Figma MCP server
+  - Moose WordPress theme

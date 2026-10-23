@@ -1,0 +1,17 @@
+id: review-release
+name: Review Release
+description: Review a software release by cross-referencing a Jira release with a GitHub pull request to verify scope alignment. Use when the user asks to review a release, audit a release PR, check if a PR matches a Jira release, verify release scope, or compare Jira tickets against PR commits.
+version: 1.0.0
+labels:
+  - release
+  - jira
+  - github
+  - pull-request
+  - review
+  - workflow
+targets:
+  - cursor
+  - claude
+dependencies:
+  - Jira MCP server
+  - GitHub CLI (gh)

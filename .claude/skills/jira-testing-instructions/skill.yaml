@@ -1,0 +1,15 @@
+id: jira-testing-instructions
+name: Jira Testing Instructions
+description: Adds precise QA and UAT testing instructions to Jira tickets using implementation-aware context. Use when the user specifically asks to add testing instructions while working a Jira ticket.
+version: 1.0.2
+labels:
+  - jira
+  - testing
+  - qa
+  - uat
+  - documentation
+targets:
+  - cursor
+  - claude
+dependencies:
+  - Jira MCP server

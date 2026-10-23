@@ -1,0 +1,16 @@
+id: modernpress-figma-sync
+name: ModernPress Figma Sync
+description: Syncs the codebase (CSS variables, theme.json, and PostCSS files) to match Figma design tokens and styles. Use whenever a user asks about syncing, updating, or pulling from a Figma design.
+version: 1.0.0
+labels:
+  - figma
+  - design-system
+  - wordpress
+  - modernpress
+  - design-tokens
+targets:
+  - cursor
+  - claude
+dependencies:
+  - Figma MCP server
+  - ModernPress WordPress theme

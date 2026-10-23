@@ -1,0 +1,16 @@
+id: modernpress-coding-standards
+name: ModernPress Coding Standards
+description: Apply ModernPress WordPress PHP coding standards for core plugin and theme work, including Modern Tribe PHPCS/PHPStan style, architecture (subscribers, controllers, CPTs, query hooks, integrations, blocks), pragmatic OOP, and readable, reviewable code.
+version: 1.1.0
+labels:
+  - modernpress
+  - wordpress
+  - php
+  - coding-standards
+  - blocks
+  - custom-post-types
+targets:
+  - cursor
+  - claude
+dependencies:
+  - moderntribe/coding-standards

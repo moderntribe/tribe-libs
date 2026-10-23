@@ -1,0 +1,9 @@
+id: ticket-autopilot
+name: Ticket Autopilot
+description: Executes one or more Jira tickets end-to-end with minimal supervision.
+version: 1.0.1
+labels:
+  - automation
+targets:
+  - cursor
+  - claude

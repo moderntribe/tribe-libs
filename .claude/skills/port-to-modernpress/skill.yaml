@@ -1,0 +1,15 @@
+id: port-to-modernpress
+name: Port to ModernPress
+description: Backports code improvements, features, or bug fixes discovered during a client project back to the ModernPress WordPress starter framework. Handles repo discovery, branching, applying changes, build verification, committing, and PR creation.
+version: 1.0.0
+labels:
+  - git
+  - workflow
+  - modernpress
+  - moose
+  - wordpress
+  - pull-request
+  - backport
+targets:
+  - cursor
+  - claude
