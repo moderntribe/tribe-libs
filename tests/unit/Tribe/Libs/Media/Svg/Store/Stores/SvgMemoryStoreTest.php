@@ -45,4 +45,8 @@ final class SvgMemoryStoreTest extends Unit {
 		$this->assertEquals( '<?xml version="1.0" encoding="UTF-8"?> ' . file_get_contents( $this->file ), $this->store->get( $id, false ) );
 	}
 
+	public function test_it_returns_empty_string_for_missing_svg(): void {
+		$this->assertSame( '', $this->store->get( 999 ) );
+	}
+
 }
